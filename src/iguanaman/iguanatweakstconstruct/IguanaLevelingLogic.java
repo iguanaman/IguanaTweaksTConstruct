@@ -46,11 +46,12 @@ public class IguanaLevelingLogic {
 		if (tags == null) tags = tool.getTagCompound().getCompoundTag("InfiTool");
         
     	long xp = -1L;
+    	
     	if (pick) xp = tags.getLong("HeadEXP");
     	else xp = tags.getLong("ToolEXP");
     	
 		String prefix = "XP: ";
-		if (pick) prefix = "Head ";
+		if (pick) prefix = "Head " + prefix;
 		
 		return prefix + Long.toString(xp) + " / " + getRequiredXp(tool, pick, tags);
 	}
@@ -205,8 +206,6 @@ public class IguanaLevelingLogic {
         
         float base = (float)TConstructRegistry.getMaterial("Obsidian").miningspeed;
         
-        if (pick) base *= (float)IguanaConfig.miningBoostLevel;
-        
         if (tool.getItem() instanceof Weapon || tool.getItem() instanceof Shortbow)
         {
         	base /= ((float)IguanaConfig.weaponLevelingRatePercentage / 100f);
@@ -234,6 +233,8 @@ public class IguanaLevelingLogic {
 	        
         	base /= ((float)IguanaConfig.toolLevelingRatePercentage / 100f);
         }
+        
+        if (pick) base *= (float)IguanaConfig.miningBoostLevel;
         
         return Math.round(base);
     }
@@ -406,6 +407,5 @@ public class IguanaLevelingLogic {
     		return new String[] {"shovel", "axe"};
     	else
     		return null;
-    			
     }
 }

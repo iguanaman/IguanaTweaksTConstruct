@@ -61,6 +61,9 @@ public class IguanaItems {
 		IguanaLog.log("Adding skull item");
         Item.itemsList[Item.skull.itemID] = null;
         Item.skull = (new IguanaItemSkull(141)).setUnlocalizedName("skull").setTextureName("skull");
+        LanguageRegistry.addName(new ItemStack(Item.skull, 1, 5), "Enderman Head");
+        LanguageRegistry.addName(new ItemStack(Item.skull, 1, 6), "Zombie Pigman Head");
+        LanguageRegistry.addName(new ItemStack(Item.skull, 1, 7), "Blaze Head");
 		
 		
 		//COBALT ARMOR

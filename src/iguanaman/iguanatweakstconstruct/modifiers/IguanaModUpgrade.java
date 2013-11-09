@@ -85,148 +85,29 @@ public class IguanaModUpgrade extends ToolMod {
     @Override
     public void modify (ItemStack[] input, ItemStack tool)
     {
+    	// setup variables
         ToolRecipe toolRecipe = GetRecipe(tool);
+        ToolCore toolClass = (ToolCore)tool.getItem();
         NBTTagCompound tags = tool.getTagCompound().getCompoundTag("InfiTool");
 
-        ItemStack headStack = null;
-        ItemStack handleStack = null;
-        ItemStack accessoryStack = null;
-        ItemStack extraStack = null;
-
+        
+        //get old tool part materials
         int oldHead = tags.getInteger("Head");
         int oldHandle = tags.getInteger("Handle");
         int oldAccessory = tags.getInteger("Accessory");
         int oldExtra = tags.getInteger("Extra");
         
-        //get current item parts
-        if (tool.getItem() instanceof Pickaxe)
-        {
-        	headStack = new ItemStack(TContent.pickaxeHead, 1, tags.getInteger("Head"));
-        	handleStack = new ItemStack(TContent.toolRod, 1, tags.getInteger("Handle"));
-        	accessoryStack = new ItemStack(TContent.binding, 1, tags.getInteger("Accessory"));
-        }
-        else if (tool.getItem() instanceof Shovel)
-        {
-        	headStack = new ItemStack(TContent.shovelHead, 1, tags.getInteger("Head"));
-        	handleStack = new ItemStack(TContent.toolRod, 1, tags.getInteger("Handle"));
-        }
-        else if (tool.getItem() instanceof Hatchet)
-        {
-        	headStack = new ItemStack(TContent.hatchetHead, 1, tags.getInteger("Head"));
-        	handleStack = new ItemStack(TContent.toolRod, 1, tags.getInteger("Handle"));
-        }
-        else if (tool.getItem() instanceof Hatchet)
-        {
-        	headStack = new ItemStack(TContent.hatchetHead, 1, tags.getInteger("Head"));
-        	handleStack = new ItemStack(TContent.toolRod, 1, tags.getInteger("Handle"));
-        }
-        else if (tool.getItem() instanceof Mattock)
-        {
-        	headStack = new ItemStack(TContent.hatchetHead, 1, tags.getInteger("Head"));
-        	handleStack = new ItemStack(TContent.toolRod, 1, tags.getInteger("Handle"));
-        	accessoryStack = new ItemStack(TContent.shovelHead, 1, tags.getInteger("Accessory"));
-        }
-        else if (tool.getItem() instanceof Broadsword)
-        {
-        	headStack = new ItemStack(TContent.swordBlade, 1, tags.getInteger("Head"));
-        	handleStack = new ItemStack(TContent.toolRod, 1, tags.getInteger("Handle"));
-        	accessoryStack = new ItemStack(TContent.wideGuard, 1, tags.getInteger("Accessory"));
-        }
-        else if (tool.getItem() instanceof Longsword)
-        {
-        	headStack = new ItemStack(TContent.swordBlade, 1, tags.getInteger("Head"));
-        	handleStack = new ItemStack(TContent.toolRod, 1, tags.getInteger("Handle"));
-        	accessoryStack = new ItemStack(TContent.handGuard, 1, tags.getInteger("Accessory"));
-        }
-        else if (tool.getItem() instanceof Rapier)
-        {
-        	headStack = new ItemStack(TContent.swordBlade, 1, tags.getInteger("Head"));
-        	handleStack = new ItemStack(TContent.toolRod, 1, tags.getInteger("Handle"));
-        	accessoryStack = new ItemStack(TContent.crossbar, 1, tags.getInteger("Accessory"));
-        }
-        else if (tool.getItem() instanceof Cutlass)
-        {
-        	headStack = new ItemStack(TContent.swordBlade, 1, tags.getInteger("Head"));
-        	handleStack = new ItemStack(TContent.toolRod, 1, tags.getInteger("Handle"));
-        	accessoryStack = new ItemStack(TContent.fullGuard, 1, tags.getInteger("Accessory"));
-        }
-        else if (tool.getItem() instanceof FryingPan)
-        {
-        	headStack = new ItemStack(TContent.frypanHead, 1, tags.getInteger("Head"));
-        	handleStack = new ItemStack(TContent.toolRod, 1, tags.getInteger("Handle"));
-        }
-        else if (tool.getItem() instanceof BattleSign)
-        {
-        	headStack = new ItemStack(TContent.battlesign, 1, tags.getInteger("Head"));
-        	handleStack = new ItemStack(TContent.toolRod, 1, tags.getInteger("Handle"));
-        }
-        else if (tool.getItem() instanceof Dagger)
-        {
-        	headStack = new ItemStack(TContent.knifeBlade, 1, tags.getInteger("Head"));
-        	handleStack = new ItemStack(TContent.toolRod, 1, tags.getInteger("Handle"));
-        	accessoryStack = new ItemStack(TContent.crossbar, 1, tags.getInteger("Accessory"));
-        }
-        else if (tool.getItem() instanceof Chisel)
-        {
-        	headStack = new ItemStack(TContent.chiselHead, 1, tags.getInteger("Head"));
-        	handleStack = new ItemStack(TContent.toolRod, 1, tags.getInteger("Handle"));
-        }
-        else if (tool.getItem() instanceof Arrow)
-        {
-        	headStack = new ItemStack(TContent.arrowhead, 1, tags.getInteger("Head"));
-        	handleStack = new ItemStack(TContent.toolRod, 1, tags.getInteger("Handle"));
-        	accessoryStack = new ItemStack(TContent.fletching, 1, tags.getInteger("Accessory"));
-        }
-        else if (tool.getItem() instanceof Scythe)
-        {
-        	headStack = new ItemStack(TContent.scytheBlade, 1, tags.getInteger("Head"));
-        	handleStack = new ItemStack(TContent.toughRod, 1, tags.getInteger("Handle"));
-        	accessoryStack = new ItemStack(TContent.toughBinding, 1, tags.getInteger("Accessory"));
-        	extraStack = new ItemStack(TContent.toughRod, 1, tags.getInteger("Extra"));
-        }
-        else if (tool.getItem() instanceof LumberAxe)
-        {
-        	headStack = new ItemStack(TContent.broadAxeHead, 1, tags.getInteger("Head"));
-        	handleStack = new ItemStack(TContent.toughRod, 1, tags.getInteger("Handle"));
-        	accessoryStack = new ItemStack(TContent.largePlate, 1, tags.getInteger("Accessory"));
-        	extraStack = new ItemStack(TContent.toughBinding, 1, tags.getInteger("Extra"));
-        }
-        else if (tool.getItem() instanceof Cleaver)
-        {
-        	headStack = new ItemStack(TContent.largeSwordBlade, 1, tags.getInteger("Head"));
-        	handleStack = new ItemStack(TContent.toughRod, 1, tags.getInteger("Handle"));
-        	accessoryStack = new ItemStack(TContent.largePlate, 1, tags.getInteger("Accessory"));
-        	extraStack = new ItemStack(TContent.toughRod, 1, tags.getInteger("Extra"));
-        }
-        else if (tool.getItem() instanceof Excavator)
-        {
-        	headStack = new ItemStack(TContent.excavatorHead, 1, tags.getInteger("Head"));
-        	handleStack = new ItemStack(TContent.toughRod, 1, tags.getInteger("Handle"));
-        	accessoryStack = new ItemStack(TContent.largePlate, 1, tags.getInteger("Accessory"));
-        	extraStack = new ItemStack(TContent.toughBinding, 1, tags.getInteger("Extra"));
-        }
-        else if (tool.getItem() instanceof Hammer)
-        {
-        	headStack = new ItemStack(TContent.hammerHead, 1, tags.getInteger("Head"));
-        	handleStack = new ItemStack(TContent.toughRod, 1, tags.getInteger("Handle"));
-        	accessoryStack = new ItemStack(TContent.largePlate, 1, tags.getInteger("Accessory"));
-        	extraStack = new ItemStack(TContent.largePlate, 1, tags.getInteger("Extra"));
-        }
-        else if (tool.getItem() instanceof Battleaxe)
-        {
-        	headStack = new ItemStack(TContent.broadAxeHead, 1, tags.getInteger("Head"));
-        	handleStack = new ItemStack(TContent.toughRod, 1, tags.getInteger("Handle"));
-        	accessoryStack = new ItemStack(TContent.broadAxeHead, 1, tags.getInteger("Accessory"));
-        	extraStack = new ItemStack(TContent.toughBinding, 1, tags.getInteger("Extra"));
-        }
-        else if (tool.getItem() instanceof Shortbow)
-        {
-        	headStack = new ItemStack(TContent.toolRod, 1, tags.getInteger("Head"));
-        	handleStack = new ItemStack(TContent.bowstring, 1, tags.getInteger("Handle"));
-        	accessoryStack = new ItemStack(TContent.toolRod, 1, tags.getInteger("Accessory"));
-        }
 
-        //build new tool from old parts and new one
+        //get current item parts
+        ItemStack headStack = new ItemStack(toolClass.getHeadItem(), 1, oldHead);
+        ItemStack handleStack = new ItemStack(toolClass.getHandleItem(), 1, oldHandle);
+    	ItemStack accessoryStack = null;
+        if (toolClass.getAccessoryItem() != null) accessoryStack = new ItemStack(toolClass.getAccessoryItem(), 1, oldAccessory);
+        ItemStack extraStack = null;
+        if (toolClass.getExtraItem() != null) extraStack = new ItemStack(toolClass.getExtraItem(), 1, oldExtra);
+        
+        
+        // check inputs for parts to replace
         List<String> replacing = new ArrayList<String>();
         for (ItemStack inputStack : input)
         {
@@ -254,12 +135,14 @@ public class IguanaModUpgrade extends ToolMod {
 				}
 	        }
         }
+        
 		
+        //build new tool and get its tags
     	ItemStack newTool = ToolBuilder.instance.buildTool(headStack, handleStack, accessoryStack, extraStack, "");
-
         NBTTagCompound newTags = newTool.getTagCompound().getCompoundTag("InfiTool");
 
 
+        //Override basic tags
         int base = newTags.getInteger("BaseDurability");
         int bonus = tags.getInteger("BonusDurability");
         float modDur = tags.getFloat("ModDurability");
@@ -267,18 +150,37 @@ public class IguanaModUpgrade extends ToolMod {
         int total = (int) ((base + bonus) * (modDur + 1f));
         if (total <= 0)
             total = 1;
-
-        //Override basic tags
     	tags.setInteger("BaseDurability", base);
     	tags.setInteger("TotalDurability", total);
     	
     	if (tags.hasKey("HarvestLevelModified"))
     	{
-    		if (tags.getBoolean("HarvestLevelModified"))
-    		{
-        		tags.setLong("HeadEXP", 0L);
-        		tags.setBoolean("HarvestLevelModified", false);
-    		}
+    		tags.setLong("HeadEXP", 0L);
+    		tags.removeTag("HarvestLevelModified");
+
+        	if (tags.hasKey("MobHead"))
+        	{
+        		tags.removeTag("MobHead");
+        		
+	            //Get and remove effects
+	            List<Integer> badEffects = Arrays.asList(0, 20, 21, 22, 23, 24, 25);
+	            List<Integer> effects = new ArrayList<Integer>();
+	            for (int i = 1; i <= 6; ++i)
+	            {
+	            	if (tags.hasKey("Effect" + i))
+	            	{
+	            		int effectInt = tags.getInteger("Effect" + i);
+	            		if (!badEffects.contains(effectInt)) effects.add(effectInt);
+	            		tags.removeTag("Effect" + i);
+	            	}
+	            }
+	            
+	            //Re-write effects
+	            for (int i = 0; i < effects.size(); ++i)
+	            {
+	            	tags.setInteger("Effect" + Integer.toString(i+1), effects.get(i));
+	            }
+        	}
     	}
     	
     	if (newTags.hasKey("Shoddy")) tags.setFloat("Shoddy", newTags.getFloat("Shoddy"));
@@ -340,17 +242,11 @@ public class IguanaModUpgrade extends ToolMod {
     	//Remove unwanted modifiers
     	int modifiers = tags.getInteger("Modifiers");
 
-        List<String> unwantedModifiers = Arrays.asList("Diamond", "Skeleton Skull", "Zombie Head", "Creeper Head", "Enderman Head", "Wither Skeleton Skull", "Nether Star");
+        List<String> unwantedModifiers = Arrays.asList("Skeleton Skull", "Zombie Head", "Creeper Head", "Enderman Head", "Wither Skeleton Skull", "Nether Star");
     	for (String unwanted : unwantedModifiers)
     	{
-        	if (tags.hasKey(unwanted))
-        	{
-        		tags.removeTag(unwanted);
-        		++modifiers;
-        	}
+        	if (tags.hasKey(unwanted)) tags.removeTag(unwanted);
     	}
-        
-    	tags.setInteger("Modifiers", modifiers);
 
     	//tooltip lists
     	List<String> tips = new ArrayList<String>();
@@ -407,28 +303,6 @@ public class IguanaModUpgrade extends ToolMod {
         {
         	tags.setString("Tooltip" + i, tips.get(i - 1));
         	tags.setString("ModifierTip" + i, modifierTips.get(i - 1));
-        }
-        
-        //Get and remove effects
-        List<Integer> badEffects = Arrays.asList(0, 20, 21, 22, 23, 24, 25);
-        List<Integer> effects = new ArrayList<Integer>();
-        for (int i = 1; i <= 6; ++i)
-        {
-        	if (tags.hasKey("Effect" + i))
-        	{
-        		int effectInt = tags.getInteger("Effect" + i);
-        		if (!badEffects.contains(effectInt))
-        		{
-            		effects.add(effectInt);
-        		}
-        		tags.removeTag("Effect" + i);
-        	}
-        }
-        
-        //Re-write effects
-        for (int i = 0; i < effects.size(); ++i)
-        {
-        	tags.setInteger("Effect" + Integer.toString(i+1), effects.get(i));
         }
 
     	String materialName = TConstructRegistry.instance.getMaterial(oldHead).displayName;

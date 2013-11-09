@@ -61,7 +61,7 @@ public class IguanaItemSkull extends ItemSkull {
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-    	if (IguanaConfig.pickaxeHeads)
+    	if (IguanaConfig.mobHeadModifiers)
     	{
 	    	int meta = par1ItemStack.getItemDamage();
 	    	if (meta < 7) par3List.add("Pickaxe modifier"); 

@@ -3,8 +3,8 @@ package iguanaman.iguanatweakstconstruct;
 import iguanaman.iguanatweakstconstruct.commands.IguanaCommandConfig;
 import iguanaman.iguanatweakstconstruct.commands.IguanaCommandLevelUpTool;
 import iguanaman.iguanatweakstconstruct.commands.IguanaCommandToolXP;
-import iguanaman.iguanatweakstconstruct.handlers.IguanaCraftingHandler;
-import iguanaman.iguanatweakstconstruct.handlers.IguanaEventHandler;
+import iguanaman.iguanatweakstconstruct.util.IguanaPatternCraftingHandler;
+import iguanaman.iguanatweakstconstruct.util.IguanaEventHandler;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -15,78 +15,10 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import tconstruct.TConstruct;
-import tconstruct.blocks.ToolForgeBlock;
-import tconstruct.blocks.ToolStationBlock;
-import tconstruct.blocks.logic.ToolForgeLogic;
-import tconstruct.blocks.logic.ToolStationLogic;
-import tconstruct.common.TContent;
-import tconstruct.items.CraftingItem;
-import tconstruct.items.FilledBucket;
-import tconstruct.items.MetalPattern;
-import tconstruct.items.Pattern;
-import tconstruct.items.ToolPart;
-import tconstruct.items.blocks.ToolForgeItemBlock;
-import tconstruct.items.blocks.ToolStationItemBlock;
-import tconstruct.items.tools.*;
-import tconstruct.library.ActiveToolMod;
-import tconstruct.library.TConstructRegistry;
-import tconstruct.library.client.TConstructClientRegistry;
-import tconstruct.library.crafting.PatternBuilder;
-import tconstruct.library.crafting.Smeltery;
-import tconstruct.library.crafting.ToolBuilder;
-import tconstruct.library.crafting.ToolRecipe;
-import tconstruct.library.tools.ToolCore;
-import tconstruct.library.tools.ToolMaterial;
-import tconstruct.library.tools.ToolMod;
-import tconstruct.library.tools.Weapon;
-import tconstruct.modifiers.ModAttack;
-import tconstruct.modifiers.ModButtertouch;
-import tconstruct.modifiers.ModDurability;
-import tconstruct.modifiers.ModExtraModifier;
-import tconstruct.modifiers.ModInteger;
-import tconstruct.modifiers.ModLapis;
-import tconstruct.modifiers.ModRedstone;
-import tconstruct.modifiers.ModRepair;
-import tconstruct.modifiers.TActiveOmniMod;
-import tconstruct.util.PHConstruct;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockGravel;
-import net.minecraft.block.BlockSkull;
-import net.minecraft.block.material.Material;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBucket;
-import net.minecraft.item.ItemBucketMilk;
-import net.minecraft.item.ItemFood;
-import net.minecraft.item.ItemSkull;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.item.crafting.ShapelessRecipes;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.Potion;
 import net.minecraft.src.ModLoader;
-import net.minecraft.util.WeightedRandomChestContent;
-import net.minecraftforge.common.ChestGenHooks;
-import net.minecraftforge.common.ConfigCategory;
-import net.minecraftforge.common.Configuration;
-import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.Property;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.liquids.LiquidContainerData;
-import net.minecraftforge.liquids.LiquidContainerRegistry;
-import net.minecraftforge.liquids.LiquidDictionary;
-import net.minecraftforge.liquids.LiquidStack;
-import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import org.modstats.ModstatInfo;
 import org.modstats.Modstats;
@@ -113,7 +45,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid="IguanaTweaksTConstruct", name="Iguana Tweaks for Tinker's Construct", version="1.6.X-1l", 
+@Mod(modid="IguanaTweaksTConstruct", name="Iguana Tweaks for Tinker's Construct", version="1.6.X-1n", 
 dependencies = "required-after:TConstruct;after:UndergroundBiomes@;after:UndergroundBiomesBlender@;after:GregTech;after:GregTech-Addon;after:IC2@;after:ThermalExpansion@;after:Buildcraft@;after:TEOreGen@")
 @NetworkMod(clientSideRequired=true, serverSideRequired=true)
 @ModstatInfo(prefix="igtweakstc")
@@ -134,10 +66,13 @@ public class IguanaTweaksTConstruct {
             NetworkRegistry.instance().registerGuiHandler(instance, proxy);
 
         	IguanaConfig.init(event.getSuggestedConfigurationFile());
+            
+        	IguanaLog.log("Starting event handler");
+            MinecraftForge.EVENT_BUS.register(new IguanaEventHandler());
+            
             IguanaBlocks.init();
             IguanaItems.init();
             MaterialTweaks.init();
-            HarvestLevelTweaks.init();
             ModifierTweaks.init();
             VariousTweaks.init();
             RemoveVanillaTools.init();
@@ -148,16 +83,15 @@ public class IguanaTweaksTConstruct {
         public void load(FMLInitializationEvent event) {
         	IguanaLog.log("Registering with modstats");
             Modstats.instance().getReporter().registerMod(this);
-            
-        	IguanaLog.log("Starting event handler");
-            MinecraftForge.EVENT_BUS.register(new IguanaEventHandler());
 
-            GameRegistry.registerCraftingHandler(new IguanaCraftingHandler());
+            GameRegistry.registerCraftingHandler(new IguanaPatternCraftingHandler());
         }
        
         @EventHandler
         public void postInit(FMLPostInitializationEvent event) {
         	proxy.registerRenderers();
+
+            HarvestLevelTweaks.init();
         }
         
 		@EventHandler

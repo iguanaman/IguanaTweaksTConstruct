@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.src.ModLoader;
 import net.minecraftforge.common.MinecraftForge;
 import tconstruct.common.TContent;
-import tconstruct.util.PHConstruct;
+import tconstruct.util.config.PHConstruct;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
@@ -27,11 +27,12 @@ public class IguanaBlocks {
 
 		//TOOL STATION + FORGE
 		IguanaLog.log("Modifying GUIs");
+		
         Block.blocksList[TContent.toolStationWood.blockID] = null;
-        TContent.toolStationWood = new IguanaToolStationBlock(PHConstruct.woodStation, Material.wood).setUnlocalizedName("ToolStation").setTextureName("ToolStation");
+        TContent.toolStationWood = new IguanaToolStationBlock(PHConstruct.woodStation, Material.wood).setUnlocalizedName("ToolStation");
         
         Block.blocksList[TContent.toolForge.blockID] = null;
-        TContent.toolForge = new IguanaToolForgeBlock(PHConstruct.toolForge, Material.iron).setUnlocalizedName("ToolForge").setTextureName("ToolForge");
+        TContent.toolForge = new IguanaToolForgeBlock(PHConstruct.toolForge, Material.iron).setUnlocalizedName("ToolForge");
         
         
         //SKULLS
@@ -40,9 +41,6 @@ public class IguanaBlocks {
         newSkullBlock = (new IguanaBlockSkull(144)).setHardness(1.0F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("skull").setTextureName("skull");
         GameRegistry.registerBlock(newSkullBlock, "Skull");
         GameRegistry.registerTileEntity(IguanaTileEntitySkull.class, "SkullEntity");
-        LanguageRegistry.addName(new ItemStack(Item.skull, 1, 5), "Enderman Head");
-        LanguageRegistry.addName(new ItemStack(Item.skull, 1, 6), "Zombie Pigman Head");
-        LanguageRegistry.addName(new ItemStack(Item.skull, 1, 7), "Blaze Head");
         
         
 	}

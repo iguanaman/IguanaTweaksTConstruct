@@ -1,4 +1,4 @@
-package iguanaman.iguanatweakstconstruct.guis;
+package iguanaman.iguanatweakstconstruct.gui;
 
 import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
 

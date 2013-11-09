@@ -1,10 +1,10 @@
 package iguanaman.iguanatweakstconstruct;
 
 import iguanaman.iguanatweakstconstruct.blocks.IguanaTileEntitySkull;
-import iguanaman.iguanatweakstconstruct.guis.IguanaToolForgeGui;
-import iguanaman.iguanatweakstconstruct.guis.IguanaToolStationGui;
-import iguanaman.iguanatweakstconstruct.handlers.IguanaClientEventHandler;
-import iguanaman.iguanatweakstconstruct.renderers.IguanaSkullRenderer;
+import iguanaman.iguanatweakstconstruct.gui.IguanaToolForgeGui;
+import iguanaman.iguanatweakstconstruct.gui.IguanaToolStationGui;
+import iguanaman.iguanatweakstconstruct.renderer.IguanaSkullRenderer;
+import iguanaman.iguanatweakstconstruct.util.IguanaClientEventHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import tconstruct.blocks.logic.PartBuilderLogic;

@@ -1,4 +1,4 @@
-package iguanaman.iguanatweakstconstruct.handlers;
+package iguanaman.iguanatweakstconstruct.util;
 
 import iguanaman.iguanatweakstconstruct.HarvestLevelTweaks;
 import iguanaman.iguanatweakstconstruct.IguanaConfig;
@@ -32,7 +32,7 @@ import tconstruct.library.tools.ToolCore;
 import tconstruct.library.tools.ToolMaterial;
 import tconstruct.library.tools.Weapon;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockTallGrass;
+import net.minecraft.block.BlockGravel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.EntityAnimal;
@@ -105,7 +105,7 @@ public class IguanaEventHandler {
 	@ForgeSubscribe(priority = EventPriority.LOWEST)
 	public void LivingDrops(LivingDropsEvent event)
 	{
-		if (IguanaConfig.pickaxeHeads)
+		if (IguanaConfig.mobHeadModifiers)
 		{
 			Iterator<EntityItem> i = event.drops.iterator();
 			while (i.hasNext()) {
@@ -409,11 +409,13 @@ public class IguanaEventHandler {
 	@ForgeSubscribe
 	public void onBlockHarvested(HarvestDropsEvent event)
 	{
-		if (event.block != null)
+		if (IguanaConfig.removeFlintDrop && event.block != null && event.block instanceof BlockGravel)
 		{
-			if (IguanaConfig.removeFlintDrop && event.block instanceof BlockTallGrass)
+			Iterator it = event.drops.iterator();
+			while (it.hasNext())
 			{
-				event.drops.clear();
+				ItemStack stack = (ItemStack) it.next();
+				if (stack != null && stack.itemID == Item.flint.itemID) it.remove();
 			}
 		}
 	}

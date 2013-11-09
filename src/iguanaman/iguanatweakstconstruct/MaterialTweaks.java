@@ -1,6 +1,14 @@
 package iguanaman.iguanatweakstconstruct;
 
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import net.minecraft.item.Item;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import tconstruct.common.TContent;
 import tconstruct.library.TConstructRegistry;
@@ -79,24 +87,28 @@ public class MaterialTweaks {
         TConstructRegistry.instance.toolMaterials.remove(12);
         TConstructRegistry.addToolMaterial(12, "Manyullyn", 8, Math.round(1200f * durMod), Math.round(1000f * speedMod), 4, 2.5F, 0, 0f, "\u00A75", "");
         
-		
+        
+        
+        
         // VANILLA
+        /*
     	IguanaLog.log("Modifying harvest levels of vanilla tools");
         MinecraftForge.setToolClass(Item.pickaxeWood,   "pickaxe", TConstructRegistry.getMaterial("Wood").harvestLevel());
-        MinecraftForge.setToolClass(Item.axeWood,   "axe", TConstructRegistry.getMaterial("Wood").harvestLevel());
-        MinecraftForge.setToolClass(Item.shovelWood,   "shovel", TConstructRegistry.getMaterial("Wood").harvestLevel());
+        MinecraftForge.setToolClass(Item.axeWood,   	"axe", TConstructRegistry.getMaterial("Wood").harvestLevel());
+        MinecraftForge.setToolClass(Item.shovelWood, 	"shovel", TConstructRegistry.getMaterial("Wood").harvestLevel());
         MinecraftForge.setToolClass(Item.pickaxeGold,   "pickaxe", TConstructRegistry.getMaterial("Wood").harvestLevel());
-        MinecraftForge.setToolClass(Item.axeGold,   "axe", TConstructRegistry.getMaterial("Wood").harvestLevel());
-        MinecraftForge.setToolClass(Item.shovelGold,   "shovel", TConstructRegistry.getMaterial("Wood").harvestLevel());
+        MinecraftForge.setToolClass(Item.axeGold,   	"axe", TConstructRegistry.getMaterial("Wood").harvestLevel());
+        MinecraftForge.setToolClass(Item.shovelGold,   	"shovel", TConstructRegistry.getMaterial("Wood").harvestLevel());
         MinecraftForge.setToolClass(Item.pickaxeStone,   "pickaxe", TConstructRegistry.getMaterial("Stone").harvestLevel());
-        MinecraftForge.setToolClass(Item.axeStone,   "axe", TConstructRegistry.getMaterial("Stone").harvestLevel());
+        MinecraftForge.setToolClass(Item.axeStone,   	"axe", TConstructRegistry.getMaterial("Stone").harvestLevel());
         MinecraftForge.setToolClass(Item.shovelStone,   "shovel", TConstructRegistry.getMaterial("Stone").harvestLevel());
         MinecraftForge.setToolClass(Item.pickaxeIron,   "pickaxe", TConstructRegistry.getMaterial("Iron").harvestLevel());
-        MinecraftForge.setToolClass(Item.axeIron,   "axe", TConstructRegistry.getMaterial("Iron").harvestLevel());
-        MinecraftForge.setToolClass(Item.shovelIron,   "shovel", TConstructRegistry.getMaterial("Iron").harvestLevel());
-        MinecraftForge.setToolClass(Item.pickaxeDiamond, "pickaxe", TConstructRegistry.getMaterial("Obsidian").harvestLevel());
-        MinecraftForge.setToolClass(Item.axeDiamond, "axe", TConstructRegistry.getMaterial("Obsidian").harvestLevel());
+        MinecraftForge.setToolClass(Item.axeIron,   	"axe", TConstructRegistry.getMaterial("Iron").harvestLevel());
+        MinecraftForge.setToolClass(Item.shovelIron,   	"shovel", TConstructRegistry.getMaterial("Iron").harvestLevel());
+        MinecraftForge.setToolClass(Item.pickaxeDiamond,"pickaxe", TConstructRegistry.getMaterial("Obsidian").harvestLevel());
+        MinecraftForge.setToolClass(Item.axeDiamond, 	"axe", TConstructRegistry.getMaterial("Obsidian").harvestLevel());
         MinecraftForge.setToolClass(Item.shovelDiamond, "shovel", TConstructRegistry.getMaterial("Obsidian").harvestLevel());
+        */
 	}
 	
 }

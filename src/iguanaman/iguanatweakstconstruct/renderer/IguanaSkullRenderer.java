@@ -1,4 +1,4 @@
-package iguanaman.iguanatweakstconstruct.renderers;
+package iguanaman.iguanatweakstconstruct.renderer;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;

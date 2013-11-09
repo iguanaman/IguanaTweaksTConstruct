@@ -12,21 +12,17 @@ import tconstruct.items.tools.Hammer;
 import tconstruct.items.tools.Pickaxe;
 import tconstruct.library.tools.ToolMod;
 import tconstruct.modifiers.ModDurability;
-import tconstruct.util.PHConstruct;
+import tconstruct.util.config.PHConstruct;
 
-public class IguanaModDurability extends ToolMod {
+public class IguanaModHeads extends ToolMod {
 
     String tooltipName;
     String color;
-    int durability;
-    float modifier;
     int miningLevel;
 
-    public IguanaModDurability(ItemStack[] items, int effect, int dur, float mod, int level, String k, String tip, String c)
+    public IguanaModHeads(ItemStack[] items, int effect, int level, String k, String tip, String c)
     {
         super(items, effect, k);
-        durability = dur;
-        modifier = mod;
         miningLevel = level;
         tooltipName = tip;
         color = c;
@@ -36,16 +32,16 @@ public class IguanaModDurability extends ToolMod {
     protected boolean canModify (ItemStack tool, ItemStack[] input)
     {
         NBTTagCompound tags = tool.getTagCompound().getCompoundTag("InfiTool");
-        if (tags.hasKey(key) || tags.getBoolean("HarvestLevelModified")) return false;
-        
-        if (IguanaConfig.pickaxeHeads) 
+        if (tags.hasKey("MobHead")) return false;
+
+        if (tool.getItem() instanceof Pickaxe || tool.getItem() instanceof Hammer)
         {
-            int mLevel = tags.getInteger("HarvestLevel");
-            if (mLevel > 1) return true;
-            else return false;
+        	if (tags.hasKey("HarvestLevelModified")) return false;
+	        int mLevel = tags.getInteger("HarvestLevel");
+	        if (mLevel > 1 && mLevel < miningLevel) return true;
         }
-        
-        return super.canModify(tool, input);
+
+        return false;
     }
 
     @Override
@@ -53,62 +49,18 @@ public class IguanaModDurability extends ToolMod {
     {
         NBTTagCompound tags = tool.getTagCompound().getCompoundTag("InfiTool");
 
-        if (PHConstruct.miningLevelIncrease || IguanaConfig.pickaxeHeads)
-        {
-            int mLevel = tags.getInteger("HarvestLevel");
-            if (mLevel < miningLevel) tags.setInteger("HarvestLevel", mLevel + 1);
-            tags.setBoolean("HarvestLevelModified", true);
-            
-            overwriteToolTip(tool);
-        }
-
-        if (!IguanaConfig.pickaxeHeads)
-        {
-            int base = tags.getInteger("BaseDurability");
-            int bonus = tags.getInteger("BonusDurability");
-            float modDur = tags.getFloat("ModDurability");
-
-            bonus += durability;
-            modDur += modifier;
-
-            int total = (int) ((base + bonus) * (modDur + 1f));
-            if (total <= 0)
-                total = 1;
-
-            tags.setInteger("TotalDurability", total);
-            tags.setInteger("BonusDurability", bonus);
-            tags.setFloat("ModDurability", modDur);
-
-            int modifiers = tags.getInteger("Modifiers");
-            modifiers -= 1;
-            tags.setInteger("Modifiers", modifiers);
-        }
-
+        tags.setBoolean("MobHead", true);
         tags.setBoolean(key, true);
+
+        if (tool.getItem() instanceof Pickaxe)
+        {
+	        tags.setInteger("HarvestLevel", tags.getInteger("HarvestLevel") + 1);
+	        tags.setBoolean("HarvestLevelModified", true);
+	        overwriteToolTip(tool);
+        }
+
         String modTip = color + key;
         addToolTip(tool, tooltipName, modTip);
-    }
-    
-    @Override
-    public boolean matches (ItemStack[] input, ItemStack tool)
-    {
-    	boolean result = super.matches(input, tool);
-    	
-    	if (result == true && IguanaConfig.pickaxeHeads)
-    	{	
-	    	if (tool.getItem() != null)
-	    	{
-	    		if (!(tool.getItem() instanceof Pickaxe))
-	    			return false;
-	    	}
-	    	
-	        NBTTagCompound tags = tool.getTagCompound().getCompoundTag("InfiTool");
-	        int harvestLevel = tags.getInteger("HarvestLevel");
-	        if (harvestLevel == 0 || harvestLevel >= miningLevel)
-	        	return false;
-    	}
-        
-    	return result;
     }
     
     public void overwriteToolTip(ItemStack tool)

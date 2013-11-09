@@ -2,7 +2,7 @@ package iguanaman.iguanatweakstconstruct;
 
 import iguanaman.iguanatweakstconstruct.modifiers.IguanaActiveToolMod;
 import iguanaman.iguanatweakstconstruct.modifiers.IguanaModAttack;
-import iguanaman.iguanatweakstconstruct.modifiers.IguanaModDurability;
+import iguanaman.iguanatweakstconstruct.modifiers.IguanaModHeads;
 import iguanaman.iguanatweakstconstruct.modifiers.IguanaModElectric;
 import iguanaman.iguanatweakstconstruct.modifiers.IguanaModLapis;
 import iguanaman.iguanatweakstconstruct.modifiers.IguanaModRedstone;
@@ -20,12 +20,14 @@ import tconstruct.library.ActiveToolMod;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.client.TConstructClientRegistry;
 import tconstruct.library.crafting.ToolBuilder;
+import tconstruct.library.tools.ToolCore;
 import tconstruct.library.tools.ToolMod;
 import tconstruct.modifiers.ModDurability;
 import tconstruct.modifiers.ModExtraModifier;
 import tconstruct.modifiers.ModInteger;
 import tconstruct.modifiers.TActiveOmniMod;
 import cpw.mods.fml.common.FMLLog;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ModifierTweaks {
@@ -34,15 +36,16 @@ public class ModifierTweaks {
 	{
 
 		// REMOVE OLD MODIFIERS
+    	IguanaLog.log("Removing old modifiers");
 		Iterator<ToolMod> i = ToolBuilder.instance.toolMods.iterator();
 		while (i.hasNext()) {
 		   ToolMod mod = i.next();
-            if (mod.key == "Emerald" || mod.key == "Diamond" || (IguanaConfig.moreExpensiveElectric && mod.key == "Electric") || 
+            if (mod.key == "Emerald" || (IguanaConfig.mobHeadModifiers && mod.key == "Diamond") || (IguanaConfig.moreExpensiveElectric && mod.key == "Electric") || 
             		(mod.key == "Tier1Free" && IguanaConfig.toolLeveling) || 
-            		(mod.key == "Tier2Free" && (IguanaConfig.toolLeveling  || IguanaConfig.pickaxeHeads)) || 
+            		(mod.key == "Tier2Free" && (IguanaConfig.toolLeveling  || IguanaConfig.mobHeadModifiers)) || 
             		mod.key == "Moss" || mod.key == "Lapis" || mod.key == "ModAttack" || mod.key == "Redstone"
             		|| mod.key == "") {
-            	IguanaLog.log("Removing old " + mod.key + " modifier");
+            	//IguanaLog.log("Removing old " + mod.key + " modifier");
         		i.remove();
         	}
 		}
@@ -54,8 +57,8 @@ public class ModifierTweaks {
         ToolBuilder tb = ToolBuilder.instance;
         if (IguanaConfig.partReplacement) tb.registerToolMod(new IguanaModUpgrade());
         tb.registerToolMod(new IguanaModRepair());
-        if (IguanaConfig.moreExpensiveElectric) tb.registerToolMod(new IguanaModElectric());
-        if (!IguanaConfig.toolLevelingRandomBonuses  && IguanaConfig.pickaxeHeads)
+        if (Loader.isModLoaded("IC2") && IguanaConfig.moreExpensiveElectric) tb.registerToolMod(new IguanaModElectric());
+        if (!IguanaConfig.toolLevelingRandomBonuses  && IguanaConfig.mobHeadModifiers)
         	tb.registerToolMod(new ModExtraModifier(new ItemStack[] { new ItemStack(Item.skull, 1, 6), new ItemStack(Item.skull, 1, 7) }, "Tier2Free"));
         tb.registerToolMod(new ModInteger(new ItemStack[] { new ItemStack(TContent.materials, 1, 6) }, 4, "Moss", IguanaConfig.mossRepairSpeed, "\u00a72", "Auto-Repair"));
 		tb.registerToolMod(new ModDurability(new ItemStack[] { new ItemStack(Item.emerald) }, 1, 0, 0.5f, TConstructRegistry.getMaterial("Bronze").harvestLevel(), "Emerald", "\u00a72Durability +50%", "\u00a72"));
@@ -77,7 +80,6 @@ public class ModifierTweaks {
         tb.registerToolMod(new IguanaModAttack("Quartz", new ItemStack[] { quartzItem, quartzBlock }, 11, 5));
         tb.registerToolMod(new IguanaModAttack("Quartz", new ItemStack[] { quartzBlock, quartzBlock }, 11, 8));
         
-		tb.registerToolMod(new IguanaModDurability(new ItemStack[] { new ItemStack(Item.diamond) }, 0, 500, 0f, 0, "Diamond", "\u00a7bDurability +500", "\u00a7b"));
 		
         ItemStack redstoneItem = new ItemStack(Item.redstone);
         ItemStack redstoneBlock = new ItemStack(Block.blockRedstone);
@@ -98,23 +100,32 @@ public class ModifierTweaks {
 		
 
 		// MINING BOOST MODIFIERS
-		if (IguanaConfig.pickaxeHeads)
+		if (IguanaConfig.mobHeadModifiers)
 		{
-			IguanaLog.log("Adding mining boost modifiers");
+			tb.registerToolMod(new ModDurability(new ItemStack[] { new ItemStack(Item.diamond) }, 0, 500, 0f, 0, "Diamond", "\u00a7bDurability +500", "\u00a7b"));
 			
-			tb.registerToolMod(new IguanaModDurability(new ItemStack[] { new ItemStack(Item.skull, 1, 0) }, 20, 0, 0f, TConstructRegistry.getMaterial("Iron").harvestLevel(), "Skeleton Skull", "\u00a7fMining Level Boost", "\u00a7f"));
-			tb.registerToolMod(new IguanaModDurability(new ItemStack[] { new ItemStack(Item.skull, 1, 2) }, 21, 0, 0f, TConstructRegistry.getMaterial("Iron").harvestLevel(), "Zombie Head", "\u00a72Mining Level Boost", "\u00a72"));
-			tb.registerToolMod(new IguanaModDurability(new ItemStack[] { new ItemStack(Item.skull, 1, 4) }, 22, 0, 0f, TConstructRegistry.getMaterial("Bronze").harvestLevel(), "Creeper Head", "\u00a7aMining Level Boost", "\u00a7a"));
-			tb.registerToolMod(new IguanaModDurability(new ItemStack[] { new ItemStack(Item.skull, 1, 5) }, 23, 0, 0f, TConstructRegistry.getMaterial("Obsidian").harvestLevel(), "Enderman Head", "\u00a78Mining Level Boost", "\u00a78"));
-			tb.registerToolMod(new IguanaModDurability(new ItemStack[] { new ItemStack(Item.skull, 1, 1) }, 24, 0, 0f, TConstructRegistry.getMaterial("Ardite").harvestLevel(), "Wither Skeleton Skull", "\u00a78Mining Level Boost", "\u00a78"));
-			tb.registerToolMod(new IguanaModDurability(new ItemStack[] { new ItemStack(Item.netherStar) }, 25, 0, 0f, TConstructRegistry.getMaterial("Cobalt").harvestLevel(), "Nether Star", "\u00a73Mining Level Boost", "\u00a73"));
+			IguanaLog.log("Adding mob head modifiers");
+			
+			// add modifers
+			tb.registerToolMod(new IguanaModHeads(new ItemStack[] { new ItemStack(Item.skull, 1, 0) }, 20, TConstructRegistry.getMaterial("Iron").harvestLevel(), "Skeleton Skull", "\u00a7fMining Level Boost", "\u00a7f"));
+			tb.registerToolMod(new IguanaModHeads(new ItemStack[] { new ItemStack(Item.skull, 1, 2) }, 21, TConstructRegistry.getMaterial("Iron").harvestLevel(), "Zombie Head", "\u00a72Mining Level Boost", "\u00a72"));
+			tb.registerToolMod(new IguanaModHeads(new ItemStack[] { new ItemStack(Item.skull, 1, 4) }, 22, TConstructRegistry.getMaterial("Bronze").harvestLevel(), "Creeper Head", "\u00a7aMining Level Boost", "\u00a7a"));
+			tb.registerToolMod(new IguanaModHeads(new ItemStack[] { new ItemStack(Item.skull, 1, 5) }, 23, TConstructRegistry.getMaterial("Obsidian").harvestLevel(), "Enderman Head", "\u00a78Mining Level Boost", "\u00a78"));
+			tb.registerToolMod(new IguanaModHeads(new ItemStack[] { new ItemStack(Item.skull, 1, 1) }, 24, TConstructRegistry.getMaterial("Ardite").harvestLevel(), "Wither Skeleton Skull", "\u00a78Mining Level Boost", "\u00a78"));
+			tb.registerToolMod(new IguanaModHeads(new ItemStack[] { new ItemStack(Item.netherStar) }, 25, TConstructRegistry.getMaterial("Cobalt").harvestLevel(), "Nether Star", "\u00a73Mining Level Boost", "\u00a73"));
 
-            TConstructClientRegistry.addEffectRenderMapping(TContent.pickaxe, 20, "iguanatweakstconstruct", "skeletonskull", true);
-            TConstructClientRegistry.addEffectRenderMapping(TContent.pickaxe, 21, "iguanatweakstconstruct", "zombiehead", true);
-            TConstructClientRegistry.addEffectRenderMapping(TContent.pickaxe, 22, "iguanatweakstconstruct", "creeperhead", true);
-            TConstructClientRegistry.addEffectRenderMapping(TContent.pickaxe, 23, "iguanatweakstconstruct", "endermanhead", true);
-            TConstructClientRegistry.addEffectRenderMapping(TContent.pickaxe, 24, "iguanatweakstconstruct", "witherskeletonskull", true);
-            TConstructClientRegistry.addEffectRenderMapping(TContent.pickaxe, 25, "iguanatweakstconstruct", "netherstar", true);
+			// rendering code
+			ToolCore[] tools = new ToolCore[] { TContent.pickaxe, TContent.hammer };
+			int[] modifierIds = new int[] { 20, 21, 22, 23, 24, 25 };
+			String[] renderNames = new String[] { "skeletonskull", "zombiehead", "creeperhead", "endermanhead", "witherskeletonskull", "netherstar" };
+			
+			for (ToolCore tool : tools)
+			{
+				for (int index = 0; index < modifierIds.length; ++index)
+				{
+		            TConstructClientRegistry.addEffectRenderMapping(tool, modifierIds[index], "iguanatweakstconstruct", renderNames[index], true);
+				}
+			}
 		}
 		
 		

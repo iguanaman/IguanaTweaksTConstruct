@@ -8,6 +8,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
 public class IguanaCommandLevelUpTool extends CommandBase {
 
@@ -28,16 +29,24 @@ public class IguanaCommandLevelUpTool extends CommandBase {
 	public void processCommand(ICommandSender icommandsender, String[] astring) {
         EntityPlayerMP entityplayermp = astring.length >= 1 ? getPlayer(icommandsender, astring[0]) : getCommandSenderAsPlayer(icommandsender);
         ItemStack equipped = entityplayermp.getCurrentEquippedItem();
-		if (equipped != null)
+		if (equipped != null && equipped.getItem() instanceof ToolCore)
 		{
-			if (equipped.getItem() instanceof ToolCore)
+			NBTTagCompound tags = equipped.getTagCompound().getCompoundTag("InfiTool");
+			if (tags.hasKey("ToolEXP"))
 			{
-				IguanaLevelingLogic.addXP(equipped, entityplayermp, 999999L);
-				notifyAdmins(icommandsender, 1, "Leveled up " + entityplayermp.getEntityName() + "'s tool", new Object[0]);
-			}
-			else
-			{
-	        	throw new WrongUsageException("Player must have a Tinker's Construct tool in hand", new Object[0]);
+				Long xp = tags.getLong("ToolEXP");
+				Long toAdd = IguanaLevelingLogic.getRequiredXp(equipped, false, tags) - xp;
+				if (tags.hasKey("HeadEXP") && !tags.hasKey("HarvestLevelModified"))
+				{
+					Long xpHead = tags.getLong("HeadEXP");
+					Long toAddHead = IguanaLevelingLogic.getRequiredXp(equipped, true, tags) - xpHead;
+					if (toAddHead < toAdd) toAdd = toAddHead;
+				}
+				if (toAdd > 0L)
+				{
+					IguanaLevelingLogic.addXP(equipped, entityplayermp, toAdd);
+					notifyAdmins(icommandsender, 1, getPlayer(icommandsender, astring[0]) + " leveled up " + entityplayermp.getEntityName() + "'s tool", new Object[0]);
+				}
 			}
 		}
 		else

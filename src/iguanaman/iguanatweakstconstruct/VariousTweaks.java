@@ -1,5 +1,7 @@
 package iguanaman.iguanatweakstconstruct;
 
+import iguanaman.iguanatweakstconstruct.util.IguanaToolBuildRecipe;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,30 +72,6 @@ public class VariousTweaks {
         	}
         }
         
-        
-        // MELTABLE PARTS
-        IguanaLog.log("Making metal parts meltable in smeltery");
-        
-        Fluid[] fluids = {TContent.moltenIronFluid, TContent.moltenObsidianFluid, TContent.moltenCobaltFluid, 
-        		TContent.moltenArditeFluid, TContent.moltenManyullynFluid, TContent.moltenCopperFluid, 
-        		TContent.moltenBronzeFluid, TContent.moltenAlumiteFluid, TContent.moltenSteelFluid};
-        int[] metals = { 2, 6, 10, 11, 12, 13, 14, 15, 16 };
-        int mb = TContent.metalBlock.blockID;
-        int[] renderBlock = { Block.blockIron.blockID, Block.obsidian.blockID, mb, mb, mb, mb, mb, mb, mb };
-        int[] renderMeta = { 0, 0, 0, 1, 2, 3, 4, 8, 9 };
-        int[] temps = { 500, 750, 650, 650, 750, 100, 500, 650, 700 };
-        int halfIngot = Math.round((float)TConstruct.ingotLiquidValue / 2f);
-
-        for (int p = 0; p < toolParts.length; ++p)
-        {
-        	for (int m = 0; m < metals.length; ++m)
-        	{
-    			int cost = ((Pattern)TContent.woodPattern).getPatternCost(new ItemStack(TContent.woodPattern, 1, p + 1));
-                int liquidValue = cost * Math.round((float)TConstruct.ingotLiquidValue / 2f);
-                Smeltery.addMelting(new ItemStack(toolParts[p], 1, metals[m]), renderBlock[m], renderMeta[m], temps[m], new FluidStack(fluids[m], liquidValue)); 
-        	}
-        }
-        
 
         // REMOVE RESTRICTED PARTS FROM TINKERS HOUSE LOOT
     	IguanaLog.log("Removing restricted parts from Tinker House chest");
@@ -127,103 +105,75 @@ public class VariousTweaks {
             TContent.tinkerHouseChest.removeItem(new ItemStack(toolParts[i], 1, 16)); //steel
     	}
     	
+    	
+    	// SIMPLE WOOD PATTERN CRAFTING RECIPE
+    	if (IguanaConfig.easyBlankPatternRecipe)
+    	{
+        	IguanaLog.log("Adding easy blank pattern recipe");
+        	GameRegistry.addShapedRecipe(new ItemStack(TContent.blankPattern), "ss", "ss", 's', new ItemStack(Item.stick));
+    	}
+    	
 
         //ROTATING PATTERN CRAFTING
-    	IguanaLog.log("Adding rotating pattern crafting recipes");
+    	if (IguanaConfig.easyPatternCrafting)
+    	{
+	    	IguanaLog.log("Adding rotating pattern crafting recipes");
+	    	
+	    	String[] patternName = new String[] { "ingot", "rod", "pickaxe", "shovel", "axe", "swordblade", "largeguard", "mediumguard", "crossbar", "binding", "frypan", "sign",
+	                "knifeblade", "chisel", "largerod", "toughbinding", "largeplate", "broadaxe", "scythe", "excavator", "largeblade", "hammerhead", "fullguard", "bowstring", "fletching", "arrowhead" };
+	    	
+	    	List<Integer> patternIds = new ArrayList<Integer>();
+	    	
+	        for (int x = 1; x < patternName.length; x++)
+	        {
+	        	if (!IguanaConfig.restrictedBoneParts.contains(x) || !IguanaConfig.restrictedCactusParts.contains(x)
+	       			 || !IguanaConfig.restrictedFlintParts.contains(x) || !IguanaConfig.restrictedPaperParts.contains(x)
+	    			 || !IguanaConfig.restrictedSlimeParts.contains(x) || !IguanaConfig.restrictedWoodParts.contains(x)
+	    			 || (IguanaConfig.allowStoneTools && !IguanaConfig.restrictedStoneParts.contains(x)))
+	        	{
+	        		patternIds.add(x);
+	        	}
+	        }
+	        
+	        ItemStack[] materialStacks = new ItemStack[] {
+	        		pb.getRodFromSet("Bone"), pb.getShardFromSet("Bone"), new ItemStack(Item.bone), 
+	        		pb.getRodFromSet("Cactus"), pb.getShardFromSet("Cactus"), new ItemStack(Block.cactus), 
+	        		pb.getRodFromSet("Paper"), pb.getShardFromSet("Paper"), new ItemStack(TContent.materials, 1, 0), 
+	        		pb.getRodFromSet("Slime"), pb.getShardFromSet("Slime"), new ItemStack(TContent.materials, 1, 1), 
+	        		pb.getRodFromSet("BlueSlime"), pb.getShardFromSet("BlueSlime"), new ItemStack(TContent.materials, 1, 17), 
+	        		pb.getRodFromSet("Flint"), pb.getShardFromSet("Flint"), new ItemStack(Item.flint),
+	        		pb.getRodFromSet("Wood"), pb.getShardFromSet("Wood"),  
+	        		new ItemStack(Block.planks, 1, 0), new ItemStack(Block.planks, 1, 1), new ItemStack(Block.planks, 1, 2), new ItemStack(Block.planks, 1, 3)};
+	
+	        GameRegistry.addShapelessRecipe(new ItemStack(TContent.woodPattern, 1, patternIds.get(0)), new ItemStack(TContent.blankPattern, 1, 0));
+	        for (int x = 0; x < patternIds.size(); x++)
+	        {
+	        	int pmeta = patternIds.get(x);
+	        	
+	    		if (x == patternIds.size() - 1)
+	        		GameRegistry.addShapelessRecipe(new ItemStack(TContent.woodPattern, 1, patternIds.get(0)), new ItemStack(TContent.woodPattern, 1, pmeta));
+	        	else
+	        		GameRegistry.addShapelessRecipe(new ItemStack(TContent.woodPattern, 1, patternIds.get(x+1)), new ItemStack(TContent.woodPattern, 1, pmeta));
+	    		
+	    		int patternCost = ((Pattern)TContent.woodPattern).getPatternCost(new ItemStack(TContent.woodPattern, 1, pmeta));
+	    		
+	    		for (ItemStack materialStack : materialStacks)
+	    		{
+	        		ItemStack[] parts = pb.getToolPart(materialStack, new ItemStack(TContent.woodPattern, 1, pmeta), null);
+	        		if (parts != null)
+	            		GameRegistry.addShapelessRecipe(parts[0], new ItemStack(TContent.woodPattern, 1, pmeta), materialStack);
+	    		}
+	        }
+    	}
     	
-    	String[] patternName = new String[] { "ingot", "rod", "pickaxe", "shovel", "axe", "swordblade", "largeguard", "mediumguard", "crossbar", "binding", "frypan", "sign",
-                "knifeblade", "chisel", "largerod", "toughbinding", "largeplate", "broadaxe", "scythe", "excavator", "largeblade", "hammerhead", "fullguard", "bowstring", "fletching", "arrowhead" };
-    	
-    	List<Integer> patternIds = new ArrayList<Integer>();
-    	
-        for (int x = 1; x < patternName.length; x++)
-        {
-        	if (!IguanaConfig.restrictedBoneParts.contains(x) || !IguanaConfig.restrictedCactusParts.contains(x)
-       			 || !IguanaConfig.restrictedFlintParts.contains(x) || !IguanaConfig.restrictedPaperParts.contains(x)
-    			 || !IguanaConfig.restrictedSlimeParts.contains(x) || !IguanaConfig.restrictedWoodParts.contains(x)
-    			 || (IguanaConfig.allowStoneTools && !IguanaConfig.restrictedStoneParts.contains(x)))
-        	{
-        		patternIds.add(x);
-        	}
-        }
-        
-        ItemStack[] materialStacks = new ItemStack[] {
-        		pb.getRodFromSet("Bone"), pb.getShardFromSet("Bone"), new ItemStack(Item.bone), 
-        		pb.getRodFromSet("Cactus"), pb.getShardFromSet("Cactus"), new ItemStack(Block.cactus), 
-        		pb.getRodFromSet("Paper"), pb.getShardFromSet("Paper"), new ItemStack(TContent.materials, 1, 0), 
-        		pb.getRodFromSet("Slime"), pb.getShardFromSet("Slime"), new ItemStack(TContent.materials, 1, 1), 
-        		pb.getRodFromSet("BlueSlime"), pb.getShardFromSet("BlueSlime"), new ItemStack(TContent.materials, 1, 17), 
-        		pb.getRodFromSet("Flint"), pb.getShardFromSet("Flint"), new ItemStack(Item.flint),
-        		pb.getRodFromSet("Wood"), pb.getShardFromSet("Wood"), 
-        		new ItemStack(Block.planks, 1, 0), new ItemStack(Block.planks, 1, 1), new ItemStack(Block.planks, 1, 2), new ItemStack(Block.planks, 1, 3)};
-
-        GameRegistry.addShapelessRecipe(new ItemStack(TContent.woodPattern, 1, patternIds.get(0)), new ItemStack(TContent.blankPattern, 1, 0));
-        for (int x = 0; x < patternIds.size(); x++)
-        {
-        	int pmeta = patternIds.get(x);
-        	
-    		if (x == patternIds.size() - 1)
-        		GameRegistry.addShapelessRecipe(new ItemStack(TContent.woodPattern, 1, patternIds.get(0)), new ItemStack(TContent.woodPattern, 1, pmeta));
-        	else
-        		GameRegistry.addShapelessRecipe(new ItemStack(TContent.woodPattern, 1, patternIds.get(x+1)), new ItemStack(TContent.woodPattern, 1, pmeta));
-    		
-    		int patternCost = ((Pattern)TContent.woodPattern).getPatternCost(new ItemStack(TContent.woodPattern, 1, pmeta));
-    		
-    		for (ItemStack materialStack : materialStacks)
-    		{
-        		ItemStack[] parts = pb.getToolPart(materialStack, new ItemStack(TContent.woodPattern, 1, pmeta), null);
-        		if (parts != null)
-            		GameRegistry.addShapelessRecipe(parts[0], new ItemStack(TContent.woodPattern, 1, pmeta), materialStack);
-    		}
-        }
-        
         
         // ALTERNATIVE TOOL CRAFTING
-        IguanaLog.log("Adding alternative tool crafting");
-    	
-    	ToolCore[] tools = { TContent.pickaxe, TContent.shovel, TContent.hatchet, TContent.broadsword, 
-    			TContent.longsword, TContent.rapier, TContent.cutlass, TContent.frypan, 
-    			TContent.battlesign, TContent.mattock, TContent.chisel};
-    	
-    	for (ToolCore tool : tools)
+    	if (IguanaConfig.easyToolCreation || IguanaConfig.easyToolModification)
     	{
-    		IguanaLog.log("Adding recipes for " + tool.getUnlocalizedName());
-    		
-    		Item headItem = tool.getHeadItem();
-    		Item handleItem = tool.getHandleItem();
-    		Item accessoryItem = tool.getAccessoryItem();
-    		
-    		int maxId = 17;
-
-			int maxAccessoryId = 0;
-			if (accessoryItem != null) maxAccessoryId = maxId;
-
-    		for (int headItemId = 0; headItemId <= maxId ; ++headItemId)
-    		{
-        		for (int handleItemId = 0; handleItemId <= maxId ; ++handleItemId)
-        		{
-            		for (int accessoryItemId = 0; accessoryItemId <= maxAccessoryId ; ++accessoryItemId)
-            		{
-            			ItemStack head = new ItemStack(headItem, 1, headItemId);
-            			
-            			ItemStack handle = new ItemStack(handleItem, 1, handleItemId);
-            			
-            			ItemStack accessory = null;
-            			if (accessoryItem != null) accessory = new ItemStack(accessoryItem, 1, accessoryItemId);
-            			
-            			ItemStack output = ToolBuilder.instance.buildTool(head, handle, accessory, null, null);
-            			
-            			if (output != null)
-            			{
-            				if (head != null && handle != null && accessory != null)
-            					GameRegistry.addShapelessRecipe(output, head, handle, accessory);
-            				else if (head != null && handle != null)
-            					GameRegistry.addShapelessRecipe(output, head, handle);
-            			}
-            		}
-        		}
-    		}
+	        IguanaLog.log("Adding easy tool crafting recipes");
+	    	GameRegistry.addRecipe(new IguanaToolBuildRecipe());
     	}
+    	
 	}
 	
 }

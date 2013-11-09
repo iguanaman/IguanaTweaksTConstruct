@@ -1,4 +1,4 @@
-package iguanaman.iguanatweakstconstruct.handlers;
+package iguanaman.iguanatweakstconstruct.util;
 
 import cpw.mods.fml.common.FMLLog;
 import tconstruct.TConstruct;

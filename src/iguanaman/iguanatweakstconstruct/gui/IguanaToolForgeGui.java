@@ -1,4 +1,4 @@
-package iguanaman.iguanatweakstconstruct.guis;
+package iguanaman.iguanatweakstconstruct.gui;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;

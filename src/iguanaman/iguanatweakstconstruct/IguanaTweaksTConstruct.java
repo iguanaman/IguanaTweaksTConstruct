@@ -83,8 +83,6 @@ public class IguanaTweaksTConstruct {
         public void load(FMLInitializationEvent event) {
         	IguanaLog.log("Registering with modstats");
             Modstats.instance().getReporter().registerMod(this);
-
-            GameRegistry.registerCraftingHandler(new IguanaPatternCraftingHandler());
         }
        
         @EventHandler

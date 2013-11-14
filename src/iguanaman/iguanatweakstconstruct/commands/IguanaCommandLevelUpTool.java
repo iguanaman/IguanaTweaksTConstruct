@@ -45,7 +45,14 @@ public class IguanaCommandLevelUpTool extends CommandBase {
 				if (toAdd > 0L)
 				{
 					IguanaLevelingLogic.addXP(equipped, entityplayermp, toAdd);
-					notifyAdmins(icommandsender, 1, getPlayer(icommandsender, astring[0]) + " leveled up " + entityplayermp.getEntityName() + "'s tool", new Object[0]);
+					if (astring == null)
+					{
+						notifyAdmins(icommandsender, 1, entityplayermp.username + " leveled up their tool", new Object[0]);
+					}
+					else
+					{
+						notifyAdmins(icommandsender, 1, getPlayer(icommandsender, astring[0]).username + " leveled up " + entityplayermp.username + "'s tool", new Object[0]);
+					}
 				}
 			}
 		}

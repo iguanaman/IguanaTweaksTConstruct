@@ -22,6 +22,7 @@ import tconstruct.items.tools.Hatchet;
 import tconstruct.items.tools.LumberAxe;
 import tconstruct.items.tools.Mattock;
 import tconstruct.items.tools.Pickaxe;
+import tconstruct.items.tools.Scythe;
 import tconstruct.items.tools.Shortbow;
 import tconstruct.items.tools.Shovel;
 import tconstruct.library.TConstructRegistry;
@@ -87,7 +88,7 @@ public class IguanaLevelingLogic {
         boolean leveled = false;
         boolean pickLeveled = false;
 
-    	if (tags.hasKey("ToolEXP") && level >= 1 && level <= 6 && toolXP >= 0L) 
+    	if (tags.hasKey("ToolEXP") && level >= 1 && level <= 5 && toolXP >= 0L) 
     	{
     		tags.setLong("ToolEXP", toolXP);
 
@@ -177,8 +178,14 @@ public class IguanaLevelingLogic {
         //write tips
         for (int i = 1; i <= tips.size(); ++i)
         {
-        	tags.setString("Tooltip" + i, tips.get(i - 1));
-        	tags.setString("ModifierTip" + i, modifierTips.get(i - 1));
+        	if (tips.get(i - 1) != null)
+        	{
+	        	tags.setString("Tooltip" + i, tips.get(i - 1));
+	        	if (modifierTips.get(i - 1) != null)
+	        		tags.setString("ModifierTip" + i, modifierTips.get(i - 1));
+	        	else
+	        		tags.setString("ModifierTip" + i, "");
+        	}
         }
 	}
 	
@@ -234,6 +241,17 @@ public class IguanaLevelingLogic {
         	base /= ((float)IguanaConfig.toolLevelingRatePercentage / 100f);
         }
         
+        // tier 2 tools
+        if (tool.getItem() instanceof Hammer || tool.getItem() instanceof Excavator || tool.getItem() instanceof LumberAxe)
+        {
+        	base *= 8f;
+        }
+        else if (tool.getItem() instanceof Scythe)
+        {
+        	base *= 1.5f;
+        }
+        
+        // picks
         if (pick) base *= (float)IguanaConfig.miningBoostLevel;
         
         return Math.round(base);

@@ -97,8 +97,14 @@ public class IguanaModHeads extends ToolMod {
         //write tips
         for (int i = 1; i <= tips.size(); ++i)
         {
-        	toolTag.setString("Tooltip" + i, tips.get(i - 1));
-        	toolTag.setString("ModifierTip" + i, modifierTips.get(i - 1));
+        	if (tips.get(i - 1) != null)
+        	{
+        		toolTag.setString("Tooltip" + i, tips.get(i - 1));
+	        	if (modifierTips.get(i - 1) != null)
+	        		toolTag.setString("ModifierTip" + i, modifierTips.get(i - 1));
+	        	else
+	        		toolTag.setString("ModifierTip" + i, "");
+        	}
         }
         
     }

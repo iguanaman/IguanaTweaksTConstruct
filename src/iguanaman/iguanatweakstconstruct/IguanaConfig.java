@@ -43,12 +43,15 @@ public class IguanaConfig {
 	public static boolean mobHeadModifiers;
     public static int baseHeadDropChance;
     public static int beheadingHeadDropChance;
-	
-	//other
+    
+    //crafting
     public static boolean easyBlankPatternRecipe;
+    public static boolean easyPartCrafting;
     public static boolean easyPatternCrafting;
     public static boolean easyToolModification;
     public static boolean easyToolCreation;
+	
+	//other
 	public static boolean partReplacement;
 	public static boolean pickaxeBoostRequired;
 	public static boolean cobaltArmor;
@@ -63,14 +66,14 @@ public class IguanaConfig {
     public static int redstoneEffect;
     
     // Harvest Levels
-    public static List<Integer> harvestLevel0Ids = new ArrayList<Integer>();
-    public static List<Integer> harvestLevel1Ids = new ArrayList<Integer>();
-    public static List<Integer> harvestLevel2Ids = new ArrayList<Integer>();
-    public static List<Integer> harvestLevel3Ids = new ArrayList<Integer>();
-    public static List<Integer> harvestLevel4Ids = new ArrayList<Integer>();
-    public static List<Integer> harvestLevel5Ids = new ArrayList<Integer>();
-    public static List<Integer> harvestLevel6Ids = new ArrayList<Integer>();
-    public static List<Integer> harvestLevel7Ids = new ArrayList<Integer>();
+    public static List<String> harvestLevel0Ids = new ArrayList<String>();
+    public static List<String> harvestLevel1Ids = new ArrayList<String>();
+    public static List<String> harvestLevel2Ids = new ArrayList<String>();
+    public static List<String> harvestLevel3Ids = new ArrayList<String>();
+    public static List<String> harvestLevel4Ids = new ArrayList<String>();
+    public static List<String> harvestLevel5Ids = new ArrayList<String>();
+    public static List<String> harvestLevel6Ids = new ArrayList<String>();
+    public static List<String> harvestLevel7Ids = new ArrayList<String>();
     
     //Restrictions
     public static boolean allowStoneTools;
@@ -150,9 +153,9 @@ public class IguanaConfig {
         showDebugXPProperty.comment = "Current XP is shown as debug (F3) text (requires 'toolLeveling=true')";
         showDebugXP = showDebugXPProperty.getBoolean(false);
 		
-        Property miningBoostLevelProperty = config.get("leveling", "miningBoostLevel", 3);
+        Property miningBoostLevelProperty = config.get("leveling", "miningBoostLevel", 2);
         miningBoostLevelProperty.comment = "Levels of XP required to get mining boost modifier on a pick (requires 'toolLevelingPickaxeBoost=true')";
-        miningBoostLevel = Math.max(miningBoostLevelProperty.getInt(3), 1);
+        miningBoostLevel = Math.max(miningBoostLevelProperty.getInt(2), 1);
         miningBoostLevelProperty.set(miningBoostLevel);
 		
         Property toolLevelingRatePercentageProperty = config.get("leveling", "toolLevelingRatePercentage", 100);
@@ -213,13 +216,17 @@ public class IguanaConfig {
         beheadingHeadDropChanceProperty.set(beheadingHeadDropChance);
         
         
-        // other
-		ConfigCategory otherCategory = config.getCategory("other");
-		otherCategory.setComment("Random stuff to configure here");
+        // crafting
+		ConfigCategory craftingCategory = config.getCategory("crafting");
+		craftingCategory.setComment("Allow Tinkers crafting to be done in a normal crafting window");
 
         Property easyBlankPatternRecipeProperty = config.get("other", "easyBlankPatternRecipe", true);
         easyBlankPatternRecipeProperty.comment = "Allows blank patterns to be crafted with 4 sticks in a square";
         easyBlankPatternRecipe = easyBlankPatternRecipeProperty.getBoolean(true);
+
+        Property easyPartCraftingProperty = config.get("other", "easyPartCrafting", true);
+        easyPartCraftingProperty.comment = "Allows you to rotate the the tier 1 patterns in a normal crafting window";
+        easyPartCrafting = easyPartCraftingProperty.getBoolean(true);
 
         Property easyPatternCraftingProperty = config.get("other", "easyPatternCrafting", true);
         easyPatternCraftingProperty.comment = "Allows you to rotate the the tier 1 patterns in a normal crafting window";
@@ -232,6 +239,11 @@ public class IguanaConfig {
         Property easyToolModificationProperty = config.get("other", "easyToolModification", true);
         easyToolModificationProperty.comment = "Allows you add modifications to tools in a normal crafting window";
         easyToolModification = easyToolModificationProperty.getBoolean(true);
+        
+        
+        // other
+		ConfigCategory otherCategory = config.getCategory("other");
+		otherCategory.setComment("Random stuff to configure here");
 
         Property cobaltArmorProperty = config.get("other", "cobaltArmor", false);
         cobaltArmorProperty.comment = "Changes diamond armor to cobalt armor (more expensive recipe)";
@@ -327,37 +339,37 @@ public class IguanaConfig {
 		ConfigCategory harvestidsCategory = config.getCategory("harvestids");
 		harvestidsCategory.setComment("Set harvest levels of blocks here (most should be modified by default, so check if needed first)");
 		
-        Property harvestLevel0IdsProperty = config.get("harvestids", "harvestLevel0Ids", new int[] {});
+        Property harvestLevel0IdsProperty = config.get("harvestids", "harvestLevel0Ids", new String[] {});
         harvestLevel0IdsProperty.comment = "Block ids (each on seperate line) for blocks to be set to harvest level 0 (stone pick+)";
-        for (int i : harvestLevel0IdsProperty.getIntList()) harvestLevel0Ids.add(i);
+        for (String i : harvestLevel0IdsProperty.getStringList()) harvestLevel0Ids.add(i);
 		
-        Property harvestLevel1IdsProperty = config.get("harvestids", "harvestLevel1Ids", new int[] {});
-        harvestLevel1IdsProperty.comment = "Block ids (each on seperate line) for blocks to be set to harvest level 1 (flint pick+)";
-        for (int i : harvestLevel1IdsProperty.getIntList()) harvestLevel1Ids.add(i);
+        Property harvestLevel1IdsProperty = config.get("harvestids", "harvestLevel1Ids", new String[] {});
+        harvestLevel1IdsProperty.comment = "Block ids (each on seperate line) for blocks to be set to harvest level 1 (flString pick+)";
+        for (String i : harvestLevel1IdsProperty.getStringList()) harvestLevel1Ids.add(i);
 		
-        Property harvestLevel2IdsProperty = config.get("harvestids", "harvestLevel2Ids", new int[] {});
+        Property harvestLevel2IdsProperty = config.get("harvestids", "harvestLevel2Ids", new String[] {});
         harvestLevel2IdsProperty.comment = "Block ids (each on seperate line) for blocks to be set to harvest level 2 (copper pick+)";
-        for (int i : harvestLevel2IdsProperty.getIntList()) harvestLevel2Ids.add(i);
+        for (String i : harvestLevel2IdsProperty.getStringList()) harvestLevel2Ids.add(i);
 		
-        Property harvestLevel3IdsProperty = config.get("harvestids", "harvestLevel3Ids", new int[] {});
+        Property harvestLevel3IdsProperty = config.get("harvestids", "harvestLevel3Ids", new String[] {});
         harvestLevel3IdsProperty.comment = "Block ids (each on seperate line) for blocks to be set to harvest level 3 (iron pick+)";
-        for (int i : harvestLevel3IdsProperty.getIntList()) harvestLevel3Ids.add(i);
+        for (String i : harvestLevel3IdsProperty.getStringList()) harvestLevel3Ids.add(i);
 		
-        Property harvestLevel4IdsProperty = config.get("harvestids", "harvestLevel4Ids", new int[] {});
+        Property harvestLevel4IdsProperty = config.get("harvestids", "harvestLevel4Ids", new String[] {});
         harvestLevel4IdsProperty.comment = "Block ids (each on seperate line) for blocks to be set to harvest level 4 (bronze pick+)";
-        for (int i : harvestLevel4IdsProperty.getIntList()) harvestLevel4Ids.add(i);
+        for (String i : harvestLevel4IdsProperty.getStringList()) harvestLevel4Ids.add(i);
 		
-        Property harvestLevel5IdsProperty = config.get("harvestids", "harvestLevel5Ids", new int[] {});
+        Property harvestLevel5IdsProperty = config.get("harvestids", "harvestLevel5Ids", new String[] {});
         harvestLevel5IdsProperty.comment = "Block ids (each on seperate line) for blocks to be set to harvest level 5 (alumite pick+)";
-        for (int i : harvestLevel5IdsProperty.getIntList()) harvestLevel5Ids.add(i);
+        for (String i : harvestLevel5IdsProperty.getStringList()) harvestLevel5Ids.add(i);
 		
-        Property harvestLevel6IdsProperty = config.get("harvestids", "harvestLevel6Ids", new int[] {});
+        Property harvestLevel6IdsProperty = config.get("harvestids", "harvestLevel6Ids", new String[] {});
         harvestLevel6IdsProperty.comment = "Block ids (each on seperate line) for blocks to be set to harvest level 6 (ardite pick+)";
-        for (int i : harvestLevel6IdsProperty.getIntList()) harvestLevel6Ids.add(i);
+        for (String i : harvestLevel6IdsProperty.getStringList()) harvestLevel6Ids.add(i);
 		
-        Property harvestLevel7IdsProperty = config.get("harvestids", "harvestLevel7Ids", new int[] {});
+        Property harvestLevel7IdsProperty = config.get("harvestids", "harvestLevel7Ids", new String[] {});
         harvestLevel7IdsProperty.comment = "Block ids (each on seperate line) for blocks to be set to harvest level 7 (cobalt pick+)";
-        for (int i : harvestLevel7IdsProperty.getIntList()) harvestLevel7Ids.add(i);
+        for (String i : harvestLevel7IdsProperty.getStringList()) harvestLevel7Ids.add(i);
         
         
         config.save();

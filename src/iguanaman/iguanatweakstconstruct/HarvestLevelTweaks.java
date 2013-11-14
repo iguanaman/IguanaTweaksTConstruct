@@ -25,9 +25,9 @@ public class HarvestLevelTweaks {
     public static String[][] oreDictLevels = {
     		{},
     		{"Copper", "Coal", "Tetrahedrite", "Aluminum", "Aluminium", "NaturalAluminum", "AluminumBrass", "Shard", "Bauxite", "Zinc"},
-    		{"Iron", "Cassiterite", "Pyrite", "Lead"},
-			{"Tin", "Gold", "Lapis", "Steel", "Galena", "Nickel", "Invar", "Electrum", "Sphalerite"},
-			{"Diamond", "Emerald", "Redstone", "Ruby", "Sapphire", "Cinnabar", "Quartz", "Silver", 
+    		{"Iron", "Pyrite", "Lead", "Silver"},
+			{"Tin", "Cassiterite", "Gold", "Lapis", "Steel", "Galena", "Nickel", "Invar", "Electrum", "Sphalerite"},
+			{"Diamond", "Emerald", "Redstone", "Ruby", "Sapphire", "Cinnabar", "Quartz", 
 				"Obsidian", "CertusQuartz", "Tungstate", "Sodalite", "GreenSapphire", "BlackGranite", "RedGranite"},
 			{"Ardite", "Uranium", "Olivine", "Sheldonite", "Osmium", "Platinum"},
 			{"Cobalt", "Iridium", "Cooperite", "Titanium"},
@@ -145,13 +145,6 @@ public class HarvestLevelTweaks {
         	}
         }
         
-        
-        List[] harvestLevelIds = { 
-        		IguanaConfig.harvestLevel0Ids, IguanaConfig.harvestLevel1Ids, IguanaConfig.harvestLevel2Ids, 
-        		IguanaConfig.harvestLevel3Ids, IguanaConfig.harvestLevel4Ids, IguanaConfig.harvestLevel5Ids, 
-        		IguanaConfig.harvestLevel6Ids, IguanaConfig.harvestLevel7Ids 
-        		};
-        
         for (int i = 0; i < oreDictLevels.length; ++i)
         {
         	int level = i;
@@ -163,8 +156,6 @@ public class HarvestLevelTweaks {
 	            for (ItemStack oreStack : OreDictionary.getOres("block" + materialName)) SetHarvestLevel(oreStack, level);
 	            for (ItemStack oreStack : OreDictionary.getOres("stone" + materialName)) SetHarvestLevel(oreStack, level);
             }
-            
-            for (int blockId : (List<Integer>)harvestLevelIds[i]) SetHarvestLevel(new ItemStack(blockId, 1, 0), level);
         }
         
     	IguanaLog.log("Modifying required harvest levels of vanilla ores");
@@ -173,6 +164,7 @@ public class HarvestLevelTweaks {
         MinecraftForge.setBlockHarvestLevel(Block.blockGold,    "pickaxe", harvestLevelIron);
         MinecraftForge.setBlockHarvestLevel(Block.blockIron,   "pickaxe", harvestLevelCopper);
         MinecraftForge.setBlockHarvestLevel(Block.blockLapis,   "pickaxe", harvestLevelIron);
+        MinecraftForge.setBlockHarvestLevel(Block.oreRedstone, "pickaxe", harvestLevelBronze);
         MinecraftForge.setBlockHarvestLevel(Block.oreRedstoneGlowing, "pickaxe", harvestLevelBronze);
 
         MinecraftForge.setBlockHarvestLevel(TContent.oreGravel, 0, "shovel", harvestLevelIron);
@@ -181,6 +173,42 @@ public class HarvestLevelTweaks {
         MinecraftForge.setBlockHarvestLevel(TContent.oreGravel, 3, "shovel", harvestLevelIron);
         MinecraftForge.setBlockHarvestLevel(TContent.oreGravel, 4, "shovel", harvestLevelFlint);
         MinecraftForge.setBlockHarvestLevel(TContent.oreGravel, 5, "shovel", harvestLevelArdite);
+        
+        List[] harvestLevelIds = { 
+        		IguanaConfig.harvestLevel0Ids, IguanaConfig.harvestLevel1Ids, IguanaConfig.harvestLevel2Ids, 
+        		IguanaConfig.harvestLevel3Ids, IguanaConfig.harvestLevel4Ids, IguanaConfig.harvestLevel5Ids, 
+        		IguanaConfig.harvestLevel6Ids, IguanaConfig.harvestLevel7Ids 
+        		};
+        
+        for (int i = 0; i < oreDictLevels.length; ++i)
+        {
+        	int level = i;
+        	if (i > 1) level += boostMod;
+            
+            for (String idline : (List<String>)harvestLevelIds[i]) 
+            {
+            	int blockId = -1;
+            	int meta = OreDictionary.WILDCARD_VALUE;
+            	
+            	try {
+	            	if (idline.contains(":"))
+	            	{
+	            		String[] idlinesplit = idline.split(":");
+	            		blockId = Integer.parseInt(idlinesplit[0]);
+	            		meta = Integer.parseInt(idlinesplit[1]);
+	            	}
+	            	else
+	            	{
+	            		blockId = Integer.parseInt(idline);
+	            	}
+            	} catch (Exception e) {
+            		throw new RuntimeException("Config setting harvestLevel" + i + "Ids contains an invalid line (" + idline + ").  Each id must be on a separate line and in this format: id or id:meta");
+            	}
+            	
+            	SetHarvestLevel(new ItemStack(blockId, 1, meta), level);
+            }
+        }
+        
 	}
     
     public static void SetHarvestLevel(ItemStack oreStack, int level)

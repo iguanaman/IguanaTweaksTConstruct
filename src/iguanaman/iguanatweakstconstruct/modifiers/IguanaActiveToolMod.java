@@ -1,6 +1,7 @@
 package iguanaman.iguanatweakstconstruct.modifiers;
 
 import iguanaman.iguanatweakstconstruct.IguanaLevelingLogic;
+import iguanaman.iguanatweakstconstruct.IguanaLog;
 import cpw.mods.fml.common.FMLLog;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
@@ -33,43 +34,38 @@ import tconstruct.library.tools.Weapon;
 
 public class IguanaActiveToolMod extends ActiveToolMod {
 
-	
     /* Harvesting */
     @Override
     public boolean beforeBlockBreak (ToolCore tool, ItemStack stack, int x, int y, int z, EntityLivingBase entity)
     {
-    	if (!(entity instanceof EntityPlayer))
-    		return false;
+    	if (!(entity instanceof EntityPlayer)) return false;
     	
     	String[] toolTypes = IguanaLevelingLogic.getHarvestType(tool);
     	
-    	if (toolTypes == null)
-    		return false;
-    	
-		EntityPlayer player = (EntityPlayer)entity;
+    	if (toolTypes == null) return false;
 
         NBTTagCompound tags = stack.getTagCompound().getCompoundTag("InfiTool");
-        World world = entity.worldObj;
         int bID = entity.worldObj.getBlockId(x, y, z);
-        int meta = world.getBlockMetadata(x, y, z);
         Block block = Block.blocksList[bID];
-        if (block == null || bID < 1 || bID > 4095 || block instanceof BlockLeaves)
-            return false;
+        if (block == null || bID < 1 || bID > 4095 || block instanceof BlockLeaves) return false;
+        int meta = entity.worldObj.getBlockMetadata(x, y, z);
         
+        //IguanaLog.log("checking allow");
         boolean allow = false;
         
         for (String toolType : toolTypes)
         {
-        	int hlvl = MinecraftForge.getBlockHarvestLevel(block, meta, toolType);
-
-            if (hlvl >= 0)
+            //IguanaLog.log("checking if " + toolType + " allowed");
+            if (MinecraftForge.getBlockHarvestLevel(block, meta, toolType) >= 0)
             {
+                //IguanaLog.log(toolType + "allowed");
             	allow = true;
             	break;
             }
         }
         
-        IguanaLevelingLogic.addXP(stack, player, 1L);
+        // add the xp
+        if (allow) IguanaLevelingLogic.addXP(stack, (EntityPlayer)entity, 1L);
         
     	return false;
     }

@@ -301,8 +301,14 @@ public class IguanaModUpgrade extends ToolMod {
         //write tips
         for (int i = 1; i <= tips.size(); ++i)
         {
-        	tags.setString("Tooltip" + i, tips.get(i - 1));
-        	tags.setString("ModifierTip" + i, modifierTips.get(i - 1));
+        	if (tips.get(i - 1) != null)
+        	{
+	        	tags.setString("Tooltip" + i, tips.get(i - 1));
+	        	if (modifierTips.get(i - 1) != null)
+	        		tags.setString("ModifierTip" + i, modifierTips.get(i - 1));
+	        	else
+	        		tags.setString("ModifierTip" + i, "");
+        	}
         }
 
     	String materialName = TConstructRegistry.instance.getMaterial(oldHead).displayName;

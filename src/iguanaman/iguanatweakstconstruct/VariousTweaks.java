@@ -1,5 +1,8 @@
 package iguanaman.iguanatweakstconstruct;
 
+import iguanaman.iguanatweakstconstruct.util.IguanaPartBuildRecipe;
+import iguanaman.iguanatweakstconstruct.util.IguanaPartCraftingHandler;
+import iguanaman.iguanatweakstconstruct.util.IguanaPatternCraftingHandler;
 import iguanaman.iguanatweakstconstruct.util.IguanaToolBuildRecipe;
 
 import java.util.ArrayList;
@@ -118,9 +121,14 @@ public class VariousTweaks {
     	if (IguanaConfig.easyPatternCrafting)
     	{
 	    	IguanaLog.log("Adding rotating pattern crafting recipes");
+
+            GameRegistry.registerCraftingHandler(new IguanaPatternCraftingHandler());
 	    	
-	    	String[] patternName = new String[] { "ingot", "rod", "pickaxe", "shovel", "axe", "swordblade", "largeguard", "mediumguard", "crossbar", "binding", "frypan", "sign",
-	                "knifeblade", "chisel", "largerod", "toughbinding", "largeplate", "broadaxe", "scythe", "excavator", "largeblade", "hammerhead", "fullguard", "bowstring", "fletching", "arrowhead" };
+	    	String[] patternName = new String[] { 
+	    			"ingot", "rod", "pickaxe", "shovel", "axe", "swordblade", "largeguard", "mediumguard", "crossbar", 
+	    			"binding", "frypan", "sign", "knifeblade", "chisel", "largerod", "toughbinding", "largeplate", "broadaxe", 
+	    			"scythe", "excavator", "largeblade", "hammerhead", "fullguard", "bowstring", "fletching", "arrowhead" 
+	    			};
 	    	
 	    	List<Integer> patternIds = new ArrayList<Integer>();
 	    	
@@ -129,7 +137,8 @@ public class VariousTweaks {
 	        	if (!IguanaConfig.restrictedBoneParts.contains(x) || !IguanaConfig.restrictedCactusParts.contains(x)
 	       			 || !IguanaConfig.restrictedFlintParts.contains(x) || !IguanaConfig.restrictedPaperParts.contains(x)
 	    			 || !IguanaConfig.restrictedSlimeParts.contains(x) || !IguanaConfig.restrictedWoodParts.contains(x)
-	    			 || (IguanaConfig.allowStoneTools && !IguanaConfig.restrictedStoneParts.contains(x)))
+	    			 || (IguanaConfig.allowStoneTools && !IguanaConfig.restrictedStoneParts.contains(x))
+	    			 || x >= 23)
 	        	{
 	        		patternIds.add(x);
 	        	}
@@ -154,23 +163,23 @@ public class VariousTweaks {
 	        		GameRegistry.addShapelessRecipe(new ItemStack(TContent.woodPattern, 1, patternIds.get(0)), new ItemStack(TContent.woodPattern, 1, pmeta));
 	        	else
 	        		GameRegistry.addShapelessRecipe(new ItemStack(TContent.woodPattern, 1, patternIds.get(x+1)), new ItemStack(TContent.woodPattern, 1, pmeta));
-	    		
-	    		int patternCost = ((Pattern)TContent.woodPattern).getPatternCost(new ItemStack(TContent.woodPattern, 1, pmeta));
-	    		
-	    		for (ItemStack materialStack : materialStacks)
-	    		{
-	        		ItemStack[] parts = pb.getToolPart(materialStack, new ItemStack(TContent.woodPattern, 1, pmeta), null);
-	        		if (parts != null)
-	            		GameRegistry.addShapelessRecipe(parts[0], new ItemStack(TContent.woodPattern, 1, pmeta), materialStack);
-	    		}
 	        }
+    	}
+    	
+    	
+    	// ALTERNATIVE PART CRAFTING
+    	if (IguanaConfig.easyPartCrafting)
+    	{
+	        IguanaLog.log("Adding easy part crafting");
+	    	GameRegistry.addRecipe(new IguanaPartBuildRecipe());
+            GameRegistry.registerCraftingHandler(new IguanaPartCraftingHandler());
     	}
     	
         
         // ALTERNATIVE TOOL CRAFTING
     	if (IguanaConfig.easyToolCreation || IguanaConfig.easyToolModification)
     	{
-	        IguanaLog.log("Adding easy tool crafting recipes");
+	        IguanaLog.log("Adding easy tool crafting");
 	    	GameRegistry.addRecipe(new IguanaToolBuildRecipe());
     	}
     	

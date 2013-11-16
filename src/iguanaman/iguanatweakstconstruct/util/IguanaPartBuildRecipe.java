@@ -27,6 +27,7 @@ public class IguanaPartBuildRecipe implements IRecipe {
 	public boolean matches(InventoryCrafting inv, World world) {
 		
 		// setup
+		output = null;
 		ItemStack material = null;
 		ItemStack pattern = null;
 		

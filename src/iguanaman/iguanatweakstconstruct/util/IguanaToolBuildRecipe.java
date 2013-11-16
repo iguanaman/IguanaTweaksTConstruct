@@ -21,6 +21,7 @@ public class IguanaToolBuildRecipe implements IRecipe {
 	@Override
 	public boolean matches(InventoryCrafting inv, World world) {
 		
+		output = null;
 		boolean toolFound = false;
 		ArrayList<ItemStack> inputs = new ArrayList<ItemStack>();
 		
@@ -56,7 +57,7 @@ public class IguanaToolBuildRecipe implements IRecipe {
         for (int i1 = 0; i1 < 4; ++i1)
         {
         	ItemStack input1 = inputs.get(i1);
-        	if (input1 == null) continue; 
+        	if (input1 == null || (!IguanaConfig.easyToolCreation && !(input1.getItem() instanceof ToolCore))) continue; 
         	
             for (int i2 = 0; i2 < 4; ++i2)
             {
@@ -77,9 +78,9 @@ public class IguanaToolBuildRecipe implements IRecipe {
                     	if (i3 == i4) continue;
                     	
                     	// try to build / modify something
-                    	if (IguanaConfig.easyToolCreation) 
+                		if (IguanaConfig.easyToolCreation && !toolFound) 
                     		output = ToolBuilder.instance.buildTool(input1, input2, input3, input4, "");
-                    	else
+                		else if (input1.getItem() instanceof ToolCore)
                     		output = ToolBuilder.instance.modifyTool(input1, input2, input3, input4);
                         
                         // If modification was successful

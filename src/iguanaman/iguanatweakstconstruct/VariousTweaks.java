@@ -51,6 +51,7 @@ public class VariousTweaks {
     	TContent.smeltery.setHardness(1.5F);
     	TContent.lavaTank.setHardness(1.5F);
     	TContent.searedBlock.setHardness(1.5F);
+    	TContent.castingChannel.setHardness(1.5F);
         
     	
         // REUSABLE PARTS
@@ -71,7 +72,8 @@ public class VariousTweaks {
         	{
         		ToolMaterial mat = TConstructRegistry.getMaterial(m);
     			int cost = ((Pattern)TContent.woodPattern).getPatternCost(new ItemStack(TContent.woodPattern, 1, p + 1));
-    			pb.registerMaterial(new ItemStack(toolParts[p], 1, nonMetals[m]), cost, mat.name());
+    			cost = Math.round(((float)cost / 2f) - 0.5f);
+    			if (cost > 0) pb.registerMaterial(new ItemStack(toolParts[p], 1, nonMetals[m]), cost, mat.name());
         	}
         }
         

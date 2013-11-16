@@ -105,58 +105,55 @@ public class IguanaEventHandler {
 	@ForgeSubscribe(priority = EventPriority.LOWEST)
 	public void LivingDrops(LivingDropsEvent event)
 	{
-		if (IguanaConfig.mobHeadModifiers)
-		{
-			Iterator<EntityItem> i = event.drops.iterator();
-			while (i.hasNext()) {
-			   EntityItem eitem = i.next();
+		Iterator<EntityItem> i = event.drops.iterator();
+		while (i.hasNext()) {
+		   EntityItem eitem = i.next();
 
-				if (eitem != null)
+			if (eitem != null)
+			{
+				if (eitem.getEntityItem() != null)
 				{
-					if (eitem.getEntityItem() != null)
+					ItemStack item = eitem.getEntityItem();
+					if (item.itemID == Item.skull.itemID && item.getItemDamage() != 3)
 					{
-						ItemStack item = eitem.getEntityItem();
-						if (item.itemID == Item.skull.itemID && item.getItemDamage() != 3)
-						{
-							i.remove();
-						}
+						i.remove();
 					}
 				}
 			}
+		}
+		
+		if (event.recentlyHit && event.source.damageType.equals("player"))
+		{
+			int skullID = -1;
 			
-			if (event.recentlyHit && event.source.damageType.equals("player"))
+			if (event.entityLiving instanceof EntitySkeleton)
+				skullID = ((EntitySkeleton)event.entityLiving).getSkeletonType();
+			else if (event.entityLiving instanceof EntityPigZombie)
+				skullID = 6;
+			else if (event.entityLiving instanceof EntityZombie)
+				skullID = 2;
+			else if (event.entityLiving instanceof EntityCreeper)
+				skullID = 4;
+			else if (event.entityLiving instanceof EntityEnderman)
+				skullID = 5;
+			else if (event.entityLiving instanceof EntityBlaze)
+				skullID = 7;
+			
+			if (skullID != -1)
 			{
-				int skullID = -1;
+				EntityPlayer player = (EntityPlayer) event.source.getEntity();
+				ItemStack stack = player.getCurrentEquippedItem();
+				int beheading = 0;                
 				
-				if (event.entityLiving instanceof EntitySkeleton)
-					skullID = ((EntitySkeleton)event.entityLiving).getSkeletonType();
-				else if (event.entityLiving instanceof EntityPigZombie)
-					skullID = 6;
-				else if (event.entityLiving instanceof EntityZombie)
-					skullID = 2;
-				else if (event.entityLiving instanceof EntityCreeper)
-					skullID = 4;
-				else if (event.entityLiving instanceof EntityEnderman)
-					skullID = 5;
-				else if (event.entityLiving instanceof EntityBlaze)
-					skullID = 7;
-				
-				if (skullID != -1)
+				if (stack != null && stack.hasTagCompound() && stack.getItem() instanceof ToolCore)
 				{
-					EntityPlayer player = (EntityPlayer) event.source.getEntity();
-					ItemStack stack = player.getCurrentEquippedItem();
-					int beheading = 0;                
-					
-					if (stack != null && stack.hasTagCompound() && stack.getItem() instanceof ToolCore)
-					{
-						beheading = stack.getTagCompound().getCompoundTag("InfiTool").getInteger("Beheading");
-						if (stack.getItem() == TContent.cleaver)
-							beheading += 2;
-					}
-					
-					if (random.nextInt(100) < (beheading * IguanaConfig.beheadingHeadDropChance) + IguanaConfig.baseHeadDropChance)
-						addDrops(event, new ItemStack(Item.skull.itemID, 1, skullID));
+					beheading = stack.getTagCompound().getCompoundTag("InfiTool").getInteger("Beheading");
+					if (stack.getItem() == TContent.cleaver)
+						beheading += 2;
 				}
+				
+				if (random.nextInt(100) < (beheading * IguanaConfig.beheadingHeadDropChance) + IguanaConfig.baseHeadDropChance)
+					addDrops(event, new ItemStack(Item.skull.itemID, 1, skullID));
 			}
 		}
 	}
@@ -309,26 +306,9 @@ public class IguanaEventHandler {
 		        
 	            if (IguanaConfig.showTooltipXP)
 	            {
-	            	tips.add(IguanaLevelingLogic.getXpString(new ItemStack(event.tool), false, false, toolTag));
+	            	tips.add(IguanaLevelingLogic.getXpString(new ItemStack(event.tool), false, toolTag));
 	                modifierTips.add("");
 	            }
-			}
-
-			
-			// PICKAXE LEVELING DATA + TOOLTIP
-	        if (IguanaConfig.pickaxeLevelingBoost && (event.tool instanceof Pickaxe || event.tool instanceof Hammer))
-			{
-	        	toolTag.setLong("HeadEXP", 0);
-	        	
-	        	if (IguanaConfig.showTooltipXP)
-	        	{
-		        	int hLevel = toolTag.getInteger("HarvestLevel");
-		    		if (hLevel > 0 && hLevel < HarvestLevelTweaks.oreDictLevels.length - 1)
-		    		{
-		            	tips.add(IguanaLevelingLogic.getXpString(new ItemStack(event.tool), true, false, toolTag));
-		                modifierTips.add("");
-		    		}
-	        	}
 			}
 	    	
 	    	// STORE + REMOVE EXISTING TOOLTIPS
@@ -439,9 +419,7 @@ public class IguanaEventHandler {
 				if (equipped != null && equipped.getItem() != null && equipped.getItem() instanceof ToolCore)
 				{
 				    event.left.add("");
-					event.left.add(IguanaLevelingLogic.getXpString(equipped, false, true));
-					if (equipped.getItem() instanceof Pickaxe || equipped.getItem() instanceof Hammer)
-						event.left.add(IguanaLevelingLogic.getXpString(equipped, true, true));
+					event.left.add(IguanaLevelingLogic.getXpString(equipped, true));
 				}
 			}
 		}

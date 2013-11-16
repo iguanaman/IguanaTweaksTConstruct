@@ -262,18 +262,8 @@ public class IguanaModUpgrade extends ToolMod {
     	
         tips.add(IguanaLevelingLogic.getLevelTooltip(tags.getInteger("ToolLevel")));
         modifierTips.add("");
-        tips.add(IguanaLevelingLogic.getXpString(tool, false, false));
+        tips.add(IguanaLevelingLogic.getXpString(tool, false, tags));
         modifierTips.add("");
-        
-        if (tool.getItem() instanceof Pickaxe || tool.getItem() instanceof Hammer)
-        {
-            int hLevel = tags.getInteger("HarvestLevel");
-    		if (hLevel > 0 && ((!IguanaConfig.pickaxeBoostRequired && hLevel < 6 || IguanaConfig.pickaxeBoostRequired && hLevel < 7)))
-    		{
-                tips.add(IguanaLevelingLogic.getXpString(tool, true, false));
-                modifierTips.add("");
-    		}
-        }
     	
     	//get and remove tooltips
         int tipNum = 0;

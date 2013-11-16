@@ -35,13 +35,7 @@ public class IguanaCommandLevelUpTool extends CommandBase {
 			if (tags.hasKey("ToolEXP"))
 			{
 				Long xp = tags.getLong("ToolEXP");
-				Long toAdd = IguanaLevelingLogic.getRequiredXp(equipped, false, tags) - xp;
-				if (tags.hasKey("HeadEXP") && !tags.hasKey("HarvestLevelModified"))
-				{
-					Long xpHead = tags.getLong("HeadEXP");
-					Long toAddHead = IguanaLevelingLogic.getRequiredXp(equipped, true, tags) - xpHead;
-					if (toAddHead < toAdd) toAdd = toAddHead;
-				}
+				Long toAdd = IguanaLevelingLogic.getRequiredXp(equipped, tags) - xp;
 				if (toAdd > 0L)
 				{
 					IguanaLevelingLogic.addXP(equipped, entityplayermp, toAdd);

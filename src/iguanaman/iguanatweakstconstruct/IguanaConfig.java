@@ -25,10 +25,8 @@ public class IguanaConfig {
 	public static boolean toolLeveling;
 	public static boolean toolLevelingExtraModifiers;
 	public static boolean toolLevelingRandomBonuses;
-	public static boolean pickaxeLevelingBoost;
 	public static boolean showTooltipXP;
 	public static boolean showDebugXP;
-    public static int miningBoostLevel;
     public static int toolLevelingRatePercentage;
     public static int weaponLevelingRatePercentage;
 	
@@ -40,7 +38,6 @@ public class IguanaConfig {
     public static int repairCostPercentage;
 	
 	// heads
-	public static boolean mobHeadModifiers;
     public static int baseHeadDropChance;
     public static int beheadingHeadDropChance;
     
@@ -141,10 +138,6 @@ public class IguanaConfig {
         toolLevelingRandomBonusesProperty.comment = "Gives a random bonus every level, if false and levelling is on modifiers are given at levels 2 and 4 (requires 'toolLeveling=true')";
         toolLevelingRandomBonuses = toolLevelingRandomBonusesProperty.getBoolean(true);
         
-        Property pickaxeLevelingBoostProperty = config.get("leveling", "pickaxeLevelingBoost", true);
-        pickaxeLevelingBoostProperty.comment = "Seperate pickaxe leveling system which gives a mining level boost";
-        pickaxeLevelingBoost = pickaxeLevelingBoostProperty.getBoolean(true);
-        
         Property showTooltipXPProperty = config.get("leveling", "showTooltipXP", true);
         showTooltipXPProperty.comment = "Current XP is shown when hovering over a tool (requires 'toolLeveling=true')";
         showTooltipXP = showTooltipXPProperty.getBoolean(true);
@@ -152,11 +145,6 @@ public class IguanaConfig {
         Property showDebugXPProperty = config.get("leveling", "showDebugXP", false);
         showDebugXPProperty.comment = "Current XP is shown as debug (F3) text (requires 'toolLeveling=true')";
         showDebugXP = showDebugXPProperty.getBoolean(false);
-		
-        Property miningBoostLevelProperty = config.get("leveling", "miningBoostLevel", 2);
-        miningBoostLevelProperty.comment = "Levels of XP required to get mining boost modifier on a pick (requires 'toolLevelingPickaxeBoost=true')";
-        miningBoostLevel = Math.max(miningBoostLevelProperty.getInt(2), 1);
-        miningBoostLevelProperty.set(miningBoostLevel);
 		
         Property toolLevelingRatePercentageProperty = config.get("leveling", "toolLevelingRatePercentage", 100);
         toolLevelingRatePercentageProperty.comment = "Rate at which tools gain XP (higher=faster) (requires 'toolLeveling=true')";
@@ -200,10 +188,6 @@ public class IguanaConfig {
         // heads
 		ConfigCategory headsCategory = config.getCategory("heads");
 		headsCategory.setComment("Configure the mob head modifiers and drops here");
-        
-        Property pickaxeHeadsProperty = config.get("heads", "pickaxeHeads", true);
-        pickaxeHeadsProperty.comment = "Adds mob head drops that can boost pickaxes and nerfs cleaver";
-        mobHeadModifiers = pickaxeHeadsProperty.getBoolean(true);
 		
         Property baseHeadDropChanceProperty = config.get("heads", "baseHeadDropChance", 5);
         baseHeadDropChanceProperty.comment = "Base percentage chance for a head to drop (only if 'pickaxeHeads' is true)";

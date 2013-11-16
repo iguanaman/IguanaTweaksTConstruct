@@ -49,11 +49,6 @@ public class IguanaCommandConfig extends CommandBase {
 				IguanaConfig.repairLimitActive = Boolean.parseBoolean(value);
 				worked = true;
 			}
-			else if (setting.equalsIgnoreCase("miningBoostLevel") && isInteger(value))
-			{
-				IguanaConfig.miningBoostLevel = Integer.parseInt(value);
-				worked = true;
-			}
 			else if (setting.equalsIgnoreCase("baseHeadDropChance") && isInteger(value))
 			{
 				IguanaConfig.baseHeadDropChance = Integer.parseInt(value);

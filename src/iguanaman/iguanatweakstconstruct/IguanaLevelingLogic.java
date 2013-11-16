@@ -37,24 +37,15 @@ import tconstruct.modifiers.ModSmite;
 
 public class IguanaLevelingLogic {
 
-	public static String getXpString(ItemStack tool, boolean pick, boolean debug)
+	public static String getXpString(ItemStack tool, boolean debug)
 	{
-		return getXpString(tool, pick, debug, null);
+		return getXpString(tool, debug, null);
 	}
 
-	public static String getXpString(ItemStack tool, boolean pick, boolean debug, NBTTagCompound tags)
+	public static String getXpString(ItemStack tool, boolean debug, NBTTagCompound tags)
 	{
-		if (tags == null) tags = tool.getTagCompound().getCompoundTag("InfiTool");
-        
-    	long xp = -1L;
-    	
-    	if (pick) xp = tags.getLong("HeadEXP");
-    	else xp = tags.getLong("ToolEXP");
-    	
-		String prefix = "XP: ";
-		if (pick) prefix = "Head " + prefix;
-		
-		return prefix + Long.toString(xp) + " / " + getRequiredXp(tool, pick, tags);
+		if (tags == null) tags = tool.getTagCompound().getCompoundTag("InfiTool");		
+		return "XP: " + Long.toString(tags.getLong("ToolEXP")) + " / " + getRequiredXp(tool, tags);
 	}
 	
 	public static String getLevelTooltip(int level)
@@ -71,7 +62,7 @@ public class IguanaLevelingLogic {
 		}
 	}
 	
-	public static void updateXP(ItemStack tool, EntityPlayer player, long toolXP, long headXP)
+	public static void updateXP(ItemStack tool, EntityPlayer player, long toolXP)
 	{
         if (player.capabilities.isCreativeMode) return;
         
@@ -93,27 +84,12 @@ public class IguanaLevelingLogic {
     		tags.setLong("ToolEXP", toolXP);
 
         	//CHECK FOR LEVEL UP
-    	    if (toolXP >= getRequiredXp(tool, false))
+    	    if (toolXP >= getRequiredXp(tool, tags))
     	    {
     	    	LevelUpTool(tool, player);
     	    	leveled = true;
     	    }
     	}
-    	
-    	if (tags.hasKey("HeadEXP") && !tags.hasKey("HarvestLevelModified") && headXP >= 0L)
-    	{
-    		if (hLevel > 0 && ((!IguanaConfig.pickaxeBoostRequired && hLevel < 6 || IguanaConfig.pickaxeBoostRequired && hLevel < 7)))
-    		{
-        		tags.setLong("HeadEXP", headXP);
-        		
-            	//CHECK FOR PICK LEVEL UP
-        	    if (headXP >= getRequiredXp(tool, true))
-        	    {
-        	    	LevelUpPick(tool, player, leveled);
-        	    	pickLeveled = true;
-        	    }
-    		}
-    	}	
     	
     	//Recheck level
     	level = tags.getInteger("ToolLevel");
@@ -133,20 +109,10 @@ public class IguanaLevelingLogic {
     	tips.add(getLevelTooltip(level));
     	modifierTips.add("");
 
-        if (IguanaConfig.showTooltipXP)
+        if (IguanaConfig.showTooltipXP && level < 6)
         {
-        	if (level < 6)
-        	{
-            	tips.add(getXpString(tool, false, false));
-            	modifierTips.add("");
-        	}
-        	
-        	if (hLevel > 0 && !tags.hasKey("HarvestLevelModified") 
-        			&& (tool.getItem() instanceof Pickaxe || tool.getItem() instanceof Hammer))
-        	{
-            	tips.add(getXpString(tool, true, false));
-            	modifierTips.add("");
-        	}
+        	tips.add(getXpString(tool, false, tags));
+        	modifierTips.add("");
         }
     	
     	//get and remove tooltips
@@ -192,22 +158,15 @@ public class IguanaLevelingLogic {
     public static void addXP(ItemStack tool, EntityPlayer player, long xp)
     {
         NBTTagCompound tags = tool.getTagCompound().getCompoundTag("InfiTool");
-    	
-    	Long toolXP = -1L;
-    	Long headXP = -1L;
-
-    	if (tags.hasKey("ToolEXP"))	toolXP = tags.getLong("ToolEXP") + xp;
-    	if (tags.hasKey("HeadEXP"))	headXP = tags.getLong("HeadEXP") + xp;
-    	
-    	updateXP(tool, player, toolXP, headXP);
+    	updateXP(tool, player, tags.getLong("ToolEXP") + xp);
     }
     
-    public static int getRequiredXp(ItemStack tool, boolean pick)
+    public static int getRequiredXp(ItemStack tool)
     {
-    	return getRequiredXp(tool, pick, null);
+    	return getRequiredXp(tool, null);
     }
     
-    public static int getRequiredXp(ItemStack tool, boolean pick, NBTTagCompound tags)
+    public static int getRequiredXp(ItemStack tool, NBTTagCompound tags)
     {
         if (tags == null) tags = tool.getTagCompound().getCompoundTag("InfiTool");
         
@@ -251,9 +210,6 @@ public class IguanaLevelingLogic {
         	base *= 1.5f;
         }
         
-        // picks
-        if (pick) base *= (float)IguanaConfig.miningBoostLevel;
-        
         return Math.round(base);
     }
     
@@ -269,7 +225,7 @@ public class IguanaLevelingLogic {
     	if (stack.getItem() instanceof HarvestTool)
     		isTool = true;
         	
-        updateXP(stack, player, 0l, -1l);
+        updateXP(stack, player, 0l);
     
     	if (!world.isRemote)
     	{
@@ -300,27 +256,6 @@ public class IguanaLevelingLogic {
 
             tags.setInteger("Modifiers", currentModifiers);
         }
-    }
-    
-    public static void LevelUpPick(ItemStack stack, EntityPlayer player, boolean leveled)
-    {
-        NBTTagCompound tags = stack.getTagCompound().getCompoundTag("InfiTool");
-
-        World world = player.worldObj;
-    	int level = tags.getInteger("ToolLevel");
-    	
-    	updateXP(stack, player, -1L, 0L);
-
-    	if (!world.isRemote)
-    	{
-    		if (leveled)
-        		player.addChatMessage("\u00a79Suddenly, a flash of light shines from the tip of the pickaxe (+1 mining level)");
-    		else
-        		player.addChatMessage("\u00a73Suddenly, a flash of light shines from the tip of your " + stack.getDisplayName() + " (+1 mining level)");
-    	}
-        
-        tags.setBoolean("HarvestLevelModified", true);
-        tags.setInteger("HarvestLevel", tags.getInteger("HarvestLevel") + 1);
     }
     
     private static boolean tryModify(EntityPlayer player, ItemStack stack, int rnd, boolean isTool)

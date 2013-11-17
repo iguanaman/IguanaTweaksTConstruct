@@ -17,11 +17,14 @@ import java.util.List;
 
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
+import net.minecraft.item.Item;
 import net.minecraft.src.ModLoader;
 import net.minecraftforge.common.MinecraftForge;
 
 import org.modstats.ModstatInfo;
 import org.modstats.Modstats;
+
+import tconstruct.common.TContent;
 
 import com.google.common.base.Optional;
 
@@ -46,7 +49,7 @@ import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
 @Mod(modid="IguanaTweaksTConstruct", name="Iguana Tweaks for Tinker's Construct", version="1.6.X-1n", 
-dependencies = "required-after:TConstruct;after:UndergroundBiomes@;after:UndergroundBiomesBlender@;after:GregTech;after:GregTech-Addon;after:IC2@;after:ThermalExpansion@;after:Buildcraft@;after:TEOreGen@")
+dependencies = "required-after:TConstruct;after:*")
 @NetworkMod(clientSideRequired=true, serverSideRequired=true)
 @ModstatInfo(prefix="igtweakstc")
 public class IguanaTweaksTConstruct {
@@ -54,10 +57,13 @@ public class IguanaTweaksTConstruct {
         // The instance of your mod that Forge uses.
         @Instance("IguanaTweaksTConstruct")
         public static IguanaTweaksTConstruct instance;
-       
+        
         // Says where the client and server 'proxy' code is loaded.
         @SidedProxy(clientSide="iguanaman.iguanatweakstconstruct.ClientProxy", serverSide="iguanaman.iguanatweakstconstruct.CommonProxy")
         public static CommonProxy proxy;
+        
+
+        public static List<Item> toolParts = null;
         
         @EventHandler
         public void preInit(FMLPreInitializationEvent event) {
@@ -69,6 +75,15 @@ public class IguanaTweaksTConstruct {
             
         	IguanaLog.log("Starting event handler");
             MinecraftForge.EVENT_BUS.register(new IguanaEventHandler());
+            
+            toolParts = Arrays.asList (
+            		TContent.toolRod, TContent.pickaxeHead, TContent.shovelHead, TContent.hatchetHead, 
+            		TContent.binding, TContent.toughBinding, TContent.toughRod, TContent.largePlate, 
+            		TContent.swordBlade, TContent.wideGuard, TContent.handGuard, TContent.crossbar, 
+            		TContent.knifeBlade, TContent.fullGuard, TContent.frypanHead, TContent.signHead, 
+            		TContent.chiselHead, TContent.scytheBlade, TContent.broadAxeHead, TContent.excavatorHead, 
+            		TContent.largeSwordBlade, TContent.hammerHead, TContent.bowstring, TContent.fletching, 
+            		TContent.arrowhead );
             
             IguanaBlocks.init();
             IguanaItems.init();

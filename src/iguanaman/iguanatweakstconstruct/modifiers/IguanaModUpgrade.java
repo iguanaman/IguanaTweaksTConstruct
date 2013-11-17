@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import cpw.mods.fml.common.FMLLog;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import tconstruct.common.BowRecipe;
@@ -35,38 +36,41 @@ public class IguanaModUpgrade extends ToolMod {
     {
         if (!canModify(tool, input)) return false;
         
-        ToolRecipe toolRecipe = GetRecipe(tool);
+        ToolRecipe toolRecipe = GetRecipe((ToolCore)tool.getItem());
         if (toolRecipe == null) return false;
         
         for (ItemStack inputStack : input)
         {
         	if (inputStack != null)
         	{
+        		// Make sure all inputs are valid parts
 	        	if (!(toolRecipe.validHead(inputStack.getItem()) 
 	        			|| toolRecipe.validHandle(inputStack.getItem()) 
 	        			|| toolRecipe.validAccessory(inputStack.getItem())
 	        			|| toolRecipe.validExtra(inputStack.getItem()))
 	        			) 
 	        			return false;
-	        	if (!IguanaConfig.allowStoneTools && inputStack.getItemDamage() == 1)
-	        		return false;
+	        	
+	        	// Check for stone parts
+	        	if (inputStack.getItemDamage() == 1)
+	        	{
+		        	if (!IguanaConfig.allowStoneTools) return false;
+
+		        	int partIndex = IguanaTweaksTConstruct.toolParts.indexOf(inputStack.getItem());
+		        	if (IguanaConfig.restrictedFlintParts.contains(partIndex+1)) return false;
+	        	}
         	}
         }
         
         return true;
     }
     
-    protected ToolRecipe GetRecipe(ItemStack output)
+    protected ToolRecipe GetRecipe(ToolCore tool)
     {
-    	if (output.getItem() != null)
-    	{
-    		if (output.getItem() instanceof Shortbow)
-    		{
-    			return new BowRecipe(TContent.toolRod, TContent.bowstring, TContent.toolRod, TContent.shortbow);
-    		}
-    	}
-    	
-    	return ToolBuilder.instance.recipeList.get(((ToolCore)output.getItem()).getToolName());
+    	if (tool instanceof Shortbow)
+    		return new BowRecipe(TContent.toolRod, TContent.bowstring, TContent.toolRod, TContent.shortbow);
+    	else
+    		return ToolBuilder.instance.recipeList.get(tool.getToolName());
     }
 
     @Override
@@ -86,7 +90,7 @@ public class IguanaModUpgrade extends ToolMod {
     public void modify (ItemStack[] input, ItemStack tool)
     {
     	// setup variables
-        ToolRecipe toolRecipe = GetRecipe(tool);
+        ToolRecipe toolRecipe = GetRecipe((ToolCore)tool.getItem());
         ToolCore toolClass = (ToolCore)tool.getItem();
         NBTTagCompound tags = tool.getTagCompound().getCompoundTag("InfiTool");
 

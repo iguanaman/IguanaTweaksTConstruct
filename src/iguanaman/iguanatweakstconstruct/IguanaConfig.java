@@ -287,7 +287,7 @@ public class IguanaConfig {
 		restrictionsCategory.setComment("See config section of mod thread for list of pattern ids");
 		
         Property allowStoneToolsProperty = config.get("restrictions", "allowStoneTools", false);
-        allowStoneToolsProperty.comment = "Allow stone tools to be built in the tool station";
+        allowStoneToolsProperty.comment = "Allow certain stone tools to be built (if equivalent flint tool can also be made, the stone version is allowed)";
         allowStoneTools = allowStoneToolsProperty.getBoolean(false);
 		
         Property restrictedWoodPartsProperty = config.get("restrictions", "restrictedWoodParts", new int[] {2,4,5,6,7,10,13,14,15,16,17,18,19,20,21,22,23,24});

@@ -26,20 +26,18 @@ public class RemoveVanillaTools {
     		RemoveVanillaTool(Item.swordWood);
     	
     	//Stone
-    	if (!IguanaConfig.allowStoneTools || IguanaConfig.restrictedStoneParts.contains(1) 
-    			|| IguanaConfig.restrictedStoneParts.contains(2) || IguanaConfig.restrictedStoneParts.contains(9))
+    	if (!IguanaConfig.allowStoneTools || IguanaConfig.restrictedWoodParts.contains(1) 
+    			|| IguanaConfig.restrictedFlintParts.contains(2) || IguanaConfig.restrictedWoodParts.contains(9))
     		RemoveVanillaTool(Item.pickaxeStone);
     	
-    	if (!IguanaConfig.allowStoneTools || IguanaConfig.restrictedStoneParts.contains(1) || IguanaConfig.restrictedStoneParts.contains(3))
+    	if (!IguanaConfig.allowStoneTools || IguanaConfig.restrictedWoodParts.contains(1) || IguanaConfig.restrictedFlintParts.contains(3))
     		RemoveVanillaTool(Item.shovelStone);
     	
-    	if (!IguanaConfig.allowStoneTools || IguanaConfig.restrictedStoneParts.contains(1) || IguanaConfig.restrictedStoneParts.contains(4))
+    	if (!IguanaConfig.allowStoneTools || IguanaConfig.restrictedWoodParts.contains(1) || IguanaConfig.restrictedFlintParts.contains(4))
     		RemoveVanillaTool(Item.axeStone);
     	
-    	if (!IguanaConfig.allowStoneTools || IguanaConfig.restrictedStoneParts.contains(1) || IguanaConfig.restrictedStoneParts.contains(5) || IguanaConfig.restrictedStoneParts.contains(6))
+    	if (!IguanaConfig.allowStoneTools || IguanaConfig.restrictedWoodParts.contains(1) || IguanaConfig.restrictedFlintParts.contains(5) || IguanaConfig.restrictedWoodParts.contains(6))
     		RemoveVanillaTool(Item.swordStone);
-    	
-    	if (!IguanaConfig.allowStoneTools) RemoveVanillaTool(Item.hoeStone);
 	}
     
     public static void RemoveVanillaTool(Item item)

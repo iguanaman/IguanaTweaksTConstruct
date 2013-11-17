@@ -5,6 +5,7 @@ import iguanaman.iguanatweakstconstruct.IguanaConfig;
 import iguanaman.iguanatweakstconstruct.IguanaItems;
 import iguanaman.iguanatweakstconstruct.IguanaLevelingLogic;
 import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
+import iguanaman.iguanatweakstconstruct.modifiers.IguanaModUpgrade;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import tconstruct.common.TContent;
 import tconstruct.items.tools.*;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.crafting.PatternBuilder;
+import tconstruct.library.crafting.ToolRecipe;
 import tconstruct.library.crafting.PatternBuilder.ItemKey;
 import tconstruct.library.crafting.PatternBuilder.MaterialSet;
 import tconstruct.library.event.PartBuilderEvent;
@@ -274,12 +276,57 @@ public class IguanaEventHandler {
         int head = toolTag.getInteger("Head");
         int handle = toolTag.getInteger("Handle");
         int accessory = toolTag.getInteger("Accessory");
+        int extra = -1;
+        if (toolTag.hasKey("Extra")) extra = toolTag.getInteger("Extra");
 
-        if (!IguanaConfig.allowStoneTools && (head == 1 || handle == 1 || (event.tool != TContent.arrow && accessory == 1)))
+        if (!IguanaConfig.allowStoneTools && (head == 1 || handle == 1 || (event.tool != TContent.arrow && accessory == 1)) || extra == 1)
         {
             event.setResult(Result.DENY);
             return;
         }
+        else if (IguanaConfig.allowStoneTools)
+        {
+        	if (head == 1)
+        	{
+        		int partIndex = IguanaTweaksTConstruct.toolParts.indexOf(event.tool.getHeadItem());
+        		if (IguanaConfig.restrictedFlintParts.contains(partIndex+1)) 
+        		{
+                    event.setResult(Result.DENY);
+        			return;
+        		}
+        	}
+        	
+        	if (handle == 1)
+        	{
+        		int partIndex = IguanaTweaksTConstruct.toolParts.indexOf(event.tool.getHandleItem());
+        		if (IguanaConfig.restrictedFlintParts.contains(partIndex+1)) 
+        		{
+                    event.setResult(Result.DENY);
+        			return;
+        		}
+        	}
+        	
+        	if (event.tool != TContent.arrow && accessory == 1)
+        	{
+        		int partIndex = IguanaTweaksTConstruct.toolParts.indexOf(event.tool.getAccessoryItem());
+        		if (IguanaConfig.restrictedFlintParts.contains(partIndex+1)) 
+        		{
+                    event.setResult(Result.DENY);
+        			return;
+        		}
+        	}
+        	
+        	if (extra == 1)
+        	{
+        		int partIndex = IguanaTweaksTConstruct.toolParts.indexOf(event.tool.getExtraItem());
+        		if (IguanaConfig.restrictedFlintParts.contains(partIndex+1)) 
+        		{
+                    event.setResult(Result.DENY);
+        			return;
+        		}
+        	}
+        }
+        
 
         if (event.tool != TContent.arrow)
         {

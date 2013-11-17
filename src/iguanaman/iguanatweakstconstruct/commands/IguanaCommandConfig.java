@@ -74,14 +74,14 @@ public class IguanaCommandConfig extends CommandBase {
 				IguanaConfig.repairCostPercentage = Integer.parseInt(value);
 				worked = true;
 			}
-			else if (setting.equalsIgnoreCase("toolLevelingRatePercentage") && isInteger(value))
+			else if (setting.equalsIgnoreCase("xpRequiredToolsPercentage") && isInteger(value))
 			{
-				IguanaConfig.toolLevelingRatePercentage = Integer.parseInt(value);
+				IguanaConfig.xpRequiredToolsPercentage = Integer.parseInt(value);
 				worked = true;
 			}
-			else if (setting.equalsIgnoreCase("weaponLevelingRatePercentage") && isInteger(value))
+			else if (setting.equalsIgnoreCase("xpRequiredWeaponsPercentage") && isInteger(value))
 			{
-				IguanaConfig.weaponLevelingRatePercentage = Integer.parseInt(value);
+				IguanaConfig.xpRequiredWeaponsPercentage = Integer.parseInt(value);
 				worked = true;
 			}
 			

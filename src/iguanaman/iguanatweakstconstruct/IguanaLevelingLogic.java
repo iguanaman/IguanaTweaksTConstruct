@@ -174,7 +174,8 @@ public class IguanaLevelingLogic {
         
         if (tool.getItem() instanceof Weapon || tool.getItem() instanceof Shortbow)
         {
-        	base /= ((float)IguanaConfig.weaponLevelingRatePercentage / 100f);
+        	if (tool.getItem() instanceof Scythe) base *= 1.5f;
+        	base *= ((float)IguanaConfig.xpRequiredWeaponsPercentage / 100f);
         }
         else
         {
@@ -197,17 +198,13 @@ public class IguanaLevelingLogic {
 	        }
 	        base = (float)miningSpeed / (float)divider;
 	        
-        	base /= ((float)IguanaConfig.toolLevelingRatePercentage / 100f);
-        }
-        
-        // tier 2 tools
-        if (tool.getItem() instanceof Hammer || tool.getItem() instanceof Excavator || tool.getItem() instanceof LumberAxe)
-        {
-        	base *= 8f;
-        }
-        else if (tool.getItem() instanceof Scythe)
-        {
-        	base *= 1.5f;
+	        // tier 2 tools
+	        if (tool.getItem() instanceof Hammer || tool.getItem() instanceof Excavator || tool.getItem() instanceof LumberAxe)
+	        {
+	        	base *= 8f;
+	        }
+	        
+        	base *= ((float)IguanaConfig.xpRequiredToolsPercentage / 100f);
         }
         
         return Math.round(base);

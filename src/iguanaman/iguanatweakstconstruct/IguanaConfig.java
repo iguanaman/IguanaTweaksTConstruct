@@ -27,8 +27,8 @@ public class IguanaConfig {
 	public static boolean toolLevelingRandomBonuses;
 	public static boolean showTooltipXP;
 	public static boolean showDebugXP;
-    public static int toolLevelingRatePercentage;
-    public static int weaponLevelingRatePercentage;
+    public static int xpRequiredToolsPercentage;
+    public static int xpRequiredWeaponsPercentage;
 	
 	// repairs
 	public static boolean repairCostScaling;
@@ -146,15 +146,15 @@ public class IguanaConfig {
         showDebugXPProperty.comment = "Current XP is shown as debug (F3) text (requires 'toolLeveling=true')";
         showDebugXP = showDebugXPProperty.getBoolean(false);
 		
-        Property toolLevelingRatePercentageProperty = config.get("leveling", "toolLevelingRatePercentage", 100);
-        toolLevelingRatePercentageProperty.comment = "Rate at which tools gain XP (higher=faster) (requires 'toolLeveling=true')";
-        toolLevelingRatePercentage = Math.max(toolLevelingRatePercentageProperty.getInt(100), 1);
-        toolLevelingRatePercentageProperty.set(toolLevelingRatePercentage);
+        Property xpRequiredToolsPercentageProperty = config.get("leveling", "xpRequiredToolsPercentage", 100);
+        xpRequiredToolsPercentageProperty.comment = "Change the XP required to level up tools (higher=less) (requires 'toolLeveling' to be true)";
+        xpRequiredToolsPercentage = Math.max(xpRequiredToolsPercentageProperty.getInt(100), 1);
+        xpRequiredToolsPercentageProperty.set(xpRequiredToolsPercentage);
 		
-        Property weaponLevelingRatePercentageProperty = config.get("leveling", "weaponLevelingRatePercentage", 100);
-        weaponLevelingRatePercentageProperty.comment = "Rate at which tools gain XP (higher=faster) (requires 'toolLeveling=true')";
-        weaponLevelingRatePercentage = Math.max(weaponLevelingRatePercentageProperty.getInt(100), 1);
-        weaponLevelingRatePercentageProperty.set(weaponLevelingRatePercentage);
+        Property xpRequiredWeaponsPercentageProperty = config.get("leveling", "xpRequiredWeaponsPercentage", 100);
+        xpRequiredWeaponsPercentageProperty.comment = "Change the XP required to level up weapons (higher=less) (requires 'toolLeveling' to be true)";
+        xpRequiredWeaponsPercentage = Math.max(xpRequiredWeaponsPercentageProperty.getInt(100), 1);
+        xpRequiredWeaponsPercentageProperty.set(xpRequiredWeaponsPercentage);
         
         
         // repairs
@@ -209,7 +209,7 @@ public class IguanaConfig {
         easyBlankPatternRecipe = easyBlankPatternRecipeProperty.getBoolean(true);
 
         Property easyPartCraftingProperty = config.get("other", "easyPartCrafting", true);
-        easyPartCraftingProperty.comment = "Allows you to rotate the the tier 1 patterns in a normal crafting window";
+        easyPartCraftingProperty.comment = "Allows you to make tool parts in a normal crafting window";
         easyPartCrafting = easyPartCraftingProperty.getBoolean(true);
 
         Property easyPatternCraftingProperty = config.get("other", "easyPatternCrafting", true);
@@ -307,7 +307,7 @@ public class IguanaConfig {
         for (int i : restrictedBonePartsProperty.getIntList()) restrictedBoneParts.add(i);
 		
         Property restrictedPaperPartsProperty = config.get("restrictions", "restrictedPaperParts", new int[] {2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25});
-        restrictedBonePartsProperty.comment = "Pattern ids to restrict for paper parts";
+        restrictedPaperPartsProperty.comment = "Pattern ids to restrict for paper parts";
         for (int i : restrictedPaperPartsProperty.getIntList()) restrictedPaperParts.add(i);
 		
         Property restrictedSlimePartsProperty = config.get("restrictions", "restrictedSlimeParts", new int[] {2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25});

@@ -57,6 +57,9 @@ public class HarvestLevelTweaks {
         int harvestLevelWood = TConstructRegistry.getMaterial("Wood").harvestLevel();
         int harvestLevelIron = TConstructRegistry.getMaterial("Iron").harvestLevel();
         int harvestLevelObsidian = TConstructRegistry.getMaterial("Obsidian").harvestLevel();
+        int harvestLevelArdite = TConstructRegistry.getMaterial("Ardite").harvestLevel();
+        int harvestLevelCobalt = TConstructRegistry.getMaterial("Cobalt").harvestLevel();
+        int harvestLevelManyullyn = TConstructRegistry.getMaterial("Manyullyn").harvestLevel();
         
         Iterator<Map.Entry<Item, List>> it = toolClasses.entrySet().iterator();
         while (it.hasNext()) 
@@ -69,17 +72,27 @@ public class HarvestLevelTweaks {
             int harvestLevel = (Integer)tmp[1];
             int newHarvestLevel = harvestLevel;
             
-            switch (harvestLevel)
+            if (toolClass.equals("pickaxe"))
             {
-            case 1: newHarvestLevel = harvestLevelWood; break; 
-            case 2: newHarvestLevel = harvestLevelIron; break; 
-            case 3: newHarvestLevel = harvestLevelObsidian; break; 
-            }
             
-            if (harvestLevel != newHarvestLevel)
-            {
-            	//IguanaLog.log("Changing harvest level of " + entry.getKey().getUnlocalizedName() + " from " + harvestLevel + " to " + newHarvestLevel);
-                entry.setValue(Arrays.asList(toolClass, newHarvestLevel));
+	            switch (harvestLevel)
+	            {
+	            case 0: newHarvestLevel = harvestLevelWood; break; 
+	            case 1: newHarvestLevel = harvestLevelWood; break; 
+	            case 2: newHarvestLevel = harvestLevelIron; break; 
+	            case 3: newHarvestLevel = harvestLevelObsidian; break; 
+	            case 4: newHarvestLevel = harvestLevelArdite; break;
+	            case 5: newHarvestLevel = harvestLevelCobalt; break;
+	            case 6: newHarvestLevel = harvestLevelManyullyn; break;
+	            default: newHarvestLevel = harvestLevelManyullyn + (harvestLevel - 6);
+	            }
+	            
+	            if (harvestLevel != newHarvestLevel)
+	            {
+	            	//IguanaLog.log("Changing harvest level of " + entry.getKey().getUnlocalizedName() + " from " + harvestLevel + " to " + newHarvestLevel);
+	                entry.setValue(Arrays.asList(toolClass, newHarvestLevel));
+	            }
+	            
             }
         }
         
@@ -92,9 +105,9 @@ public class HarvestLevelTweaks {
         harvestLevelIron += boostMod;
         int harvestLevelBronze = TConstructRegistry.getMaterial("Bronze").harvestLevel() + boostMod;
         harvestLevelObsidian += boostMod;
-        int harvestLevelArdite = TConstructRegistry.getMaterial("Ardite").harvestLevel() + boostMod;
-        int harvestLevelCobalt = TConstructRegistry.getMaterial("Cobalt").harvestLevel() + boostMod;
-        int harvestLevelManyullyn = TConstructRegistry.getMaterial("Manyullyn").harvestLevel() + boostMod;
+        harvestLevelArdite += boostMod;
+        harvestLevelCobalt += boostMod;
+        harvestLevelManyullyn += boostMod;
         
     	IguanaLog.log("Modifying required harvest levels of blocks");
         try {
@@ -123,25 +136,32 @@ public class HarvestLevelTweaks {
             int metadata = (Integer)tmp[1];
             String toolClass = (String)tmp[2];
             
-            int requiredHarvestLevel = entry.getValue();
-            int newRequiredHarvestLevel = requiredHarvestLevel;
+            if (toolClass.equals("pickaxe"))
+            {
+            
+	            int requiredHarvestLevel = entry.getValue();
+	            int newRequiredHarvestLevel = requiredHarvestLevel;
+	        	
+	        	switch (requiredHarvestLevel)
+	        	{
+		    		case 0: newRequiredHarvestLevel = harvestLevelCopper; break;
+		    		case 1: newRequiredHarvestLevel = harvestLevelCopper; break;
+		    		case 2: newRequiredHarvestLevel = harvestLevelIron; break;
+		    		case 3: newRequiredHarvestLevel = harvestLevelBronze; break;
+		    		case 4: newRequiredHarvestLevel = harvestLevelObsidian; break;
+		    		case 5: newRequiredHarvestLevel = harvestLevelArdite; break;
+		    		case 6: newRequiredHarvestLevel = harvestLevelCobalt; break;
+		    		case 7: newRequiredHarvestLevel = harvestLevelManyullyn; break;
+		    		default: newRequiredHarvestLevel = harvestLevelManyullyn + (requiredHarvestLevel - 7);
+	        	}
+	        	
+	        	if (requiredHarvestLevel != newRequiredHarvestLevel)
+	        	{
+	            	//IguanaLog.log("Changing required harvest level of " + block.getUnlocalizedName() + ":" + metadata + " from " + requiredHarvestLevel + " to " + newRequiredHarvestLevel);
+	                entry.setValue(newRequiredHarvestLevel);
+	        	}
         	
-        	switch (requiredHarvestLevel)
-        	{
-	    		case 1: newRequiredHarvestLevel = harvestLevelCopper; break;
-	    		case 2: newRequiredHarvestLevel = harvestLevelIron; break;
-	    		case 3: newRequiredHarvestLevel = harvestLevelBronze; break;
-	    		case 4: newRequiredHarvestLevel = harvestLevelObsidian; break;
-	    		case 5: newRequiredHarvestLevel = harvestLevelArdite; break;
-	    		case 6: newRequiredHarvestLevel = harvestLevelCobalt; break;
-	    		case 7: newRequiredHarvestLevel = harvestLevelManyullyn; break;
-        	}
-        	
-        	if (requiredHarvestLevel != newRequiredHarvestLevel)
-        	{
-            	//IguanaLog.log("Changing required harvest level of " + block.getUnlocalizedName() + ":" + metadata + " from " + requiredHarvestLevel + " to " + newRequiredHarvestLevel);
-                entry.setValue(newRequiredHarvestLevel);
-        	}
+            }
         }
         
         for (int i = 0; i < oreDictLevels.length; ++i)

@@ -266,9 +266,9 @@ public class IguanaConfig {
         mossRepairSpeed = Math.max(mossRepairSpeedProperty.getInt(3), 0);
         mossRepairSpeedProperty.set(mossRepairSpeed);
 		
-        Property durabilityPercentageProperty = config.get("other", "durabilityPercentage", 100);
+        Property durabilityPercentageProperty = config.get("other", "durabilityPercentage", 50);
         durabilityPercentageProperty.comment = "Change durability of all materials here (higher = tougher)";
-        durabilityPercentage = Math.max(durabilityPercentageProperty.getInt(100), 1);
+        durabilityPercentage = Math.max(durabilityPercentageProperty.getInt(50), 1);
         durabilityPercentageProperty.set(durabilityPercentage);
 		
         Property miningSpeedPercentageProperty = config.get("other", "miningSpeedPercentage", 100);

@@ -1,10 +1,15 @@
 package iguanaman.iguanatweakstconstruct;
 
 import tconstruct.common.TContent;
+import tconstruct.items.MetalPattern;
+import tconstruct.items.Pattern;
+import tconstruct.util.config.PHConstruct;
 import iguanaman.iguanatweakstconstruct.items.ClayBucket;
 import iguanaman.iguanatweakstconstruct.items.ClayBucketFilled;
 import iguanaman.iguanatweakstconstruct.items.ClayBucketMilk;
 import iguanaman.iguanatweakstconstruct.items.IguanaItemSkull;
+import iguanaman.iguanatweakstconstruct.items.IguanaMetalPattern;
+import iguanaman.iguanatweakstconstruct.items.IguanaPattern;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -88,6 +93,15 @@ public class IguanaItems {
 	            CraftingManager.getInstance().addRecipe(new ItemStack(item), new Object[] {recipePatterns[j], 'X', new ItemStack(TContent.materials, 1, 3)});
 	        }
 		}
+		
+		
+		// NEW TCON PATTERNS
+		/*
+		Item.itemsList[TContent.woodPattern.itemID] = null;
+		Item.itemsList[TContent.metalPattern.itemID] = null;
+		TContent.woodPattern = new IguanaPattern(PHConstruct.woodPattern, "pattern_", "materials/").setUnlocalizedName("tconstruct.Pattern");
+		TContent.metalPattern = new IguanaMetalPattern(PHConstruct.metalPattern, "cast_", "materials/").setUnlocalizedName("tconstruct.MetalPattern");
+        */
 		
 		
         //EASTER EGGS

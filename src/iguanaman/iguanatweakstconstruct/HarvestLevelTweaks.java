@@ -65,6 +65,7 @@ public class HarvestLevelTweaks {
         while (it.hasNext()) 
         {
         	Map.Entry<Item, List> entry = it.next();
+        	Item item = entry.getKey();
         	List info = entry.getValue();
 
             Object[] tmp = info.toArray();
@@ -72,8 +73,13 @@ public class HarvestLevelTweaks {
             int harvestLevel = (Integer)tmp[1];
             int newHarvestLevel = harvestLevel;
             
-            if (toolClass.equals("pickaxe"))
+            if (item != null && toolClass.equals("pickaxe"))
             {
+            	
+            	if (IguanaConfig.pickaxeOverrides.containsKey(item.itemID))
+            	{
+            		harvestLevel = IguanaConfig.pickaxeOverrides.get(item.itemID);
+            	}
             
 	            switch (harvestLevel)
 	            {

@@ -444,12 +444,20 @@ public class IguanaEventHandler {
 	{
 		if (IguanaConfig.removeFlintDrop && event.block != null && event.block instanceof BlockGravel)
 		{
+			boolean addGravel = false;
+			
 			Iterator it = event.drops.iterator();
 			while (it.hasNext())
 			{
 				ItemStack stack = (ItemStack) it.next();
-				if (stack != null && stack.itemID == Item.flint.itemID) it.remove();
+				if (stack != null && stack.itemID == Item.flint.itemID) 
+				{
+					it.remove();
+					addGravel = true;
+				}
 			}
+			
+			if (addGravel) event.drops.add(new ItemStack(Block.gravel));
 		}
 	}
 

@@ -15,12 +15,12 @@ public class IguanaPatternCraftingHandler implements ICraftingHandler {
     @Override
     public void onCrafting(EntityPlayer player, ItemStack item, IInventory craftMatrix) {
     	
-    	if (item.getItem() == TContent.woodPattern)
+    	if (item.getItem().itemID == TContent.woodPattern.itemID)
     	{
             for (int i = 0; i < craftMatrix.getSizeInventory(); i++)
             {
                 ItemStack inSlot = craftMatrix.getStackInSlot(i);
-                if (inSlot != null && inSlot.getItem() == TContent.woodPattern)
+                if (inSlot != null && inSlot.getItem().itemID == TContent.woodPattern.itemID)
                 {
                 	if (inSlot.stackSize > 1) --inSlot.stackSize;
                 	else craftMatrix.setInventorySlotContents(i, null);	

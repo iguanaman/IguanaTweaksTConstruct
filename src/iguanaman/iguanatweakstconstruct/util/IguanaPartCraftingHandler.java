@@ -33,7 +33,7 @@ public class IguanaPartCraftingHandler implements ICraftingHandler {
             {
             	// is the item in the slot a wood pattern?
             	boolean isPattern = false;
-            	if (slot.getItem() == TContent.woodPattern) isPattern = true;
+            	if (slot.getItem().itemID == TContent.woodPattern.itemID) isPattern = true;
             	
             	// too many items
             	if ((material != null && pattern != null) || (material != null && !isPattern)) return;

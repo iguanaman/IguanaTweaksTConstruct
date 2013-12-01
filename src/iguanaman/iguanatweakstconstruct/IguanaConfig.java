@@ -3,6 +3,7 @@ package iguanaman.iguanatweakstconstruct;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import net.minecraftforge.common.ConfigCategory;
@@ -47,6 +48,35 @@ public class IguanaConfig {
     public static boolean easyPatternCrafting;
     public static boolean easyToolModification;
     public static boolean easyToolCreation;
+    
+    //patterns
+    /*
+    public static int patternCostToolRod;
+    public static int patternCostPickaxeHead;
+    public static int patternCostShovelHead;
+    public static int patternCostHatchetHead;
+    public static int patternCostSwordBlade;
+    public static int patternCostWideGuard;
+    public static int patternCostHandGuard;
+    public static int patternCostCrossbar;
+    public static int patternCostBinding;
+    public static int patternCostFrypanHead;
+    public static int patternCostSignHead;
+    public static int patternCostKnifeBlade;
+    public static int patternCostChiselHead;
+    public static int patternCostToughRod;
+    public static int patternCostToughBinding;
+    public static int patternCostHeavyPlate;
+    public static int patternCostBroadAxeHead;
+    public static int patternCostScytheBlade;
+    public static int patternCostExcavatorHead;
+    public static int patternCostLargeSwordBlade;
+    public static int patternCostHammerHead;
+    public static int patternCostFullGuard;
+    public static int patternCostBowstring;
+    public static int patternCostFletching;
+    public static int patternCostArrowHead;
+    */
 	
 	//other
 	public static boolean partReplacement;
@@ -71,6 +101,9 @@ public class IguanaConfig {
     public static List<String> harvestLevel5Ids = new ArrayList<String>();
     public static List<String> harvestLevel6Ids = new ArrayList<String>();
     public static List<String> harvestLevel7Ids = new ArrayList<String>();
+    
+    // Pickaxe mining level overrides
+    public static HashMap<Integer, Integer> pickaxeOverrides = new HashMap<Integer, Integer>();
     
     //Restrictions
     public static boolean allowStoneTools;
@@ -225,6 +258,138 @@ public class IguanaConfig {
         easyToolModification = easyToolModificationProperty.getBoolean(true);
         
         
+        // patterns
+        /*
+		ConfigCategory patternsCategory = config.getCategory("patterns");
+		patternsCategory.setComment("Set the material cost (in half ingots) required for each pattern type");
+		
+        Property patternCostToolRodProperty = config.get("patterns", "patternCostToolRod", 1);
+        patternCostToolRodProperty.comment = "TCon default is 1";
+        patternCostToolRod = Math.max(patternCostToolRodProperty.getInt(1), 1);
+        patternCostToolRodProperty.set(patternCostToolRod);
+		
+        Property patternCostPickaxeHeadProperty = config.get("patterns", "patternCostPickaxeHead", 6);
+        patternCostPickaxeHeadProperty.comment = "TCon default is 2";
+        patternCostPickaxeHead = Math.max(patternCostPickaxeHeadProperty.getInt(6), 1);
+        patternCostPickaxeHeadProperty.set(patternCostPickaxeHead);
+		
+        Property patternCostShovelHeadProperty = config.get("patterns", "patternCostShovelHead", 2);
+        patternCostShovelHeadProperty.comment = "TCon default is 2";
+        patternCostShovelHead = Math.max(patternCostShovelHeadProperty.getInt(2), 1);
+        patternCostShovelHeadProperty.set(patternCostShovelHead);
+		
+        Property patternCostHatchetHeadProperty = config.get("patterns", "patternCostHatchetHead", 4);
+        patternCostHatchetHeadProperty.comment = "TCon default is 2";
+        patternCostHatchetHead = Math.max(patternCostHatchetHeadProperty.getInt(4), 1);
+        patternCostHatchetHeadProperty.set(patternCostHatchetHead);
+		
+        Property patternCostSwordBladeProperty = config.get("patterns", "patternCostSwordBlade", 4);
+        patternCostSwordBladeProperty.comment = "TCon default is 2";
+        patternCostSwordBlade = Math.max(patternCostSwordBladeProperty.getInt(4), 1);
+        patternCostSwordBladeProperty.set(patternCostSwordBlade);
+		
+        Property patternCostWideGuardProperty = config.get("patterns", "patternCostWideGuard", 1);
+        patternCostWideGuardProperty.comment = "TCon default is 1";
+        patternCostWideGuard = Math.max(patternCostWideGuardProperty.getInt(1), 1);
+        patternCostWideGuardProperty.set(patternCostWideGuard);
+		
+        Property patternCostHandGuardProperty = config.get("patterns", "patternCostHandGuard", 1);
+        patternCostHandGuardProperty.comment = "TCon default is 1";
+        patternCostHandGuard = Math.max(patternCostHandGuardProperty.getInt(1), 1);
+        patternCostHandGuardProperty.set(patternCostHandGuard);
+		
+        Property patternCostCrossbarProperty = config.get("patterns", "patternCostCrossbar", 1);
+        patternCostCrossbarProperty.comment = "TCon default is 1";
+        patternCostCrossbar = Math.max(patternCostCrossbarProperty.getInt(1), 1);
+        patternCostCrossbarProperty.set(patternCostCrossbar);
+		
+        Property patternCostBindingProperty = config.get("patterns", "patternCostBinding", 1);
+        patternCostBindingProperty.comment = "TCon default is 1";
+        patternCostBinding = Math.max(patternCostBindingProperty.getInt(1), 1);
+        patternCostBindingProperty.set(patternCostBinding);
+		
+        Property patternCostFrypanHeadProperty = config.get("patterns", "patternCostFrypanHead", 6);
+        patternCostFrypanHeadProperty.comment = "TCon default is 2";
+        patternCostFrypanHead = Math.max(patternCostFrypanHeadProperty.getInt(6), 1);
+        patternCostFrypanHeadProperty.set(patternCostFrypanHead);
+		
+        Property patternCostSignHeadProperty = config.get("patterns", "patternCostSignHead", 6);
+        patternCostSignHeadProperty.comment = "TCon default is 2";
+        patternCostSignHead = Math.max(patternCostSignHeadProperty.getInt(6), 1);
+        patternCostSignHeadProperty.set(patternCostSignHead);
+		
+        Property patternCostKnifeBladeProperty = config.get("patterns", "patternCostKnifeBlade", 1);
+        patternCostKnifeBladeProperty.comment = "TCon default is 1";
+        patternCostKnifeBlade = Math.max(patternCostKnifeBladeProperty.getInt(1), 1);
+        patternCostKnifeBladeProperty.set(patternCostKnifeBlade);
+		
+        Property patternCostChiselHeadProperty = config.get("patterns", "patternCostChiselHead", 1);
+        patternCostChiselHeadProperty.comment = "TCon default is 1";
+        patternCostChiselHead = Math.max(patternCostChiselHeadProperty.getInt(1), 1);
+        patternCostChiselHeadProperty.set(patternCostChiselHead);
+		
+        Property patternCostToughRodProperty = config.get("patterns", "patternCostToughRod", 6);
+        patternCostToughRodProperty.comment = "TCon default is 6";
+        patternCostToughRod = Math.max(patternCostToughRodProperty.getInt(6), 1);
+        patternCostToughRodProperty.set(patternCostToughRod);
+		
+        Property patternCostToughBindingProperty = config.get("patterns", "patternCostToughBinding", 6);
+        patternCostToughBindingProperty.comment = "TCon default is 6";
+        patternCostToughBinding = Math.max(patternCostToughBindingProperty.getInt(6), 1);
+        patternCostToughBindingProperty.set(patternCostToughBinding);
+		
+        Property patternCostHeavyPlateProperty = config.get("patterns", "patternCostHeavyPlate", 16);
+        patternCostHeavyPlateProperty.comment = "TCon default is 16";
+        patternCostHeavyPlate = Math.max(patternCostHeavyPlateProperty.getInt(16), 1);
+        patternCostHeavyPlateProperty.set(patternCostHeavyPlate);
+		
+        Property patternCostBroadAxeHeadProperty = config.get("patterns", "patternCostBroadAxeHead", 16);
+        patternCostBroadAxeHeadProperty.comment = "TCon default is 16";
+        patternCostBroadAxeHead = Math.max(patternCostBroadAxeHeadProperty.getInt(16), 1);
+        patternCostBroadAxeHeadProperty.set(patternCostBroadAxeHead);
+		
+        Property patternCostScytheBladeProperty = config.get("patterns", "patternCostScytheBlade", 16);
+        patternCostScytheBladeProperty.comment = "TCon default is 16";
+        patternCostScytheBlade = Math.max(patternCostScytheBladeProperty.getInt(16), 1);
+        patternCostScytheBladeProperty.set(patternCostScytheBlade);
+		
+        Property patternCostExcavatorHeadProperty = config.get("patterns", "patternCostExcavatorHead", 16);
+        patternCostExcavatorHeadProperty.comment = "TCon default is 16";
+        patternCostExcavatorHead = Math.max(patternCostExcavatorHeadProperty.getInt(16), 1);
+        patternCostExcavatorHeadProperty.set(patternCostExcavatorHead);
+		
+        Property patternCostLargeSwordBladeProperty = config.get("patterns", "patternCostLargeSwordBlade", 16);
+        patternCostLargeSwordBladeProperty.comment = "TCon default is 16";
+        patternCostLargeSwordBlade = Math.max(patternCostLargeSwordBladeProperty.getInt(16), 1);
+        patternCostLargeSwordBladeProperty.set(patternCostLargeSwordBlade);
+		
+        Property patternCostHammerHeadProperty = config.get("patterns", "patternCostHammerHead", 16);
+        patternCostHammerHeadProperty.comment = "TCon default is 16";
+        patternCostHammerHead = Math.max(patternCostHammerHeadProperty.getInt(16), 1);
+        patternCostHammerHeadProperty.set(patternCostHammerHead);
+		
+        Property patternCostFullGuardProperty = config.get("patterns", "patternCostFullGuard", 6);
+        patternCostFullGuardProperty.comment = "TCon default is 6";
+        patternCostFullGuard = Math.max(patternCostFullGuardProperty.getInt(6), 1);
+        patternCostFullGuardProperty.set(patternCostFullGuard);
+		
+        Property patternCostBowstringProperty = config.get("patterns", "patternCostBowstring", 6);
+        patternCostBowstringProperty.comment = "TCon default is 6";
+        patternCostBowstring = Math.max(patternCostBowstringProperty.getInt(6), 1);
+        patternCostBowstringProperty.set(patternCostBowstring);
+		
+        Property patternCostFletchingProperty = config.get("patterns", "patternCostFletching", 2);
+        patternCostFletchingProperty.comment = "TCon default is 2";
+        patternCostFletching = Math.max(patternCostFletchingProperty.getInt(2), 1);
+        patternCostFletchingProperty.set(patternCostFletching);
+		
+        Property patternCostArrowHeadProperty = config.get("patterns", "patternCostArrowHead", 2);
+        patternCostArrowHeadProperty.comment = "TCon default is 2";
+        patternCostArrowHead = Math.max(patternCostArrowHeadProperty.getInt(2), 1);
+        patternCostArrowHeadProperty.set(patternCostArrowHead);
+        */
+        
+        
         // other
 		ConfigCategory otherCategory = config.getCategory("other");
 		otherCategory.setComment("Random stuff to configure here");
@@ -354,6 +519,19 @@ public class IguanaConfig {
         Property harvestLevel7IdsProperty = config.get("harvestids", "harvestLevel7Ids", new String[] {});
         harvestLevel7IdsProperty.comment = "Block ids (each on seperate line) for blocks to be set to harvest level 7 (cobalt pick+)";
         for (String i : harvestLevel7IdsProperty.getStringList()) harvestLevel7Ids.add(i);
+
+        
+        // pickaxe mining level overrides
+		ConfigCategory pickaxeoverridesCategory = config.getCategory("pickaxeoverrides");
+		pickaxeoverridesCategory.setComment("Normally the mod changes the mining levels of all pickaxes to be in line with the new system, override that for specific picks here");
+
+        Property pickaxeOverridesProperty = config.get("pickaxeoverrides", "pickaxeOverrides", new String[] {});
+        pickaxeOverridesProperty.comment = "Format <itemID>:<miningLevel> (Each on a separate line)";
+        for (String i : pickaxeOverridesProperty.getStringList())
+        {
+        	String[] splt = i.split(":");
+        	pickaxeOverrides.put(Integer.parseInt(splt[0]), Integer.parseInt(splt[1]));
+        }
         
         
         config.save();

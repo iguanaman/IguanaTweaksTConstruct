@@ -493,7 +493,7 @@ public class IguanaConfig {
         for (String i : harvestLevel0IdsProperty.getStringList()) harvestLevel0Ids.add(i);
 		
         Property harvestLevel1IdsProperty = config.get("harvestids", "harvestLevel1Ids", new String[] {});
-        harvestLevel1IdsProperty.comment = "Block ids (each on seperate line) for blocks to be set to harvest level 1 (flString pick+)";
+        harvestLevel1IdsProperty.comment = "Block ids (each on seperate line) for blocks to be set to harvest level 1 (flint pick+)";
         for (String i : harvestLevel1IdsProperty.getStringList()) harvestLevel1Ids.add(i);
 		
         Property harvestLevel2IdsProperty = config.get("harvestids", "harvestLevel2Ids", new String[] {});

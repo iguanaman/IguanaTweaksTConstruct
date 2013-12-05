@@ -155,6 +155,16 @@ public class IguanaModUpgrade extends ToolMod {
         
     	tags.setInteger("BaseDurability", base);
     	tags.setInteger("TotalDurability", total);
+    	    	
+    	if (tags.hasKey("ToolEXP"))
+    	{
+			int requiredXp = IguanaLevelingLogic.getRequiredXp(tool, tags);
+			long currentXp = tags.getLong("ToolEXP");
+			float xpPercentage = (float)currentXp / (float)requiredXp;
+			int newRequiredXp = IguanaLevelingLogic.getRequiredXp(newTool, newTags);
+			long newXp = Math.round(newRequiredXp * xpPercentage);
+			tags.setLong("ToolEXP", newXp);
+    	}
     	
     	if (tags.hasKey("HarvestLevelModified"))
     	{

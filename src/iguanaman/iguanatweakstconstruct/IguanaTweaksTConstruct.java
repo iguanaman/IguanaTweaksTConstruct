@@ -26,6 +26,7 @@ import org.modstats.Modstats;
 
 import tconstruct.common.TContent;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -108,7 +109,7 @@ public class IguanaTweaksTConstruct {
 		@EventHandler
 		public void serverStarting(FMLServerStartingEvent event)
 		{
-			ICommandManager commandManager = ModLoader.getMinecraftServerInstance().getCommandManager();
+			ICommandManager commandManager = FMLCommonHandler.instance().getMinecraftServerInstance().getCommandManager();
 			ServerCommandManager serverCommandManager = ((ServerCommandManager) commandManager);
 			serverCommandManager.registerCommand(new IguanaCommandConfig());
 			serverCommandManager.registerCommand(new IguanaCommandLevelUpTool());

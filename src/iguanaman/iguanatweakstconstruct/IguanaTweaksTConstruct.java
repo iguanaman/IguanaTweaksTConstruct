@@ -71,6 +71,19 @@ public class IguanaTweaksTConstruct {
             NetworkRegistry.instance().registerGuiHandler(instance, proxy);
 
         	IguanaConfig.init(event.getSuggestedConfigurationFile());
+        }
+     	  
+       
+        @EventHandler
+        public void load(FMLInitializationEvent event) {
+        	IguanaLog.log("Registering with modstats");
+            Modstats.instance().getReporter().registerMod(this);
+        }
+       
+        @EventHandler
+        public void postInit(FMLPostInitializationEvent event) {
+        	proxy.registerRenderers();
+
             
         	IguanaLog.log("Starting event handler");
             MinecraftForge.EVENT_BUS.register(new IguanaEventHandler());
@@ -90,19 +103,6 @@ public class IguanaTweaksTConstruct {
             ModifierTweaks.init();
             VariousTweaks.init();
             RemoveVanillaTools.init();
-        }
-     	  
-       
-        @EventHandler
-        public void load(FMLInitializationEvent event) {
-        	IguanaLog.log("Registering with modstats");
-            Modstats.instance().getReporter().registerMod(this);
-        }
-       
-        @EventHandler
-        public void postInit(FMLPostInitializationEvent event) {
-        	proxy.registerRenderers();
-
             HarvestLevelTweaks.init();
         }
         

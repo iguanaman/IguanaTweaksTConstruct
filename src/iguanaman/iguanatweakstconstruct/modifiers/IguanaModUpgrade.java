@@ -151,15 +151,13 @@ public class IguanaModUpgrade extends ToolMod {
         int bonus = tags.getInteger("BonusDurability");
         float modDur = tags.getFloat("ModDurability");
 
-        int total = (int) ((base + bonus) * (modDur + 1f));
-        if (total <= 0)
-            total = 1;
+        int total = Math.max((int) ((base + bonus) * (modDur + 1f)), 1);
+        
     	tags.setInteger("BaseDurability", base);
     	tags.setInteger("TotalDurability", total);
     	
     	if (tags.hasKey("HarvestLevelModified"))
     	{
-    		tags.setLong("HeadEXP", 0L);
     		tags.removeTag("HarvestLevelModified");
 
         	if (tags.hasKey("MobHead"))

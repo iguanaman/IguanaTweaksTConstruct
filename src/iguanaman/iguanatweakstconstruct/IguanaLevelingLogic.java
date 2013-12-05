@@ -48,10 +48,11 @@ public class IguanaLevelingLogic {
 		
 		int requiredXp = getRequiredXp(tool, tags);
 		long currentXp = tags.getLong("ToolEXP");
-		String xpPercentage = Integer.toString((int)(tags.getLong("ToolEXP") / (long)getRequiredXp(tool, tags))) + "%";
+		int xpPercentage = (int)((currentXp / (long)requiredXp) * 100);
+		String xpPercentageString = Integer.toString(xpPercentage) + "%"; 
 		
 		if (IguanaConfig.detailedXpTooltip)
-			return "XP: " + Long.toString(currentXp) + " / " + Integer.toString(requiredXp) + " (" + xpPercentage + ")";
+			return "XP: " + Long.toString(currentXp) + " / " + Integer.toString(requiredXp) + " (" + xpPercentageString + ")";
 		else
 			return "XP: " + xpPercentage; 
 	}

@@ -23,6 +23,7 @@ public class IguanaConfig {
     public static int easterEggId2;
     
     // leveling
+    public static boolean detailedXpTooltip;
 	public static boolean toolLeveling;
 	public static boolean toolLevelingExtraModifiers;
 	public static boolean toolLevelingRandomBonuses;
@@ -158,6 +159,10 @@ public class IguanaConfig {
         // leveling
 		ConfigCategory levelingCategory = config.getCategory("leveling");
 		levelingCategory.setComment("Setup the leveling system how you like it");
+
+        Property detailedXpTooltipProperty = config.get("leveling", "detailedXpTooltip", false);
+        detailedXpTooltipProperty.comment = "XP tooltip shows numbers, in addition to percentage";
+        detailedXpTooltip = detailedXpTooltipProperty.getBoolean(false);
 
         Property toolLevelingProperty = config.get("leveling", "toolLeveling", true);
         toolLevelingProperty.comment = "Can your skill with tools 'level up' as you use them?";

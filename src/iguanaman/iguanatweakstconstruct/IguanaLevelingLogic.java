@@ -45,7 +45,15 @@ public class IguanaLevelingLogic {
 	public static String getXpString(ItemStack tool, boolean debug, NBTTagCompound tags)
 	{
 		if (tags == null) tags = tool.getTagCompound().getCompoundTag("InfiTool");		
-		return "XP: " + Long.toString(tags.getLong("ToolEXP")) + " / " + getRequiredXp(tool, tags);
+		
+		int requiredXp = getRequiredXp(tool, tags);
+		long currentXp = tags.getLong("ToolEXP");
+		String xpPercentage = Integer.toString((int)(tags.getLong("ToolEXP") / (long)getRequiredXp(tool, tags))) + "%";
+		
+		if (IguanaConfig.detailedXpTooltip)
+			return "XP: " + Long.toString(currentXp) + " / " + Integer.toString(requiredXp) + " (" + xpPercentage + ")";
+		else
+			return "XP: " + xpPercentage; 
 	}
 	
 	public static String getLevelTooltip(int level)

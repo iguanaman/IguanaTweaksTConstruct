@@ -170,7 +170,7 @@ public class IguanaLevelingLogic {
     {
         if (tags == null) tags = tool.getTagCompound().getCompoundTag("InfiTool");
         
-        float base = (float)TConstructRegistry.getMaterial("Obsidian").miningspeed;
+        float base = 600;
         
         if (tool.getItem() instanceof Weapon || tool.getItem() instanceof Shortbow)
         {
@@ -196,13 +196,24 @@ public class IguanaLevelingLogic {
 	        	miningSpeed += tags.getInteger("MiningSpeedExtra");
 	        	divider += 1;
 	        }
-	        base = (float)miningSpeed / (float)divider;
+			
+	        base = ((float)miningSpeed / (float)divider) / 2f;
 	        
 	        // tier 2 tools
 	        if (tool.getItem() instanceof Hammer || tool.getItem() instanceof Excavator || tool.getItem() instanceof LumberAxe)
 	        {
 	        	base *= 8f;
 	        }
+			
+			if (tool.getItem() instanceof Shovel || tool.getItem() instanceof Excavator)
+			{
+				base *= 2f;
+			}
+			
+			if (tool.getItem() instanceof Mattock)
+			{
+				base *= 3f;
+			}
 	        
         	base *= ((float)IguanaConfig.xpRequiredToolsPercentage / 100f);
         }

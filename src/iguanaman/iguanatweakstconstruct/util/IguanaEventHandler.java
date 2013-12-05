@@ -71,17 +71,15 @@ public class IguanaEventHandler {
         	{
 	            EntityPlayer player = (EntityPlayer) event.source.getEntity();
 	            ItemStack stack = player.getCurrentEquippedItem();
-	            if (stack != null && stack.hasTagCompound() 
-	            		&& (stack.getItem() instanceof Weapon || stack.getItem() instanceof Shortbow))
+	            if (stack != null && stack.hasTagCompound())
 	            {
-	            	if (
-	            			!(event.entityLiving instanceof EntityAnimal) 
-	            			&& (stack.getItem() instanceof Weapon
-	            			|| (stack.getItem() instanceof Shortbow && event.source.damageType.equals("arrow"))
-	            			))
-	            		IguanaLevelingLogic.addXP(stack, player, 3L);
-	            	else
-	            		IguanaLevelingLogic.addXP(stack, player, 1L);
+	            	if (stack.getItem() instanceof Weapon || (stack.getItem() instanceof Shortbow && event.source.damageType.equals("arrow")))
+		            {
+	            		long xp = Math.round(event.ammount);
+	            		if (event.entityLiving instanceof EntityAnimal) xp = Math.round(event.ammount / 4f);
+
+	            		if (xp > 0) IguanaLevelingLogic.addXP(stack, player, xp);
+		            }
 	            }
         	}
         }

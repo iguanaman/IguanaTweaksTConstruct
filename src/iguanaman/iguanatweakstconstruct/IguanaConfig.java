@@ -180,12 +180,12 @@ public class IguanaConfig {
         showDebugXP = showDebugXPProperty.getBoolean(false);
 		
         Property xpRequiredToolsPercentageProperty = config.get("leveling", "xpRequiredToolsPercentage", 100);
-        xpRequiredToolsPercentageProperty.comment = "Change the XP required to level up tools (higher=less) (requires 'toolLeveling' to be true)";
+        xpRequiredToolsPercentageProperty.comment = "Change the XP required to level up tools (higher=more) (requires 'toolLeveling' to be true)";
         xpRequiredToolsPercentage = Math.max(xpRequiredToolsPercentageProperty.getInt(100), 1);
         xpRequiredToolsPercentageProperty.set(xpRequiredToolsPercentage);
 		
         Property xpRequiredWeaponsPercentageProperty = config.get("leveling", "xpRequiredWeaponsPercentage", 100);
-        xpRequiredWeaponsPercentageProperty.comment = "Change the XP required to level up weapons (higher=less) (requires 'toolLeveling' to be true)";
+        xpRequiredWeaponsPercentageProperty.comment = "Change the XP required to level up weapons (higher=more) (requires 'toolLeveling' to be true)";
         xpRequiredWeaponsPercentage = Math.max(xpRequiredWeaponsPercentageProperty.getInt(100), 1);
         xpRequiredWeaponsPercentageProperty.set(xpRequiredWeaponsPercentage);
         

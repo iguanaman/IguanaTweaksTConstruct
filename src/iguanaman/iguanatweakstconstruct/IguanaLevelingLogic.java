@@ -261,7 +261,7 @@ public class IguanaLevelingLogic {
 	        	divider += 1;
 	        }
 			
-	        base = ((float)miningSpeed / (float)divider) / 2f;
+	        base = (float)miningSpeed / (float)divider;
 	        
 	        // tier 2 tools
 	        if (tool.getItem() instanceof Hammer || tool.getItem() instanceof Excavator || tool.getItem() instanceof LumberAxe)

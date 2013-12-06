@@ -55,6 +55,7 @@ public class HarvestLevelTweaks {
         }
 
         int harvestLevelWood = TConstructRegistry.getMaterial("Wood").harvestLevel();
+        int harvestLevelFlint = TConstructRegistry.getMaterial("Flint").harvestLevel();
         int harvestLevelIron = TConstructRegistry.getMaterial("Iron").harvestLevel();
         int harvestLevelObsidian = TConstructRegistry.getMaterial("Obsidian").harvestLevel();
         int harvestLevelArdite = TConstructRegistry.getMaterial("Ardite").harvestLevel();
@@ -84,7 +85,7 @@ public class HarvestLevelTweaks {
 	            switch (harvestLevel)
 	            {
 	            case 0: newHarvestLevel = harvestLevelWood; break; 
-	            case 1: newHarvestLevel = harvestLevelWood; break; 
+	            case 1: newHarvestLevel = harvestLevelFlint; break; 
 	            case 2: newHarvestLevel = harvestLevelIron; break; 
 	            case 3: newHarvestLevel = harvestLevelObsidian; break; 
 	            case 4: newHarvestLevel = harvestLevelArdite; break;
@@ -107,7 +108,6 @@ public class HarvestLevelTweaks {
 		//BLOCKS
         if (IguanaConfig.pickaxeBoostRequired) boostMod = 1;
 
-        int harvestLevelFlint = TConstructRegistry.getMaterial("Flint").harvestLevel();
         int harvestLevelCopper = TConstructRegistry.getMaterial("Copper").harvestLevel() + boostMod;
         harvestLevelIron += boostMod;
         int harvestLevelBronze = TConstructRegistry.getMaterial("Bronze").harvestLevel() + boostMod;
@@ -151,7 +151,7 @@ public class HarvestLevelTweaks {
 	        	
 	        	switch (requiredHarvestLevel)
 	        	{
-		    		case 0: newRequiredHarvestLevel = harvestLevelCopper; break;
+		    		case 0: newRequiredHarvestLevel = harvestLevelWood; break;
 		    		case 1: newRequiredHarvestLevel = harvestLevelCopper; break;
 		    		case 2: newRequiredHarvestLevel = harvestLevelIron; break;
 		    		case 3: newRequiredHarvestLevel = harvestLevelBronze; break;

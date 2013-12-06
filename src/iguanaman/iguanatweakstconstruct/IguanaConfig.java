@@ -31,6 +31,13 @@ public class IguanaConfig {
 	public static boolean showDebugXP;
     public static int xpRequiredToolsPercentage;
     public static int xpRequiredWeaponsPercentage;
+    public static double xpPerLevelMultiplier;
+    
+    // pick boost
+	public static boolean pickaxeBoostRequired;
+	public static boolean mobHeadPickaxeBoost;
+	public static boolean levelingPickaxeBoost;
+	public static int levelingPickaxeBoostXpPercentage;
 	
 	// repairs
 	public static boolean repairCostScaling;
@@ -81,7 +88,6 @@ public class IguanaConfig {
 	
 	//other
 	public static boolean partReplacement;
-	public static boolean pickaxeBoostRequired;
 	public static boolean cobaltArmor;
 	public static boolean moreExpensiveSilkTouch;
 	public static boolean moreExpensiveElectric;
@@ -193,6 +199,33 @@ public class IguanaConfig {
         xpRequiredWeaponsPercentageProperty.comment = "Change the XP required to level up weapons (higher=more) (requires 'toolLeveling' to be true)";
         xpRequiredWeaponsPercentage = Math.max(xpRequiredWeaponsPercentageProperty.getInt(100), 1);
         xpRequiredWeaponsPercentageProperty.set(xpRequiredWeaponsPercentage);
+		
+        Property xpPerLevelMultiplierProperty = config.get("leveling", "xpPerLevelMultiplier", 1d);
+        xpPerLevelMultiplierProperty.comment = "Exponential multiplier on required XP per level (e.g. 1.35 would cause xp required to max out a tool to double, with level 5 costing over 3 times more xp than level 1)";
+        xpPerLevelMultiplier = Math.max(xpPerLevelMultiplierProperty.getDouble(1d), 1d);
+        xpPerLevelMultiplierProperty.set(xpPerLevelMultiplier);
+        
+        
+        // pick leveling
+		ConfigCategory pickboostingCategory = config.getCategory("pickboosting");
+		pickboostingCategory.setComment("Options to configure to pickaxe mining level boost mechanics");
+        
+        Property pickaxeBoostRequiredProperty = config.get("pickboosting", "pickaxeBoostRequired", true);
+        pickaxeBoostRequiredProperty.comment = "Pickaxes only mine upto their head material level and need a mob head modifier OR leveling boost to advance";
+        pickaxeBoostRequired = pickaxeBoostRequiredProperty.getBoolean(true);
+        
+        Property mobHeadPickaxeBoostProperty = config.get("pickboosting", "mobHeadPickaxeBoost", true);
+        mobHeadPickaxeBoostProperty.comment = "Mob heads can be used to boost a pickaxe's mining level";
+        mobHeadPickaxeBoost = mobHeadPickaxeBoostProperty.getBoolean(true);
+        
+        Property levelingPickaxeBoostProperty = config.get("pickboosting", "levelingPickaxeBoost", false);
+        levelingPickaxeBoostProperty.comment = "A pickaxes mining level can be boosted through gaining XP";
+        levelingPickaxeBoost = levelingPickaxeBoostProperty.getBoolean(false);
+		
+        Property levelingPickaxeBoostXpPercentageProperty = config.get("pickboosting", "levelingPickaxeBoostXpPercentage", 200);
+        levelingPickaxeBoostXpPercentageProperty.comment = "XP required to boost a pick will be this percentage of normal leveling amount (i.e. 200 means 2x normal xp required)"; 
+        levelingPickaxeBoostXpPercentage = Math.max(levelingPickaxeBoostXpPercentageProperty.getInt(200), 1);
+        levelingPickaxeBoostXpPercentageProperty.set(levelingPickaxeBoostXpPercentage);
         
         
         // repairs
@@ -402,10 +435,6 @@ public class IguanaConfig {
         Property cobaltArmorProperty = config.get("other", "cobaltArmor", false);
         cobaltArmorProperty.comment = "Changes diamond armor to cobalt armor (more expensive recipe)";
         cobaltArmor = cobaltArmorProperty.getBoolean(false);
-        
-        Property pickaxeBoostRequiredProperty = config.get("other", "pickaxeBoostRequired", true);
-        pickaxeBoostRequiredProperty.comment = "Pickaxes only mine upto their head material level and need a mob head modifier OR leveling boost to advance";
-        pickaxeBoostRequired = pickaxeBoostRequiredProperty.getBoolean(true);
         
         Property partReplacementProperty = config.get("other", "partReplacement", true);
         partReplacementProperty.comment = "Can you replace parts of existing tools? (If true, paper/thaumium doesn't give extra modifiers)";

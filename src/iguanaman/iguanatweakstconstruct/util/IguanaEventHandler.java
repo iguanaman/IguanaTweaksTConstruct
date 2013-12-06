@@ -347,13 +347,27 @@ public class IguanaEventHandler {
                 modifierTips.add("");
 	            
 		        toolTag.setInteger("ToolLevel", 1);
-		        toolTag.setLong("ToolEXP", 0);
 		        
+		        toolTag.setLong("ToolEXP", 0);
 	            if (IguanaConfig.showTooltipXP)
 	            {
 	            	tips.add(IguanaLevelingLogic.getXpString(new ItemStack(event.tool), false, toolTag));
 	                modifierTips.add("");
 	            }
+
+		        if (IguanaConfig.levelingPickaxeBoost && (event.tool instanceof Pickaxe || event.tool instanceof Hammer))
+		        {
+			        toolTag.setLong("HeadEXP", 0);
+		            if (IguanaConfig.showTooltipXP)
+		            {
+		        		int hLevel = toolTag.hasKey("HarvestLevel") ? hLevel = toolTag.getInteger("HarvestLevel") : -1;
+		            	if (hLevel >= 2 && hLevel < TConstructRegistry.getMaterial("Manyullyn").harvestLevel())
+		            	{
+			            	tips.add(IguanaLevelingLogic.getXpString(new ItemStack(event.tool), false, toolTag, true));
+			                modifierTips.add("");
+		            	}
+		            }
+		        }
 			}
 	    	
 	    	// STORE + REMOVE EXISTING TOOLTIPS
@@ -471,8 +485,30 @@ public class IguanaEventHandler {
 				
 				if (equipped != null && equipped.getItem() != null && equipped.getItem() instanceof ToolCore)
 				{
+			        NBTTagCompound tags = equipped.getTagCompound().getCompoundTag("InfiTool");
+			    	
+			        int level = tags.getInteger("ToolLevel");
+					int hLevel = tags.hasKey("HarvestLevel") ? hLevel = tags.getInteger("HarvestLevel") : -1;
+					
 				    event.left.add("");
-					event.left.add(IguanaLevelingLogic.getXpString(equipped, true));
+
+			        if (IguanaConfig.showTooltipXP)
+			        {
+			        	if (level <= 5)
+			        	{
+							event.left.add(IguanaLevelingLogic.getXpString(equipped, true));
+			        	}
+			        	
+			        	if (IguanaConfig.levelingPickaxeBoost)
+			        	{
+				        	if (hLevel >= 2 && hLevel < TConstructRegistry.getMaterial("Manyullyn").harvestLevel() 
+				        			&& !tags.hasKey("HarvestLevelModified") 
+				        			&& (equipped.getItem() instanceof Pickaxe || equipped.getItem() instanceof Hammer))
+				        	{
+								event.left.add(IguanaLevelingLogic.getXpString(equipped, true, true));
+				        	}
+			        	}
+			        }
 				}
 			}
 		}

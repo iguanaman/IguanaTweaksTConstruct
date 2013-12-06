@@ -155,16 +155,26 @@ public class IguanaModUpgrade extends ToolMod {
         
     	tags.setInteger("BaseDurability", base);
     	tags.setInteger("TotalDurability", total);
-    	    	
-    	if (tags.hasKey("ToolEXP"))
-    	{
+    	
+		if (tags.hasKey("ToolEXP"))
+		{
 			int requiredXp = IguanaLevelingLogic.getRequiredXp(tool, tags);
 			long currentXp = tags.getLong("ToolEXP");
 			float xpPercentage = (float)currentXp / (float)requiredXp;
 			int newRequiredXp = IguanaLevelingLogic.getRequiredXp(newTool, newTags);
 			long newXp = Math.round(newRequiredXp * xpPercentage);
 			tags.setLong("ToolEXP", newXp);
-    	}
+		}
+		
+		if (tags.hasKey("HeadEXP"))
+		{
+			int requiredXp = IguanaLevelingLogic.getRequiredXp(tool, tags, true);
+			long currentXp = tags.getLong("HeadEXP");
+			float xpPercentage = (float)currentXp / (float)requiredXp;
+			int newRequiredXp = IguanaLevelingLogic.getRequiredXp(newTool, newTags, true);
+			long newXp = Math.round(newRequiredXp * xpPercentage);
+			tags.setLong("HeadEXP", newXp);
+		}
     	
     	if (tags.hasKey("HarvestLevelModified"))
     	{
@@ -272,10 +282,30 @@ public class IguanaModUpgrade extends ToolMod {
             modifierTips.add("");
         }
     	
-        tips.add(IguanaLevelingLogic.getLevelTooltip(tags.getInteger("ToolLevel")));
+        int level = tags.getInteger("ToolLevel");
+		int hLevel = tags.hasKey("HarvestLevel") ? hLevel = tags.getInteger("HarvestLevel") : -1;
+        tips.add(IguanaLevelingLogic.getLevelTooltip(level));
         modifierTips.add("");
-        tips.add(IguanaLevelingLogic.getXpString(tool, false, tags));
-        modifierTips.add("");
+
+        if (IguanaConfig.showTooltipXP)
+        {
+        	if (level <= 5)
+        	{
+            	tips.add(IguanaLevelingLogic.getXpString(tool, false, false));
+            	modifierTips.add("");
+        	}
+        	
+        	if (IguanaConfig.levelingPickaxeBoost)
+        	{
+	        	if (hLevel >= 2 && hLevel < TConstructRegistry.getMaterial("Manyullyn").harvestLevel() 
+	        			&& !tags.hasKey("HarvestLevelModified") 
+	        			&& (tool.getItem() instanceof Pickaxe || tool.getItem() instanceof Hammer))
+	        	{
+	            	tips.add(IguanaLevelingLogic.getXpString(tool, false, true));
+	            	modifierTips.add("");
+	        	}
+        	}
+        }
     	
     	//get and remove tooltips
         int tipNum = 0;

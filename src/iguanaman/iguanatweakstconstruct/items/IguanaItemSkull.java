@@ -61,15 +61,18 @@ public class IguanaItemSkull extends ItemSkull {
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-    	int meta = par1ItemStack.getItemDamage();
-    	if (meta < 7) par3List.add("Pickaxe modifier"); 
-    	switch (meta)
+    	if (IguanaConfig.mobHeadPickaxeBoost)
     	{
-			case 0: par3List.add("Max tier: Copper"); break;
-			case 1: par3List.add("Max tier: Alumite"); break;
-			case 2: par3List.add("Max tier: Copper"); break;
-			case 4: par3List.add("Max tier: Iron"); break;
-			case 5: par3List.add("Max tier: Bronze"); break;
+	    	int meta = par1ItemStack.getItemDamage();
+	    	if (meta < 7) par3List.add("Pickaxe modifier"); 
+	    	switch (meta)
+	    	{
+				case 0: par3List.add("Max tier: Copper"); break;
+				case 1: par3List.add("Max tier: Alumite"); break;
+				case 2: par3List.add("Max tier: Copper"); break;
+				case 4: par3List.add("Max tier: Iron"); break;
+				case 5: par3List.add("Max tier: Bronze"); break;
+	    	}
     	}
     }
 

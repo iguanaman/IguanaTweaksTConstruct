@@ -361,7 +361,7 @@ public class IguanaEventHandler {
 		            if (IguanaConfig.showTooltipXP)
 		            {
 		        		int hLevel = toolTag.hasKey("HarvestLevel") ? hLevel = toolTag.getInteger("HarvestLevel") : -1;
-		            	if (hLevel >= 2 && hLevel < TConstructRegistry.getMaterial("Manyullyn").harvestLevel())
+		            	if (hLevel >= TConstructRegistry.getMaterial("Copper").harvestLevel() && hLevel < TConstructRegistry.getMaterial("Manyullyn").harvestLevel())
 		            	{
 			            	tips.add(IguanaLevelingLogic.getXpString(new ItemStack(event.tool), false, toolTag, true));
 			                modifierTips.add("");
@@ -501,7 +501,7 @@ public class IguanaEventHandler {
 			        	
 			        	if (IguanaConfig.levelingPickaxeBoost)
 			        	{
-				        	if (hLevel >= 2 && hLevel < TConstructRegistry.getMaterial("Manyullyn").harvestLevel() 
+				        	if (hLevel >= TConstructRegistry.getMaterial("Copper").harvestLevel() && hLevel < TConstructRegistry.getMaterial("Manyullyn").harvestLevel() 
 				        			&& !tags.hasKey("HarvestLevelModified") 
 				        			&& (equipped.getItem() instanceof Pickaxe || equipped.getItem() instanceof Hammer))
 				        	{

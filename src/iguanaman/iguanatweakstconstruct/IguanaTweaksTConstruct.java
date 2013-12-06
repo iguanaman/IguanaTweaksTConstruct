@@ -112,8 +112,12 @@ public class IguanaTweaksTConstruct {
 			ICommandManager commandManager = FMLCommonHandler.instance().getMinecraftServerInstance().getCommandManager();
 			ServerCommandManager serverCommandManager = ((ServerCommandManager) commandManager);
 			serverCommandManager.registerCommand(new IguanaCommandConfig());
-			serverCommandManager.registerCommand(new IguanaCommandLevelUpTool());
-			serverCommandManager.registerCommand(new IguanaCommandToolXP());
+			
+			if (IguanaConfig.toolLeveling)
+			{
+				serverCommandManager.registerCommand(new IguanaCommandLevelUpTool());
+				serverCommandManager.registerCommand(new IguanaCommandToolXP());
+			}
 		}
 
 

@@ -8,6 +8,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
 public class IguanaCommandToolXP extends CommandBase {
 
@@ -35,9 +36,27 @@ public class IguanaCommandToolXP extends CommandBase {
 			{
 				if (equipped.getItem() instanceof ToolCore)
 				{
-					IguanaLevelingLogic.addXP(equipped, entityplayermp, xp);
-					notifyAdmins(icommandsender, 1, "Set " + entityplayermp.getEntityName() + "'s tool xp to " + xp, new Object[0]);
-
+					NBTTagCompound tags = equipped.getTagCompound().getCompoundTag("InfiTool");
+					if (tags.hasKey("ToolEXP"))
+					{
+				    	Long toolXP = tags.hasKey("ToolEXP") ? tags.getLong("ToolEXP") : -1;
+				    	Long headXP = tags.hasKey("HeadEXP") ? tags.getLong("HeadEXP") : -1;
+				    	
+						IguanaLevelingLogic.updateXP(equipped, entityplayermp, toolXP + xp, headXP + xp);
+						
+			            if (entityplayermp != icommandsender)
+						{
+							notifyAdmins(icommandsender, 1, "Added " + xp + " to %s's tool", new Object[]{entityplayermp.getEntityName()});
+						}
+						else
+						{
+							notifyAdmins(icommandsender, 1, "Added " + xp + " to their own tool", new Object[]{});
+						}
+					}
+					else
+					{
+			        	throw new WrongUsageException("Player must have a levelable Tinker's Construct tool in hand", new Object[0]);
+					}
 				}
 				else
 				{

@@ -165,7 +165,7 @@ public class IguanaModRedstone extends ToolMod {
         	if (IguanaConfig.levelingPickaxeBoost)
         	{
         		int hLevel = tags.hasKey("HarvestLevel") ? hLevel = tags.getInteger("HarvestLevel") : -1;
-	        	if (hLevel >= 2 && hLevel < TConstructRegistry.getMaterial("Manyullyn").harvestLevel() 
+	        	if (hLevel >= TConstructRegistry.getMaterial("Copper").harvestLevel() && hLevel < TConstructRegistry.getMaterial("Manyullyn").harvestLevel() 
 	        			&& !tags.hasKey("HarvestLevelModified") 
 	        			&& (tool.getItem() instanceof Pickaxe || tool.getItem() instanceof Hammer))
 	        	{

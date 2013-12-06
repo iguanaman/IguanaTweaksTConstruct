@@ -297,7 +297,7 @@ public class IguanaModUpgrade extends ToolMod {
         	
         	if (IguanaConfig.levelingPickaxeBoost)
         	{
-	        	if (hLevel >= 2 && hLevel < TConstructRegistry.getMaterial("Manyullyn").harvestLevel() 
+	        	if (hLevel >= TConstructRegistry.getMaterial("Copper").harvestLevel() && hLevel < TConstructRegistry.getMaterial("Manyullyn").harvestLevel() 
 	        			&& !tags.hasKey("HarvestLevelModified") 
 	        			&& (tool.getItem() instanceof Pickaxe || tool.getItem() instanceof Hammer))
 	        	{

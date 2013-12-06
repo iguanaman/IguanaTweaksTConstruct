@@ -85,7 +85,6 @@ public class IguanaLevelingLogic {
 	
 	public static void updateXP(ItemStack tool, EntityPlayer player, long toolXP, long headXP)
 	{
-        if (player.capabilities.isCreativeMode) return;
         
         NBTTagCompound tags = tool.getTagCompound().getCompoundTag("InfiTool");
         
@@ -113,7 +112,7 @@ public class IguanaLevelingLogic {
     	
     	if (IguanaConfig.levelingPickaxeBoost && tags.hasKey("HeadEXP") && !tags.hasKey("HarvestLevelModified"))
     	{
-    		if (hLevel >= 2 && ((!IguanaConfig.pickaxeBoostRequired && hLevel < 6 || IguanaConfig.pickaxeBoostRequired && hLevel < 7)))
+    		if (hLevel >= TConstructRegistry.getMaterial("Copper").harvestLevel() && ((!IguanaConfig.pickaxeBoostRequired && hLevel < 6 || IguanaConfig.pickaxeBoostRequired && hLevel < 7)))
     		{
         		tags.setLong("HeadEXP", headXP);
         		
@@ -154,7 +153,7 @@ public class IguanaLevelingLogic {
         	
         	if (IguanaConfig.levelingPickaxeBoost)
         	{
-	        	if (hLevel >= 2 && hLevel < TConstructRegistry.getMaterial("Manyullyn").harvestLevel() 
+	        	if (hLevel >= TConstructRegistry.getMaterial("Copper").harvestLevel() && hLevel < TConstructRegistry.getMaterial("Manyullyn").harvestLevel() 
 	        			&& !tags.hasKey("HarvestLevelModified") 
 	        			&& (tool.getItem() instanceof Pickaxe || tool.getItem() instanceof Hammer))
 	        	{
@@ -206,13 +205,12 @@ public class IguanaLevelingLogic {
 	
     public static void addXP(ItemStack tool, EntityPlayer player, long xp)
     {
+        if (player.capabilities.isCreativeMode) return;
+        
         NBTTagCompound tags = tool.getTagCompound().getCompoundTag("InfiTool");
-    	
-    	Long toolXP = -1L;
-    	Long headXP = -1L;
 
-    	if (tags.hasKey("ToolEXP"))	toolXP = tags.getLong("ToolEXP") + xp;
-    	if (tags.hasKey("HeadEXP"))	headXP = tags.getLong("HeadEXP") + xp;
+    	Long toolXP = tags.hasKey("ToolEXP") ? tags.getLong("ToolEXP") + xp : -1;
+    	Long headXP = tags.hasKey("HeadEXP") ? tags.getLong("HeadEXP") + xp : -1;
     	
     	updateXP(tool, player, toolXP, headXP);
     }

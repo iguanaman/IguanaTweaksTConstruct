@@ -279,23 +279,23 @@ public class IguanaConfig {
 		ConfigCategory craftingCategory = config.getCategory("crafting");
 		craftingCategory.setComment("Allow Tinkers crafting to be done in a normal crafting window");
 
-        Property easyBlankPatternRecipeProperty = config.get("other", "easyBlankPatternRecipe", true);
+        Property easyBlankPatternRecipeProperty = config.get("crafting", "easyBlankPatternRecipe", true);
         easyBlankPatternRecipeProperty.comment = "Allows blank patterns to be crafted with 4 sticks in a square";
         easyBlankPatternRecipe = easyBlankPatternRecipeProperty.getBoolean(true);
 
-        Property easyPartCraftingProperty = config.get("other", "easyPartCrafting", true);
+        Property easyPartCraftingProperty = config.get("crafting", "easyPartCrafting", true);
         easyPartCraftingProperty.comment = "Allows you to make tool parts in a normal crafting window";
         easyPartCrafting = easyPartCraftingProperty.getBoolean(true);
 
-        Property easyPatternCraftingProperty = config.get("other", "easyPatternCrafting", true);
+        Property easyPatternCraftingProperty = config.get("crafting", "easyPatternCrafting", true);
         easyPatternCraftingProperty.comment = "Allows you to rotate the the tier 1 patterns in a normal crafting window";
         easyPatternCrafting = easyPatternCraftingProperty.getBoolean(true);
 
-        Property easyToolCreationProperty = config.get("other", "easyToolCreation", true);
+        Property easyToolCreationProperty = config.get("crafting", "easyToolCreation", true);
         easyToolCreationProperty.comment = "Allows you create tinkers tools in a normal crafting window";
         easyToolCreation = easyToolCreationProperty.getBoolean(true);
 
-        Property easyToolModificationProperty = config.get("other", "easyToolModification", true);
+        Property easyToolModificationProperty = config.get("crafting", "easyToolModification", true);
         easyToolModificationProperty.comment = "Allows you add modifications to tools in a normal crafting window";
         easyToolModification = easyToolModificationProperty.getBoolean(true);
         

@@ -285,9 +285,14 @@ public class IguanaLevelingLogic {
         }
         
         if (pick) 
+        {
         	base *= ((float)IguanaConfig.levelingPickaxeBoostXpPercentage / 100f);
+        }
         else
-        	base *= (float)IguanaConfig.xpPerLevelMultiplier;
+        {
+        	int level = tags.getInteger("ToolLevel");
+        	if (level >= 1) base *= Math.pow(IguanaConfig.xpPerLevelMultiplier, level - 1);
+        }
 
         return Math.round(base);
     }

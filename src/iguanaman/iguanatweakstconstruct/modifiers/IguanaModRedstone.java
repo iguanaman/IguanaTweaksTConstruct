@@ -1,10 +1,18 @@
 package iguanaman.iguanatweakstconstruct.modifiers;
 
+import iguanaman.iguanatweakstconstruct.IguanaConfig;
+import iguanaman.iguanatweakstconstruct.IguanaLevelingLogic;
+import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import tconstruct.items.tools.Hammer;
+import tconstruct.items.tools.Pickaxe;
+import tconstruct.library.TConstructRegistry;
 import tconstruct.library.tools.ToolCore;
 import tconstruct.library.tools.ToolMod;
 
@@ -54,6 +62,7 @@ public class IguanaModRedstone extends ToolMod {
     public void modify (ItemStack[] input, ItemStack tool)
     {
         NBTTagCompound tags = tool.getTagCompound().getCompoundTag("InfiTool");
+        
         int[] keyPair;
         if (tags.hasKey(key))
         {
@@ -86,6 +95,25 @@ public class IguanaModRedstone extends ToolMod {
             tags.setIntArray(key, keyPair);
         }
 
+        // Get current xp as a percentage
+		float xpPercentage = -1f;
+		if (tags.hasKey("ToolEXP"))
+		{
+			int requiredXp = IguanaLevelingLogic.getRequiredXp(tool, tags, false);
+			long currentXp = tags.getLong("ToolEXP");
+			xpPercentage = (float)currentXp / (float)requiredXp;
+		}
+
+        // Get current pick xp as a percentage
+		float headXpPercentage = -1f;
+		if (tags.hasKey("HeadEXP"))
+		{
+			int requiredXp = IguanaLevelingLogic.getRequiredXp(tool, tags, true);
+			long currentXp = tags.getLong("HeadEXP");
+			headXpPercentage = (float)currentXp / (float)requiredXp;
+		}
+        
+
         int miningSpeed = tags.getInteger("MiningSpeed");
         miningSpeed += (increase * 4);
         tags.setInteger("MiningSpeed", miningSpeed);
@@ -103,6 +131,80 @@ public class IguanaModRedstone extends ToolMod {
             int baseDrawSpeed = tags.getInteger("BaseDrawSpeed");
             int drawSpeed = (int) (baseDrawSpeed - (0.1f * baseDrawSpeed * (keyPair[0] / 50f)));
             tags.setInteger("DrawSpeed", drawSpeed);
+        }
+        
+        // Reset xp based on previous percentage
+		if (tags.hasKey("ToolEXP"))
+		{
+			int newRequiredXp = IguanaLevelingLogic.getRequiredXp(tool, tags, false);
+			long newXp = Math.round(newRequiredXp * xpPercentage);
+			tags.setLong("ToolEXP", newXp);
+		}
+        
+        // Reset head xp based on previous percentage
+		if (tags.hasKey("HeadEXP"))
+		{
+			int newRequiredXp = IguanaLevelingLogic.getRequiredXp(tool, tags, true);
+			long newXp = Math.round(newRequiredXp * headXpPercentage);
+			tags.setLong("HeadEXP", newXp);
+		}
+		
+    	//tooltip lists
+    	List<String> tips = new ArrayList<String>();
+    	List<String> modifierTips = new ArrayList<String>();
+
+        if (IguanaConfig.showTooltipXP)
+        {
+        	int level = tags.getInteger("ToolLevel");
+        	if (level <= 5)
+        	{
+            	tips.add(IguanaLevelingLogic.getXpString(tool, false, false));
+            	modifierTips.add("");
+        	}
+        	
+        	if (IguanaConfig.levelingPickaxeBoost)
+        	{
+        		int hLevel = tags.hasKey("HarvestLevel") ? hLevel = tags.getInteger("HarvestLevel") : -1;
+	        	if (hLevel >= 2 && hLevel < TConstructRegistry.getMaterial("Manyullyn").harvestLevel() 
+	        			&& !tags.hasKey("HarvestLevelModified") 
+	        			&& (tool.getItem() instanceof Pickaxe || tool.getItem() instanceof Hammer))
+	        	{
+	            	tips.add(IguanaLevelingLogic.getXpString(tool, false, true));
+	            	modifierTips.add("");
+	        	}
+        	}
+        }
+    	
+    	//get and remove tooltips
+        int tipNum = 0;
+        while (true)
+        {
+            String tip = "Tooltip" + ++tipNum;
+            if (tags.hasKey(tip))
+            {
+            	String tipString = tags.getString(tip);
+            	if (!tipString.startsWith("XP:") && !tipString.startsWith("Head XP:"))
+            	{
+                    tips.add(tipString);
+                    modifierTips.add(tags.getString("ModifierTip" + tipNum));
+            	}
+                tags.removeTag(tip);
+                tags.removeTag("ModifierTip" + tipNum);
+            }
+            else break;
+        }
+        
+        //write tips
+        for (int i = 1; i <= tips.size(); ++i)
+        {
+        	if (tips.get(i - 1) != null)
+        	{
+	        	tags.setString("Tooltip" + i, tips.get(i - 1));
+	        	if (modifierTips.get(i - 1) != null)
+	        		tags.setString("ModifierTip" + i, modifierTips.get(i - 1));
+	        	else
+	        		tags.setString("ModifierTip" + i, "");
+        	}
         }
     }
 

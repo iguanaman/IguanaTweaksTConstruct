@@ -335,6 +335,7 @@ public class IguanaLevelingLogic {
 
             tags.setInteger("Modifiers", currentModifiers);
         }
+        
     }
     
     public static void LevelUpPick(ItemStack stack, EntityPlayer player, boolean leveled)

@@ -95,7 +95,8 @@ public class HarvestLevelTweaks {
 	            
 	            if (harvestLevel != newHarvestLevel)
 	            {
-	            	//IguanaLog.log("Changing harvest level of " + entry.getKey().getUnlocalizedName() + " from " + harvestLevel + " to " + newHarvestLevel);
+	            	if (IguanaConfig.logMiningLevelChanges) IguanaLog.log("Changing mining level of " + entry.getKey().getUnlocalizedName() + " from " + harvestLevel + " to " + newHarvestLevel);
+	            	
 	                entry.setValue(Arrays.asList(toolClass, newHarvestLevel));
 	            }
 	            
@@ -163,7 +164,7 @@ public class HarvestLevelTweaks {
 	        	
 	        	if (requiredHarvestLevel != newRequiredHarvestLevel)
 	        	{
-	            	//IguanaLog.log("Changing required harvest level of " + block.getUnlocalizedName() + ":" + metadata + " from " + requiredHarvestLevel + " to " + newRequiredHarvestLevel);
+	            	if (IguanaConfig.logHarvestLevelChanges) IguanaLog.log("Changing required harvest level of " + block.getUnlocalizedName() + ":" + metadata + " from " + requiredHarvestLevel + " to " + newRequiredHarvestLevel);
 	                entry.setValue(newRequiredHarvestLevel);
 	        	}
         	

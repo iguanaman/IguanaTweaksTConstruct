@@ -85,6 +85,10 @@ public class IguanaConfig {
     public static int patternCostFletching;
     public static int patternCostArrowHead;
     */
+    
+    //debug
+    public static boolean logHarvestLevelChanges;
+    public static boolean logMiningLevelChanges;
 	
 	//other
 	public static boolean partReplacement;
@@ -426,6 +430,19 @@ public class IguanaConfig {
         patternCostArrowHead = Math.max(patternCostArrowHeadProperty.getInt(2), 1);
         patternCostArrowHeadProperty.set(patternCostArrowHead);
         */
+        
+        
+        // debug
+		ConfigCategory debugCategory = config.getCategory("debug");
+		debugCategory.setComment("Debugging options");
+
+        Property logHarvestLevelChangesProperty = config.get("debug", "logHarvestLevelChanges", false);
+        logHarvestLevelChangesProperty.comment = "Outputs to the log when the harvest level of a block is changed";
+        logHarvestLevelChanges = logHarvestLevelChangesProperty.getBoolean(false);
+
+        Property logMiningLevelChangesProperty = config.get("debug", "logMiningLevelChanges", false);
+        logMiningLevelChangesProperty.comment = "Outputs to the log when the mining level of a tool is changed";
+        logMiningLevelChanges = logMiningLevelChangesProperty.getBoolean(false);
         
         
         // other

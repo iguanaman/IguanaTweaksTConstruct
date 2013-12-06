@@ -1,6 +1,7 @@
 package iguanaman.iguanatweakstconstruct.commands;
 
 import iguanaman.iguanatweakstconstruct.IguanaLevelingLogic;
+import tconstruct.library.TConstructRegistry;
 import tconstruct.library.tools.AbilityHelper;
 import tconstruct.library.tools.ToolCore;
 import net.minecraft.command.CommandBase;
@@ -32,12 +33,15 @@ public class IguanaCommandToolXP extends CommandBase {
 	        EntityPlayerMP entityplayermp = astring.length >= 2 ? getPlayer(icommandsender, astring[0]) : getCommandSenderAsPlayer(icommandsender);
 	        int xp = astring.length >= 2 ? parseIntWithMinMax(icommandsender, astring[1], 0, Integer.MAX_VALUE) : parseIntWithMinMax(icommandsender, astring[0], 0, Integer.MAX_VALUE);
 	        ItemStack equipped = entityplayermp.getCurrentEquippedItem();
-			if (equipped != null)
+			if (equipped != null && equipped.getItem() instanceof ToolCore)
 			{
-				if (equipped.getItem() instanceof ToolCore)
+				NBTTagCompound tags = equipped.getTagCompound().getCompoundTag("InfiTool");
+				if (tags.hasKey("ToolLevel"))
 				{
-					NBTTagCompound tags = equipped.getTagCompound().getCompoundTag("InfiTool");
-					if (tags.hasKey("ToolEXP"))
+			    	int level = tags.getInteger("ToolLevel");
+					int hLevel = tags.hasKey("HarvestLevel") ? hLevel = tags.getInteger("HarvestLevel") : -1;
+					
+					if ((level >= 1 && level <= 5) || (hLevel >= TConstructRegistry.getMaterial("Copper").harvestLevel() || hLevel < TConstructRegistry.getMaterial("Manyullyn").harvestLevel()))
 					{
 				    	Long toolXP = tags.hasKey("ToolEXP") ? tags.getLong("ToolEXP") : -1;
 				    	Long headXP = tags.hasKey("HeadEXP") ? tags.getLong("HeadEXP") : -1;
@@ -55,12 +59,12 @@ public class IguanaCommandToolXP extends CommandBase {
 					}
 					else
 					{
-			        	throw new WrongUsageException("Player must have a levelable Tinker's Construct tool in hand", new Object[0]);
+			        	throw new WrongUsageException("Players tool is already max level", new Object[0]);
 					}
 				}
 				else
 				{
-		        	throw new WrongUsageException("Player must have a Tinker's Construct tool in hand", new Object[0]);
+		        	throw new WrongUsageException("Player must have a levelable Tinker's Construct tool in hand", new Object[0]);
 				}
 			}
 			else

@@ -34,28 +34,40 @@ public class IguanaCommandLevelUpTool extends CommandBase {
 		if (equipped != null && equipped.getItem() instanceof ToolCore)
 		{
 			NBTTagCompound tags = equipped.getTagCompound().getCompoundTag("InfiTool");
-			if (tags.hasKey("ToolEXP"))
+			if (tags.hasKey("ToolLevel"))
 			{
+		    	int level = tags.getInteger("ToolLevel");
 				int hLevel = tags.hasKey("HarvestLevel") ? hLevel = tags.getInteger("HarvestLevel") : -1;
-
-		    	Long toolXP = tags.hasKey("ToolEXP") ? tags.getLong("ToolEXP") : -1;
-		    	Long headXP = tags.hasKey("HeadEXP") ? tags.getLong("HeadEXP") : -1;
-		    	long requiredToolXP = (long)IguanaLevelingLogic.getRequiredXp(equipped, tags) - toolXP;
-		    	long requiredHeadXP = tags.hasKey("HeadEXP") && hLevel >= TConstructRegistry.getMaterial("Copper").harvestLevel() && hLevel < TConstructRegistry.getMaterial("Manyullyn").harvestLevel()? (long)IguanaLevelingLogic.getRequiredXp(equipped, tags) - headXP : -1;
-		    	
-		    	if (requiredHeadXP < requiredToolXP && requiredHeadXP > 0)
-		    		IguanaLevelingLogic.updateXP(equipped, entityplayermp, toolXP + requiredHeadXP, headXP + requiredHeadXP);
-		    	else
-		    		IguanaLevelingLogic.updateXP(equipped, entityplayermp, toolXP + requiredToolXP, headXP + requiredToolXP);
-
-	            if (entityplayermp != icommandsender)
+				
+				if ((level >= 1 && level <= 5) || (hLevel >= TConstructRegistry.getMaterial("Copper").harvestLevel() || hLevel < TConstructRegistry.getMaterial("Manyullyn").harvestLevel()))
 				{
-					notifyAdmins(icommandsender, 1, "Leveled up %s's tool", new Object[]{entityplayermp.getEntityName()});
+			    	Long toolXP = tags.hasKey("ToolEXP") ? tags.getLong("ToolEXP") : -1;
+			    	Long headXP = tags.hasKey("HeadEXP") ? tags.getLong("HeadEXP") : -1;
+			    	long requiredToolXP = (long)IguanaLevelingLogic.getRequiredXp(equipped, tags) - toolXP;
+			    	long requiredHeadXP = tags.hasKey("HeadEXP") && hLevel >= TConstructRegistry.getMaterial("Copper").harvestLevel() && hLevel < TConstructRegistry.getMaterial("Manyullyn").harvestLevel() ? (long)IguanaLevelingLogic.getRequiredXp(equipped, tags) - headXP : -1;
+			    	
+			    	if (requiredHeadXP < requiredToolXP && requiredHeadXP > 0)
+			    		IguanaLevelingLogic.updateXP(equipped, entityplayermp, toolXP + requiredHeadXP, headXP + requiredHeadXP);
+			    	else
+			    		IguanaLevelingLogic.updateXP(equipped, entityplayermp, toolXP + requiredToolXP, headXP + requiredToolXP);
+
+		            if (entityplayermp != icommandsender)
+					{
+						notifyAdmins(icommandsender, 1, "Leveled up %s's tool", new Object[]{entityplayermp.getEntityName()});
+					}
+					else
+					{
+						notifyAdmins(icommandsender, 1, "Leveled up their own tool", new Object[]{});
+					}
 				}
 				else
 				{
-					notifyAdmins(icommandsender, 1, "Leveled up their own tool", new Object[]{});
+		        	throw new WrongUsageException("Players tool is already max level", new Object[0]);
 				}
+			}
+			else
+			{
+	        	throw new WrongUsageException("Player must have a levelable Tinker's Construct tool in hand", new Object[0]);
 			}
 		}
 		else

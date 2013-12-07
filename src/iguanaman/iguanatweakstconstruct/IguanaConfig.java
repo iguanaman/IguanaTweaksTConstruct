@@ -91,6 +91,7 @@ public class IguanaConfig {
     public static boolean logMiningLevelChanges;
 	
 	//other
+    public static boolean partTooltips;
 	public static boolean partReplacement;
 	public static boolean cobaltArmor;
 	public static boolean moreExpensiveSilkTouch;
@@ -452,6 +453,10 @@ public class IguanaConfig {
         Property cobaltArmorProperty = config.get("other", "cobaltArmor", false);
         cobaltArmorProperty.comment = "Changes diamond armor to cobalt armor (more expensive recipe)";
         cobaltArmor = cobaltArmorProperty.getBoolean(false);
+        
+        Property partTooltipsProperty = config.get("other", "partTooltips", true);
+        partTooltipsProperty.comment = "Shows information about tool parts in the mouseover tooltip";
+        partTooltips = partTooltipsProperty.getBoolean(true);
         
         Property partReplacementProperty = config.get("other", "partReplacement", true);
         partReplacementProperty.comment = "Can you replace parts of existing tools? (If true, paper/thaumium doesn't give extra modifiers)";

@@ -1,8 +1,13 @@
 package iguanaman.iguanatweakstconstruct;
 
 import tconstruct.common.TContent;
+import tconstruct.items.Bowstring;
+import tconstruct.items.Fletching;
 import tconstruct.items.MetalPattern;
 import tconstruct.items.Pattern;
+import tconstruct.items.ToolPart;
+import tconstruct.items.ToolPartHidden;
+import tconstruct.library.crafting.ToolBuilder;
 import tconstruct.util.config.PHConstruct;
 import iguanaman.iguanatweakstconstruct.items.ClayBucket;
 import iguanaman.iguanatweakstconstruct.items.ClayBucketFilled;
@@ -10,6 +15,7 @@ import iguanaman.iguanatweakstconstruct.items.ClayBucketMilk;
 import iguanaman.iguanatweakstconstruct.items.IguanaItemSkull;
 import iguanaman.iguanatweakstconstruct.items.IguanaMetalPattern;
 import iguanaman.iguanatweakstconstruct.items.IguanaPattern;
+import iguanaman.iguanatweakstconstruct.items.IguanaToolPart;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -61,6 +67,58 @@ public class IguanaItems {
 		FluidContainerRegistry.registerFluidContainer(FluidRegistry.WATER, new ItemStack(clayBucketWater), emptyClayBucket);
 		FluidContainerRegistry.registerFluidContainer(FluidRegistry.LAVA, new ItemStack(clayBucketLava), emptyClayBucket);
 		
+		
+		//TCON PARTS
+        TContent.toolRod = new IguanaToolPart(PHConstruct.toolRod, "_rod", "ToolRod").setUnlocalizedName("tconstruct.ToolRod");
+        TContent.pickaxeHead = new IguanaToolPart(PHConstruct.pickaxeHead, "_pickaxe_head", "PickHead").setUnlocalizedName("tconstruct.PickaxeHead");
+        TContent.shovelHead = new IguanaToolPart(PHConstruct.shovelHead, "_shovel_head", "ShovelHead").setUnlocalizedName("tconstruct.ShovelHead");
+        TContent.hatchetHead = new IguanaToolPart(PHConstruct.axeHead, "_axe_head", "AxeHead").setUnlocalizedName("tconstruct.AxeHead");
+        TContent.binding = new IguanaToolPart(PHConstruct.binding, "_binding", "Binding").setUnlocalizedName("tconstruct.Binding");
+        TContent.toughBinding = new IguanaToolPart(PHConstruct.toughBinding, "_toughbind", "ToughBind").setUnlocalizedName("tconstruct.ThickBinding");
+        TContent.toughRod = new IguanaToolPart(PHConstruct.toughRod, "_toughrod", "ToughRod").setUnlocalizedName("tconstruct.ThickRod");
+        TContent.largePlate = new IguanaToolPart(PHConstruct.largePlate, "_largeplate", "LargePlate").setUnlocalizedName("tconstruct.LargePlate");
+
+        TContent.swordBlade = new IguanaToolPart(PHConstruct.swordBlade, "_sword_blade", "SwordBlade").setUnlocalizedName("tconstruct.SwordBlade");
+        TContent.wideGuard = new IguanaToolPart(PHConstruct.largeGuard, "_large_guard", "LargeGuard").setUnlocalizedName("tconstruct.LargeGuard");
+        TContent.handGuard = new IguanaToolPart(PHConstruct.medGuard, "_medium_guard", "MediumGuard").setUnlocalizedName("tconstruct.MediumGuard");
+        TContent.crossbar = new IguanaToolPart(PHConstruct.crossbar, "_crossbar", "Crossbar").setUnlocalizedName("tconstruct.Crossbar");
+        TContent.knifeBlade = new IguanaToolPart(PHConstruct.knifeBlade, "_knife_blade", "KnifeBlade").setUnlocalizedName("tconstruct.KnifeBlade");
+        TContent.fullGuard = new IguanaToolPart(PHConstruct.fullGuard, "_full_guard", "FullGuard").setUnlocalizedName("tconstruct.FullGuard");
+
+        TContent.frypanHead = new IguanaToolPart(PHConstruct.frypanHead, "_frypan_head", "FrypanHead").setUnlocalizedName("tconstruct.FrypanHead");
+        TContent.signHead = new IguanaToolPart(PHConstruct.signHead, "_battlesign_head", "SignHead").setUnlocalizedName("tconstruct.SignHead");
+        TContent.chiselHead = new IguanaToolPart(PHConstruct.chiselHead, "_chisel_head", "ChiselHead").setUnlocalizedName("tconstruct.ChiselHead");
+
+        TContent.scytheBlade = new IguanaToolPart(PHConstruct.scytheBlade, "_scythe_head", "ScytheHead").setUnlocalizedName("tconstruct.ScytheBlade");
+        TContent.broadAxeHead = new IguanaToolPart(PHConstruct.lumberHead, "_lumberaxe_head", "LumberHead").setUnlocalizedName("tconstruct.LumberHead");
+        TContent.excavatorHead = new IguanaToolPart(PHConstruct.excavatorHead, "_excavator_head", "ExcavatorHead").setUnlocalizedName("tconstruct.ExcavatorHead");
+        TContent.largeSwordBlade = new IguanaToolPart(PHConstruct.largeSwordBlade, "_large_sword_blade", "LargeSwordBlade").setUnlocalizedName("tconstruct.LargeSwordBlade");
+        TContent.hammerHead = new IguanaToolPart(PHConstruct.hammerHead, "_hammer_head", "HammerHead").setUnlocalizedName("tconstruct.HammerHead");
+
+        TContent.arrowhead = new IguanaToolPart(PHConstruct.arrowhead, "_arrowhead", "ArrowHead").setUnlocalizedName("tconstruct.Arrowhead");
+        
+
+        // RE-ADD TOOL RECIPES
+        ToolBuilder tb = ToolBuilder.instance;
+        tb.addNormalToolRecipe(TContent.pickaxe, TContent.pickaxeHead, TContent.toolRod, TContent.binding);
+        tb.addNormalToolRecipe(TContent.broadsword, TContent.swordBlade, TContent.toolRod, TContent.wideGuard);
+        tb.addNormalToolRecipe(TContent.hatchet, TContent.hatchetHead, TContent.toolRod);
+        tb.addNormalToolRecipe(TContent.shovel, TContent.shovelHead, TContent.toolRod);
+        tb.addNormalToolRecipe(TContent.longsword, TContent.swordBlade, TContent.toolRod, TContent.handGuard);
+        tb.addNormalToolRecipe(TContent.rapier, TContent.swordBlade, TContent.toolRod, TContent.crossbar);
+        tb.addNormalToolRecipe(TContent.frypan, TContent.frypanHead, TContent.toolRod);
+        tb.addNormalToolRecipe(TContent.battlesign, TContent.signHead, TContent.toolRod);
+        tb.addNormalToolRecipe(TContent.mattock, TContent.hatchetHead, TContent.toolRod, TContent.shovelHead);
+        tb.addNormalToolRecipe(TContent.dagger, TContent.knifeBlade, TContent.toolRod, TContent.crossbar);
+        tb.addNormalToolRecipe(TContent.cutlass, TContent.swordBlade, TContent.toolRod, TContent.fullGuard);
+        tb.addNormalToolRecipe(TContent.chisel, TContent.chiselHead, TContent.toolRod);
+
+        tb.addNormalToolRecipe(TContent.scythe, TContent.scytheBlade, TContent.toughRod, TContent.toughBinding, TContent.toughRod);
+        tb.addNormalToolRecipe(TContent.lumberaxe, TContent.broadAxeHead, TContent.toughRod, TContent.largePlate, TContent.toughBinding);
+        tb.addNormalToolRecipe(TContent.cleaver, TContent.largeSwordBlade, TContent.toughRod, TContent.largePlate, TContent.toughRod);
+        tb.addNormalToolRecipe(TContent.excavator, TContent.excavatorHead, TContent.toughRod, TContent.largePlate, TContent.toughBinding);
+        tb.addNormalToolRecipe(TContent.hammer, TContent.hammerHead, TContent.toughRod, TContent.largePlate, TContent.largePlate);
+        tb.addNormalToolRecipe(TContent.battleaxe, TContent.broadAxeHead, TContent.toughRod, TContent.broadAxeHead, TContent.toughBinding);
 		
 		//SKULL ITEM
 		IguanaLog.log("Adding skull item");

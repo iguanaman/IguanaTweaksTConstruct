@@ -331,6 +331,7 @@ public class IguanaModUpgrade extends ToolMod {
             			&& !tipString.startsWith("Skill Level:")
             			&& !tipString.startsWith("XP:")
             			&& !tipString.startsWith("Head XP:")
+            			&& !tipString.startsWith("Boost XP:")
         				&& !tipString.startsWith("Requires boost"))
             	{
                     tips.add(tipString);

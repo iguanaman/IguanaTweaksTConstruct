@@ -61,7 +61,7 @@ public class IguanaLevelingLogic {
 		float xpPercentage = ((float)currentXp / (float)requiredXp) * 100f;
 		String xpPercentageString = String.format("%.2f", xpPercentage) + "%"; 
 		
-		String prefix = pick ? "Head XP: " : "XP: ";
+		String prefix = pick ? "Boost XP: " : "XP: ";
 		
 		if (IguanaConfig.detailedXpTooltip)
 			return prefix + Long.toString(currentXp) + " / " + Integer.toString(requiredXp) + " (" + xpPercentageString + ")";
@@ -171,7 +171,7 @@ public class IguanaLevelingLogic {
             if (tags.hasKey(tip))
             {
             	String tipString = tags.getString(tip);
-            	if (!tipString.startsWith("XP:") && !tipString.startsWith("Head XP:") 
+            	if (!tipString.startsWith("XP:") && !tipString.startsWith("Head XP:") && !tipString.startsWith("Boost XP:") 
             			&& !tipString.startsWith("Skill Level:") && !tipString.startsWith("Mining Level:")
             			 && !tipString.startsWith("Requires boost"))
             	{

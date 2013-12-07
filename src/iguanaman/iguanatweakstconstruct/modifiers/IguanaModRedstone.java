@@ -183,7 +183,7 @@ public class IguanaModRedstone extends ToolMod {
             if (tags.hasKey(tip))
             {
             	String tipString = tags.getString(tip);
-            	if (!tipString.startsWith("XP:") && !tipString.startsWith("Head XP:"))
+            	if (!tipString.startsWith("XP:") && !tipString.startsWith("Head XP:") && !tipString.startsWith("Boost XP:"))
             	{
                     tips.add(tipString);
                     modifierTips.add(tags.getString("ModifierTip" + tipNum));

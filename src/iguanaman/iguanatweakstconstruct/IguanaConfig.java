@@ -204,9 +204,9 @@ public class IguanaConfig {
         xpRequiredWeaponsPercentage = Math.max(xpRequiredWeaponsPercentageProperty.getInt(100), 1);
         xpRequiredWeaponsPercentageProperty.set(xpRequiredWeaponsPercentage);
 		
-        Property xpPerLevelMultiplierProperty = config.get("leveling", "xpPerLevelMultiplier", 1.2d);
+        Property xpPerLevelMultiplierProperty = config.get("leveling", "xpPerLevelMultiplier", 1.35d);
         xpPerLevelMultiplierProperty.comment = "Exponential multiplier on required XP per level";
-        xpPerLevelMultiplier = Math.max(xpPerLevelMultiplierProperty.getDouble(1.2d), 1d);
+        xpPerLevelMultiplier = Math.max(xpPerLevelMultiplierProperty.getDouble(1.35d), 1d);
         xpPerLevelMultiplierProperty.set(xpPerLevelMultiplier);
         
         

@@ -83,7 +83,7 @@ public class IguanaModHeads extends ToolMod {
             if (toolTag.hasKey(tip))
             {
             	String tipString = toolTag.getString(tip);
-            	if (!tipString.startsWith("Head XP:") && !tipString.startsWith("Mining Level:"))
+            	if (!tipString.startsWith("Head XP:") && !tipString.startsWith("Mining Level:") && !tipString.startsWith("Requires boost"))
             	{
                     tips.add(toolTag.getString(tip));
                     modifierTips.add(toolTag.getString("ModifierTip" + tipNum));

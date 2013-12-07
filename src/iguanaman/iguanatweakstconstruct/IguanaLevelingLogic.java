@@ -172,7 +172,8 @@ public class IguanaLevelingLogic {
             {
             	String tipString = tags.getString(tip);
             	if (!tipString.startsWith("XP:") && !tipString.startsWith("Head XP:") 
-            			&& !tipString.startsWith("Skill Level:") && !tipString.startsWith("Mining Level:"))
+            			&& !tipString.startsWith("Skill Level:") && !tipString.startsWith("Mining Level:")
+            			 && !tipString.startsWith("Requires boost"))
             	{
                     tips.add(tipString);
                     modifierTips.add(tags.getString("ModifierTip" + tipNum));

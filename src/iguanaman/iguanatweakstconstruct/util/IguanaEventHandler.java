@@ -371,6 +371,9 @@ public class IguanaEventHandler {
 			                modifierTips.add("");
 		            	}
 		            }
+		            
+	            	tips.add("Requires boost");
+	                modifierTips.add("");
 		        }
 			}
 	    	

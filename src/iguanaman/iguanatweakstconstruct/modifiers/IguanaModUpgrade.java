@@ -176,8 +176,12 @@ public class IguanaModUpgrade extends ToolMod {
 			tags.setLong("HeadEXP", newXp);
 		}
     	
+		
+		boolean requiresBoost = false;
     	if (tags.hasKey("HarvestLevelModified"))
     	{
+    		requiresBoost = true;
+    		
     		tags.removeTag("HarvestLevelModified");
 
         	if (tags.hasKey("MobHead"))
@@ -203,6 +207,7 @@ public class IguanaModUpgrade extends ToolMod {
 	            	tags.setInteger("Effect" + Integer.toString(i+1), effects.get(i));
 	            }
         	}
+
     	}
     	
     	if (newTags.hasKey("Shoddy")) tags.setFloat("Shoddy", newTags.getFloat("Shoddy"));
@@ -304,6 +309,12 @@ public class IguanaModUpgrade extends ToolMod {
 	            	tips.add(IguanaLevelingLogic.getXpString(tool, false, true));
 	            	modifierTips.add("");
 	        	}
+	        	
+	        	if (requiresBoost)
+	        	{
+                	tips.add("Requires boost");
+                    modifierTips.add("");
+	        	}
         	}
         }
     	
@@ -319,7 +330,8 @@ public class IguanaModUpgrade extends ToolMod {
             			&& !tipString.startsWith("Mining Level:")
             			&& !tipString.startsWith("Skill Level:")
             			&& !tipString.startsWith("XP:")
-            			&& !tipString.startsWith("Head XP:"))
+            			&& !tipString.startsWith("Head XP:")
+        				&& !tipString.startsWith("Requires boost"))
             	{
                     tips.add(tipString);
                     modifierTips.add(tags.getString("ModifierTip" + tipNum));

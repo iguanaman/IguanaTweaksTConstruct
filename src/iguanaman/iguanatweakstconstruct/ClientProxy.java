@@ -1,6 +1,7 @@
 package iguanaman.iguanatweakstconstruct;
 
 import iguanaman.iguanatweakstconstruct.blocks.IguanaTileEntitySkull;
+import iguanaman.iguanatweakstconstruct.gui.IguanaPartCrafterGui;
 import iguanaman.iguanatweakstconstruct.gui.IguanaToolForgeGui;
 import iguanaman.iguanatweakstconstruct.gui.IguanaToolStationGui;
 import iguanaman.iguanatweakstconstruct.renderer.IguanaSkullRenderer;
@@ -43,7 +44,7 @@ public class ClientProxy extends CommonProxy {
             if (ID == TProxyCommon.toolStationID)
                 return new IguanaToolStationGui(player.inventory, (ToolStationLogic) world.getBlockTileEntity(x, y, z), world, x, y, z);
             if (ID == TProxyCommon.partBuilderID)
-                return new PartCrafterGui(player.inventory, (PartBuilderLogic) world.getBlockTileEntity(x, y, z), world, x, y, z);
+                return new IguanaPartCrafterGui(player.inventory, (PartBuilderLogic) world.getBlockTileEntity(x, y, z), world, x, y, z);
             if (ID == TProxyCommon.patternChestID)
                 return new PatternChestGui(player.inventory, (PatternChestLogic) world.getBlockTileEntity(x, y, z), world, x, y, z);
             if (ID == TProxyCommon.toolForgeID)

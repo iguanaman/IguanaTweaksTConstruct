@@ -85,7 +85,7 @@ public class VariousTweaks {
     		
     		if (IguanaConfig.restrictedWoodParts.contains(i+1))
                 TContent.tinkerHouseChest.removeItem(new ItemStack(part, 1, 0));
-    		if (IguanaConfig.restrictedStoneParts.contains(i+1))
+    		if (!IguanaConfig.allowStoneTools || IguanaConfig.restrictedStoneParts.contains(i+1))
                 TContent.tinkerHouseChest.removeItem(new ItemStack(part, 1, 1));
     		if (IguanaConfig.restrictedFlintParts.contains(i+1))
                 TContent.tinkerHouseChest.removeItem(new ItemStack(part, 1, 3));

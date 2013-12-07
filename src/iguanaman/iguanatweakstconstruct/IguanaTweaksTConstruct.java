@@ -71,6 +71,18 @@ public class IguanaTweaksTConstruct {
             NetworkRegistry.instance().registerGuiHandler(instance, proxy);
 
         	IguanaConfig.init(event.getSuggestedConfigurationFile());
+        	
+            toolParts = Arrays.asList (
+            		TContent.toolRod, TContent.pickaxeHead, TContent.shovelHead, TContent.hatchetHead, 
+            		TContent.binding, TContent.toughBinding, TContent.toughRod, TContent.largePlate, 
+            		TContent.swordBlade, TContent.wideGuard, TContent.handGuard, TContent.crossbar, 
+            		TContent.knifeBlade, TContent.fullGuard, TContent.frypanHead, TContent.signHead, 
+            		TContent.chiselHead, TContent.scytheBlade, TContent.broadAxeHead, TContent.excavatorHead, 
+            		TContent.largeSwordBlade, TContent.hammerHead, TContent.bowstring, TContent.fletching, 
+            		TContent.arrowhead );
+            
+            IguanaBlocks.init();
+            IguanaItems.init();
         }
      	  
        
@@ -83,27 +95,15 @@ public class IguanaTweaksTConstruct {
         @EventHandler
         public void postInit(FMLPostInitializationEvent event) {
         	proxy.registerRenderers();
-
             
-        	IguanaLog.log("Starting event handler");
-            MinecraftForge.EVENT_BUS.register(new IguanaEventHandler());
-            
-            toolParts = Arrays.asList (
-            		TContent.toolRod, TContent.pickaxeHead, TContent.shovelHead, TContent.hatchetHead, 
-            		TContent.binding, TContent.toughBinding, TContent.toughRod, TContent.largePlate, 
-            		TContent.swordBlade, TContent.wideGuard, TContent.handGuard, TContent.crossbar, 
-            		TContent.knifeBlade, TContent.fullGuard, TContent.frypanHead, TContent.signHead, 
-            		TContent.chiselHead, TContent.scytheBlade, TContent.broadAxeHead, TContent.excavatorHead, 
-            		TContent.largeSwordBlade, TContent.hammerHead, TContent.bowstring, TContent.fletching, 
-            		TContent.arrowhead );
-            
-            IguanaBlocks.init();
-            IguanaItems.init();
             MaterialTweaks.init();
             ModifierTweaks.init();
             VariousTweaks.init();
             RemoveVanillaTools.init();
             HarvestLevelTweaks.init();
+            
+        	IguanaLog.log("Starting event handler");
+            MinecraftForge.EVENT_BUS.register(new IguanaEventHandler());
         }
         
 		@EventHandler

@@ -4,7 +4,9 @@ import iguanaman.iguanatweakstconstruct.HarvestLevelTweaks;
 import iguanaman.iguanatweakstconstruct.IguanaConfig;
 import iguanaman.iguanatweakstconstruct.IguanaItems;
 import iguanaman.iguanatweakstconstruct.IguanaLevelingLogic;
+import iguanaman.iguanatweakstconstruct.IguanaLog;
 import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
+import iguanaman.iguanatweakstconstruct.blocks.IguanaGravelOre;
 import iguanaman.iguanatweakstconstruct.modifiers.IguanaModUpgrade;
 
 import java.text.DecimalFormat;
@@ -18,6 +20,7 @@ import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
+import tconstruct.blocks.GravelOre;
 import tconstruct.blocks.LiquidMetalFinite;
 import tconstruct.blocks.logic.LiquidTextureLogic;
 import tconstruct.common.TContent;
@@ -55,6 +58,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
+import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.event.ForgeSubscribe;
 
@@ -454,22 +458,25 @@ public class IguanaEventHandler {
 	@ForgeSubscribe
 	public void onBlockHarvested(HarvestDropsEvent event)
 	{
-		if (IguanaConfig.removeFlintDrop && event.block != null && event.block instanceof BlockGravel)
-		{
-			boolean addGravel = false;
-			
-			Iterator it = event.drops.iterator();
-			while (it.hasNext())
+		if (event.block != null)
+		{ 
+			if (IguanaConfig.removeFlintDrop && event.block != null && event.block instanceof BlockGravel)
 			{
-				ItemStack stack = (ItemStack) it.next();
-				if (stack != null && stack.itemID == Item.flint.itemID) 
+				boolean addGravel = false;
+				
+				Iterator it = event.drops.iterator();
+				while (it.hasNext())
 				{
-					it.remove();
-					addGravel = true;
+					ItemStack stack = (ItemStack) it.next();
+					if (stack != null && stack.itemID == Item.flint.itemID) 
+					{
+						it.remove();
+						addGravel = true;
+					}
 				}
+				
+				if (addGravel) event.drops.add(new ItemStack(Block.gravel));
 			}
-			
-			if (addGravel) event.drops.add(new ItemStack(Block.gravel));
 		}
 	}
 

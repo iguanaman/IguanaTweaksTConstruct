@@ -1,6 +1,7 @@
 package iguanaman.iguanatweakstconstruct;
 
 import iguanaman.iguanatweakstconstruct.blocks.IguanaBlockSkull;
+import iguanaman.iguanatweakstconstruct.blocks.IguanaGravelOre;
 import iguanaman.iguanatweakstconstruct.blocks.IguanaTileEntitySkull;
 import iguanaman.iguanatweakstconstruct.blocks.IguanaToolForgeBlock;
 import iguanaman.iguanatweakstconstruct.blocks.IguanaToolStationBlock;
@@ -10,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.src.ModLoader;
 import net.minecraftforge.common.MinecraftForge;
+import tconstruct.blocks.GravelOre;
 import tconstruct.common.TContent;
 import tconstruct.util.config.PHConstruct;
 import cpw.mods.fml.common.FMLLog;
@@ -33,6 +35,9 @@ public class IguanaBlocks {
         
         Block.blocksList[TContent.toolForge.blockID] = null;
         TContent.toolForge = new IguanaToolForgeBlock(PHConstruct.toolForge, Material.iron).setUnlocalizedName("ToolForge");
+        
+        Block.blocksList[TContent.oreGravel.blockID] = null;
+        TContent.oreGravel = new IguanaGravelOre(PHConstruct.oreGravel).setUnlocalizedName("GravelOre").setUnlocalizedName("tconstruct.gravelore");
         
         
         //SKULLS

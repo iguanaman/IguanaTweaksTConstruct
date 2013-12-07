@@ -7,7 +7,9 @@ import tconstruct.items.MetalPattern;
 import tconstruct.items.Pattern;
 import tconstruct.items.ToolPart;
 import tconstruct.items.ToolPartHidden;
+import tconstruct.library.crafting.PatternBuilder;
 import tconstruct.library.crafting.ToolBuilder;
+import tconstruct.library.util.IPattern;
 import tconstruct.util.config.PHConstruct;
 import iguanaman.iguanatweakstconstruct.items.ClayBucket;
 import iguanaman.iguanatweakstconstruct.items.ClayBucketFilled;
@@ -154,12 +156,13 @@ public class IguanaItems {
 		
 		
 		// NEW TCON PATTERNS
-		/*
+		
 		Item.itemsList[TContent.woodPattern.itemID] = null;
-		Item.itemsList[TContent.metalPattern.itemID] = null;
+		//Item.itemsList[TContent.metalPattern.itemID] = null;
 		TContent.woodPattern = new IguanaPattern(PHConstruct.woodPattern, "pattern_", "materials/").setUnlocalizedName("tconstruct.Pattern");
-		TContent.metalPattern = new IguanaMetalPattern(PHConstruct.metalPattern, "cast_", "materials/").setUnlocalizedName("tconstruct.MetalPattern");
-        */
+		//TContent.metalPattern = new IguanaMetalPattern(PHConstruct.metalPattern, "cast_", "materials/").setUnlocalizedName("tconstruct.MetalPattern");
+
+        PatternBuilder.instance.addToolPattern((IPattern) TContent.woodPattern);
 		
 		
         //EASTER EGGS

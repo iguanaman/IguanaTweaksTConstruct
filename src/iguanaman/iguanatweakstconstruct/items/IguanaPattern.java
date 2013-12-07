@@ -1,8 +1,15 @@
 package iguanaman.iguanatweakstconstruct.items;
 
+import java.util.List;
+
 import iguanaman.iguanatweakstconstruct.IguanaConfig;
+import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import tconstruct.items.Pattern;
+import tconstruct.library.TConstructRegistry;
+import tconstruct.library.crafting.PatternBuilder;
+import tconstruct.library.tools.ToolMaterial;
 
 public class IguanaPattern extends Pattern {
 
@@ -78,5 +85,25 @@ public class IguanaPattern extends Pattern {
         }
     }
     */
+	
+	/**
+     * allows items to add custom lines of information to the mouseover description
+     */
+	@Override
+    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
+    {
+		PatternBuilder pb = PatternBuilder.instance;
+		
+		par3List.add("Valid materials:");
+		for (ToolMaterial material : TConstructRegistry.toolMaterials.values())
+		{
+			ItemStack shard = pb.getShardFromSet(material.name());
+			shard.stackSize = shard.getMaxStackSize();
+			if (pb.getToolPart(shard, par1ItemStack, null) != null)
+			{
+				par3List.add(material.materialName);
+			}
+		}
+    }
 
 }

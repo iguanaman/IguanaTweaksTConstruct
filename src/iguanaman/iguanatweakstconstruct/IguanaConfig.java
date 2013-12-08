@@ -91,6 +91,7 @@ public class IguanaConfig {
     public static boolean logMiningLevelChanges;
 	
 	//other
+    public static boolean toolsNeverDespawn;
     public static boolean partTooltips;
 	public static boolean partReplacement;
 	public static boolean cobaltArmor;
@@ -100,9 +101,9 @@ public class IguanaConfig {
     public static boolean removeFlintDrop;
     public static boolean addFlintRecipe;
     public static int mossRepairSpeed;
+    public static int redstoneEffect;
     public static int durabilityPercentage;
     public static int miningSpeedPercentage;
-    public static int redstoneEffect;
     
     // Harvest Levels
     public static List<String> harvestLevel0Ids = new ArrayList<String>();
@@ -501,6 +502,10 @@ public class IguanaConfig {
         redstoneEffectProperty.comment = "Amount each piece of redstone increases mining speed (tinkers default is 8)";
         redstoneEffect = Math.max(redstoneEffectProperty.getInt(4), 1);
         redstoneEffectProperty.set(redstoneEffect);
+		
+        Property toolsNeverDespawnProperty = config.get("other", "toolsNeverDespawn", true);
+        toolsNeverDespawnProperty.comment = "Do Tinker's tools on the ground never despawn?";
+        toolsNeverDespawn = toolsNeverDespawnProperty.getBoolean(true);
         
         
         //restrictions

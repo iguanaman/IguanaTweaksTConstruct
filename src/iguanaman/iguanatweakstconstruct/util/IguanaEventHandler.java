@@ -43,6 +43,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.monster.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -53,6 +54,7 @@ import net.minecraft.util.EnumMovingObjectType;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.Event.Result;
 import net.minecraftforge.event.EventPriority;
+import net.minecraftforge.event.entity.item.ItemExpireEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
@@ -65,6 +67,19 @@ import net.minecraftforge.event.ForgeSubscribe;
 public class IguanaEventHandler {
 
     Random random = new Random();
+
+    @ForgeSubscribe
+    public void onItemExpireEvent(ItemExpireEvent event)
+    {
+    	if (IguanaConfig.toolsNeverDespawn && event.entity != null && event.entity instanceof EntityItem)
+    	{
+    		ItemStack stack = ((EntityItem)event.entity).getEntityItem();
+    		if (stack.getItem() != null && stack.getItem() instanceof ToolCore)
+    		{
+    			event.setResult(Result.DENY);
+    		}
+    	}
+    }
     
     @ForgeSubscribe
     public void onHurt (LivingHurtEvent event)

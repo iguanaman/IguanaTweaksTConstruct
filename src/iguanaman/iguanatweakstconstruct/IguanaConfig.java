@@ -86,6 +86,12 @@ public class IguanaConfig {
     public static int patternCostArrowHead;
     */
     
+    // modifiers
+	public static boolean moreExpensiveSilkTouch;
+	public static boolean moreExpensiveElectric;
+    public static int mossRepairSpeed;
+    public static int redstoneEffect;
+    
     //debug
     public static boolean logHarvestLevelChanges;
     public static boolean logMiningLevelChanges;
@@ -95,13 +101,9 @@ public class IguanaConfig {
     public static boolean partTooltips;
 	public static boolean partReplacement;
 	public static boolean cobaltArmor;
-	public static boolean moreExpensiveSilkTouch;
-	public static boolean moreExpensiveElectric;
     public static boolean removeStoneTorchRecipe;
     public static boolean removeFlintDrop;
     public static boolean addFlintRecipe;
-    public static int mossRepairSpeed;
-    public static int redstoneEffect;
     public static int durabilityPercentage;
     public static int miningSpeedPercentage;
     
@@ -434,6 +436,29 @@ public class IguanaConfig {
         */
         
         
+        // modifiers
+		ConfigCategory modifiersCategory = config.getCategory("modifiers");
+		modifiersCategory.setComment("Options relating to tool modifiers");
+		
+        Property moreExpensiveSilkTouchProperty = config.get("modifiers", "moreExpensiveSilkTouch", true);
+        moreExpensiveSilkTouchProperty.comment = "Silky Cloth needs gold ingots and Silky Jewels needs an emerald block";
+        moreExpensiveSilkTouch = moreExpensiveSilkTouchProperty.getBoolean(true);
+		
+        Property moreExpensiveElectricProperty = config.get("modifiers", "moreExpensiveElectric", true);
+        moreExpensiveElectricProperty.comment = "Electric modifier requires 2 modifiers slots instead of 1";
+        moreExpensiveElectric = moreExpensiveElectricProperty.getBoolean(true);
+		
+        Property mossRepairSpeedProperty = config.get("modifiers", "mossRepairSpeed", 3);
+        mossRepairSpeedProperty.comment = "Rate tools with moss repair (TC default 3)";
+        mossRepairSpeed = Math.max(mossRepairSpeedProperty.getInt(3), 0);
+        mossRepairSpeedProperty.set(mossRepairSpeed);
+		
+        Property redstoneEffectProperty = config.get("modifiers", "redstoneEffect", 4);
+        redstoneEffectProperty.comment = "Amount each piece of redstone increases mining speed (tinkers default is 8)";
+        redstoneEffect = Math.max(redstoneEffectProperty.getInt(4), 1);
+        redstoneEffectProperty.set(redstoneEffect);
+        
+        
         // debug
 		ConfigCategory debugCategory = config.getCategory("debug");
 		debugCategory.setComment("Debugging options");
@@ -463,14 +488,6 @@ public class IguanaConfig {
         partReplacementProperty.comment = "Can you replace parts of existing tools? (If true, paper/thaumium doesn't give extra modifiers)";
         partReplacement = partReplacementProperty.getBoolean(true);
 		
-        Property moreExpensiveSilkTouchProperty = config.get("other", "moreExpensiveSilkTouch", true);
-        moreExpensiveSilkTouchProperty.comment = "Silky Cloth needs gold ingots and Silky Jewels needs an emerald block";
-        moreExpensiveSilkTouch = moreExpensiveSilkTouchProperty.getBoolean(true);
-		
-        Property moreExpensiveElectricProperty = config.get("other", "moreExpensiveElectric", true);
-        moreExpensiveElectricProperty.comment = "Electric modifier requires 2 modifiers slots instead of 1";
-        moreExpensiveElectric = moreExpensiveElectricProperty.getBoolean(true);
-		
         Property removeFlintDropProperty = config.get("other", "removeFlintDrop", true);
         removeFlintDropProperty.comment = "Removes the random chance of getting flint from gravel";
         removeFlintDrop = removeFlintDropProperty.getBoolean(true);
@@ -483,11 +500,6 @@ public class IguanaConfig {
         removeStoneTorchRecipeProperty.comment = "Removes the recipe for Tinker's Construct's stone torch";
         removeStoneTorchRecipe = removeStoneTorchRecipeProperty.getBoolean(true);
 		
-        Property mossRepairSpeedProperty = config.get("other", "mossRepairSpeed", 3);
-        mossRepairSpeedProperty.comment = "Rate tools with moss repair (TC default 3)";
-        mossRepairSpeed = Math.max(mossRepairSpeedProperty.getInt(3), 0);
-        mossRepairSpeedProperty.set(mossRepairSpeed);
-		
         Property durabilityPercentageProperty = config.get("other", "durabilityPercentage", 50);
         durabilityPercentageProperty.comment = "Change durability of all materials here (higher = tougher)";
         durabilityPercentage = Math.max(durabilityPercentageProperty.getInt(50), 1);
@@ -497,11 +509,6 @@ public class IguanaConfig {
         miningSpeedPercentageProperty.comment = "Change mining speed of all materials here (higher = faster)";
         miningSpeedPercentage = Math.max(miningSpeedPercentageProperty.getInt(100), 1);
         miningSpeedPercentageProperty.set(miningSpeedPercentage);
-		
-        Property redstoneEffectProperty = config.get("other", "redstoneEffect", 4);
-        redstoneEffectProperty.comment = "Amount each piece of redstone increases mining speed (tinkers default is 8)";
-        redstoneEffect = Math.max(redstoneEffectProperty.getInt(4), 1);
-        redstoneEffectProperty.set(redstoneEffect);
 		
         Property toolsNeverDespawnProperty = config.get("other", "toolsNeverDespawn", true);
         toolsNeverDespawnProperty.comment = "Do Tinker's tools on the ground never despawn?";

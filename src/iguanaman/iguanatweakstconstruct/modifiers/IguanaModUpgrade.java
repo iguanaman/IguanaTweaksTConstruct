@@ -53,28 +53,8 @@ public class IguanaModUpgrade extends ToolMod {
         if (tool == null || tool.getItem() == null || !(tool.getItem() instanceof ToolCore)) return false;
         NBTTagCompound tags = tool.getTagCompound().getCompoundTag("InfiTool");
         if (tags.getInteger("Damage") > 0) return false;
-        
 
-        // check which parts are changable
-        String headAbility = TConstructRegistry.getMaterial(tags.getInteger("Head")).ability;
-        boolean headChangable = headAbility.equals("Writable") || headAbility.equals("Thaumic") ? false : true;
-        String handleAbility = TConstructRegistry.getMaterial(tags.getInteger("Handle")).ability;
-        boolean handleChangable = handleAbility.equals("Writable") || headAbility.equals("Thaumic") ? false : true;
-        
-        boolean accessoryChangable = true;
-        if (tags.hasKey("Accessory"))
-        {
-            String accessoryAbility = TConstructRegistry.getMaterial(tags.getInteger("Accessory")).ability;
-            if (accessoryAbility.equals("Writable") || accessoryAbility.equals("Thaumic")) accessoryChangable = false;
-        }
-
-        boolean extraChangable = true;
-        if (tags.hasKey("Extra"))
-        {
-            String extraAbility = TConstructRegistry.getMaterial(tags.getInteger("Extra")).ability;
-            if (extraAbility.equals("Writable") || extraAbility.equals("Thaumic")) extraChangable = false;
-        }
-
+        // Get tool recipe
         ToolRecipe toolRecipe = GetRecipe((ToolCore)tool.getItem());
         if (toolRecipe == null) return false;
         
@@ -84,7 +64,29 @@ public class IguanaModUpgrade extends ToolMod {
         int oldAccessory = tags.getInteger("Accessory");
         int oldExtra = tags.getInteger("Extra");
         
+        // check which parts are Writable
+        String headAbility = TConstructRegistry.getMaterial(tags.getInteger("Head")).ability;
+        boolean headWritable = headAbility.equals("Writable") || headAbility.equals("Thaumic") ? true : false;
+        String handleAbility = TConstructRegistry.getMaterial(tags.getInteger("Handle")).ability;
+        boolean handleWritable = handleAbility.equals("Writable") || headAbility.equals("Thaumic") ? true : false;
+        
+        boolean accessoryWritable = false;
+        if (tags.hasKey("Accessory"))
+        {
+            String accessoryAbility = TConstructRegistry.getMaterial(tags.getInteger("Accessory")).ability;
+            if (accessoryAbility.equals("Writable") || accessoryAbility.equals("Thaumic")) accessoryWritable = true;
+        }
+
+        boolean extraWritable = false;
+        if (tags.hasKey("Extra"))
+        {
+            String extraAbility = TConstructRegistry.getMaterial(tags.getInteger("Extra")).ability;
+            if (extraAbility.equals("Writable") || extraAbility.equals("Thaumic")) extraWritable = true;
+        }
+        
         // check if trying to replace irreplacable parts
+        int modifiersNeeded = 0;
+        List<String> replacing = new ArrayList<String>();
         for (ItemStack inputStack : input)
         {
 	        if (inputStack != null)
@@ -97,21 +99,48 @@ public class IguanaModUpgrade extends ToolMod {
 	        			) 
 	        			return false;
 
-	        	// Check for irreplacable parts
-		    	if (
-		    			(toolRecipe.validHead(inputStack.getItem()) && headChangable == false)
-		    			|| (toolRecipe.validHandle(inputStack.getItem()) && handleChangable == false)
-		    			|| (toolRecipe.validAccessory(inputStack.getItem()) && accessoryChangable == false)
-		    			|| (toolRecipe.validExtra(inputStack.getItem()) && extraChangable == false)
-		    			) return false;
-		    	
-		    	// Check for same parts
-		    	if (
-		    			(toolRecipe.validHead(inputStack.getItem()) && inputStack.getItemDamage() == oldHead)
-		    			|| (toolRecipe.validHandle(inputStack.getItem()) && inputStack.getItemDamage() == oldHandle)
-		    			|| (toolRecipe.validAccessory(inputStack.getItem()) && inputStack.getItemDamage() == oldAccessory)
-		    			|| (toolRecipe.validExtra(inputStack.getItem()) && inputStack.getItemDamage() == oldExtra)
-		    			) return false;
+	        	
+	        	// Check for duplicates, same parts and count modifiers needed
+		    	if (toolRecipe.validHead(inputStack.getItem())) 
+		    	{
+		    		if (replacing.contains("Head") || inputStack.getItemDamage() == oldHead) return false;
+		    		
+		            String ability = TConstructRegistry.getMaterial(inputStack.getItemDamage()).ability;
+		            boolean newHeadWritable = ability.equals("Writable") || ability.equals("Thaumic") ? true : false;
+		    		if (headWritable && !newHeadWritable) modifiersNeeded += 1;
+
+		    		replacing.add("Head");
+		    	}
+		    	else if (toolRecipe.validHandle(inputStack.getItem()))
+		    	{
+		    		if (replacing.contains("Handle") || inputStack.getItemDamage() == oldHandle) return false;
+		    		
+		            String ability = TConstructRegistry.getMaterial(inputStack.getItemDamage()).ability;
+		            boolean newHandleWritable = ability.equals("Writable") || ability.equals("Thaumic") ? true : false;
+		    		if (handleWritable && !newHandleWritable) modifiersNeeded += 1;
+
+		    		replacing.add("Handle");
+				}
+		    	else if (toolRecipe.validAccessory(inputStack.getItem()))
+		    	{
+		    		if (replacing.contains("Accessory") || inputStack.getItemDamage() == oldAccessory) return false;
+		    		
+		            String ability = TConstructRegistry.getMaterial(inputStack.getItemDamage()).ability;
+		            boolean newAccessoryWritable = ability.equals("Writable") || ability.equals("Thaumic") ? true : false;
+		    		if (accessoryWritable && !newAccessoryWritable) modifiersNeeded += 1;
+		    		
+		    		replacing.add("Accessory");
+				}
+		    	else if (toolRecipe.validExtra(inputStack.getItem()))
+		    	{
+		    		if (replacing.contains("Extra") || inputStack.getItemDamage() == oldExtra) return false;
+		    		
+		            String ability = TConstructRegistry.getMaterial(inputStack.getItemDamage()).ability;
+		            boolean newExtraWritable = ability.equals("Writable") || ability.equals("Thaumic") ? true : false;
+		    		if (extraWritable && !newExtraWritable) modifiersNeeded += 1;
+
+		    		replacing.add("Extra");
+				}
 	        	
 	        	// Check for stone parts
 	        	if (inputStack.getItemDamage() == 1)
@@ -123,6 +152,10 @@ public class IguanaModUpgrade extends ToolMod {
 	        	}
 	        }
         }
+        
+        // Check if have enough free modifiers to replace written/thaumic parts
+        int freeModifiers = tags.getInteger("Modifiers");
+        if (freeModifiers < modifiersNeeded) return false;
         
         return true;
     }
@@ -149,9 +182,31 @@ public class IguanaModUpgrade extends ToolMod {
         if (toolClass.getAccessoryItem() != null) accessoryStack = new ItemStack(toolClass.getAccessoryItem(), 1, oldAccessory);
         ItemStack extraStack = null;
         if (toolClass.getExtraItem() != null) extraStack = new ItemStack(toolClass.getExtraItem(), 1, oldExtra);
+
+        
+        // check which parts are Writable
+        String headAbility = TConstructRegistry.getMaterial(tags.getInteger("Head")).ability;
+        boolean headWritable = headAbility.equals("Writable") || headAbility.equals("Thaumic") ? true : false;
+        String handleAbility = TConstructRegistry.getMaterial(tags.getInteger("Handle")).ability;
+        boolean handleWritable = handleAbility.equals("Writable") || headAbility.equals("Thaumic") ? true : false;
+        
+        boolean accessoryWritable = false;
+        if (tags.hasKey("Accessory"))
+        {
+            String accessoryAbility = TConstructRegistry.getMaterial(tags.getInteger("Accessory")).ability;
+            if (accessoryAbility.equals("Writable") || accessoryAbility.equals("Thaumic")) accessoryWritable = true;
+        }
+
+        boolean extraWritable = false;
+        if (tags.hasKey("Extra"))
+        {
+            String extraAbility = TConstructRegistry.getMaterial(tags.getInteger("Extra")).ability;
+            if (extraAbility.equals("Writable") || extraAbility.equals("Thaumic")) extraWritable = true;
+        }
         
         
         // check inputs for parts to replace
+        int modifiersDifference = 0;
         ToolRecipe toolRecipe = GetRecipe((ToolCore)tool.getItem());
         List<String> replacing = new ArrayList<String>();
         for (ItemStack inputStack : input)
@@ -160,21 +215,41 @@ public class IguanaModUpgrade extends ToolMod {
 	        {
 		    	if (toolRecipe.validHead(inputStack.getItem()) && !replacing.contains("Head")) 
 		    	{
+		            String ability = TConstructRegistry.getMaterial(inputStack.getItemDamage()).ability;
+		            boolean newHeadWritable = ability.equals("Writable") || ability.equals("Thaumic") ? true : false;
+		    		if (headWritable && !newHeadWritable) modifiersDifference -= 1;
+		    		else if (!headWritable && newHeadWritable) modifiersDifference += 1;
+		    		
 		    		headStack = inputStack;
 		    		replacing.add("Head");
 		    	}
 		    	else if (toolRecipe.validHandle(inputStack.getItem()) && !replacing.contains("Handle"))
 		    	{
+		            String ability = TConstructRegistry.getMaterial(inputStack.getItemDamage()).ability;
+		            boolean newHandleWritable = ability.equals("Writable") || ability.equals("Thaumic") ? true : false;
+		    		if (handleWritable && !newHandleWritable) modifiersDifference -= 1;
+		    		else if (!handleWritable && newHandleWritable) modifiersDifference += 1;
+		    		
 		    		handleStack = inputStack;
 		    		replacing.add("Handle");
 				}
 		    	else if (toolRecipe.validAccessory(inputStack.getItem()) && !replacing.contains("Accessory"))
 		    	{
+		            String ability = TConstructRegistry.getMaterial(inputStack.getItemDamage()).ability;
+		            boolean newAccessoryWritable = ability.equals("Writable") || ability.equals("Thaumic") ? true : false;
+		    		if (accessoryWritable && !newAccessoryWritable) modifiersDifference -= 1;
+		    		else if (!accessoryWritable && newAccessoryWritable) modifiersDifference += 1;
+		    		
 		    		accessoryStack = inputStack;
 		    		replacing.add("Accessory");
 				}
 		    	else if (toolRecipe.validExtra(inputStack.getItem()) && !replacing.contains("Extra"))
 		    	{
+		            String ability = TConstructRegistry.getMaterial(inputStack.getItemDamage()).ability;
+		            boolean newExtraWritable = ability.equals("Writable") || ability.equals("Thaumic") ? true : false;
+		    		if (extraWritable && !newExtraWritable) modifiersDifference -= 1;
+		    		else if (!extraWritable && newExtraWritable) modifiersDifference += 1;
+		    		
 		    		extraStack = inputStack;
 		    		replacing.add("Extra");
 				}
@@ -307,7 +382,7 @@ public class IguanaModUpgrade extends ToolMod {
     	}
     	
     	//Remove unwanted modifiers
-    	int modifiers = tags.getInteger("Modifiers");
+    	tags.setInteger("Modifiers", tags.getInteger("Modifiers") + modifiersDifference);
 
         List<String> unwantedModifiers = Arrays.asList("Skeleton Skull", "Zombie Head", "Creeper Head", "Enderman Head", "Wither Skeleton Skull", "Nether Star");
     	for (String unwanted : unwantedModifiers)

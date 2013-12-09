@@ -33,7 +33,8 @@ public class IguanaToolPart extends ToolPart {
 		{
 			if (IguanaConfig.partReplacement && (material.ability.equals("Writable") || material.ability.equals("Thaumic")))
 			{
-				par3List.add("\u00a74Cannot be replaced once added");
+				par3List.add("\u00a74Cannot be replaced once added,");
+				par3List.add("\u00a74unless a modifier is available");
 			}
 			
 			if (!material.ability.equals("")) par3List.add(material.style() + material.ability);

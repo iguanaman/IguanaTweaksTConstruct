@@ -356,7 +356,7 @@ public class IguanaEventHandler {
 	        {
 	        	String mLevel = IguanaTweaksTConstruct.getHarvestLevelName(toolTag.getInteger("HarvestLevel"));
 	            tips.add("Mining Level: " + mLevel);
-	            modifierTips.add("Mining Level: " + mLevel);
+	            modifierTips.add("");
 	        }
 	
 	        // TOOL LEVELING DATA + TOOLTIP

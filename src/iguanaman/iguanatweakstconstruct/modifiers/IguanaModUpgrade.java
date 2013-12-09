@@ -35,33 +35,6 @@ public class IguanaModUpgrade extends ToolMod {
     public boolean matches (ItemStack[] input, ItemStack tool)
     {
         if (!canModify(tool, input)) return false;
-        
-        ToolRecipe toolRecipe = GetRecipe((ToolCore)tool.getItem());
-        if (toolRecipe == null) return false;
-        
-        for (ItemStack inputStack : input)
-        {
-        	if (inputStack != null)
-        	{
-        		// Make sure all inputs are valid parts
-	        	if (!(toolRecipe.validHead(inputStack.getItem()) 
-	        			|| toolRecipe.validHandle(inputStack.getItem()) 
-	        			|| toolRecipe.validAccessory(inputStack.getItem())
-	        			|| toolRecipe.validExtra(inputStack.getItem()))
-	        			) 
-	        			return false;
-	        	
-	        	// Check for stone parts
-	        	if (inputStack.getItemDamage() == 1)
-	        	{
-		        	if (!IguanaConfig.allowStoneTools) return false;
-
-		        	int partIndex = IguanaTweaksTConstruct.toolParts.indexOf(inputStack.getItem());
-		        	if (IguanaConfig.restrictedFlintParts.contains(partIndex+1)) return false;
-	        	}
-        	}
-        }
-        
         return true;
     }
     
@@ -105,17 +78,49 @@ public class IguanaModUpgrade extends ToolMod {
         ToolRecipe toolRecipe = GetRecipe((ToolCore)tool.getItem());
         if (toolRecipe == null) return false;
         
+        //get old tool part materials
+        int oldHead = tags.getInteger("Head");
+        int oldHandle = tags.getInteger("Handle");
+        int oldAccessory = tags.getInteger("Accessory");
+        int oldExtra = tags.getInteger("Extra");
+        
         // check if trying to replace irreplacable parts
         for (ItemStack inputStack : input)
         {
 	        if (inputStack != null)
 	        {
+        		// Make sure all inputs are valid parts
+	        	if (!(toolRecipe.validHead(inputStack.getItem()) 
+	        			|| toolRecipe.validHandle(inputStack.getItem()) 
+	        			|| toolRecipe.validAccessory(inputStack.getItem())
+	        			|| toolRecipe.validExtra(inputStack.getItem()))
+	        			) 
+	        			return false;
+
+	        	// Check for irreplacable parts
 		    	if (
 		    			(toolRecipe.validHead(inputStack.getItem()) && headChangable == false)
 		    			|| (toolRecipe.validHandle(inputStack.getItem()) && handleChangable == false)
 		    			|| (toolRecipe.validAccessory(inputStack.getItem()) && accessoryChangable == false)
 		    			|| (toolRecipe.validExtra(inputStack.getItem()) && extraChangable == false)
 		    			) return false;
+		    	
+		    	// Check for same parts
+		    	if (
+		    			(toolRecipe.validHead(inputStack.getItem()) && inputStack.getItemDamage() == oldHead)
+		    			|| (toolRecipe.validHandle(inputStack.getItem()) && inputStack.getItemDamage() == oldHandle)
+		    			|| (toolRecipe.validAccessory(inputStack.getItem()) && inputStack.getItemDamage() == oldAccessory)
+		    			|| (toolRecipe.validExtra(inputStack.getItem()) && inputStack.getItemDamage() == oldExtra)
+		    			) return false;
+	        	
+	        	// Check for stone parts
+	        	if (inputStack.getItemDamage() == 1)
+	        	{
+		        	if (!IguanaConfig.allowStoneTools) return false;
+
+		        	int partIndex = IguanaTweaksTConstruct.toolParts.indexOf(inputStack.getItem());
+		        	if (IguanaConfig.restrictedFlintParts.contains(partIndex+1)) return false;
+	        	}
 	        }
         }
         
@@ -126,7 +131,6 @@ public class IguanaModUpgrade extends ToolMod {
     public void modify (ItemStack[] input, ItemStack tool)
     {
     	// setup variables
-        ToolRecipe toolRecipe = GetRecipe((ToolCore)tool.getItem());
         ToolCore toolClass = (ToolCore)tool.getItem();
         NBTTagCompound tags = tool.getTagCompound().getCompoundTag("InfiTool");
 
@@ -148,6 +152,7 @@ public class IguanaModUpgrade extends ToolMod {
         
         
         // check inputs for parts to replace
+        ToolRecipe toolRecipe = GetRecipe((ToolCore)tool.getItem());
         List<String> replacing = new ArrayList<String>();
         for (ItemStack inputStack : input)
         {
@@ -243,7 +248,6 @@ public class IguanaModUpgrade extends ToolMod {
 	            	tags.setInteger("Effect" + Integer.toString(i+1), effects.get(i));
 	            }
         	}
-
     	}
     	
     	if (newTags.hasKey("Shoddy")) tags.setFloat("Shoddy", newTags.getFloat("Shoddy"));

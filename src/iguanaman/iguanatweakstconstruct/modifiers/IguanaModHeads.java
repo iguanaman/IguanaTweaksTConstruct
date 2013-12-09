@@ -71,7 +71,7 @@ public class IguanaModHeads extends ToolMod {
     	List<String> tips = new ArrayList<String>();
     	List<String> modifierTips = new ArrayList<String>();
 
-    	tips.add(IguanaTweaksTConstruct.getHarvestLevelName(toolTag.getInteger("HarvestLevel")));
+    	tips.add("Mining Level: " + IguanaTweaksTConstruct.getHarvestLevelName(toolTag.getInteger("HarvestLevel")));
     	modifierTips.add("");
     	
     	

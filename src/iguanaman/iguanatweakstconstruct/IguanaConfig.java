@@ -87,7 +87,9 @@ public class IguanaConfig {
     */
     
     // modifiers
-	public static boolean moreExpensiveSilkTouch;
+    public static boolean addCleanModifier;
+	public static boolean moreExpensiveSilkyCloth;
+	public static boolean moreExpensiveSilkyJewel;
 	public static boolean moreExpensiveElectric;
     public static int mossRepairSpeed;
     public static int redstoneEffect;
@@ -440,10 +442,18 @@ public class IguanaConfig {
 		ConfigCategory modifiersCategory = config.getCategory("modifiers");
 		modifiersCategory.setComment("Options relating to tool modifiers");
 		
-        Property moreExpensiveSilkTouchProperty = config.get("modifiers", "moreExpensiveSilkTouch", true);
-        moreExpensiveSilkTouchProperty.comment = "Silky Cloth needs gold ingots and Silky Jewels needs an emerald block";
-        moreExpensiveSilkTouch = moreExpensiveSilkTouchProperty.getBoolean(true);
+        Property addCleanModifierProperty = config.get("modifiers", "addCleanModifier", true);
+        addCleanModifierProperty.comment = "Silky Cloth can be used to remove all modifiers from a tool (currently safe but not working)";
+        addCleanModifier = addCleanModifierProperty.getBoolean(true);
 		
+        Property moreExpensiveSilkyClothProperty = config.get("modifiers", "moreExpensiveSilkyCloth", true);
+        moreExpensiveSilkyClothProperty.comment = "Silky Cloth needs gold ingots, instead of nuggets";
+        moreExpensiveSilkyCloth = moreExpensiveSilkyClothProperty.getBoolean(true);
+		
+        Property moreExpensiveSilkyJewelProperty = config.get("modifiers", "moreExpensiveSilkyJewel", true);
+        moreExpensiveSilkyJewelProperty.comment = "Silky Jewel needs emerald block, instead of one emerald";
+        moreExpensiveSilkyJewel = moreExpensiveSilkyJewelProperty.getBoolean(true);
+    	
         Property moreExpensiveElectricProperty = config.get("modifiers", "moreExpensiveElectric", true);
         moreExpensiveElectricProperty.comment = "Electric modifier requires 2 modifiers slots instead of 1";
         moreExpensiveElectric = moreExpensiveElectricProperty.getBoolean(true);

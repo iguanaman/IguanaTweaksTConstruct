@@ -539,7 +539,7 @@ public class IguanaConfig {
         restrictedBonePartsProperty.comment = "Pattern ids to restrict for bone parts";
         for (int i : restrictedBonePartsProperty.getIntList()) restrictedBoneParts.add(i);
 		
-        Property restrictedPaperPartsProperty = config.get("restrictions", "restrictedPaperParts", new int[] {2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25});
+        Property restrictedPaperPartsProperty = config.get("restrictions", "restrictedPaperParts", new int[] {2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18,19,20,21,22,23,25});
         restrictedPaperPartsProperty.comment = "Pattern ids to restrict for paper parts";
         for (int i : restrictedPaperPartsProperty.getIntList()) restrictedPaperParts.add(i);
 		

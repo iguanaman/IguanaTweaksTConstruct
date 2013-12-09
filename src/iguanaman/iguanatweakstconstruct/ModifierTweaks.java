@@ -81,7 +81,6 @@ public class ModifierTweaks {
         tb.registerToolMod(new IguanaModAttack("Quartz", new ItemStack[] { quartzItem, quartzBlock }, 11, 5));
         tb.registerToolMod(new IguanaModAttack("Quartz", new ItemStack[] { quartzBlock, quartzBlock }, 11, 8));
         
-		
         ItemStack redstoneItem = new ItemStack(Item.redstone);
         ItemStack redstoneBlock = new ItemStack(Block.blockRedstone);
         tb.registerToolMod(new IguanaModRedstone(new ItemStack[] { redstoneItem }, 2, 1));
@@ -95,7 +94,7 @@ public class ModifierTweaks {
             RecipeRemover.removeAnyRecipe(new ItemStack(TContent.materials, 1, 25));
             RecipeRemover.removeAnyRecipe(new ItemStack(TContent.materials, 1, 26));
             GameRegistry.addRecipe(new ItemStack(TContent.materials, 1, 25), "sss", "sns", "sss", 'n', new ItemStack(TContent.materials, 1, 14), 's', new ItemStack(Item.silk)); //Silky Cloth
-            GameRegistry.addRecipe(new ItemStack(TContent.materials, 1, 25), "sss", "sns", "sss", 'n', new ItemStack(Item.ingotGold), 's', new ItemStack(Item.silk));
+            GameRegistry.addRecipe(new ItemStack(TContent.materials, 1, 25), "sss", "sns", "sss", 'n', new ItemStack(Item.ingotGold), 's', new ItemStack(Item.silk)); //Silky Cloth
             GameRegistry.addRecipe(new ItemStack(TContent.materials, 1, 26), " c ", "cec", " c ", 'c', new ItemStack(TContent.materials, 1, 25), 'e', new ItemStack(Block.blockEmerald)); //Silky Jewel
 		}
 		

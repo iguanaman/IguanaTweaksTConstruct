@@ -76,14 +76,50 @@ public class IguanaModUpgrade extends ToolMod {
     @Override
     protected boolean canModify (ItemStack tool, ItemStack[] input)
     {
+    	// basic checks
+        if (tool == null || tool.getItem() == null || !(tool.getItem() instanceof ToolCore)) return false;
         NBTTagCompound tags = tool.getTagCompound().getCompoundTag("InfiTool");
-        if (tags.getInteger("Damage") > 0)
-        	return false;
+        if (tags.getInteger("Damage") > 0) return false;
         
-        if (tool.getItem() instanceof ToolCore)
-        	return true;
+
+        // check which parts are changable
+        String headAbility = TConstructRegistry.getMaterial(tags.getInteger("Head")).ability;
+        boolean headChangable = headAbility.equals("Writable") || headAbility.equals("Thaumic") ? false : true;
+        String handleAbility = TConstructRegistry.getMaterial(tags.getInteger("Handle")).ability;
+        boolean handleChangable = handleAbility.equals("Writable") || headAbility.equals("Thaumic") ? false : true;
         
-        return false;
+        boolean accessoryChangable = true;
+        if (tags.hasKey("Accessory"))
+        {
+            String accessoryAbility = TConstructRegistry.getMaterial(tags.getInteger("Accessory")).ability;
+            if (accessoryAbility.equals("Writable") || accessoryAbility.equals("Thaumic")) accessoryChangable = false;
+        }
+
+        boolean extraChangable = true;
+        if (tags.hasKey("Extra"))
+        {
+            String extraAbility = TConstructRegistry.getMaterial(tags.getInteger("Extra")).ability;
+            if (extraAbility.equals("Writable") || extraAbility.equals("Thaumic")) extraChangable = false;
+        }
+
+        ToolRecipe toolRecipe = GetRecipe((ToolCore)tool.getItem());
+        if (toolRecipe == null) return false;
+        
+        // check if trying to replace irreplacable parts
+        for (ItemStack inputStack : input)
+        {
+	        if (inputStack != null)
+	        {
+		    	if (
+		    			(toolRecipe.validHead(inputStack.getItem()) && headChangable == false)
+		    			|| (toolRecipe.validHandle(inputStack.getItem()) && handleChangable == false)
+		    			|| (toolRecipe.validAccessory(inputStack.getItem()) && accessoryChangable == false)
+		    			|| (toolRecipe.validExtra(inputStack.getItem()) && extraChangable == false)
+		    			) return false;
+	        }
+        }
+        
+        return true;
     }
 
     @Override

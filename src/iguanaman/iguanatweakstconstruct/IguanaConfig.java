@@ -485,7 +485,7 @@ public class IguanaConfig {
         partTooltips = partTooltipsProperty.getBoolean(true);
         
         Property partReplacementProperty = config.get("other", "partReplacement", true);
-        partReplacementProperty.comment = "Can you replace parts of existing tools? (If true, paper/thaumium doesn't give extra modifiers)";
+        partReplacementProperty.comment = "Can you replace parts of existing tools?";
         partReplacement = partReplacementProperty.getBoolean(true);
 		
         Property removeFlintDropProperty = config.get("other", "removeFlintDrop", true);

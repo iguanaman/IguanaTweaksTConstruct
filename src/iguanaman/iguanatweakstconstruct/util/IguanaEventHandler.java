@@ -420,14 +420,7 @@ public class IguanaEventHandler {
 	        	}
 	        }
 	        
-	        if (IguanaConfig.partReplacement)
-	        {
-	        	if (IguanaConfig.toolLeveling && IguanaConfig.toolLevelingExtraModifiers)
-	        		toolTag.setInteger("Modifiers", 0);
-	        	else
-	        		toolTag.setInteger("Modifiers", 3);
-	        }
-	        else if (IguanaConfig.toolLeveling && IguanaConfig.toolLevelingExtraModifiers)
+	        if (IguanaConfig.toolLeveling && IguanaConfig.toolLevelingExtraModifiers)
 	        	toolTag.setInteger("Modifiers", Math.max(toolTag.getInteger("Modifiers") - 3, 0));
         }
         

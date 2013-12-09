@@ -26,11 +26,16 @@ public class IguanaToolPart extends ToolPart {
 		ToolMaterial material = TConstructRegistry.getMaterial(par1ItemStack.getItemDamage());
 		if (!IguanaConfig.allowStoneTools && material.materialName.equals("Stone"))
 		{
-			par3List.add("Can only be used to make casts,");
-			par3List.add("you cannot make a tool with this");
+			par3List.add("\u00a74Can only be used to make casts,");
+			par3List.add("\u00a74cannot be used to make a tool");
 		}
 		else 
 		{
+			if (IguanaConfig.partReplacement && (material.ability.equals("Writable") || material.ability.equals("Thaumic")))
+			{
+				par3List.add("\u00a74Cannot be replaced once added to a tool");
+			}
+			
 			if (!material.ability.equals(""))
 			{
 				par3List.add("Ability: " + material.ability);

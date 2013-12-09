@@ -33,15 +33,13 @@ public class IguanaToolPart extends ToolPart {
 		{
 			if (IguanaConfig.partReplacement && (material.ability.equals("Writable") || material.ability.equals("Thaumic")))
 			{
-				par3List.add("\u00a74Cannot be replaced once added to a tool");
+				par3List.add("\u00a74Cannot be replaced once added");
 			}
 			
-			if (!material.ability.equals(""))
-			{
-				par3List.add("Ability: " + material.ability);
-			}
+			if (!material.ability.equals("")) par3List.add(material.style() + material.ability);
 			
-			if (partName.equals("PickHead") || partName.equals("HammerHead") || partName.equals("ShovelHead") || partName.equals("ExcavatorHead"))
+			if (partName.equals("PickHead") || partName.equals("HammerHead") || partName.equals("ShovelHead") 
+					|| partName.equals("ExcavatorHead"))
 			{
 				par3List.add("Mining Level: " + IguanaTweaksTConstruct.getHarvestLevelName(material.harvestLevel));
 			}
@@ -55,19 +53,16 @@ public class IguanaToolPart extends ToolPart {
 			{
 				par3List.add("Damage: " + material.attack);
 			}
-			
-			if (partName.equals("PickHead") || partName.equals("HammerHead") || partName.equals("ShovelHead") || partName.equals("ExcavatorHead")
-					|| partName.equals("AxeHead") || partName.equals("LumberHead"))
-			{
-				par3List.add("Speed: " + material.miningspeed);
-			}
 
 			if (partName.equals("ToolRod") || partName.equals("ToughRod"))
 			{
 				par3List.add("Handle Modifier: " + Float.toString(material.handleModifier));
 			}
-			
-			par3List.add("Durability: " + material.durability);
+			else if (!partName.equals("Binding"))
+			{
+				par3List.add("Speed: " + material.miningspeed);
+				par3List.add("Durability: " + material.durability);
+			}
 		}
     }
 

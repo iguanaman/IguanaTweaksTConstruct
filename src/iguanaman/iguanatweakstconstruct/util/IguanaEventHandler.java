@@ -387,7 +387,7 @@ public class IguanaEventHandler {
 		            	}
 		            }
 		            
-	            	tips.add("Requires boost");
+	            	tips.add("\u00A76Requires boost");
 	                modifierTips.add("");
 		        }
 			}

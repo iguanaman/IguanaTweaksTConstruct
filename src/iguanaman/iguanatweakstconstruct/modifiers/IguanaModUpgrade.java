@@ -348,7 +348,7 @@ public class IguanaModUpgrade extends ToolMod {
 	        	
 	        	if (requiresBoost)
 	        	{
-                	tips.add("Requires boost");
+                	tips.add("\u00A76Requires boost");
                     modifierTips.add("");
 	        	}
         	}
@@ -363,12 +363,13 @@ public class IguanaModUpgrade extends ToolMod {
             {
             	String tipString = tags.getString(tip);
             	if (!tipString.contains("Mining Level Boost") 
+            			&& !tipString.contains("Boosted") 
             			&& !tipString.startsWith("Mining Level:")
             			&& !tipString.startsWith("Skill Level:")
             			&& !tipString.startsWith("XP:")
             			&& !tipString.startsWith("Head XP:")
             			&& !tipString.startsWith("Boost XP:")
-        				&& !tipString.startsWith("Requires boost"))
+        				&& !tipString.contains("Requires boost"))
             	{
                     tips.add(tipString);
                     modifierTips.add(tags.getString("ModifierTip" + tipNum));

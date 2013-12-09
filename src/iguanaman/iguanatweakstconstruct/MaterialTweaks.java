@@ -27,8 +27,6 @@ public class MaterialTweaks {
 		float durMod = (float)IguanaConfig.durabilityPercentage / 100F;
 		float speedMod = (float)IguanaConfig.miningSpeedPercentage / 100F;
 
-
-		
         TConstructRegistry.instance.toolMaterials.remove(0);
         TConstructRegistry.addToolMaterial(0, "Wood", "Wooden ", 0, Math.round(59F * durMod), Math.round(150f * speedMod), 1, 1.0F, 0, 0f, "\u00A7e", "");
 

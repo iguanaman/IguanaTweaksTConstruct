@@ -106,12 +106,12 @@ public class ModifierTweaks {
 			IguanaLog.log("Adding mob head modifiers");
 			
 			// add modifers
-			tb.registerToolMod(new IguanaModHeads(new ItemStack[] { new ItemStack(Item.skull, 1, 0) }, 20, TConstructRegistry.getMaterial("Iron").harvestLevel(), "Skeleton Skull", "\u00a7fMining Level Boost", "\u00a7f"));
-			tb.registerToolMod(new IguanaModHeads(new ItemStack[] { new ItemStack(Item.skull, 1, 2) }, 21, TConstructRegistry.getMaterial("Iron").harvestLevel(), "Zombie Head", "\u00a72Mining Level Boost", "\u00a72"));
-			tb.registerToolMod(new IguanaModHeads(new ItemStack[] { new ItemStack(Item.skull, 1, 4) }, 22, TConstructRegistry.getMaterial("Bronze").harvestLevel(), "Creeper Head", "\u00a7aMining Level Boost", "\u00a7a"));
-			tb.registerToolMod(new IguanaModHeads(new ItemStack[] { new ItemStack(Item.skull, 1, 5) }, 23, TConstructRegistry.getMaterial("Obsidian").harvestLevel(), "Enderman Head", "\u00a78Mining Level Boost", "\u00a78"));
-			tb.registerToolMod(new IguanaModHeads(new ItemStack[] { new ItemStack(Item.skull, 1, 1) }, 24, TConstructRegistry.getMaterial("Ardite").harvestLevel(), "Wither Skeleton Skull", "\u00a78Mining Level Boost", "\u00a78"));
-			tb.registerToolMod(new IguanaModHeads(new ItemStack[] { new ItemStack(Item.netherStar) }, 25, TConstructRegistry.getMaterial("Cobalt").harvestLevel(), "Nether Star", "\u00a73Mining Level Boost", "\u00a73"));
+			tb.registerToolMod(new IguanaModHeads(new ItemStack[] { new ItemStack(Item.skull, 1, 0) }, 20, TConstructRegistry.getMaterial("Iron").harvestLevel(), "Skeleton Skull", "\u00a7fBoosted", "\u00a7f"));
+			tb.registerToolMod(new IguanaModHeads(new ItemStack[] { new ItemStack(Item.skull, 1, 2) }, 21, TConstructRegistry.getMaterial("Iron").harvestLevel(), "Zombie Head", "\u00a72Boosted", "\u00a72"));
+			tb.registerToolMod(new IguanaModHeads(new ItemStack[] { new ItemStack(Item.skull, 1, 4) }, 22, TConstructRegistry.getMaterial("Bronze").harvestLevel(), "Creeper Head", "\u00a7aBoosted", "\u00a7a"));
+			tb.registerToolMod(new IguanaModHeads(new ItemStack[] { new ItemStack(Item.skull, 1, 5) }, 23, TConstructRegistry.getMaterial("Obsidian").harvestLevel(), "Enderman Head", "\u00a78Boosted", "\u00a78"));
+			tb.registerToolMod(new IguanaModHeads(new ItemStack[] { new ItemStack(Item.skull, 1, 1) }, 24, TConstructRegistry.getMaterial("Ardite").harvestLevel(), "Wither Skeleton Skull", "\u00a78Boosted", "\u00a78"));
+			tb.registerToolMod(new IguanaModHeads(new ItemStack[] { new ItemStack(Item.netherStar) }, 25, TConstructRegistry.getMaterial("Cobalt").harvestLevel(), "Nether Star", "\u00a73Boosted", "\u00a73"));
 	
 			// rendering code
 			ToolCore[] tools = new ToolCore[] { TContent.pickaxe, TContent.hammer };

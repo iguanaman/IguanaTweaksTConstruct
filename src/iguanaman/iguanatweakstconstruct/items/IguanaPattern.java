@@ -2,6 +2,8 @@ package iguanaman.iguanatweakstconstruct.items;
 
 import java.util.List;
 
+import org.lwjgl.input.Keyboard;
+
 import iguanaman.iguanatweakstconstruct.IguanaConfig;
 import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,6 +23,36 @@ public class IguanaPattern extends Pattern {
 			String folder) {
 		super(id, names, patternTypes, folder);
 	}
+	
+	/**
+     * allows items to add custom lines of information to the mouseover description
+     */
+	@Override
+    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
+    {
+		super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
+		
+		PatternBuilder pb = PatternBuilder.instance;
+		
+		par3List.add("Valid materials:");
+		for (ToolMaterial material : TConstructRegistry.toolMaterials.values())
+		{
+			ItemStack shard = pb.getShardFromSet(material.name());
+			shard.stackSize = shard.getMaxStackSize();
+			if (pb.getToolPart(shard, par1ItemStack, null) != null)
+			{
+				if (par3List.size() < 8 || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
+				{
+					par3List.add(material.materialName);
+				}
+				else
+				{
+	                 par3List.add("\u00A7o<Hold SHIFT for more>");
+	                 break;
+				}
+			}
+		}
+    }
 
 	/*
     @Override
@@ -85,27 +117,5 @@ public class IguanaPattern extends Pattern {
         }
     }
     */
-	
-	/**
-     * allows items to add custom lines of information to the mouseover description
-     */
-	@Override
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
-    {
-		super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
-		
-		PatternBuilder pb = PatternBuilder.instance;
-		
-		par3List.add("Valid materials:");
-		for (ToolMaterial material : TConstructRegistry.toolMaterials.values())
-		{
-			ItemStack shard = pb.getShardFromSet(material.name());
-			shard.stackSize = shard.getMaxStackSize();
-			if (pb.getToolPart(shard, par1ItemStack, null) != null)
-			{
-				par3List.add(material.materialName);
-			}
-		}
-    }
 
 }

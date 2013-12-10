@@ -19,8 +19,6 @@ public class IguanaConfig {
     public static int clayBucketFiredId;
     public static int clayBucketUnfiredId;
     public static int clayBucketsId;
-    public static int easterEggId1;
-    public static int easterEggId2;
     
     // leveling
     public static boolean detailedXpTooltip;
@@ -161,14 +159,6 @@ public class IguanaConfig {
         Property clayBucketMilkIdProperty = config.getItem("clayBucketMilkId", 25715);
         clayBucketMilkIdProperty.comment = "Item ID for the milk filled clay bucket";
         clayBucketMilkId = clayBucketMilkIdProperty.getInt(25715);
-
-        Property easterEggId1Property = config.getItem("easterEggId1", 25716);
-        easterEggId1Property.comment = "Item ID for the easter egg item 1";
-        easterEggId1 = easterEggId1Property.getInt(25716);
-
-        Property easterEggId2Property = config.getItem("easterEggId2", 25717);
-        easterEggId2Property.comment = "Item ID for the easter egg item 2";
-        easterEggId2 = easterEggId2Property.getInt(25717);
         
         
         

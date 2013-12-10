@@ -256,33 +256,22 @@ public class IguanaEventHandler {
 	@ForgeSubscribe
     public void EntityInteract(EntityInteractEvent event)
 	{
-		if (event != null && event.target != null )
+		if (event != null && event.target != null && event.target instanceof EntityCow)
 		{
-				ItemStack equipped = event.entityPlayer.getCurrentEquippedItem();
-				if (event.target instanceof EntityAnimal && equipped == null && !event.entityPlayer.worldObj.isRemote
-						 && IguanaItems.twinkie1 != null && IguanaItems.twinkie2 != null)
+			ItemStack equipped = event.entityPlayer.getCurrentEquippedItem();
+			{
+				if (equipped != null && equipped.itemID == IguanaItems.clayBucketFired.itemID)
 				{
-					String username = event.entityPlayer.username.toLowerCase();
-					if (username.startsWith("materialize127") && event.entityPlayer.worldObj.rand.nextInt(30) == 0) 
-						event.target.dropItem(IguanaItems.twinkie1.itemID, 1); //10% chance
-					if (username.startsWith("voxknight") && event.entityPlayer.worldObj.rand.nextInt(30) == 0) 
-						event.target.dropItem(IguanaItems.twinkie2.itemID, 1); //10% chance
-				}
-				
-				if (event.target instanceof EntityCow)
-				{
-					if (equipped != null && equipped.itemID == IguanaItems.clayBucketFired.itemID)
+					if (--equipped.stackSize <= 0)
 					{
-						if (--equipped.stackSize <= 0)
-						{
-							event.entityPlayer.setCurrentItemOrArmor(0, new ItemStack(IguanaItems.clayBucketMilk));
-						} 
-						else if (!event.entityPlayer.inventory.addItemStackToInventory(new ItemStack(IguanaItems.clayBucketMilk)))
-		                {
-		                	event.entityPlayer.dropPlayerItem(new ItemStack(IguanaItems.clayBucketMilk));
-		                }
-					}
+						event.entityPlayer.setCurrentItemOrArmor(0, new ItemStack(IguanaItems.clayBucketMilk));
+					} 
+					else if (!event.entityPlayer.inventory.addItemStackToInventory(new ItemStack(IguanaItems.clayBucketMilk)))
+	                {
+	                	event.entityPlayer.dropPlayerItem(new ItemStack(IguanaItems.clayBucketMilk));
+	                }
 				}
+			}
 		}
 	}
     

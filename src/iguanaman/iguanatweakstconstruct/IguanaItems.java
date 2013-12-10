@@ -41,8 +41,6 @@ public class IguanaItems {
     public static Item clayBucketFired;
     public static Item clayBucketUnfired;
     public static Item clayBuckets;
-    public static Item twinkie1;
-    public static Item twinkie2;
     
 	public static void init()
 	{
@@ -156,24 +154,11 @@ public class IguanaItems {
 		
 		
 		// NEW TCON PATTERNS
-		
 		Item.itemsList[TContent.woodPattern.itemID] = null;
 		//Item.itemsList[TContent.metalPattern.itemID] = null;
 		TContent.woodPattern = new IguanaPattern(PHConstruct.woodPattern, "pattern_", "materials/").setUnlocalizedName("tconstruct.Pattern");
 		//TContent.metalPattern = new IguanaMetalPattern(PHConstruct.metalPattern, "cast_", "materials/").setUnlocalizedName("tconstruct.MetalPattern");
-
         PatternBuilder.instance.addToolPattern((IPattern) TContent.woodPattern);
-		
-		
-        //EASTER EGGS
-        if (Item.itemsList[IguanaConfig.easterEggId1] == null && Item.itemsList[IguanaConfig.easterEggId2] == null)
-        {
-        	IguanaLog.log("Adding easter eggs");
-            twinkie1 = new ItemFood(IguanaConfig.easterEggId1, 0, false).setAlwaysEdible().setPotionEffect(Potion.moveSpeed.id, 5, 5, 1.0F).setUnlocalizedName("iguanatweakstconstruct:twinkie1").setTextureName("iguanatweakstconstruct:twinkie1");
-            LanguageRegistry.addName(twinkie1, "Materialize127 Twinkie");
-            twinkie2 = new ItemFood(IguanaConfig.easterEggId2, 0, false).setAlwaysEdible().setPotionEffect(Potion.invisibility.id, 30, 1, 1.0F).setUnlocalizedName("iguanatweakstconstruct:twinkie2").setTextureName("iguanatweakstconstruct:twinkie2");
-            LanguageRegistry.addName(twinkie2, "VoxKnight Twinkie");
-        }
         
         
 	}

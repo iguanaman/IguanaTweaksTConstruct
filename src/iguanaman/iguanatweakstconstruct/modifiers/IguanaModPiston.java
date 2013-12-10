@@ -9,7 +9,6 @@ public class IguanaModPiston extends ModPiston {
 
 	public IguanaModPiston(ItemStack[] items, int effect, int inc) {
 		super(items, effect, inc);
-		// TODO Auto-generated constructor stub
 	}
 
     @Override

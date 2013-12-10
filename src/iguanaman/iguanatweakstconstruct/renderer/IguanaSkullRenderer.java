@@ -13,9 +13,7 @@ import net.minecraft.util.StringUtils;
 
 public class IguanaSkullRenderer extends TileEntitySkullRenderer {
 
-	public IguanaSkullRenderer() {
-		// TODO Auto-generated constructor stub
-	}
+	public IguanaSkullRenderer() {}
 	
 	@Override
     public void func_82393_a(float par1, float par2, float par3, int par4, float par5, int par6, String par7Str)

@@ -14,7 +14,6 @@ public class ClayBucketFilled extends FilledBucket {
 
 	public ClayBucketFilled(int id) {
 		super(id);
-		// TODO Auto-generated constructor stub
 	}
 	
     /**

@@ -9,7 +9,6 @@ public class IguanaBlockSkull extends BlockSkull {
 
 	public IguanaBlockSkull(int par1) {
 		super(par1);
-		// TODO Auto-generated constructor stub
 	}
 
     /**

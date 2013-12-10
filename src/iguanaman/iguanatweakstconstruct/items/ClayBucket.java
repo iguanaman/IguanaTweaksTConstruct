@@ -20,7 +20,6 @@ public class ClayBucket extends ItemBucket {
 
 	public ClayBucket(int par1, int par2) {
 		super(par1, par2);
-		// TODO Auto-generated constructor stub
 	}
 	
     /**

@@ -125,6 +125,9 @@ public class IguanaLevelingLogic {
     		}
     	}	
     	
+    	if ((leveled || pickLeveled) && !player.worldObj.isRemote)
+    		player.worldObj.playSoundAtEntity(player, "iguanatweakstconstruct:chime", 1.0F, 1.0F);
+    	
     	//Recheck level
     	level = tags.getInteger("ToolLevel");
 		if (tags.hasKey("HarvestLevel")) hLevel = tags.getInteger("HarvestLevel");
@@ -300,9 +303,7 @@ public class IguanaLevelingLogic {
         updateXP(stack, player, 0l, -1l);
     
     	if (!world.isRemote)
-    	{
-            player.worldObj.playSoundAtEntity(player, "iguanatweakstconstruct:chime", 1.0F, 1.0F);
-            
+    	{            
             switch (level)
             {
         	case 2: player.addChatMessage("\u00a73You begin to feel comfortable handling the " + stack.getDisplayName()); break;

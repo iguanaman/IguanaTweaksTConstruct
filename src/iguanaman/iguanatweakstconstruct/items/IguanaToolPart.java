@@ -31,11 +31,6 @@ public class IguanaToolPart extends ToolPart {
 		}
 		else 
 		{
-			if (IguanaConfig.partReplacement && (material.ability.equals("Writable") || material.ability.equals("Thaumic")))
-			{
-				par3List.add("\u00a74Cannot be replaced once added,");
-				par3List.add("\u00a74unless a modifier is available");
-			}
 			
 			if (!material.ability.equals("")) par3List.add(material.style() + material.ability);
 			
@@ -63,6 +58,19 @@ public class IguanaToolPart extends ToolPart {
 			{
 				par3List.add("Speed: " + material.miningspeed);
 				par3List.add("Durability: " + material.durability);
+			}
+			
+			if (IguanaConfig.partReplacement)
+			{
+				if (material.ability.equals("Writable") || material.ability.equals("Thaumic"))
+				{
+					par3List.add("\u00a74Cannot be replaced once added,");
+					par3List.add("\u00a74unless a modifier is available");
+				}
+				else
+				{
+					par3List.add("\u00a76Parts can be replaced");
+				}
 			}
 		}
     }

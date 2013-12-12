@@ -218,13 +218,13 @@ public class IguanaConfig {
         mobHeadPickaxeBoostProperty.comment = "Mob heads can be used to boost a pickaxe's mining level";
         mobHeadPickaxeBoost = mobHeadPickaxeBoostProperty.getBoolean(true);
         
-        Property levelingPickaxeBoostProperty = config.get("pickboosting", "levelingPickaxeBoost", false);
+        Property levelingPickaxeBoostProperty = config.get("pickboosting", "levelingPickaxeBoost", true);
         levelingPickaxeBoostProperty.comment = "A pickaxes mining level can be boosted through gaining XP";
-        levelingPickaxeBoost = levelingPickaxeBoostProperty.getBoolean(false);
+        levelingPickaxeBoost = levelingPickaxeBoostProperty.getBoolean(true);
 		
-        Property levelingPickaxeBoostXpPercentageProperty = config.get("pickboosting", "levelingPickaxeBoostXpPercentage", 200);
+        Property levelingPickaxeBoostXpPercentageProperty = config.get("pickboosting", "levelingPickaxeBoostXpPercentage", 100);
         levelingPickaxeBoostXpPercentageProperty.comment = "XP required to boost a pick will be this percentage of normal leveling amount (i.e. 200 means 2x normal xp required)"; 
-        levelingPickaxeBoostXpPercentage = Math.max(levelingPickaxeBoostXpPercentageProperty.getInt(200), 1);
+        levelingPickaxeBoostXpPercentage = Math.max(levelingPickaxeBoostXpPercentageProperty.getInt(100), 1);
         levelingPickaxeBoostXpPercentageProperty.set(levelingPickaxeBoostXpPercentage);
         
         

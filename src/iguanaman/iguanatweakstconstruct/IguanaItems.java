@@ -1,5 +1,6 @@
 package iguanaman.iguanatweakstconstruct;
 
+import tconstruct.common.BowRecipe;
 import tconstruct.common.TContent;
 import tconstruct.items.Bowstring;
 import tconstruct.items.Fletching;
@@ -119,7 +120,10 @@ public class IguanaItems {
         tb.addNormalToolRecipe(TContent.excavator, TContent.excavatorHead, TContent.toughRod, TContent.largePlate, TContent.toughBinding);
         tb.addNormalToolRecipe(TContent.hammer, TContent.hammerHead, TContent.toughRod, TContent.largePlate, TContent.largePlate);
         tb.addNormalToolRecipe(TContent.battleaxe, TContent.broadAxeHead, TContent.toughRod, TContent.broadAxeHead, TContent.toughBinding);
-		
+
+        tb.addNormalToolRecipe(TContent.arrow, TContent.arrowhead, TContent.toolRod, TContent.fletching);
+        tb.addCustomToolRecipe(new BowRecipe(TContent.toolRod, TContent.bowstring, TContent.toolRod, TContent.shortbow));
+        
 		//SKULL ITEM
 		IguanaLog.log("Adding skull item");
         Item.itemsList[Item.skull.itemID] = null;

@@ -282,8 +282,7 @@ public class IguanaEventHandler {
         int head = toolTag.getInteger("Head");
         int handle = toolTag.getInteger("Handle");
         int accessory = toolTag.getInteger("Accessory");
-        int extra = -1;
-        if (toolTag.hasKey("Extra")) extra = toolTag.getInteger("Extra");
+        int extra = toolTag.hasKey("Extra") ? toolTag.getInteger("Extra") : -1;
 
         if (!IguanaConfig.allowStoneTools && (head == 1 || handle == 1 || (event.tool != TContent.arrow && accessory == 1)) || extra == 1)
         {
@@ -411,18 +410,18 @@ public class IguanaEventHandler {
 	        
 	        if (IguanaConfig.toolLeveling && IguanaConfig.toolLevelingExtraModifiers)
 	        	toolTag.setInteger("Modifiers", Math.max(toolTag.getInteger("Modifiers") - 3, 0));
-        }
-        
-        if (event.tool == TContent.hammer || event.tool == TContent.excavator || event.tool == TContent.lumberaxe)
-        {
-            List<String> replaceTags = new ArrayList<String>(Arrays.asList(
-            		"MiningSpeed", "MiningSpeed2", "MiningSpeedHandle", "MiningSpeedExtra"
-            		));
-            
-            for (String replaceTag : replaceTags)
-            {
-            	if (toolTag.hasKey(replaceTag)) toolTag.setInteger(replaceTag, Math.round((float)toolTag.getInteger(replaceTag) / 2f));
-            }
+	        
+	        if (event.tool == TContent.hammer || event.tool == TContent.excavator || event.tool == TContent.lumberaxe)
+	        {
+	            List<String> replaceTags = new ArrayList<String>(Arrays.asList(
+	            		"MiningSpeed", "MiningSpeed2", "MiningSpeedHandle", "MiningSpeedExtra"
+	            		));
+	            
+	            for (String replaceTag : replaceTags)
+	            {
+	            	if (toolTag.hasKey(replaceTag)) toolTag.setInteger(replaceTag, Math.round((float)toolTag.getInteger(replaceTag) / 2f));
+	            }
+	        }
         }
         
     }

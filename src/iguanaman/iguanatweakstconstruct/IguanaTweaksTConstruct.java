@@ -47,7 +47,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid="IguanaTweaksTConstruct", name="Iguana Tweaks for Tinker's Construct", version="1.6.X-1o", 
+@Mod(modid="IguanaTweaksTConstruct", name="Iguana Tweaks for Tinker's Construct", version="1.6.X-1p", 
 dependencies = "required-after:TConstruct;after:*")
 @NetworkMod(clientSideRequired=true, serverSideRequired=true)
 @ModstatInfo(prefix="igtweakstc")

@@ -268,9 +268,11 @@ public class IguanaLevelingLogic {
 	        base = ((float)miningSpeed / (float)divider);
 
 	        if (tool.getItem() instanceof Hatchet) base /= 2f;
-			if (tool.getItem() instanceof Shovel || tool.getItem() instanceof Mattock || tool.getItem() instanceof LumberAxe) base *= 3f;
-	        if (tool.getItem() instanceof Hammer) base *= 6f;
-	        if (tool.getItem() instanceof Excavator) base *= 9f;
+	        else if (tool.getItem() instanceof Shovel) base *= 2f;
+	        else if (tool.getItem() instanceof Mattock) base *= 2.5f;
+	        else if (tool.getItem() instanceof LumberAxe) base *= 3f;
+	        else if (tool.getItem() instanceof Hammer) base *= 6f;
+	        else if (tool.getItem() instanceof Excavator) base *= 9f;
 	        
         	base *= ((float)IguanaConfig.xpRequiredToolsPercentage / 100f);
         }

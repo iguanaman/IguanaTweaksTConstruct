@@ -18,7 +18,6 @@ import java.util.List;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.item.Item;
-import net.minecraft.src.ModLoader;
 import net.minecraftforge.common.MinecraftForge;
 
 import org.modstats.ModstatInfo;

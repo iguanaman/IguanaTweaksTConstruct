@@ -1,5 +1,8 @@
 package iguanaman.iguanatweakstconstruct.modifiers;
 
+import java.util.Arrays;
+import java.util.List;
+
 import iguanaman.iguanatweakstconstruct.IguanaLevelingLogic;
 import iguanaman.iguanatweakstconstruct.IguanaLog;
 import cpw.mods.fml.common.FMLLog;
@@ -10,6 +13,9 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemAxe;
+import net.minecraft.item.ItemPickaxe;
+import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -40,18 +46,14 @@ public class IguanaActiveToolMod extends ActiveToolMod {
     {
     	if (!(entity instanceof EntityPlayer)) return false;
     	
-    	String[] toolTypes = IguanaLevelingLogic.getHarvestType(tool);
+    	List<String> toolTypes = Arrays.asList(IguanaLevelingLogic.getHarvestType(tool));
     	
     	if (toolTypes == null) return false;
 
-        NBTTagCompound tags = stack.getTagCompound().getCompoundTag("InfiTool");
         int bID = entity.worldObj.getBlockId(x, y, z);
-        Block block = Block.blocksList[bID];
-        if (block == null || bID < 1 || bID > 4095 || block instanceof BlockLeaves) return false;
         int meta = entity.worldObj.getBlockMetadata(x, y, z);
-        
-        //IguanaLog.log("checking allow");
-        boolean allow = false;
+        Block block = Block.blocksList[bID];
+        if (block == null || block instanceof BlockLeaves) return false;
         
         for (String toolType : toolTypes)
         {
@@ -59,15 +61,52 @@ public class IguanaActiveToolMod extends ActiveToolMod {
             if (MinecraftForge.getBlockHarvestLevel(block, meta, toolType) >= 0)
             {
                 //IguanaLog.log(toolType + "allowed");
-            	allow = true;
-            	break;
+            	addBlockBreakXp(stack, entity);
+            	return false;
             }
         }
-        
-        // add the xp
-        if (allow) IguanaLevelingLogic.addXP(stack, (EntityPlayer)entity, 1L);
+
+        if (toolTypes.contains("pickaxe"))
+        {
+            for (Block effectiveBlock : ItemPickaxe.blocksEffectiveAgainst)
+            {
+            	if (block.getClass().isInstance(effectiveBlock))
+            	{
+                	addBlockBreakXp(stack, entity);
+                	return false;
+            	}
+            }
+        }
+
+        if (toolTypes.contains("axe"))
+        {
+            for (Block effectiveBlock : ItemAxe.blocksEffectiveAgainst)
+            {
+            	if (block.getClass().isInstance(effectiveBlock))
+            	{
+                	addBlockBreakXp(stack, entity);
+                	return false;
+            	}
+            }
+        }
+
+        if (toolTypes.contains("shovel"))
+        {
+            for (Block effectiveBlock : ItemSpade.blocksEffectiveAgainst)
+            {
+            	if (block.getClass().isInstance(effectiveBlock))
+            	{
+                	addBlockBreakXp(stack, entity);
+                	return false;
+            	}
+            }
+        }
         
     	return false;
     }
     
+    public void addBlockBreakXp(ItemStack stack, EntityLivingBase entity)
+    {
+    	IguanaLevelingLogic.addXP(stack, (EntityPlayer)entity, 1L);
+    }
 }

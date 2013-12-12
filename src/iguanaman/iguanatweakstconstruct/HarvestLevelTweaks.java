@@ -23,7 +23,7 @@ public class HarvestLevelTweaks {
 
     // HarvestLevels
     public static String[][] oreDictLevels = {
-    		{},
+    		{"stone", "cobblestone"},
     		{"Copper", "Coal", "Tetrahedrite", "Aluminum", "Aluminium", "NaturalAluminum", "AluminumBrass", "Shard", "Bauxite", "Zinc"},
     		{"Iron", "Pyrite", "Lead", "Silver"},
 			{"Tin", "Cassiterite", "Gold", "Lapis", "Steel", "Galena", "Nickel", "Invar", "Electrum", "Sphalerite"},
@@ -177,6 +177,8 @@ public class HarvestLevelTweaks {
         	if (i > 1) level += boostMod;
         	
             for (String materialName : oreDictLevels[i]) {
+	            for (ItemStack oreStack : OreDictionary.getOres(materialName.toLowerCase())) SetHarvestLevel(oreStack, level);
+	            for (ItemStack oreStack : OreDictionary.getOres(materialName.toLowerCase() + "Bricks")) SetHarvestLevel(oreStack, level);
 	            for (ItemStack oreStack : OreDictionary.getOres("ore" + materialName)) SetHarvestLevel(oreStack, level);
 	            for (ItemStack oreStack : OreDictionary.getOres("oreNether" + materialName)) SetHarvestLevel(oreStack, level);
 	            for (ItemStack oreStack : OreDictionary.getOres("block" + materialName)) SetHarvestLevel(oreStack, level);

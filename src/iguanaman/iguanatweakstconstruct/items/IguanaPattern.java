@@ -35,20 +35,40 @@ public class IguanaPattern extends Pattern {
 		PatternBuilder pb = PatternBuilder.instance;
 		
 		par3List.add("Valid materials:");
-		for (ToolMaterial material : TConstructRegistry.toolMaterials.values())
+		
+		if (par1ItemStack.getItemDamage() == 23)
 		{
-			ItemStack shard = pb.getShardFromSet(material.name());
-			shard.stackSize = shard.getMaxStackSize();
-			if (pb.getToolPart(shard, par1ItemStack, null) != null)
+			par3List.add("String");
+		}
+		else if (par1ItemStack.getItemDamage() == 24)
+		{
+			par3List.add("Feather");
+			par3List.add("Leaf");
+			par3List.add("Slime");
+		}
+		else
+		{
+			for (ToolMaterial material : TConstructRegistry.toolMaterials.values())
 			{
-				if (par3List.size() < 8 || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
+				if (!par3List.contains(material.displayName))
 				{
-					par3List.add(material.materialName);
-				}
-				else
-				{
-	                 par3List.add("\u00A7o<Hold SHIFT for more>");
-	                 break;
+					ItemStack shard = pb.getShardFromSet(material.name());
+					if (shard != null)
+					{
+						shard.stackSize = this.getPatternCost(par1ItemStack);
+						if (pb.getToolPart(shard, par1ItemStack, null) != null)
+						{
+							if (par3List.size() < 7 || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
+							{
+								par3List.add(material.displayName);
+							}
+							else
+							{
+				                 par3List.add("\u00A7o<Hold SHIFT for more>");
+				                 break;
+							}
+						}
+					}
 				}
 			}
 		}

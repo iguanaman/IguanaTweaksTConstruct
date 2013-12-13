@@ -238,7 +238,7 @@ public class IguanaLevelingLogic {
     {
         if (tags == null) tags = tool.getTagCompound().getCompoundTag("InfiTool");
         
-        float base = 600;
+        float base = 300;
         
         if (tool.getItem() instanceof Weapon || tool.getItem() instanceof Shortbow)
         {
@@ -265,7 +265,8 @@ public class IguanaLevelingLogic {
 	        	divider += 1;
 	        }
 			
-	        base = ((float)miningSpeed / (float)divider);
+	        base = 100f;
+	        base += ((float)miningSpeed / (float)divider) / 4f;
 
 	        if (tool.getItem() instanceof Hatchet) base /= 2f;
 	        else if (tool.getItem() instanceof Shovel) base *= 2f;

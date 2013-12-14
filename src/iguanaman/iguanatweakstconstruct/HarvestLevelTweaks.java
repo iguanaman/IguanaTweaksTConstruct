@@ -23,7 +23,7 @@ public class HarvestLevelTweaks {
 
     // HarvestLevels
     public static String[][] oreDictLevels = {
-    		{"stone", "cobblestone"},
+    		{},
     		{"Copper", "Coal", "Tetrahedrite", "Aluminum", "Aluminium", "NaturalAluminum", "AluminumBrass", "Shard", "Bauxite", "Zinc"},
     		{"Iron", "Pyrite", "Lead", "Silver"},
 			{"Tin", "Cassiterite", "Gold", "Lapis", "Steel", "Galena", "Nickel", "Invar", "Electrum", "Sphalerite"},

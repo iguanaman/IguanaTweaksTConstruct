@@ -238,7 +238,7 @@ public class IguanaLevelingLogic {
     {
         if (tags == null) tags = tool.getTagCompound().getCompoundTag("InfiTool");
         
-        float base = 300;
+        float base = 400;
         
         if (tool.getItem() instanceof Weapon || tool.getItem() instanceof Shortbow)
         {
@@ -266,7 +266,7 @@ public class IguanaLevelingLogic {
 	        }
 			
 	        base = 100f;
-	        base += ((float)miningSpeed / (float)divider) / 4f;
+	        base += ((float)miningSpeed / (float)divider) / 2f;
 
 	        if (tool.getItem() instanceof Hatchet) base /= 2f;
 	        else if (tool.getItem() instanceof Shovel) base *= 2f;
@@ -299,9 +299,7 @@ public class IguanaLevelingLogic {
     	int level = tags.getInteger("ToolLevel");
     	tags.setInteger("ToolLevel", ++level);
     	
-        boolean isTool = false;
-    	if (stack.getItem() instanceof HarvestTool)
-    		isTool = true;
+        boolean isTool = stack.getItem() instanceof HarvestTool ? true : false;
         	
         updateXP(stack, player, 0l, -1l);
     
@@ -327,9 +325,7 @@ public class IguanaLevelingLogic {
         if (IguanaConfig.toolLevelingRandomBonuses)
         {
             tags.setInteger("Modifiers", currentModifiers + 1);
-        	for (int i = 1; i <= 10; ++i) 
-        		if (tryModify(player, stack, world.rand.nextInt(10), isTool)) break;
-
+        	for (int i = 1; i <= 10; ++i) if (tryModify(player, stack, world.rand.nextInt(10), isTool)) break;
             tags.setInteger("Modifiers", currentModifiers);
         }
         
@@ -444,19 +440,5 @@ public class IguanaLevelingLogic {
 		mod.addMatchingEffect(stack);
 		mod.modify(nullItemStack, stack);
 		return true;
-    }
-    
-    public static String[] getHarvestType(ToolCore tool)
-    {
-    	if (tool instanceof Battleaxe || tool instanceof Hatchet || tool instanceof LumberAxe)
-    		return new String[] {"axe"};
-    	else if (tool instanceof Excavator || tool instanceof Shovel)
-    		return new String[] {"shovel"};
-    	else if (tool instanceof Hammer || tool instanceof Pickaxe)
-    		return new String[] {"pickaxe"};
-    	else if (tool instanceof Mattock)
-    		return new String[] {"shovel", "axe"};
-    	else
-    		return null;
     }
 }

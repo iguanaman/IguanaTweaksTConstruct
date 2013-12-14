@@ -223,7 +223,7 @@ public class IguanaConfig {
         levelingPickaxeBoost = levelingPickaxeBoostProperty.getBoolean(true);
 		
         Property levelingPickaxeBoostXpPercentageProperty = config.get("pickboosting", "levelingPickaxeBoostXpPercentage", 100);
-        levelingPickaxeBoostXpPercentageProperty.comment = "XP required to boost a pick will be this percentage of normal leveling amount (i.e. 200 means 2x normal xp required)"; 
+        levelingPickaxeBoostXpPercentageProperty.comment = "Change the percentage of XP required to boost a pick (i.e. 200 means 2x normal boost xp required)"; 
         levelingPickaxeBoostXpPercentage = Math.max(levelingPickaxeBoostXpPercentageProperty.getInt(100), 1);
         levelingPickaxeBoostXpPercentageProperty.set(levelingPickaxeBoostXpPercentage);
         

@@ -280,6 +280,9 @@ public class IguanaLevelingLogic {
         
         if (pick) 
         {
+        	int harvestLevelCopper = TConstructRegistry.getMaterial("Copper").harvestLevel();
+            int harvestLevel = TConstructRegistry.getMaterial(tags.getInteger("Head")).harvestLevel();
+            if (harvestLevel >= harvestLevelCopper) base *= Math.pow(IguanaConfig.xpPerLevelMultiplier, (double)(harvestLevel - harvestLevelCopper));
         	base *= ((float)IguanaConfig.levelingPickaxeBoostXpPercentage / 100f);
         }
         else

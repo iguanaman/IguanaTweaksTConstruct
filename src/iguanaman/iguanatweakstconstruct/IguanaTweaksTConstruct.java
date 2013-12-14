@@ -1,6 +1,5 @@
 package iguanaman.iguanatweakstconstruct;
 
-import iguanaman.iguanatweakstconstruct.commands.IguanaCommandConfig;
 import iguanaman.iguanatweakstconstruct.commands.IguanaCommandLevelUpTool;
 import iguanaman.iguanatweakstconstruct.commands.IguanaCommandToolXP;
 import iguanaman.iguanatweakstconstruct.util.IguanaPatternCraftingHandler;
@@ -109,12 +108,10 @@ public class IguanaTweaksTConstruct {
 		@EventHandler
 		public void serverStarting(FMLServerStartingEvent event)
 		{
-			ICommandManager commandManager = FMLCommonHandler.instance().getMinecraftServerInstance().getCommandManager();
-			ServerCommandManager serverCommandManager = ((ServerCommandManager) commandManager);
-			serverCommandManager.registerCommand(new IguanaCommandConfig());
-			
 			if (IguanaConfig.toolLeveling)
 			{
+				ICommandManager commandManager = FMLCommonHandler.instance().getMinecraftServerInstance().getCommandManager();
+				ServerCommandManager serverCommandManager = ((ServerCommandManager) commandManager);
 				serverCommandManager.registerCommand(new IguanaCommandLevelUpTool());
 				serverCommandManager.registerCommand(new IguanaCommandToolXP());
 			}

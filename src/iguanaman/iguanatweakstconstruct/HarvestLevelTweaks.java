@@ -177,8 +177,6 @@ public class HarvestLevelTweaks {
         	if (i > 1) level += boostMod;
         	
             for (String materialName : oreDictLevels[i]) {
-	            for (ItemStack oreStack : OreDictionary.getOres(materialName.toLowerCase())) SetHarvestLevel(oreStack, level);
-	            for (ItemStack oreStack : OreDictionary.getOres(materialName.toLowerCase() + "Bricks")) SetHarvestLevel(oreStack, level);
 	            for (ItemStack oreStack : OreDictionary.getOres("ore" + materialName)) SetHarvestLevel(oreStack, level);
 	            for (ItemStack oreStack : OreDictionary.getOres("oreNether" + materialName)) SetHarvestLevel(oreStack, level);
 	            for (ItemStack oreStack : OreDictionary.getOres("block" + materialName)) SetHarvestLevel(oreStack, level);
@@ -186,11 +184,12 @@ public class HarvestLevelTweaks {
             }
         }
         
-    	IguanaLog.log("Modifying required harvest levels of vanilla ores");
+    	IguanaLog.log("Modifying required harvest levels of vanilla blocks");
         MinecraftForge.setBlockHarvestLevel(Block.obsidian,     "pickaxe", harvestLevelBronze);
         MinecraftForge.setBlockHarvestLevel(Block.blockDiamond, "pickaxe", harvestLevelBronze);
         MinecraftForge.setBlockHarvestLevel(Block.blockGold,    "pickaxe", harvestLevelIron);
         MinecraftForge.setBlockHarvestLevel(Block.blockIron,   "pickaxe", harvestLevelCopper);
+        MinecraftForge.setBlockHarvestLevel(Block.fenceIron,   "pickaxe", harvestLevelCopper);
         MinecraftForge.setBlockHarvestLevel(Block.blockLapis,   "pickaxe", harvestLevelIron);
         MinecraftForge.setBlockHarvestLevel(Block.oreRedstone, "pickaxe", harvestLevelBronze);
         MinecraftForge.setBlockHarvestLevel(Block.oreRedstoneGlowing, "pickaxe", harvestLevelBronze);

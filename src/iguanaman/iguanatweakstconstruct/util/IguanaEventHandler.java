@@ -365,18 +365,19 @@ public class IguanaEventHandler {
 		        if (IguanaConfig.levelingPickaxeBoost && (event.tool instanceof Pickaxe || event.tool instanceof Hammer))
 		        {
 			        toolTag.setLong("HeadEXP", 0);
-		            if (IguanaConfig.showTooltipXP)
-		            {
-		        		int hLevel = toolTag.hasKey("HarvestLevel") ? hLevel = toolTag.getInteger("HarvestLevel") : -1;
-		            	if (hLevel >= TConstructRegistry.getMaterial("Copper").harvestLevel() && hLevel < TConstructRegistry.getMaterial("Manyullyn").harvestLevel())
-		            	{
+			        
+	        		int hLevel = toolTag.hasKey("HarvestLevel") ? hLevel = toolTag.getInteger("HarvestLevel") : -1;
+	            	if (hLevel >= TConstructRegistry.getMaterial("Copper").harvestLevel() && hLevel < TConstructRegistry.getMaterial("Manyullyn").harvestLevel())
+	            	{
+			            if (IguanaConfig.showTooltipXP)
+			            {
 			            	tips.add(IguanaLevelingLogic.getXpString(new ItemStack(event.tool), false, toolTag, true));
 			                modifierTips.add("");
-		            	}
-		            }
-		            
-	            	tips.add("\u00A76Requires boost");
-	                modifierTips.add("");
+			            }
+			            
+		            	tips.add("\u00A76Requires boost");
+		                modifierTips.add("");
+	            	}
 		        }
 			}
 	    	

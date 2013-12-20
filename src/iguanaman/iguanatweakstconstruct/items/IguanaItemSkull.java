@@ -64,7 +64,7 @@ public class IguanaItemSkull extends ItemSkull {
     	if (IguanaConfig.mobHeadPickaxeBoost)
     	{
 	    	int meta = par1ItemStack.getItemDamage();
-	    	if (meta != 4 && meta <= 5) par3List.add("\u00a76Pickaxe booster"); 
+	    	if (meta != 3 && meta <= 5) par3List.add("\u00a76Pickaxe booster"); 
 	    	switch (meta)
 	    	{
 				case 0: par3List.add("Max tier: Copper"); break;

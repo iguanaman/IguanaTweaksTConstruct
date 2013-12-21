@@ -5,6 +5,7 @@ import iguanaman.iguanatweakstconstruct.util.IguanaPartCraftingHandler;
 import iguanaman.iguanatweakstconstruct.util.IguanaPatternCraftingHandler;
 import iguanaman.iguanatweakstconstruct.util.IguanaToolBuildRecipe;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +31,19 @@ public class VariousTweaks {
 
 	public static void init()
 	{
+		
+		// SUPPRESS MISSING TOOL LOGS
+        try
+        {
+            Class clazz = Class.forName(tconstruct.common.TContent.class.getName());
+            Field fld = clazz.getField("supressMissingToolLogs");
+            fld.setBoolean(fld, true);
+        }
+        catch (Exception e)
+        {
+            IguanaLog.log("Failed to suppress missing tool logs");
+            e.printStackTrace();
+        }
 
 		//REMOVE STONE TORCH
         if (IguanaConfig.removeStoneTorchRecipe)

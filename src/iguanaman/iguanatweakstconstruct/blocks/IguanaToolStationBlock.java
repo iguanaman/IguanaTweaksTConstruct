@@ -10,10 +10,10 @@ public class IguanaToolStationBlock extends ToolStationBlock {
 		super(id, material);
 	}
 
-    @Override
-    public Object getModInstance ()
-    {
-        return IguanaTweaksTConstruct.instance;
-    }
+	@Override
+	public Object getModInstance ()
+	{
+		return IguanaTweaksTConstruct.instance;
+	}
 
 }

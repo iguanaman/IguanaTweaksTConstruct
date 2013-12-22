@@ -2,12 +2,11 @@ package iguanaman.iguanatweakstconstruct.items;
 
 import java.util.List;
 
-import org.lwjgl.input.Keyboard;
-
-import iguanaman.iguanatweakstconstruct.IguanaConfig;
-import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+
+import org.lwjgl.input.Keyboard;
+
 import tconstruct.items.Pattern;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.crafting.PatternBuilder;
@@ -23,56 +22,45 @@ public class IguanaPattern extends Pattern {
 			String folder) {
 		super(id, names, patternTypes, folder);
 	}
-	
+
 	/**
-     * allows items to add custom lines of information to the mouseover description
-     */
+	 * allows items to add custom lines of information to the mouseover description
+	 */
 	@Override
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
-    {
+	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
+	{
 		super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
-		
+
 		PatternBuilder pb = PatternBuilder.instance;
-		
+
 		par3List.add("Valid materials:");
-		
+
 		if (par1ItemStack.getItemDamage() == 23)
-		{
 			par3List.add("String");
-		}
 		else if (par1ItemStack.getItemDamage() == 24)
 		{
 			par3List.add("Feather");
 			par3List.add("Leaf");
 			par3List.add("Slime");
-		}
-		else
-		{
+		} else
 			for (ToolMaterial material : TConstructRegistry.toolMaterials.values())
-			{
 				if (!par3List.contains(material.displayName))
 				{
 					ItemStack shard = pb.getShardFromSet(material.name());
 					if (shard != null)
 					{
-						shard.stackSize = this.getPatternCost(par1ItemStack);
+						shard.stackSize = getPatternCost(par1ItemStack);
 						if (pb.getToolPart(shard, par1ItemStack, null) != null)
-						{
 							if (par3List.size() < 7 || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
-							{
 								par3List.add(material.displayName);
-							}
 							else
 							{
-				                 par3List.add("\u00A7o<Hold SHIFT for more>");
-				                 break;
+								par3List.add("\u00A7o<Hold SHIFT for more>");
+								break;
 							}
-						}
 					}
 				}
-			}
-		}
-    }
+	}
 
 	/*
     @Override
@@ -136,6 +124,6 @@ public class IguanaPattern extends Pattern {
             return 0;
         }
     }
-    */
+	 */
 
 }

@@ -2,7 +2,6 @@ package iguanaman.iguanatweakstconstruct.blocks;
 
 import net.minecraft.block.BlockSkull;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.world.World;
 
 public class IguanaBlockSkull extends BlockSkull {
@@ -11,13 +10,13 @@ public class IguanaBlockSkull extends BlockSkull {
 		super(par1);
 	}
 
-    /**
-     * Returns a new instance of a block's tile entity class. Called on placing the block.
-     */
+	/**
+	 * Returns a new instance of a block's tile entity class. Called on placing the block.
+	 */
 	@Override
-    public TileEntity createNewTileEntity(World par1World)
-    {
-        return new IguanaTileEntitySkull();
-    }
+	public TileEntity createNewTileEntity(World par1World)
+	{
+		return new IguanaTileEntitySkull();
+	}
 
 }

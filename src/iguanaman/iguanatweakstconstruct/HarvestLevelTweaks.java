@@ -94,7 +94,6 @@ public class HarvestLevelTweaks {
 				if (harvestLevel != newHarvestLevel)
 				{
 					if (IguanaConfig.logMiningLevelChanges) IguanaLog.log("Changing mining level of " + entry.getKey().getUnlocalizedName() + " from " + harvestLevel + " to " + newHarvestLevel);
-
 					entry.setValue(Arrays.asList(toolClass, newHarvestLevel));
 				}
 
@@ -183,6 +182,7 @@ public class HarvestLevelTweaks {
 
 		IguanaLog.log("Modifying required harvest levels of vanilla blocks");
 		MinecraftForge.setBlockHarvestLevel(Block.obsidian,     "pickaxe", harvestLevelBronze);
+		MinecraftForge.setBlockHarvestLevel(Block.oreDiamond, "pickaxe", harvestLevelBronze);
 		MinecraftForge.setBlockHarvestLevel(Block.blockDiamond, "pickaxe", harvestLevelBronze);
 		MinecraftForge.setBlockHarvestLevel(Block.blockGold,    "pickaxe", harvestLevelIron);
 		MinecraftForge.setBlockHarvestLevel(Block.blockIron,   "pickaxe", harvestLevelCopper);

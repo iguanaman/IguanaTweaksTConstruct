@@ -87,7 +87,6 @@ public class IguanaConfig {
 	public static boolean addCleanModifier;
 	public static boolean moreExpensiveSilkyCloth;
 	public static boolean moreExpensiveSilkyJewel;
-	public static boolean moreExpensiveElectric;
 	public static int mossRepairSpeed;
 	public static int redstoneEffect;
 
@@ -442,10 +441,6 @@ public class IguanaConfig {
 		Property moreExpensiveSilkyJewelProperty = config.get("modifiers", "moreExpensiveSilkyJewel", true);
 		moreExpensiveSilkyJewelProperty.comment = "Silky Jewel needs emerald block, instead of one emerald";
 		moreExpensiveSilkyJewel = moreExpensiveSilkyJewelProperty.getBoolean(true);
-
-		Property moreExpensiveElectricProperty = config.get("modifiers", "moreExpensiveElectric", true);
-		moreExpensiveElectricProperty.comment = "Electric modifier requires 2 modifiers slots instead of 1";
-		moreExpensiveElectric = moreExpensiveElectricProperty.getBoolean(true);
 
 		Property mossRepairSpeedProperty = config.get("modifiers", "mossRepairSpeed", 3);
 		mossRepairSpeedProperty.comment = "Rate tools with moss repair (TC default 3)";

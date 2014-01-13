@@ -3,7 +3,6 @@ package iguanaman.iguanatweakstconstruct;
 import iguanaman.iguanatweakstconstruct.modifiers.IguanaActiveToolMod;
 import iguanaman.iguanatweakstconstruct.modifiers.IguanaModAttack;
 import iguanaman.iguanatweakstconstruct.modifiers.IguanaModClean;
-import iguanaman.iguanatweakstconstruct.modifiers.IguanaModElectric;
 import iguanaman.iguanatweakstconstruct.modifiers.IguanaModHeads;
 import iguanaman.iguanatweakstconstruct.modifiers.IguanaModLapis;
 import iguanaman.iguanatweakstconstruct.modifiers.IguanaModRedstone;
@@ -24,7 +23,6 @@ import tconstruct.library.tools.ToolMod;
 import tconstruct.modifiers.ModDurability;
 import tconstruct.modifiers.ModExtraModifier;
 import tconstruct.modifiers.ModInteger;
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ModifierTweaks {
@@ -37,7 +35,7 @@ public class ModifierTweaks {
 		Iterator<ToolMod> i = ToolBuilder.instance.toolMods.iterator();
 		while (i.hasNext()) {
 			ToolMod mod = i.next();
-			if (mod.key == "Emerald" || mod.key == "Diamond" || IguanaConfig.moreExpensiveElectric && mod.key == "Electric" ||
+			if (mod.key == "Emerald" || mod.key == "Diamond" ||
 					mod.key == "Tier1Free" && IguanaConfig.toolLeveling ||
 					mod.key == "Tier2Free" ||
 					mod.key == "Moss" || mod.key == "Lapis" || mod.key == "ModAttack" || mod.key == "Redstone"
@@ -65,10 +63,8 @@ public class ModifierTweaks {
 		// REPLACE OLD MODIFIERS
 		IguanaLog.log("Replacing old modifiers");
 
-		ToolBuilder tb = ToolBuilder.instance;
 		if (IguanaConfig.partReplacement) ToolBuilder.registerToolMod(new IguanaModUpgrade());
 		ToolBuilder.registerToolMod(new IguanaModRepair());
-		if (Loader.isModLoaded("IC2") && IguanaConfig.moreExpensiveElectric) ToolBuilder.registerToolMod(new IguanaModElectric());
 		if (!IguanaConfig.toolLevelingRandomBonuses)
 			ToolBuilder.registerToolMod(new ModExtraModifier(new ItemStack[] { new ItemStack(Item.skull, 1, 6), new ItemStack(Item.skull, 1, 7) }, "Tier2Free"));
 		ToolBuilder.registerToolMod(new ModInteger(new ItemStack[] { new ItemStack(TContent.materials, 1, 6) }, 4, "Moss", IguanaConfig.mossRepairSpeed, "\u00a72", "Auto-Repair"));

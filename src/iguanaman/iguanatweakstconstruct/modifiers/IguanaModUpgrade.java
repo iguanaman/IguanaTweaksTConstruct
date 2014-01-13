@@ -54,7 +54,8 @@ public class IguanaModUpgrade extends ToolMod {
 		if (tags.getInteger("Damage") > 0) return false;
 
 		// Get tool recipe
-		ToolRecipe toolRecipe = GetRecipe((ToolCore)tool.getItem());
+		ToolCore toolItem = (ToolCore)tool.getItem();
+		ToolRecipe toolRecipe = GetRecipe(toolItem);
 		if (toolRecipe == null) return false;
 
 		//get old tool part materials
@@ -89,6 +90,8 @@ public class IguanaModUpgrade extends ToolMod {
 		for (ItemStack inputStack : input)
 			if (inputStack != null)
 			{
+				int partIndex = -1;
+
 				// Make sure all inputs are valid parts
 				if (!(toolRecipe.validHead(inputStack.getItem())
 						|| toolRecipe.validHandle(inputStack.getItem())
@@ -107,6 +110,8 @@ public class IguanaModUpgrade extends ToolMod {
 					boolean newHeadWritable = ability.equals("Writable") || ability.equals("Thaumic") ? true : false;
 					if (headWritable && !newHeadWritable) modifiersNeeded += 1;
 
+					partIndex = IguanaTweaksTConstruct.toolParts.indexOf(toolItem.getHeadItem());
+
 					replacing.add("Head");
 				}
 				else if (toolRecipe.validHandle(inputStack.getItem()))
@@ -116,6 +121,8 @@ public class IguanaModUpgrade extends ToolMod {
 					String ability = TConstructRegistry.getMaterial(inputStack.getItemDamage()).ability;
 					boolean newHandleWritable = ability.equals("Writable") || ability.equals("Thaumic") ? true : false;
 					if (handleWritable && !newHandleWritable) modifiersNeeded += 1;
+
+					partIndex = IguanaTweaksTConstruct.toolParts.indexOf(toolItem.getHandleItem());
 
 					replacing.add("Handle");
 				}
@@ -127,6 +134,8 @@ public class IguanaModUpgrade extends ToolMod {
 					boolean newAccessoryWritable = ability.equals("Writable") || ability.equals("Thaumic") ? true : false;
 					if (accessoryWritable && !newAccessoryWritable) modifiersNeeded += 1;
 
+					partIndex = IguanaTweaksTConstruct.toolParts.indexOf(toolItem.getAccessoryItem());
+
 					replacing.add("Accessory");
 				}
 				else if (toolRecipe.validExtra(inputStack.getItem()))
@@ -137,22 +146,18 @@ public class IguanaModUpgrade extends ToolMod {
 					boolean newExtraWritable = ability.equals("Writable") || ability.equals("Thaumic") ? true : false;
 					if (extraWritable && !newExtraWritable) modifiersNeeded += 1;
 
+					partIndex = IguanaTweaksTConstruct.toolParts.indexOf(toolItem.getExtraItem());
+
 					replacing.add("Extra");
 				}
 
 				// Check for stone parts
 				if (inputStack.getItemDamage() == 1)
-				{
-					if (!IguanaConfig.allowStoneTools) return false;
-
-					int partIndex = IguanaTweaksTConstruct.toolParts.indexOf(inputStack.getItem());
-					if (IguanaConfig.restrictedFlintParts.contains(partIndex+1)) return false;
-				}
+					if (!IguanaConfig.allowStoneTools || IguanaConfig.restrictedFlintParts.contains(partIndex+1)) return false;
 			}
 
 		// Check if have enough free modifiers to replace written/thaumic parts
-		int freeModifiers = tags.getInteger("Modifiers");
-		if (freeModifiers < modifiersNeeded) return false;
+		if (tags.getInteger("Modifiers") < modifiersNeeded) return false;
 
 		return true;
 	}

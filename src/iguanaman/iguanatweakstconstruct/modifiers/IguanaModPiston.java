@@ -7,14 +7,12 @@ import tconstruct.modifiers.tools.ModPiston;
 public class IguanaModPiston extends ModPiston
 {
 
-    public IguanaModPiston(ItemStack[] items, int effect, int inc)
-    {
+    public IguanaModPiston(ItemStack[] items, int effect, int inc) {
         super(effect, items, new int[] { inc });
     }
 
     @Override
-    public boolean canModify (ItemStack tool, ItemStack[] input)
-    {
+    public boolean canModify (ItemStack tool, ItemStack[] input) {
         ToolCore toolItem = (ToolCore) tool.getItem();
         if (!validType(toolItem))
             return false;

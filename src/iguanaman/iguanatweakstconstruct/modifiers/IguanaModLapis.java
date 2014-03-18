@@ -7,20 +7,17 @@ import tconstruct.modifiers.tools.ModLapis;
 public class IguanaModLapis extends ModLapis
 {
 
-    public IguanaModLapis(ItemStack[] items, int effect, int inc)
-    {
+    public IguanaModLapis(ItemStack[] items, int effect, int inc) {
         super(effect, items, new int[] { inc });
     }
 
     @Override
-    public boolean canModify (ItemStack tool, ItemStack[] input)
-    {
+    public boolean canModify (ItemStack tool, ItemStack[] input) {
         return super.canModify(tool, input);
     }
 
     @Override
-    public void midStreamModify (ItemStack tool, ToolCore toolItem)
-    {
+    public void midStreamModify (ItemStack tool, ToolCore toolItem) {
     }
 
 }

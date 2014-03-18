@@ -27,10 +27,10 @@ import tconstruct.library.TConstructRegistry;
 import tconstruct.library.tools.HarvestTool;
 import tconstruct.library.tools.ToolMod;
 import tconstruct.library.tools.Weapon;
-import tconstruct.modifiers.ModAntiSpider;
-import tconstruct.modifiers.ModInteger;
-import tconstruct.modifiers.ModReinforced;
-import tconstruct.modifiers.ModSmite;
+import tconstruct.modifiers.tools.ModAntiSpider;
+import tconstruct.modifiers.tools.ModInteger;
+import tconstruct.modifiers.tools.ModReinforced;
+import tconstruct.modifiers.tools.ModSmite;
 
 public class IguanaLevelingLogic {
 
@@ -400,13 +400,13 @@ public class IguanaLevelingLogic {
 		}
 		else if (rnd < 7 && !isTool && !(item instanceof Shortbow))
 		{
-			mod = new ModSmite("Smite", nullItemStack, 14, 36);
+			mod = new ModSmite("Smite", 14, nullItemStack, new int[]{ 36});
 			if (!player.worldObj.isRemote)
 				player.addChatMessage("\u00a79It begins to radiate a slight glow (+1 smite)");
 		}
 		else if (rnd < 8 && !isTool && !(item instanceof Shortbow))
 		{
-			mod = new ModAntiSpider("Anti-Spider", nullItemStack, 15, 4);
+			mod = new ModAntiSpider("Anti-Spider",15, nullItemStack, new int[]{ 4});
 			if (!player.worldObj.isRemote)
 				player.addChatMessage("\u00a79A strange odor emanates from the weapon (+1 bane of arthropods)");
 		}

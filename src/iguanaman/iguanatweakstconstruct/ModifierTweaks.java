@@ -20,9 +20,9 @@ import tconstruct.library.client.TConstructClientRegistry;
 import tconstruct.library.crafting.ToolBuilder;
 import tconstruct.library.tools.ToolCore;
 import tconstruct.library.tools.ToolMod;
-import tconstruct.modifiers.ModDurability;
-import tconstruct.modifiers.ModExtraModifier;
-import tconstruct.modifiers.ModInteger;
+import tconstruct.modifiers.tools.ModDurability;
+import tconstruct.modifiers.tools.ModExtraModifier;
+import tconstruct.modifiers.tools.ModInteger;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ModifierTweaks {

@@ -76,4 +76,10 @@ public class IguanaCommandLevelUpTool extends CommandBase {
 		return null;
 	}
 
+    @Override
+    public int compareTo (Object arg0)
+    {
+        return 0;
+    }
+
 }

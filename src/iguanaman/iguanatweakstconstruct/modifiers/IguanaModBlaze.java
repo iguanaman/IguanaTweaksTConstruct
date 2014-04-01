@@ -7,8 +7,8 @@ import tconstruct.modifiers.tools.ModBlaze;
 public class IguanaModBlaze extends ModBlaze {
 
 
-	public IguanaModBlaze(ItemStack[] items, int effect, int inc) {
-		super(effect, items, new int[]{ inc});
+	public IguanaModBlaze(ItemStack[] items, int effect, int[] inc) {
+		super(effect, items, inc);
 	}
 
 	@Override

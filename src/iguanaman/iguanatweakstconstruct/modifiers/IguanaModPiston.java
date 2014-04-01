@@ -7,8 +7,8 @@ import tconstruct.modifiers.tools.ModPiston;
 public class IguanaModPiston extends ModPiston
 {
 
-    public IguanaModPiston(ItemStack[] items, int effect, int inc) {
-        super(effect, items, new int[] { inc });
+    public IguanaModPiston(ItemStack[] items, int effect, int[] inc) {
+        super(effect, items,inc);
     }
 
     @Override

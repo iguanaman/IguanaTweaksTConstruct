@@ -7,8 +7,8 @@ import tconstruct.modifiers.tools.ModLapis;
 public class IguanaModLapis extends ModLapis
 {
 
-    public IguanaModLapis(ItemStack[] items, int effect, int inc) {
-        super(effect, items, new int[] { inc });
+    public IguanaModLapis(ItemStack[] items, int effect, int[] inc) {
+        super(effect, items, inc);
     }
 
     @Override

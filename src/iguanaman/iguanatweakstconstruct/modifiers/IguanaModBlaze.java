@@ -2,13 +2,13 @@ package iguanaman.iguanatweakstconstruct.modifiers;
 
 import net.minecraft.item.ItemStack;
 import tconstruct.library.tools.ToolCore;
-import tconstruct.modifiers.ModBlaze;
+import tconstruct.modifiers.tools.ModBlaze;
 
 public class IguanaModBlaze extends ModBlaze {
 
 
-	public IguanaModBlaze(ItemStack[] items, int effect, int inc) {
-		super(items, effect, inc);
+	public IguanaModBlaze(ItemStack[] items, int effect, int[] inc) {
+		super(effect, items, inc);
 	}
 
 	@Override

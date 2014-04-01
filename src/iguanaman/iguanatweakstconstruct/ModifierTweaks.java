@@ -20,9 +20,9 @@ import tconstruct.library.client.TConstructClientRegistry;
 import tconstruct.library.crafting.ToolBuilder;
 import tconstruct.library.tools.ToolCore;
 import tconstruct.library.tools.ToolMod;
-import tconstruct.modifiers.ModDurability;
-import tconstruct.modifiers.ModExtraModifier;
-import tconstruct.modifiers.ModInteger;
+import tconstruct.modifiers.tools.ModDurability;
+import tconstruct.modifiers.tools.ModExtraModifier;
+import tconstruct.modifiers.tools.ModInteger;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ModifierTweaks {
@@ -73,12 +73,7 @@ public class ModifierTweaks {
 
 		ItemStack lapisItem = new ItemStack(Item.dyePowder, 1, 4);
 		ItemStack lapisBlock = new ItemStack(Block.blockLapis);
-		ToolBuilder.registerToolMod(new IguanaModLapis(new ItemStack[] { lapisItem }, 10, 1));
-		ToolBuilder.registerToolMod(new IguanaModLapis(new ItemStack[] { lapisItem, lapisItem }, 10, 2));
-		ToolBuilder.registerToolMod(new IguanaModLapis(new ItemStack[] { lapisBlock }, 10, 9));
-		ToolBuilder.registerToolMod(new IguanaModLapis(new ItemStack[] { lapisItem, lapisBlock }, 10, 10));
-		ToolBuilder.registerToolMod(new IguanaModLapis(new ItemStack[] { lapisBlock, lapisBlock }, 10, 18));
-		ToolBuilder.registerToolMod(new IguanaModLapis(new ItemStack[] { lapisBlock, lapisBlock, lapisBlock }, 10, 27));
+		ToolBuilder.registerToolMod(new IguanaModLapis(new ItemStack[] { lapisBlock, lapisItem }, 10, new int[]{1,1}));
 
 		ItemStack quartzItem = new ItemStack(Item.netherQuartz);
 		ItemStack quartzBlock = new ItemStack(Block.blockNetherQuartz, 1, Short.MAX_VALUE);

@@ -1,0 +1,13 @@
+[
+  {
+    "modid": "IguanaTweaksTConstruct",
+    "name": "Iguana Tweaks for Tinkers Construct",
+    "description": "Rebalances and adds new features to Tinkers Construct",
+    "version": "1.6.X-1p",
+      "mcversion": "1.6.4",
+    "url": "http://www.minecraftforum.net/topic/1953828-",
+    "authors": [
+      "iguana_man"
+    ]
+  }
+]

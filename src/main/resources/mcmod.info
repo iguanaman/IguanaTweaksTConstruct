@@ -1,0 +1,16 @@
+[
+{
+  "modid": "iguanamantconstruct",
+  "name": "Iguana Tweaks for Tinkers Construct",
+  "description": "Rebalances and adds new features to Tinkers Construct.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "http://www.minecraftforum.net/topic/1953828",
+  "updateUrl": "",
+  "authors": ["Iguana_man"],
+  "credits": "The Forge and FML guys, for making this example",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

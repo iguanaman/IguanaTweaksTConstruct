@@ -5,19 +5,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import net.minecraftforge.common.ConfigCategory;
-import net.minecraftforge.common.Configuration;
-import net.minecraftforge.common.Property;
+import net.minecraftforge.common.config.ConfigCategory;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
+
+
 
 public class IguanaConfig {
 
 	// Item Ids
+	/*
 	public static int clayBucketLavaId;
 	public static int clayBucketMilkId;
 	public static int clayBucketWaterId;
 	public static int clayBucketFiredId;
 	public static int clayBucketUnfiredId;
 	public static int clayBucketsId;
+	*/
 
 	// leveling
 	public static boolean detailedXpTooltip;
@@ -132,33 +136,6 @@ public class IguanaConfig {
 	{
 		Configuration config = new Configuration(file);
 		config.load();
-
-		// items
-		Property clayBucketUnfiredIdProperty = config.getItem("clayBucketUnfiredId", 25710);
-		clayBucketUnfiredIdProperty.comment = "Item ID for the unfired clay bucket";
-		clayBucketUnfiredId = clayBucketUnfiredIdProperty.getInt(25710);
-
-		Property clayBucketFiredIdProperty = config.getItem("clayBucketFiredId", 25711);
-		clayBucketFiredIdProperty.comment = "Item ID for the fired clay bucket";
-		clayBucketFiredId = clayBucketFiredIdProperty.getInt(25711);
-
-		Property clayBucketWaterIdProperty = config.getItem("clayBucketWaterId", 25712);
-		clayBucketWaterIdProperty.comment = "Item ID for the water filled clay bucket";
-		clayBucketWaterId = clayBucketWaterIdProperty.getInt(25712);
-
-		Property clayBucketLavaIdProperty = config.getItem("clayBucketLavaId", 25713);
-		clayBucketLavaIdProperty.comment = "Item ID for the lava filled clay bucket";
-		clayBucketLavaId = clayBucketLavaIdProperty.getInt(25713);
-
-		Property clayBucketsIdProperty = config.getItem("clayBucketsId", 25714);
-		clayBucketsIdProperty.comment = "Item ID for the filled clay buckets";
-		clayBucketsId = clayBucketsIdProperty.getInt(25714);
-
-		Property clayBucketMilkIdProperty = config.getItem("clayBucketMilkId", 25715);
-		clayBucketMilkIdProperty.comment = "Item ID for the milk filled clay bucket";
-		clayBucketMilkId = clayBucketMilkIdProperty.getInt(25715);
-
-
 
 		// leveling
 		ConfigCategory levelingCategory = config.getCategory("leveling");
@@ -588,12 +565,13 @@ public class IguanaConfig {
 		pickaxeoverridesCategory.setComment("Normally the mod changes the mining levels of all pickaxes to be in line with the new system, override that for specific picks here");
 
 		Property pickaxeOverridesProperty = config.get("pickaxeoverrides", "pickaxeOverrides", new String[] {});
-		pickaxeOverridesProperty.comment = "Format <itemID>:<miningLevel> (Each on a separate line)";
+		// TODO: Find a better way to implement pickaxeOveride
+		/*pickaxeOverridesProperty.comment = "Format <itemID>:<miningLevel> (Each on a separate line)";
 		for (String i : pickaxeOverridesProperty.getStringList())
 		{
 			String[] splt = i.split(":");
 			pickaxeOverrides.put(Integer.parseInt(splt[0]), Integer.parseInt(splt[1]));
-		}
+		}*/
 
 
 		config.save();

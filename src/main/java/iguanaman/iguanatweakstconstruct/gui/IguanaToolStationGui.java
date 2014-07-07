@@ -14,7 +14,6 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
@@ -22,15 +21,14 @@ import net.minecraft.world.World;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
-import tconstruct.blocks.logic.ToolStationLogic;
 import tconstruct.client.gui.GuiButtonTool;
 import tconstruct.client.gui.NewContainerGui;
-import tconstruct.inventory.ActiveContainer;
-import tconstruct.inventory.ToolStationContainer;
 import tconstruct.library.client.TConstructClientRegistry;
 import tconstruct.library.client.ToolGuiElement;
 import tconstruct.library.tools.ToolCore;
-import cpw.mods.fml.common.network.PacketDispatcher;
+import tconstruct.smeltery.inventory.ActiveContainer;
+import tconstruct.tools.inventory.ToolStationContainer;
+import tconstruct.tools.logic.ToolStationLogic;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -51,7 +49,7 @@ public class IguanaToolStationGui extends NewContainerGui
 		super((ActiveContainer) stationlogic.getGuiContainer(inventoryplayer, world, x, y, z));
 		logic = stationlogic;
 		toolSlots = (ToolStationContainer) container;
-		text = new GuiTextField(fontRenderer, xSize / 2 - 5, 8, 30, 12);
+		text = new GuiTextField(fontRendererObj, xSize / 2 - 5, 8, 30, 12);
 		text.setMaxStringLength(40);
 		text.setEnableBackgroundDrawing(false);
 		text.setVisible(true);
@@ -166,9 +164,9 @@ public class IguanaToolStationGui extends NewContainerGui
 	@Override
 	protected void drawGuiContainerForegroundLayer (int par1, int par2)
 	{
-		fontRenderer.drawString(StatCollector.translateToLocal(logic.getInvName()), 6, 8, 0x000000);
-		fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 96 + 2, 0x000000);
-		fontRenderer.drawString(toolName + "_", xSize / 2 - 18, 8, 0xffffff);
+		fontRendererObj.drawString(StatCollector.translateToLocal(logic.getInvName()), 6, 8, 0x000000);
+		fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 96 + 2, 0x000000);
+		fontRendererObj.drawString(toolName + "_", xSize / 2 - 18, 8, 0xffffff);
 
 		if (logic.isStackInSlot(0))
 			drawToolStats();
@@ -185,7 +183,7 @@ public class IguanaToolStationGui extends NewContainerGui
 		{
 			ToolCore tool = (ToolCore) stack.getItem();
 			NBTTagCompound tags = stack.getTagCompound().getCompoundTag("InfiTool");
-			drawCenteredString(fontRenderer, "\u00A7n" + tool.getToolName(), xSize + 63, 8, 0xffffff);
+			drawCenteredString(fontRendererObj, "\u00A7n" + tool.getToolName(), xSize + 63, 8, 0xffffff);
 
 			drawModularToolStats(stack, tool, tags);
 		}
@@ -193,7 +191,7 @@ public class IguanaToolStationGui extends NewContainerGui
 
 	void drawModularToolStats (ItemStack stack, ToolCore tool, NBTTagCompound tags)
 	{
-		List categories = Arrays.asList(tool.toolCategories());
+		List<String> categories = Arrays.asList(tool.getTraits());
 		final int durability = tags.getInteger("Damage");
 		final int maxDur = tags.getInteger("TotalDurability");
 		int availableDurability = maxDur - durability;
@@ -204,14 +202,14 @@ public class IguanaToolStationGui extends NewContainerGui
 		if (maxDur > 0)
 			if (maxDur >= 10000)
 			{
-				fontRenderer.drawString("Durability:", xSize + 8, base + offset * 11, 0xffffff);
+				fontRendererObj.drawString("Durability:", xSize + 8, base + offset * 11, 0xffffff);
 				offset++;
-				fontRenderer.drawString("- " + availableDurability + "/" + maxDur, xSize + 8, base + offset * 10, 0xffffff);
+				fontRendererObj.drawString("- " + availableDurability + "/" + maxDur, xSize + 8, base + offset * 10, 0xffffff);
 				offset++;
 			}
 			else
 			{
-				fontRenderer.drawString("Durability: " + availableDurability + "/" + maxDur, xSize + 8, base + offset * 10, 0xffffff);
+				fontRendererObj.drawString("Durability: " + availableDurability + "/" + maxDur, xSize + 8, base + offset * 10, 0xffffff);
 				offset++;
 			}
 
@@ -228,16 +226,16 @@ public class IguanaToolStationGui extends NewContainerGui
 
 			String heart = attack == 2 ? " Heart" : " Hearts";
 			if (attack % 2 == 0)
-				fontRenderer.drawString("Attack: " + attack / 2 + heart, xSize + 8, base + offset * 10, 0xffffff);
+				fontRendererObj.drawString("Attack: " + attack / 2 + heart, xSize + 8, base + offset * 10, 0xffffff);
 			else
-				fontRenderer.drawString("Attack: " + attack / 2f + heart, xSize + 8, base + offset * 10, 0xffffff);
+				fontRendererObj.drawString("Attack: " + attack / 2f + heart, xSize + 8, base + offset * 10, 0xffffff);
 			offset++;
 
 			if (stoneboundDamage != 0)
 			{
 				heart = stoneboundDamage == 2 ? " Heart" : " Hearts";
 				String bloss = stoneboundDamage > 0 ? "Bonus: " : "Loss: ";
-				fontRenderer.drawString(bloss + (int) stoneboundDamage / 2 + heart, xSize + 8, base + offset * 10, 0xffffff);
+				fontRendererObj.drawString(bloss + (int) stoneboundDamage / 2 + heart, xSize + 8, base + offset * 10, 0xffffff);
 				offset++;
 			}
 			offset++;
@@ -250,9 +248,9 @@ public class IguanaToolStationGui extends NewContainerGui
 			int drawSpeed = tags.getInteger("DrawSpeed");
 			float flightSpeed = tags.getFloat("FlightSpeed");
 			float trueDraw = drawSpeed / 20f * flightSpeed;
-			fontRenderer.drawString("Draw Speed: " + df.format(trueDraw) + "s", xSize + 8, base + offset * 10, 0xffffff);
+			fontRendererObj.drawString("Draw Speed: " + df.format(trueDraw) + "s", xSize + 8, base + offset * 10, 0xffffff);
 			offset++;
-			fontRenderer.drawString("Arrow Speed: " + df.format(flightSpeed) + "x", xSize + 8, base + offset * 10, 0xffffff);
+			fontRendererObj.drawString("Arrow Speed: " + df.format(flightSpeed) + "x", xSize + 8, base + offset * 10, 0xffffff);
 			offset++;
 			offset++;
 		}
@@ -266,26 +264,26 @@ public class IguanaToolStationGui extends NewContainerGui
 			tags.getFloat("BreakChance");
 			float accuracy = tags.getFloat("Accuracy");
 
-			fontRenderer.drawString("Base Attack:", xSize + 8, base + offset * 10, 0xffffff);
+			fontRendererObj.drawString("Base Attack:", xSize + 8, base + offset * 10, 0xffffff);
 			offset++;
 			String heart = attack == 2 ? " Heart" : " Hearts";
 			if (attack % 2 == 0)
-				fontRenderer.drawString("- " + attack / 2 + heart, xSize + 8, base + offset * 10, 0xffffff);
+				fontRendererObj.drawString("- " + attack / 2 + heart, xSize + 8, base + offset * 10, 0xffffff);
 			else
-				fontRenderer.drawString("- " + attack / 2f + heart, xSize + 8, base + offset * 10, 0xffffff);
+				fontRendererObj.drawString("- " + attack / 2f + heart, xSize + 8, base + offset * 10, 0xffffff);
 			offset++;
 			int minAttack = attack;
 			int maxAttack = attack * 2;
 			heart = " Hearts";
-			fontRenderer.drawString("Shortbow Attack:", xSize + 8, base + offset * 10, 0xffffff);
+			fontRendererObj.drawString("Shortbow Attack:", xSize + 8, base + offset * 10, 0xffffff);
 			offset++;
-			fontRenderer.drawString(df.format(minAttack / 2f) + "-" + df.format(maxAttack / 2f) + heart, xSize + 8, base + offset * 10, 0xffffff);
+			fontRendererObj.drawString(df.format(minAttack / 2f) + "-" + df.format(maxAttack / 2f) + heart, xSize + 8, base + offset * 10, 0xffffff);
 			offset++;
 			offset++;
 
-			fontRenderer.drawString("Weight: " + df.format(mass), xSize + 8, base + offset * 10, 0xffffff);
+			fontRendererObj.drawString("Weight: " + df.format(mass), xSize + 8, base + offset * 10, 0xffffff);
 			offset++;
-			fontRenderer.drawString("Accuracy: " + df.format(accuracy - 4) + "%", xSize + 8, base + offset * 10, 0xffffff);
+			fontRendererObj.drawString("Accuracy: " + df.format(accuracy - 4) + "%", xSize + 8, base + offset * 10, 0xffffff);
 			offset++;
 			/*this.fontRenderer.drawString("Chance to break: " + df.format(shatter)+"%", xSize + 8, base + offset * 10, 0xffffff);
             offset++;*/
@@ -302,20 +300,20 @@ public class IguanaToolStationGui extends NewContainerGui
 			float trueSpeed = mineSpeed + stoneboundSpeed;
 			float trueSpeed2 = mineSpeed + stoneboundSpeed;
 
-			fontRenderer.drawString("Mining Speeds: ", xSize + 8, base + offset * 10, 0xffffff);
+			fontRendererObj.drawString("Mining Speeds: ", xSize + 8, base + offset * 10, 0xffffff);
 			offset++;
-			fontRenderer.drawString("- " + df.format(trueSpeed) + ", " + df.format(trueSpeed2), xSize + 8, base + offset * 10, 0xffffff);
+			fontRendererObj.drawString("- " + df.format(trueSpeed) + ", " + df.format(trueSpeed2), xSize + 8, base + offset * 10, 0xffffff);
 			offset++;
 			if (stoneboundSpeed != 0)
 			{
 				String bloss = stoneboundSpeed > 0 ? "Bonus: " : "Loss: ";
-				fontRenderer.drawString(bloss + df.format(stoneboundSpeed), xSize + 8, base + offset * 10, 0xffffff);
+				fontRendererObj.drawString(bloss + df.format(stoneboundSpeed), xSize + 8, base + offset * 10, 0xffffff);
 				offset++;
 			}
 			offset++;
-			fontRenderer.drawString("Harvest Levels:", xSize + 8, base + offset * 10, 0xffffff);
+			fontRendererObj.drawString("Harvest Levels:", xSize + 8, base + offset * 10, 0xffffff);
 			offset++;
-			fontRenderer
+			fontRendererObj
 			.drawString("- " + getHarvestLevelName(tags.getInteger("HarvestLevel")) + ", " + getHarvestLevelName(tags.getInteger("HarvestLevel2")), xSize + 8, base + offset * 10, 0xffffff);
 			offset++;
 			offset++;
@@ -351,15 +349,15 @@ public class IguanaToolStationGui extends NewContainerGui
 			trueSpeed += stoneboundSpeed;
 			if (trueSpeed < 0)
 				trueSpeed = 0;
-			fontRenderer.drawString("Mining Speed: " + df.format(trueSpeed), xSize + 8, base + offset * 10, 0xffffff);
+			fontRendererObj.drawString("Mining Speed: " + df.format(trueSpeed), xSize + 8, base + offset * 10, 0xffffff);
 			offset++;
 			if (stoneboundSpeed != 0)
 			{
 				String bloss = stoneboundSpeed > 0 ? "Bonus: " : "Loss: ";
-				fontRenderer.drawString(bloss + df.format(stoneboundSpeed), xSize + 8, base + offset * 10, 0xffffff);
+				fontRendererObj.drawString(bloss + df.format(stoneboundSpeed), xSize + 8, base + offset * 10, 0xffffff);
 				offset++;
 			}
-			fontRenderer.drawString("Mining Level: " + getHarvestLevelName(tags.getInteger("HarvestLevel")), xSize + 8, base + offset * 10, 0xffffff);
+			fontRendererObj.drawString("Mining Level: " + getHarvestLevelName(tags.getInteger("HarvestLevel")), xSize + 8, base + offset * 10, 0xffffff);
 			offset++;
 			offset++;
 		}
@@ -367,7 +365,7 @@ public class IguanaToolStationGui extends NewContainerGui
 		{
 			float mineSpeed = tags.getInteger("MiningSpeed");
 			float trueSpeed = mineSpeed / 100f;
-			fontRenderer.drawString("Usage Speed: " + trueSpeed, xSize + 8, base + offset * 10, 0xffffff);
+			fontRendererObj.drawString("Usage Speed: " + trueSpeed, xSize + 8, base + offset * 10, 0xffffff);
 			offset++;
 			offset++;
 		}
@@ -375,11 +373,11 @@ public class IguanaToolStationGui extends NewContainerGui
 		int modifiers = tags.getInteger("Modifiers");
 		if (modifiers > 0)
 		{
-			fontRenderer.drawString("Modifiers remaining: " + tags.getInteger("Modifiers"), xSize + 8, base + offset * 10, 0xffffff);
+			fontRendererObj.drawString("Modifiers remaining: " + tags.getInteger("Modifiers"), xSize + 8, base + offset * 10, 0xffffff);
 			offset++;
 		}
 		if (tags.hasKey("Tooltip1"))
-			fontRenderer.drawString("Modifiers:", xSize + 8, base + offset * 10, 0xffffff);
+			fontRendererObj.drawString("Modifiers:", xSize + 8, base + offset * 10, 0xffffff);
 
 		boolean displayToolTips = true;
 		int tipNum = 0;
@@ -392,7 +390,7 @@ public class IguanaToolStationGui extends NewContainerGui
 			{
 				String tipName = tags.getString(tooltip);
 				if (!tipName.trim().equals(""))
-					fontRenderer.drawString("- " + tipName, xSize + 8, base + (offset + ++written) * 10, 0xffffff);
+					fontRendererObj.drawString("- " + tipName, xSize + 8, base + (offset + ++written) * 10, 0xffffff);
 			}
 			else
 				displayToolTips = false;
@@ -401,8 +399,8 @@ public class IguanaToolStationGui extends NewContainerGui
 
 	void drawToolInformation ()
 	{
-		drawCenteredString(fontRenderer, title, xSize + 63, 8, 0xffffff);
-		fontRenderer.drawSplitString(body, xSize + 8, 24, 115, 0xffffff);
+		drawCenteredString(fontRendererObj, title, xSize + 63, 8, 0xffffff);
+		fontRendererObj.drawSplitString(body, xSize + 8, 24, 115, 0xffffff);
 	}
 
 	String getHarvestLevelName (int num)
@@ -453,7 +451,7 @@ public class IguanaToolStationGui extends NewContainerGui
 	@Override
 	protected void keyTyped (char par1, int keyCode)
 	{
-		if (keyCode == 1 || !active && keyCode == mc.gameSettings.keyBindInventory.keyCode)
+		if (keyCode == 1 || !active && keyCode == mc.gameSettings.keyBindInventory.getKeyCode())
 		{
 			logic.setToolname("");
 			updateServer("");
@@ -471,12 +469,13 @@ public class IguanaToolStationGui extends NewContainerGui
 
 	void updateServer (String name)
 	{
-		ByteArrayOutputStream bos = new ByteArrayOutputStream(8);
+		// TODO: Update networking
+		/*ByteArrayOutputStream bos = new ByteArrayOutputStream(8);
 		DataOutputStream outputStream = new DataOutputStream(bos);
 		try
 		{
 			outputStream.writeByte(1);
-			outputStream.writeInt(logic.worldObj.provider.dimensionId);
+			outputStream.writeInt(logic.getWorldObj().provider.dimensionId);
 			outputStream.writeInt(logic.xCoord);
 			outputStream.writeInt(logic.yCoord);
 			outputStream.writeInt(logic.zCoord);
@@ -492,7 +491,7 @@ public class IguanaToolStationGui extends NewContainerGui
 		packet.data = bos.toByteArray();
 		packet.length = bos.size();
 
-		PacketDispatcher.sendPacketToServer(packet);
+		PacketDispatcher.sendPacketToServer(packet);*/
 	}
 
 	/*protected void mouseClicked(int par1, int par2, int par3)

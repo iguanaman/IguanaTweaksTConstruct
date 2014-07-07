@@ -3,10 +3,10 @@ package iguanaman.iguanatweakstconstruct.gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.world.World;
-import tconstruct.blocks.logic.ToolForgeLogic;
 import tconstruct.client.gui.GuiButtonTool;
 import tconstruct.library.client.TConstructClientRegistry;
 import tconstruct.library.client.ToolGuiElement;
+import tconstruct.tools.logic.ToolForgeLogic;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

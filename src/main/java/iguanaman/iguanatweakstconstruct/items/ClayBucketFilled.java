@@ -1,19 +1,20 @@
 package iguanaman.iguanatweakstconstruct.items;
 
-import net.minecraft.client.renderer.texture.IconRegister;
+import tconstruct.smeltery.items.FilledBucket;
+import net.minecraft.block.Block;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import tconstruct.items.FilledBucket;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ClayBucketFilled extends FilledBucket {
 
-	public ClayBucketFilled(int id) {
-		super(id);
+	public ClayBucketFilled(Block contents) {
+		super(contents);
 	}
 
 	/**
@@ -23,7 +24,7 @@ public class ClayBucketFilled extends FilledBucket {
 	public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
 	{
 		ItemStack result = super.onItemRightClick(par1ItemStack, par2World, par3EntityPlayer);
-		if (result.itemID == Item.bucketEmpty.itemID) {
+		if (result.getItem() == Items.bucket) {
 			--par1ItemStack.stackSize;
 			return par1ItemStack;
 		}
@@ -32,9 +33,9 @@ public class ClayBucketFilled extends FilledBucket {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons (IconRegister iconRegister)
+	public void registerIcons (IIconRegister iconRegister)
 	{
-		icons = new Icon[textureNames.length];
+		icons = new IIcon[textureNames.length];
 
 		for (int i = 0; i < icons.length; ++i)
 			icons[i] = iconRegister.registerIcon("iguanatweakstconstruct:clayBucket_" + textureNames[i]);

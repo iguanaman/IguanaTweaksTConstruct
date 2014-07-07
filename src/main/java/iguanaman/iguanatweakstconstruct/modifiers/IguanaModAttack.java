@@ -5,10 +5,11 @@ import java.util.List;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import tconstruct.library.modifier.IModifyable;
+import tconstruct.library.modifier.ItemModifier;
 import tconstruct.library.tools.ToolCore;
-import tconstruct.library.tools.ToolMod;
 
-public class IguanaModAttack extends ToolMod {
+public class IguanaModAttack extends ItemModifier {
 
 	String tooltipName;
 	int increase;
@@ -116,16 +117,16 @@ public class IguanaModAttack extends ToolMod {
 	}
 
 	@Override
-	public boolean validType (ToolCore tool)
+	public boolean validType (IModifyable input)
 	{
-		return true;
+		return input.getModifyType().equals("Tool");
 		/*List list = Arrays.asList(tool.toolCategories());
         return list.contains("melee") || list.contains("harvest") || list.contains("ammo");*/
 	}
 
-	public boolean nerfType (ToolCore tool)
+	public boolean nerfType (IModifyable input)
 	{
-		List list = Arrays.asList(tool.toolCategories());
+		List<String> list = Arrays.asList(input.getTraits());
 		return list.contains("throwing") || list.contains("ammo");
 	}
 

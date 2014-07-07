@@ -6,7 +6,7 @@
     "version": "@VERSION@",
       "mcversion": "@MCVERSION@",
     "url": "http://www.minecraftforum.net/topic/1953828-",
-    "authors": [
+    "authorList": [
       "iguana_man"
     ]
   }

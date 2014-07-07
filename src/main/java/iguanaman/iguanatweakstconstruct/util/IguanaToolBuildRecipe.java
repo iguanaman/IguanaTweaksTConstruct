@@ -4,19 +4,18 @@ import iguanaman.iguanatweakstconstruct.IguanaConfig;
 
 import java.util.ArrayList;
 
-import org.apache.commons.lang3.StringUtils;
-
-import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
+import tconstruct.library.crafting.ModifyBuilder;
 import tconstruct.library.crafting.ToolBuilder;
 import tconstruct.library.tools.ToolCore;
 
 public class IguanaToolBuildRecipe implements IRecipe {
 
-	ItemStack placeholder = new ItemStack(Block.stone);
+	ItemStack placeholder = new ItemStack(Blocks.stone);
 	ItemStack output = null;
 
 	@Override
@@ -82,7 +81,7 @@ public class IguanaToolBuildRecipe implements IRecipe {
 						if (IguanaConfig.easyToolCreation && !toolFound)
 							output = ToolBuilder.instance.buildTool(input1, input2, input3, input4, "");
 						else if (input1.getItem() instanceof ToolCore && input1.hasTagCompound() && input1.getTagCompound().getCompoundTag("InfiTool") != null)
-							output = ToolBuilder.instance.modifyTool(input1, input2, input3, input4, "");
+							output = ModifyBuilder.instance.modifyItem(input1, new ItemStack[] {input2, input3, input4});
 
 						// If modification was successful
 						if (output != null) return true;

@@ -1,7 +1,7 @@
 package iguanaman.iguanatweakstconstruct;
 
-import tconstruct.common.TContent;
 import tconstruct.library.TConstructRegistry;
+import tconstruct.tools.TinkerTools;
 import cpw.mods.fml.common.Loader;
 
 public class MaterialTweaks {
@@ -51,7 +51,7 @@ public class MaterialTweaks {
 		TConstructRegistry.toolMaterials.remove(14);
 		TConstructRegistry.addToolMaterial(14, "Bronze", 4, Math.round(350f * durMod), Math.round(700f * speedMod), 3, 1.3F, 1, 0f, "\u00A76", "");
 
-		if (TContent.thaumcraftAvailable)
+		if (TinkerTools.thaumcraftAvailable)
 		{
 			TConstructRegistry.toolMaterials.remove(31);
 			TConstructRegistry.addToolMaterial(31, "Thaumium", 3, Math.round(200f * durMod), Math.round(600f * speedMod), 3, 1.3F, 0, 0f, "\u00A75", "Thaumic");

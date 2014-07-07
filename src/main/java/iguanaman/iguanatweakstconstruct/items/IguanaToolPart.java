@@ -7,23 +7,23 @@ import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import tconstruct.items.ToolPart;
 import tconstruct.library.TConstructRegistry;
-import tconstruct.library.tools.ToolMaterial;
+import tconstruct.tools.items.ToolPart;
 
 public class IguanaToolPart extends ToolPart {
 
-	public IguanaToolPart(int id, String textureType, String name) {
-		super(id, textureType, name);
+	public IguanaToolPart(String textureType, String name) {
+		super(textureType, name);
 	}
 
 	/**
 	 * allows items to add custom lines of information to the mouseover description
 	 */
 	@Override
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
 	{
-		ToolMaterial material = TConstructRegistry.getMaterial(par1ItemStack.getItemDamage());
+		tconstruct.library.tools.ToolMaterial material = TConstructRegistry.getMaterial(par1ItemStack.getItemDamage());
 		if (!IguanaConfig.allowStoneTools && material.materialName.equals("Stone"))
 		{
 			par3List.add("\u00a74Can only be used to make casts,");

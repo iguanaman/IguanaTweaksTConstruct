@@ -3,12 +3,13 @@ package iguanaman.iguanatweakstconstruct.util;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import tconstruct.common.TContent;
-import cpw.mods.fml.common.ICraftingHandler;
+//import tconstruct.common.TContent;
+//import cpw.mods.fml.common.ICraftingHandler;
 
-public class IguanaPatternCraftingHandler implements ICraftingHandler {
+// TODO: Find the crating Handler replacement
+public class IguanaPatternCraftingHandler /*implements ICraftingHandler*/ {
 
-	@Override
+	/*@Override
 	public void onCrafting(EntityPlayer player, ItemStack item, IInventory craftMatrix) {
 
 		if (item.getItem().itemID == TContent.woodPattern.itemID)
@@ -23,6 +24,6 @@ public class IguanaPatternCraftingHandler implements ICraftingHandler {
 	}
 
 	@Override
-	public void onSmelting(EntityPlayer player, ItemStack item) {}
+	public void onSmelting(EntityPlayer player, ItemStack item) {}*/
 
 }

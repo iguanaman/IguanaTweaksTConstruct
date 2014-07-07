@@ -10,19 +10,19 @@ import java.util.List;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import tconstruct.common.BowRecipe;
-import tconstruct.common.TContent;
 import tconstruct.items.tools.Hammer;
 import tconstruct.items.tools.Pickaxe;
 import tconstruct.items.tools.Shortbow;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.crafting.ToolBuilder;
 import tconstruct.library.crafting.ToolRecipe;
+import tconstruct.library.modifier.ItemModifier;
 import tconstruct.library.tools.ToolCore;
 import tconstruct.library.tools.ToolMaterial;
-import tconstruct.library.tools.ToolMod;
+import tconstruct.tools.BowRecipe;
+import tconstruct.tools.TinkerTools;
 
-public class IguanaModUpgrade extends ToolMod {
+public class IguanaModUpgrade extends ItemModifier {
 
 
 	public IguanaModUpgrade()
@@ -40,7 +40,7 @@ public class IguanaModUpgrade extends ToolMod {
 	protected ToolRecipe GetRecipe(ToolCore tool)
 	{
 		if (tool instanceof Shortbow)
-			return new BowRecipe(TContent.toolRod, TContent.bowstring, TContent.toolRod, TContent.shortbow);
+			return new BowRecipe(TinkerTools.toolRod, TinkerTools.bowstring, TinkerTools.toolRod, TinkerTools.shortbow);
 		else
 			return ToolBuilder.instance.recipeList.get(tool.getToolName());
 	}
@@ -465,7 +465,8 @@ public class IguanaModUpgrade extends ToolMod {
 		if (tool.getDisplayName().endsWith(materialName + toolName))
 		{
 			materialName = TConstructRegistry.getMaterial(tags.getInteger("Head")).displayName;
-			tool.setItemName("\u00a7r" + materialName + toolName);
+			// TODO: find replacement for setItemName
+			//tool.setItemName("\u00a7r" + materialName + toolName);
 		}
 	}
 

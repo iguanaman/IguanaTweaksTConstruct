@@ -10,13 +10,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import tconstruct.common.TContent;
-import tconstruct.items.Pattern;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.crafting.PatternBuilder;
 import tconstruct.library.tools.ToolMaterial;
+import tconstruct.smeltery.TinkerSmeltery;
+import tconstruct.tools.TinkerTools;
+import tconstruct.tools.items.Pattern;
+import tconstruct.world.TinkerWorld;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class VariousTweaks {
@@ -27,7 +31,7 @@ public class VariousTweaks {
 		// SUPPRESS MISSING TOOL LOGS
 		try
 		{
-			Class clazz = Class.forName(tconstruct.common.TContent.class.getName());
+			Class clazz = Class.forName(tconstruct.tools.TinkerTools.class.getName());
 			Field fld = clazz.getField("supressMissingToolLogs");
 			fld.setBoolean(fld, true);
 		}
@@ -41,23 +45,23 @@ public class VariousTweaks {
 		if (IguanaConfig.removeStoneTorchRecipe)
 		{
 			IguanaLog.log("Removing stone torch recipe");
-			RecipeRemover.removeAnyRecipe(new ItemStack(TContent.stoneTorch, 4));
+			RecipeRemover.removeAnyRecipe(new ItemStack(TinkerWorld.stoneTorch, 4));
 		}
 
 
 		// GRAVEL TO FLINT RECIPE
 		if (IguanaConfig.addFlintRecipe) {
 			IguanaLog.log("Adding gravel to flint recipe");
-			GameRegistry.addShapelessRecipe(new ItemStack(Item.flint), new Object[] {Block.gravel, Block.gravel, Block.gravel, Block.gravel});
+			GameRegistry.addShapelessRecipe(new ItemStack(Items.flint), new Object[] {Blocks.gravel, Blocks.gravel, Blocks.gravel, Blocks.gravel});
 		}
 
 
 		//SOFTEN SEARED BLOCKS
 		IguanaLog.log("Softening seared blocks");
-		TContent.smeltery.setHardness(1.5F);
-		TContent.lavaTank.setHardness(1.5F);
-		TContent.searedBlock.setHardness(1.5F);
-		TContent.castingChannel.setHardness(1.5F);
+		TinkerSmeltery.smeltery.setHardness(1.5F);
+		TinkerSmeltery.lavaTank.setHardness(1.5F);
+		TinkerSmeltery.searedBlock.setHardness(1.5F);
+		TinkerSmeltery.castingChannel.setHardness(1.5F);
 
 
 		// REUSABLE PARTS
@@ -69,7 +73,7 @@ public class VariousTweaks {
 			for (int m = 0; m < nonMetals.length; ++m)
 			{
 				ToolMaterial mat = TConstructRegistry.getMaterial(m);
-				int cost = ((Pattern)TContent.woodPattern).getPatternCost(new ItemStack(TContent.woodPattern, 1, p + 1));
+				int cost = ((Pattern)TinkerTools.woodPattern).getPatternCost(new ItemStack(TinkerTools.woodPattern, 1, p + 1));
 				cost = Math.round(cost / 2f - 0.5f);
 				if (cost > 0)
 				{
@@ -88,30 +92,30 @@ public class VariousTweaks {
 			Item part = IguanaTweaksTConstruct.toolParts.get(i);
 
 			if (IguanaConfig.restrictedWoodParts.contains(i+1))
-				TContent.tinkerHouseChest.removeItem(new ItemStack(part, 1, 0));
+				TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 0));
 			if (!IguanaConfig.allowStoneTools || IguanaConfig.restrictedStoneParts.contains(i+1))
-				TContent.tinkerHouseChest.removeItem(new ItemStack(part, 1, 1));
+				TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 1));
 			if (IguanaConfig.restrictedFlintParts.contains(i+1))
-				TContent.tinkerHouseChest.removeItem(new ItemStack(part, 1, 3));
+				TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 3));
 			if (IguanaConfig.restrictedCactusParts.contains(i+1))
-				TContent.tinkerHouseChest.removeItem(new ItemStack(part, 1, 4));
+				TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 4));
 			if (IguanaConfig.restrictedBoneParts.contains(i+1))
-				TContent.tinkerHouseChest.removeItem(new ItemStack(part, 1, 5));
+				TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 5));
 			if (IguanaConfig.restrictedPaperParts.contains(i+1))
-				TContent.tinkerHouseChest.removeItem(new ItemStack(part, 1, 9));
+				TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 9));
 			if (IguanaConfig.restrictedSlimeParts.contains(i+1))
 			{
-				TContent.tinkerHouseChest.removeItem(new ItemStack(part, 1, 8));
-				TContent.tinkerHouseChest.removeItem(new ItemStack(part, 1, 17));
+				TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 8));
+				TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 17));
 			}
-			TContent.tinkerHouseChest.removeItem(new ItemStack(part, 1, 2)); //iron
-			TContent.tinkerHouseChest.removeItem(new ItemStack(part, 1, 6)); //obsidian
-			TContent.tinkerHouseChest.removeItem(new ItemStack(part, 1, 10)); //cobalt
-			TContent.tinkerHouseChest.removeItem(new ItemStack(part, 1, 11)); //ardite
-			TContent.tinkerHouseChest.removeItem(new ItemStack(part, 1, 12)); //manyullum
-			TContent.tinkerHouseChest.removeItem(new ItemStack(part, 1, 14)); //bronze
-			TContent.tinkerHouseChest.removeItem(new ItemStack(part, 1, 15)); //alumite
-			TContent.tinkerHouseChest.removeItem(new ItemStack(part, 1, 16)); //steel
+			TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 2)); //iron
+			TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 6)); //obsidian
+			TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 10)); //cobalt
+			TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 11)); //ardite
+			TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 12)); //manyullum
+			TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 14)); //bronze
+			TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 15)); //alumite
+			TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 16)); //steel
 		}
 
 
@@ -119,7 +123,7 @@ public class VariousTweaks {
 		if (IguanaConfig.easyBlankPatternRecipe)
 		{
 			IguanaLog.log("Adding easy blank pattern recipe");
-			GameRegistry.addShapedRecipe(new ItemStack(TContent.blankPattern), "ss", "ss", 's', new ItemStack(Item.stick));
+			GameRegistry.addShapedRecipe(new ItemStack(TinkerTools.blankPattern), "ss", "ss", 's', new ItemStack(Items.stick));
 		}
 
 
@@ -128,7 +132,8 @@ public class VariousTweaks {
 		{
 			IguanaLog.log("Adding rotating pattern crafting recipes");
 
-			GameRegistry.registerCraftingHandler(new IguanaPatternCraftingHandler());
+			// TODO: Find Crafting Handler replacement 
+			//GameRegistry.registerCraftingHandler(new IguanaPatternCraftingHandler());
 
 			String[] patternName = new String[] {
 					"ingot", "rod", "pickaxe", "shovel", "axe", "swordblade", "largeguard", "mediumguard", "crossbar",
@@ -146,15 +151,15 @@ public class VariousTweaks {
 						|| x >= 23)
 					patternIds.add(x);
 
-			GameRegistry.addShapelessRecipe(new ItemStack(TContent.woodPattern, 1, patternIds.get(0)), new ItemStack(TContent.blankPattern, 1, 0));
+			GameRegistry.addShapelessRecipe(new ItemStack(TinkerTools.woodPattern, 1, patternIds.get(0)), new ItemStack(TinkerTools.blankPattern, 1, 0));
 			for (int x = 0; x < patternIds.size(); x++)
 			{
 				int pmeta = patternIds.get(x);
 
 				if (x == patternIds.size() - 1)
-					GameRegistry.addShapelessRecipe(new ItemStack(TContent.woodPattern, 1, patternIds.get(0)), new ItemStack(TContent.woodPattern, 1, pmeta));
+					GameRegistry.addShapelessRecipe(new ItemStack(TinkerTools.woodPattern, 1, patternIds.get(0)), new ItemStack(TinkerTools.woodPattern, 1, pmeta));
 				else
-					GameRegistry.addShapelessRecipe(new ItemStack(TContent.woodPattern, 1, patternIds.get(x+1)), new ItemStack(TContent.woodPattern, 1, pmeta));
+					GameRegistry.addShapelessRecipe(new ItemStack(TinkerTools.woodPattern, 1, patternIds.get(x+1)), new ItemStack(TinkerTools.woodPattern, 1, pmeta));
 			}
 		}
 
@@ -164,7 +169,8 @@ public class VariousTweaks {
 		{
 			IguanaLog.log("Adding easy part crafting");
 			GameRegistry.addRecipe(new IguanaPartBuildRecipe());
-			GameRegistry.registerCraftingHandler(new IguanaPartCraftingHandler());
+			// TODO: Find crafting Handler replacement
+			//GameRegistry.registerCraftingHandler(new IguanaPartCraftingHandler());
 		}
 
 

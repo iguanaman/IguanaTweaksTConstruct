@@ -2,27 +2,31 @@ package iguanaman.iguanatweakstconstruct.items;
 
 import iguanaman.iguanatweakstconstruct.IguanaItems;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockFluid;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.Event;
+import cpw.mods.fml.common.eventhandler.Event;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.IFluidBlock;
 
 public class ClayBucket extends ItemBucket
 {
 
-    public ClayBucket(int par1, int par2)
+	protected Block isFull = Blocks.air; 
+	
+    public ClayBucket(Block contents)
     {
-        super(par1, par2);
+        super(contents);
+        isFull = contents;
     }
 
     /**
@@ -31,8 +35,7 @@ public class ClayBucket extends ItemBucket
     @Override
     public ItemStack onItemRightClick (ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        float f = 1.0F;
-        boolean flag = isFull == 0;
+        boolean flag = isFull == Blocks.air;
         MovingObjectPosition movingobjectposition = getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, flag);
         if (movingobjectposition == null)
             return par1ItemStack;
@@ -51,39 +54,39 @@ public class ClayBucket extends ItemBucket
                     return event.result;
 
                 if (!par3EntityPlayer.inventory.addItemStackToInventory(event.result))
-                    par3EntityPlayer.dropPlayerItem(event.result);
+                    par3EntityPlayer.dropPlayerItemWithRandomChoice(event.result, false);
 
                 return par1ItemStack;
             }
 
-            if (movingobjectposition.typeOfHit == EnumMovingObjectType.TILE)
+            if (movingobjectposition.typeOfHit == MovingObjectType.BLOCK)
             {
                 int i = movingobjectposition.blockX;
                 int j = movingobjectposition.blockY;
                 int k = movingobjectposition.blockZ;
-                if (Block.blocksList[par2World.getBlockId(i, j, k)] instanceof BlockFluid)
+                Block bf =  par2World.getBlock(i, j, k);
+                if (bf instanceof IFluidBlock)
                 {
-                    BlockFluid bf = (BlockFluid) Block.blocksList[par2World.getBlockId(i, j, k)];
-                    if (bf != null)
+                    Fluid fl = FluidRegistry.lookupFluidForBlock(bf);
+                    if (fl != null)
                     {
-                        Fluid fl = FluidRegistry.lookupFluidForBlock(bf);
-                        if (fl != null)
-                        {
-                            String name = fl.getUnlocalizedName().toLowerCase();
-                            if (name.contains("witchwater") || !(name.contains("water") || name.contains("lava") || name.contains("milk")))
-                                return par1ItemStack;
-                        }
+                       String name = fl.getUnlocalizedName().toLowerCase();
+                       if (name.contains("witchwater") || !(name.contains("water") || name.contains("lava") || name.contains("milk")))
+                          return par1ItemStack;
                     }
                 }
                 if (!par2World.canMineBlock(par3EntityPlayer, i, j, k))
                     return par1ItemStack;
 
-                if (isFull == 0)
+                if (flag)
                 {
                     if (!par3EntityPlayer.canPlayerEdit(i, j, k, movingobjectposition.sideHit, par1ItemStack))
                         return par1ItemStack;
 
-                    if (par2World.getBlockMaterial(i, j, k) == Material.water && par2World.getBlockMetadata(i, j, k) == 0)
+                    Material material = par2World.getBlock(i, j, k).getMaterial();
+                    int blockMeta = par2World.getBlockMetadata(i, j, k);
+                    
+                    if (material == Material.water && blockMeta == 0)
                     {
                         par2World.setBlockToAir(i, j, k);
 
@@ -94,12 +97,12 @@ public class ClayBucket extends ItemBucket
                             return new ItemStack(IguanaItems.clayBucketWater);
 
                         if (!par3EntityPlayer.inventory.addItemStackToInventory(new ItemStack(IguanaItems.clayBucketWater)))
-                            par3EntityPlayer.dropPlayerItem(new ItemStack(IguanaItems.clayBucketWater.itemID, 1, 0));
+                            par3EntityPlayer.dropPlayerItemWithRandomChoice(new ItemStack(IguanaItems.clayBucketWater, 1, 0) , false);
 
                         return par1ItemStack;
                     }
 
-                    if (par2World.getBlockMaterial(i, j, k) == Material.lava && par2World.getBlockMetadata(i, j, k) == 0)
+                    if (material == Material.lava && blockMeta == 0)
                     {
                         par2World.setBlockToAir(i, j, k);
 
@@ -110,14 +113,14 @@ public class ClayBucket extends ItemBucket
                             return new ItemStack(IguanaItems.clayBucketLava);
 
                         if (!par3EntityPlayer.inventory.addItemStackToInventory(new ItemStack(IguanaItems.clayBucketLava)))
-                            par3EntityPlayer.dropPlayerItem(new ItemStack(IguanaItems.clayBucketLava.itemID, 1, 0));
+                            par3EntityPlayer.dropPlayerItemWithRandomChoice(new ItemStack(IguanaItems.clayBucketLava, 1, 0), false);
 
                         return par1ItemStack;
                     }
                 }
                 else
                 {
-                    if (isFull < 0)
+                    if (isFull == Blocks.air)
                         return new ItemStack(IguanaItems.clayBucketFired);
 
                     if (movingobjectposition.sideHit == 0)
@@ -142,7 +145,7 @@ public class ClayBucket extends ItemBucket
                         return par1ItemStack;
 
                     if (tryPlaceContainedLiquid(par2World, i, j, k) && !par3EntityPlayer.capabilities.isCreativeMode)
-                        if (isFull == Block.lavaMoving.blockID)
+                        if (isFull == Blocks.flowing_lava)
                         {
                             --par1ItemStack.stackSize;
                             return par1ItemStack;
@@ -151,7 +154,7 @@ public class ClayBucket extends ItemBucket
                             return new ItemStack(IguanaItems.clayBucketFired);
                 }
             }
-            else if (isFull == 0 && movingobjectposition.entityHit instanceof EntityCow)
+            else if (isFull == Blocks.air && movingobjectposition.entityHit instanceof EntityCow)
                 return new ItemStack(IguanaItems.clayBucketMilk);
 
             return par1ItemStack;

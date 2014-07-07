@@ -12,10 +12,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import tconstruct.items.tools.Hammer;
 import tconstruct.items.tools.Pickaxe;
 import tconstruct.library.TConstructRegistry;
+import tconstruct.library.modifier.IModifyable;
+import tconstruct.library.modifier.ItemModifier;
 import tconstruct.library.tools.ToolCore;
-import tconstruct.library.tools.ToolMod;
 
-public class IguanaModRedstone extends ToolMod {
+public class IguanaModRedstone extends ItemModifier {
 
 	String tooltipName;
 	int increase;
@@ -214,9 +215,9 @@ public class IguanaModRedstone extends ToolMod {
 	}
 
 	@Override
-	public boolean validType (ToolCore tool)
+	public boolean validType (IModifyable input)
 	{
-		List list = Arrays.asList(tool.toolCategories());
+		List<String> list = Arrays.asList(input.getTraits());
 		return list.contains("harvest") || list.contains("utility") || list.contains("bow");
 	}
 

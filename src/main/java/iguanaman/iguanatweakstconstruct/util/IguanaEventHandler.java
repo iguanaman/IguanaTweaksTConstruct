@@ -24,14 +24,12 @@ import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumMovingObjectType;
+import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.event.Event.Result;
-import net.minecraftforge.event.EventPriority;
-import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.item.ItemExpireEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -39,8 +37,6 @@ import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
-import tconstruct.blocks.LiquidMetalFinite;
-import tconstruct.common.TContent;
 import tconstruct.items.tools.Hammer;
 import tconstruct.items.tools.Pickaxe;
 import tconstruct.items.tools.Shortbow;
@@ -52,6 +48,12 @@ import tconstruct.library.event.PartBuilderEvent;
 import tconstruct.library.event.ToolCraftEvent;
 import tconstruct.library.tools.ToolCore;
 import tconstruct.library.tools.Weapon;
+import tconstruct.smeltery.TinkerSmeltery;
+import tconstruct.smeltery.blocks.LiquidMetalFinite;
+import tconstruct.tools.TinkerTools;
+import cpw.mods.fml.common.eventhandler.Event;
+import cpw.mods.fml.common.eventhandler.EventPriority;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -59,18 +61,18 @@ public class IguanaEventHandler {
 
 	Random random = new Random();
 
-	@ForgeSubscribe
+	@SubscribeEvent
 	public void onItemExpireEvent(ItemExpireEvent event)
 	{
 		if (IguanaConfig.toolsNeverDespawn && event.entity != null && event.entity instanceof EntityItem)
 		{
 			ItemStack stack = ((EntityItem)event.entity).getEntityItem();
 			if (stack.getItem() != null && stack.getItem() instanceof ToolCore)
-				event.setResult(Result.DENY);
+				event.setResult(Event.Result.DENY);
 		}
 	}
 
-	@ForgeSubscribe
+	@SubscribeEvent
 	public void onHurt (LivingHurtEvent event)
 	{
 		if (event.source.damageType.equals("player") || event.source.damageType.equals("arrow"))
@@ -89,7 +91,7 @@ public class IguanaEventHandler {
 			}
 	}
 
-	@ForgeSubscribe
+	@SubscribeEvent
 	public void onUseHoe(UseHoeEvent event) {
 		EntityPlayer player = event.entityPlayer;
 		ItemStack stack = event.current;
@@ -104,7 +106,7 @@ public class IguanaEventHandler {
 		event.drops.add(entityitem);
 	}
 
-	@ForgeSubscribe(priority = EventPriority.LOWEST)
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void LivingDrops(LivingDropsEvent event)
 	{
 		Iterator<EntityItem> i = event.drops.iterator();
@@ -115,7 +117,7 @@ public class IguanaEventHandler {
 				if (eitem.getEntityItem() != null)
 				{
 					ItemStack item = eitem.getEntityItem();
-					if (item.itemID == Item.skull.itemID && item.getItemDamage() != 3)
+					if (item.getItem() == Items.skull && item.getItemDamage() != 3)
 						i.remove();
 				}
 		}
@@ -146,20 +148,20 @@ public class IguanaEventHandler {
 				if (stack != null && stack.hasTagCompound() && stack.getItem() instanceof ToolCore)
 				{
 					beheading = stack.getTagCompound().getCompoundTag("InfiTool").getInteger("Beheading");
-					if (stack.getItem() == TContent.cleaver)
+					if (stack.getItem() == TinkerTools.cleaver)
 						beheading += 2;
 				}
 
 				if (random.nextInt(100) < beheading * IguanaConfig.beheadingHeadDropChance + IguanaConfig.baseHeadDropChance)
-					addDrops(event, new ItemStack(Item.skull.itemID, 1, skullID));
+					addDrops(event, new ItemStack(Items.skull, 1, skullID));
 			}
 		}
 	}
 
-	@ForgeSubscribe
+	@SubscribeEvent
 	public void bucketFill (FillBucketEvent evt)
 	{
-		if (evt.current.getItem() == IguanaItems.clayBucketFired && evt.target.typeOfHit == EnumMovingObjectType.TILE)
+		if (evt.current.getItem() == IguanaItems.clayBucketFired && evt.target.typeOfHit == MovingObjectType.BLOCK)
 		{
 			int hitX = evt.target.blockX;
 			int hitY = evt.target.blockY;
@@ -168,21 +170,21 @@ public class IguanaEventHandler {
 			if (evt.entityPlayer != null && !evt.entityPlayer.canPlayerEdit(hitX, hitY, hitZ, evt.target.sideHit, evt.current))
 				return;
 
-			int bID = evt.world.getBlockId(hitX, hitY, hitZ);
-			for (int id = 0; id < TContent.fluidBlocks.length; id++)
-				if (bID == TContent.fluidBlocks[id].blockID)
+			Block block = evt.world.getBlock(hitX, hitY, hitZ);
+			for (int id = 0; id < TinkerSmeltery.fluidBlocks.length; id++)
+				if (block == TinkerSmeltery.fluidBlocks[id])
 					if (evt.entityPlayer.capabilities.isCreativeMode)
 						evt.world.setBlockToAir(hitX, hitY, hitZ);
 					else
 					{
-						if (TContent.fluidBlocks[id] instanceof LiquidMetalFinite)
+						if (TinkerSmeltery.fluidBlocks[id] instanceof LiquidMetalFinite)
 						{
 							int quanta = 0;
 							for (int posX = -1; posX <= 1; posX++)
 								for (int posZ = -1; posZ <= 1; posZ++)
 								{
-									int localID = evt.world.getBlockId(hitX + posX, hitY, hitZ + posZ);
-									if (localID == bID)
+									Block localBlock = evt.world.getBlock(hitX + posX, hitY, hitZ + posZ);
+									if (localBlock == block)
 										quanta += evt.world.getBlockMetadata(hitX + posX, hitY, hitZ + posZ) + 1;
 								}
 
@@ -191,8 +193,8 @@ public class IguanaEventHandler {
 									for (int posX = -1; posX <= 1; posX++)
 										for (int posZ = -1; posZ <= 1; posZ++)
 										{
-											int localID = evt.world.getBlockId(hitX + posX, hitY, hitZ + posZ);
-											if (localID == bID)
+											Block localBlock = evt.world.getBlock(hitX + posX, hitY, hitZ + posZ);
+											if (localBlock == block)
 											{
 												quanta -= 1;
 												int meta = evt.world.getBlockMetadata(hitX + posX, hitY, hitZ + posZ);
@@ -205,29 +207,29 @@ public class IguanaEventHandler {
 						} else
 							evt.world.setBlockToAir(hitX, hitY, hitZ);
 
-						evt.setResult(Result.ALLOW);
+						evt.setResult(Event.Result.ALLOW);
 						evt.result = new ItemStack(IguanaItems.clayBuckets, 1, id);
 					}
 		}
 	}
 
-	@ForgeSubscribe
+	@SubscribeEvent
 	public void EntityInteract(EntityInteractEvent event)
 	{
 		if (event != null && event.target != null && event.target instanceof EntityCow)
 		{
 			ItemStack equipped = event.entityPlayer.getCurrentEquippedItem();
 			{
-				if (equipped != null && equipped.itemID == IguanaItems.clayBucketFired.itemID)
+				if (equipped != null && equipped.getItem() == IguanaItems.clayBucketFired)
 					if (--equipped.stackSize <= 0)
 						event.entityPlayer.setCurrentItemOrArmor(0, new ItemStack(IguanaItems.clayBucketMilk));
 					else if (!event.entityPlayer.inventory.addItemStackToInventory(new ItemStack(IguanaItems.clayBucketMilk)))
-						event.entityPlayer.dropPlayerItem(new ItemStack(IguanaItems.clayBucketMilk));
+						event.entityPlayer.dropPlayerItemWithRandomChoice(new ItemStack(IguanaItems.clayBucketMilk), false);
 			}
 		}
 	}
 
-	@ForgeSubscribe
+	@SubscribeEvent
 	public void craftTool (ToolCraftEvent.NormalTool event)
 	{
 		NBTTagCompound toolTag = event.toolTag.getCompoundTag("InfiTool");
@@ -236,9 +238,9 @@ public class IguanaEventHandler {
 		int accessory = toolTag.getInteger("Accessory");
 		int extra = toolTag.hasKey("Extra") ? toolTag.getInteger("Extra") : -1;
 
-		if (!IguanaConfig.allowStoneTools && (head == 1 || handle == 1 || event.tool != TContent.arrow && accessory == 1) || extra == 1)
+		if (!IguanaConfig.allowStoneTools && (head == 1 || handle == 1 || event.tool != TinkerTools.arrow && accessory == 1) || extra == 1)
 		{
-			event.setResult(Result.DENY);
+			event.setResult(Event.Result.DENY);
 			return;
 		}
 		else if (IguanaConfig.allowStoneTools)
@@ -248,7 +250,7 @@ public class IguanaEventHandler {
 				int partIndex = IguanaTweaksTConstruct.toolParts.indexOf(event.tool.getHeadItem());
 				if (IguanaConfig.restrictedFlintParts.contains(partIndex+1))
 				{
-					event.setResult(Result.DENY);
+					event.setResult(Event.Result.DENY);
 					return;
 				}
 			}
@@ -258,17 +260,17 @@ public class IguanaEventHandler {
 				int partIndex = IguanaTweaksTConstruct.toolParts.indexOf(event.tool.getHandleItem());
 				if (IguanaConfig.restrictedFlintParts.contains(partIndex+1))
 				{
-					event.setResult(Result.DENY);
+					event.setResult(Event.Result.DENY);
 					return;
 				}
 			}
 
-			if (event.tool != TContent.arrow && accessory == 1)
+			if (event.tool != TinkerTools.arrow && accessory == 1)
 			{
 				int partIndex = IguanaTweaksTConstruct.toolParts.indexOf(event.tool.getAccessoryItem());
 				if (IguanaConfig.restrictedFlintParts.contains(partIndex+1))
 				{
-					event.setResult(Result.DENY);
+					event.setResult(Event.Result.DENY);
 					return;
 				}
 			}
@@ -278,14 +280,14 @@ public class IguanaEventHandler {
 				int partIndex = IguanaTweaksTConstruct.toolParts.indexOf(event.tool.getExtraItem());
 				if (IguanaConfig.restrictedFlintParts.contains(partIndex+1))
 				{
-					event.setResult(Result.DENY);
+					event.setResult(Event.Result.DENY);
 					return;
 				}
 			}
 		}
 
 
-		if (event.tool != TContent.arrow)
+		if (event.tool != TinkerTools.arrow)
 		{
 			// CREATE TOOLTIP LISTS
 			List<String> tips = new ArrayList<String>();
@@ -362,7 +364,7 @@ public class IguanaEventHandler {
 			if (IguanaConfig.toolLeveling && IguanaConfig.toolLevelingExtraModifiers)
 				toolTag.setInteger("Modifiers", Math.max(toolTag.getInteger("Modifiers") - 3, 0));
 
-			if (event.tool == TContent.hammer || event.tool == TContent.excavator || event.tool == TContent.lumberaxe)
+			if (event.tool == TinkerTools.hammer || event.tool == TinkerTools.excavator || event.tool == TinkerTools.lumberaxe)
 			{
 				List<String> replaceTags = new ArrayList<String>(Arrays.asList(
 						"MiningSpeed", "MiningSpeed2", "MiningSpeedHandle", "MiningSpeedExtra"
@@ -376,7 +378,7 @@ public class IguanaEventHandler {
 	}
 
 	/* Crafting */
-	@ForgeSubscribe
+	@SubscribeEvent
 	public void craftPart (PartBuilderEvent.NormalPart event)
 	{
 		ItemKey key = PatternBuilder.instance.getItemKey(event.material);
@@ -395,13 +397,13 @@ public class IguanaEventHandler {
 						mat.materialID == 17 && IguanaConfig.restrictedSlimeParts.contains(event.pattern.getItemDamage())
 						)
 				{
-					event.setResult(Result.DENY);
+					event.setResult(Event.Result.DENY);
 					return;
 				}
 		}
 	}
 
-	@ForgeSubscribe
+	@SubscribeEvent
 	public void onBlockHarvested(HarvestDropsEvent event)
 	{
 		if (event.block != null)
@@ -409,23 +411,23 @@ public class IguanaEventHandler {
 			{
 				boolean addGravel = false;
 
-				Iterator it = event.drops.iterator();
+				Iterator<ItemStack> it = event.drops.iterator();
 				while (it.hasNext())
 				{
 					ItemStack stack = (ItemStack) it.next();
-					if (stack != null && stack.itemID == Item.flint.itemID)
+					if (stack != null && stack.getItem() == Items.flint)
 					{
 						it.remove();
 						addGravel = true;
 					}
 				}
 
-				if (addGravel) event.drops.add(new ItemStack(Block.gravel));
+				if (addGravel) event.drops.add(new ItemStack(Blocks.gravel));
 			}
 	}
 
 	@SideOnly(Side.CLIENT)
-	@ForgeSubscribe
+	@SubscribeEvent
 	public void onRenderGameOverlay(RenderGameOverlayEvent.Text event) {
 		if (IguanaConfig.toolLeveling && IguanaConfig.showDebugXP)
 		{

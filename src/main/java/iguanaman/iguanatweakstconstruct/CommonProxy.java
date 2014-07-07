@@ -1,10 +1,10 @@
 package iguanaman.iguanatweakstconstruct;
 
+import mantle.blocks.abstracts.InventoryLogic;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import tconstruct.common.TProxyCommon;
-import tconstruct.library.blocks.InventoryLogic;
+import tconstruct.tools.ToolProxyCommon;
 import cpw.mods.fml.common.network.IGuiHandler;
 
 public class CommonProxy implements IGuiHandler
@@ -17,10 +17,10 @@ public class CommonProxy implements IGuiHandler
 	@Override
 	public Object getServerGuiElement (int ID, EntityPlayer player, World world, int x, int y, int z)
 	{
-		if (ID == TProxyCommon.toolStationID || ID == TProxyCommon.partBuilderID || ID == TProxyCommon.patternChestID
-				|| ID == TProxyCommon.toolForgeID || ID == TProxyCommon.stencilTableID)
+		if (ID == ToolProxyCommon.toolStationID || ID == ToolProxyCommon.partBuilderID || ID == ToolProxyCommon.patternChestID
+				|| ID == ToolProxyCommon.toolForgeID || ID == ToolProxyCommon.stencilTableID)
 		{
-			TileEntity tile = world.getBlockTileEntity(x, y, z);
+			TileEntity tile = world.getTileEntity(x, y, z);
 			if (tile != null && tile instanceof InventoryLogic)
 				return ((InventoryLogic) tile).getGuiContainer(player.inventory, world, x, y, z);
 		}

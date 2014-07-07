@@ -1,5 +1,8 @@
 package iguanaman.iguanatweakstconstruct.renderer;
 
+import java.util.Map;
+
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelSkeletonHead;
 import net.minecraft.client.renderer.tileentity.TileEntitySkullRenderer;
@@ -9,41 +12,56 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.minecraft.MinecraftProfileTexture;
+import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
+
 public class IguanaSkullRenderer extends TileEntitySkullRenderer {
 
+    private static final ResourceLocation field_147537_c = new ResourceLocation("textures/entity/skeleton/skeleton.png");
+    private static final ResourceLocation field_147534_d = new ResourceLocation("textures/entity/skeleton/wither_skeleton.png");
+    private static final ResourceLocation field_147535_e = new ResourceLocation("textures/entity/zombie/zombie.png");
+    private static final ResourceLocation field_147532_f = new ResourceLocation("textures/entity/creeper/creeper.png");
+	private ModelSkeletonHead field_147533_g = new ModelSkeletonHead(0, 0, 64, 32);
+	private ModelSkeletonHead field_147538_h = new ModelSkeletonHead(0, 0, 64, 64);
 	public IguanaSkullRenderer() {}
 
 	@Override
-	public void func_82393_a(float par1, float par2, float par3, int par4, float par5, int par6, String par7Str)
+	public void func_152674_a(float p_152674_1_, float p_152674_2_, float p_152674_3_, int p_152674_4_, float p_152674_5_, int p_152674_6_, GameProfile p_152674_7_)
 	{
-		ModelSkeletonHead modelskeletonhead = field_82396_c;
+		ModelSkeletonHead modelskeletonhead = field_147533_g;
 
-		switch (par6)
+		switch (p_152674_6_)
 		{
 		case 0:
 		default:
-			bindTexture(field_110642_c);
+			bindTexture(field_147537_c);
 			break;
 		case 1:
-			bindTexture(field_110640_d);
+			bindTexture(field_147534_d);
 			break;
 		case 2:
-			bindTexture(field_110641_e);
-			modelskeletonhead = field_82395_d;
+			bindTexture(field_147535_e);
+			modelskeletonhead = field_147538_h;
 			break;
 		case 3:
 			ResourceLocation resourcelocation = AbstractClientPlayer.locationStevePng;
 
-			if (par7Str != null && par7Str.length() > 0)
-			{
-				resourcelocation = AbstractClientPlayer.getLocationSkull(par7Str);
-				AbstractClientPlayer.getDownloadImageSkin(resourcelocation, par7Str);
-			}
+			if (p_152674_7_ != null)
+            {
+                Minecraft minecraft = Minecraft.getMinecraft();
+                Map map = minecraft.func_152342_ad().func_152788_a(p_152674_7_);
+
+                if (map.containsKey(Type.SKIN))
+                {
+                    resourcelocation = minecraft.func_152342_ad().func_152792_a((MinecraftProfileTexture)map.get(Type.SKIN), Type.SKIN);
+                }
+            }
 
 			bindTexture(resourcelocation);
 			break;
 		case 4:
-			bindTexture(field_110639_f);
+			bindTexture(field_147532_f);
 			break;
 		case 5:
 			bindTexture(new ResourceLocation("textures/entity/enderman/enderman.png"));
@@ -59,33 +77,37 @@ public class IguanaSkullRenderer extends TileEntitySkullRenderer {
 		GL11.glPushMatrix();
 		GL11.glDisable(GL11.GL_CULL_FACE);
 
-		if (par4 != 1)
-			switch (par4)
-			{
-			case 2:
-				GL11.glTranslatef(par1 + 0.5F, par2 + 0.25F, par3 + 0.74F);
-				break;
-			case 3:
-				GL11.glTranslatef(par1 + 0.5F, par2 + 0.25F, par3 + 0.26F);
-				par5 = 180.0F;
-				break;
-			case 4:
-				GL11.glTranslatef(par1 + 0.74F, par2 + 0.25F, par3 + 0.5F);
-				par5 = 270.0F;
-				break;
-			case 5:
-			default:
-				GL11.glTranslatef(par1 + 0.26F, par2 + 0.25F, par3 + 0.5F);
-				par5 = 90.0F;
-			}
-		else
-			GL11.glTranslatef(par1 + 0.5F, par2, par3 + 0.5F);
+		if (p_152674_4_ != 1)
+        {
+            switch (p_152674_4_)
+            {
+                case 2:
+                    GL11.glTranslatef(p_152674_1_ + 0.5F, p_152674_2_ + 0.25F, p_152674_3_ + 0.74F);
+                    break;
+                case 3:
+                    GL11.glTranslatef(p_152674_1_ + 0.5F, p_152674_2_ + 0.25F, p_152674_3_ + 0.26F);
+                    p_152674_5_ = 180.0F;
+                    break;
+                case 4:
+                    GL11.glTranslatef(p_152674_1_ + 0.74F, p_152674_2_ + 0.25F, p_152674_3_ + 0.5F);
+                    p_152674_5_ = 270.0F;
+                    break;
+                case 5:
+                default:
+                    GL11.glTranslatef(p_152674_1_ + 0.26F, p_152674_2_ + 0.25F, p_152674_3_ + 0.5F);
+                    p_152674_5_ = 90.0F;
+            }
+        }
+        else
+        {
+            GL11.glTranslatef(p_152674_1_ + 0.5F, p_152674_2_, p_152674_3_ + 0.5F);
+        }
 
 		float f4 = 0.0625F;
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 		GL11.glScalef(-1.0F, -1.0F, 1.0F);
 		GL11.glEnable(GL11.GL_ALPHA_TEST);
-		modelskeletonhead.render((Entity)null, 0.0F, 0.0F, 0.0F, par5, 0.0F, f4);
+		modelskeletonhead.render((Entity)null, 0.0F, 0.0F, 0.0F, p_152674_5_, 0.0F, f4);
 		GL11.glPopMatrix();
 	}
 

@@ -7,26 +7,26 @@ import net.minecraft.item.ItemStack;
 
 import org.lwjgl.input.Keyboard;
 
-import tconstruct.items.Pattern;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.crafting.PatternBuilder;
-import tconstruct.library.tools.ToolMaterial;
+import tconstruct.tools.items.Pattern;
 
 public class IguanaPattern extends Pattern {
 
-	public IguanaPattern(int id, String patternType, String folder) {
-		super(id, patternType, folder);
+	public IguanaPattern(String patternType, String folder) {
+		super(patternType, folder);
 	}
 
 	public IguanaPattern(int id, String[] names, String[] patternTypes,
 			String folder) {
-		super(id, names, patternTypes, folder);
+		super(names, patternTypes, folder);
 	}
 
 	/**
 	 * allows items to add custom lines of information to the mouseover description
 	 */
 	@Override
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
 	{
 		super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
@@ -43,7 +43,7 @@ public class IguanaPattern extends Pattern {
 			par3List.add("Leaf");
 			par3List.add("Slime");
 		} else
-			for (ToolMaterial material : TConstructRegistry.toolMaterials.values())
+			for (tconstruct.library.tools.ToolMaterial material : TConstructRegistry.toolMaterials.values())
 				if (!par3List.contains(material.displayName))
 				{
 					ItemStack shard = pb.getShardFromSet(material.name());

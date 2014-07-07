@@ -9,9 +9,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import tconstruct.items.tools.Hammer;
 import tconstruct.items.tools.Pickaxe;
-import tconstruct.library.tools.ToolMod;
+import tconstruct.library.modifier.ItemModifier;
 
-public class IguanaModHeads extends ToolMod {
+public class IguanaModHeads extends ItemModifier {
 
 	String tooltipName;
 	String color;

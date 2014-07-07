@@ -49,9 +49,15 @@ public class IguanaCommandToolXP extends CommandBase {
 						IguanaLevelingLogic.updateXP(equipped, entityplayermp, toolXP + xp, headXP + xp);
 
 						if (entityplayermp != icommandsender)
-							notifyAdmins(icommandsender, 1, "Added " + xp + " to %s's tool", new Object[]{entityplayermp.getEntityName()});
+						{
+							// TODO: find replacement for notifyAdmins
+							//notifyAdmins(icommandsender, 1, "Added " + xp + " to %s's tool", new Object[]{entityplayermp.getEntityName()});
+						}
 						else
-							notifyAdmins(icommandsender, 1, "Added " + xp + " to their own tool", new Object[]{});
+						{
+							// TODO: find replacement for notifyAdmins
+							//notifyAdmins(icommandsender, 1, "Added " + xp + " to their own tool", new Object[]{});
+						}
 					} else
 						throw new WrongUsageException("Players tool is already max level", new Object[0]);
 				} else

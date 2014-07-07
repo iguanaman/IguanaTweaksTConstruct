@@ -2,14 +2,15 @@ package iguanaman.iguanatweakstconstruct.blocks;
 
 import java.util.Random;
 
-import net.minecraft.entity.item.EntityFallingSand;
+import tconstruct.world.blocks.GravelOre;
+import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.world.World;
-import tconstruct.blocks.GravelOre;
+
 
 public class IguanaGravelOre extends GravelOre {
 
-	public IguanaGravelOre(int id) {
-		super(id);
+	public IguanaGravelOre() {
+		super();
 	}
 
 	/**
@@ -19,7 +20,8 @@ public class IguanaGravelOre extends GravelOre {
 	public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
 	{
 		if (!par1World.isRemote)
-			if (canFallBelow(par1World, par2, par3 - 1, par4) && par3 >= 0)
+			// func_149831_e = canFallBelow
+			if (func_149831_e(par1World, par2, par3 - 1, par4) && par3 >= 0)
 			{
 				byte b0 = 32;
 
@@ -27,21 +29,24 @@ public class IguanaGravelOre extends GravelOre {
 				{
 					if (!par1World.isRemote)
 					{
-						EntityFallingSand entityfallingsand = new EntityFallingSand(par1World, par2 + 0.5F, par3 + 0.5F, par4 + 0.5F, blockID, par1World.getBlockMetadata(par2, par3, par4));
-						entityfallingsand.shouldDropItem = false;
-						onStartFalling(entityfallingsand);
-						par1World.spawnEntityInWorld(entityfallingsand);
+						EntityFallingBlock entityfallingblock = new EntityFallingBlock(par1World, par2 + 0.5F, par3 + 0.5F, par4 + 0.5F, this, par1World.getBlockMetadata(par2, par3, par4));
+						// field_145813_c = shouldDropItem
+						entityfallingblock.field_145813_c = false;
+						// func_149829_a = onStartFalling
+						func_149829_a(entityfallingblock);
+						par1World.spawnEntityInWorld(entityfallingblock);
 					}
 				}
 				else
 				{
 					par1World.setBlockToAir(par2, par3, par4);
 
-					while (canFallBelow(par1World, par2, par3 - 1, par4) && par3 > 0)
+					// func_149831_e = canFallBelow
+					while (func_149831_e(par1World, par2, par3 - 1, par4) && par3 > 0)
 						--par3;
 
 					if (par3 > 0)
-						par1World.setBlock(par2, par3, par4, blockID);
+						par1World.setBlock(par2, par3, par4, this);
 				}
 			}
 	}

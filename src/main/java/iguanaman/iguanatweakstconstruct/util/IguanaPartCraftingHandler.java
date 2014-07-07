@@ -3,19 +3,21 @@ package iguanaman.iguanatweakstconstruct.util;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import tconstruct.common.TContent;
-import tconstruct.items.Pattern;
+//import tconstruct.common.TContent;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.crafting.PatternBuilder;
 import tconstruct.library.crafting.PatternBuilder.ItemKey;
 import tconstruct.library.tools.BowstringMaterial;
 import tconstruct.library.tools.CustomMaterial;
 import tconstruct.library.tools.FletchingMaterial;
-import cpw.mods.fml.common.ICraftingHandler;
+import tconstruct.tools.TinkerTools;
+import tconstruct.tools.items.Pattern;
+//import cpw.mods.fml.common.ICraftingHandler;
 
-public class IguanaPartCraftingHandler implements ICraftingHandler {
+//TODO: Find the crating Handler replacement
+public class IguanaPartCraftingHandler /*implements ICraftingHandler*/ {
 
-	@Override
+	/*@Override
 	public void onCrafting(EntityPlayer player, ItemStack item, IInventory craftMatrix) {
 		ItemStack pattern = null;
 		ItemStack material = null;
@@ -29,7 +31,7 @@ public class IguanaPartCraftingHandler implements ICraftingHandler {
 			{
 				// is the item in the slot a wood pattern?
 				boolean isPattern = false;
-				if (slot.getItem().itemID == TContent.woodPattern.itemID) isPattern = true;
+				if (slot.getItem() == TinkerTools.woodPattern) isPattern = true;
 
 				// too many items
 				if (material != null && pattern != null || material != null && !isPattern) return;
@@ -43,7 +45,7 @@ public class IguanaPartCraftingHandler implements ICraftingHandler {
 		if (pattern == null || material == null) return;
 
 		// part crafting occurred
-		int cost = ((Pattern)TContent.woodPattern).getPatternCost(pattern);
+		int cost = ((Pattern)TinkerTools.woodPattern).getPatternCost(pattern);
 		ItemKey key = PatternBuilder.instance.getItemKey(material);
 		int value = -1;
 		if (key == null)
@@ -71,7 +73,7 @@ public class IguanaPartCraftingHandler implements ICraftingHandler {
         IguanaLog.log("used " + used);
 		 */
 
-		if (used > 0)
+		/*if (used > 0)
 			if (material.stackSize < used) material = null;
 			else material.stackSize -= used;
 	}
@@ -80,6 +82,6 @@ public class IguanaPartCraftingHandler implements ICraftingHandler {
 	public void onSmelting(EntityPlayer player, ItemStack item) {
 
 
-	}
+	}*/
 
 }

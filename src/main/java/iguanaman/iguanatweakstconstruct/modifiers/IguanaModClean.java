@@ -3,15 +3,15 @@ package iguanaman.iguanatweakstconstruct.modifiers;
 import iguanaman.iguanatweakstconstruct.IguanaLog;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import tconstruct.common.TContent;
 import tconstruct.library.crafting.ToolBuilder;
+import tconstruct.library.modifier.ItemModifier;
 import tconstruct.library.tools.ToolCore;
-import tconstruct.library.tools.ToolMod;
+import tconstruct.tools.TinkerTools;
 
-public class IguanaModClean extends ToolMod {
+public class IguanaModClean extends ItemModifier {
 
 	public IguanaModClean() {
-		super(new ItemStack[] { new ItemStack(TContent.materials, 1, 25) }, 0, "");
+		super(new ItemStack[] { new ItemStack(TinkerTools.materials, 1, 25) }, 0, "");
 	}
 
 	public IguanaModClean(ItemStack[] items, int effect, String dataKey) {

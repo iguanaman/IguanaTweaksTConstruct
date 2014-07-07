@@ -13,6 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import tconstruct.items.tools.Excavator;
 import tconstruct.items.tools.Hammer;
@@ -24,8 +25,8 @@ import tconstruct.items.tools.Scythe;
 import tconstruct.items.tools.Shortbow;
 import tconstruct.items.tools.Shovel;
 import tconstruct.library.TConstructRegistry;
+import tconstruct.library.modifier.ItemModifier;
 import tconstruct.library.tools.HarvestTool;
-import tconstruct.library.tools.ToolMod;
 import tconstruct.library.tools.Weapon;
 import tconstruct.modifiers.tools.ModAntiSpider;
 import tconstruct.modifiers.tools.ModInteger;
@@ -297,17 +298,24 @@ public class IguanaLevelingLogic {
 
 		if (!world.isRemote)
 		{
+			String message = "";
 			switch (level)
 			{
-			case 2: player.addChatMessage("\u00a73You begin to feel comfortable handling the " + stack.getDisplayName()); break;
-			case 3: player.addChatMessage("\u00a73You are now accustomed to the weight of the " + stack.getDisplayName()); break;
-			case 4: player.addChatMessage("\u00a73You have become adept at handling the " + stack.getDisplayName()); break;
-			case 5: player.addChatMessage("\u00a73You are now an expert at using the " + stack.getDisplayName() + "\u00a73!"); break;
-			case 6: player.addChatMessage("\u00a73You have mastered the " + stack.getDisplayName() + "\u00a73!"); break;
+			case 2: message = "\u00a73You begin to feel comfortable handling the " + stack.getDisplayName(); break;
+			case 3: message = "\u00a73You are now accustomed to the weight of the " + stack.getDisplayName(); break;
+			case 4: message = "\u00a73You have become adept at handling the " + stack.getDisplayName(); break;
+			case 5: message = "\u00a73You are now an expert at using the " + stack.getDisplayName() + "\u00a73!"; break;
+			case 6: message = "\u00a73You have mastered the " + stack.getDisplayName() + "\u00a73!"; break;
+			}
+			
+			if (!message.equalsIgnoreCase(""))
+			{
+				player.addChatMessage(new ChatComponentText(message));
 			}
 
 			if (!IguanaConfig.toolLevelingRandomBonuses || level % 2 == 0 && IguanaConfig.toolLevelingExtraModifiers)
-				player.addChatMessage("\u00a79You notice room for improvement (+1 modifier).");
+				player.addChatMessage(new ChatComponentText("\u00a79You notice room for improvement (+1 modifier)."));
+			
 		}
 
 		int currentModifiers = tags.getInteger("Modifiers");
@@ -334,9 +342,10 @@ public class IguanaLevelingLogic {
 
 		if (!world.isRemote)
 			if (leveled)
-				player.addChatMessage("\u00a79Suddenly, a flash of light shines from the tip of the pickaxe (+1 mining level)");
+				player.addChatMessage(new ChatComponentText("\u00a79Suddenly, a flash of light shines from the tip of the pickaxe (+1 mining level)"));
+				
 			else
-				player.addChatMessage("\u00a73Suddenly, a flash of light shines from the tip of your " + stack.getDisplayName() + "\u00a73 (+1 mining level)");
+				player.addChatMessage(new ChatComponentText("\u00a73Suddenly, a flash of light shines from the tip of your " + stack.getDisplayName() + "\u00a73 (+1 mining level)"));
 
 		tags.setBoolean("HarvestLevelModified", true);
 		tags.setInteger("HarvestLevel", tags.getInteger("HarvestLevel") + 1);
@@ -344,7 +353,7 @@ public class IguanaLevelingLogic {
 
 	private static boolean tryModify(EntityPlayer player, ItemStack stack, int rnd, boolean isTool)
 	{
-		ToolMod mod = null;
+		ItemModifier mod = null;
 		Item item = stack.getItem();
 
 		ItemStack[] nullItemStack = new ItemStack[] {};
@@ -352,14 +361,14 @@ public class IguanaLevelingLogic {
 		{
 			mod = new ModInteger(nullItemStack, 4, "Moss", IguanaConfig.mossRepairSpeed, "\u00a72", "Auto-Repair");
 			if (!player.worldObj.isRemote)
-				player.addChatMessage("\u00a79It seems to have accumulated a patch of moss (+1 repair)");
+				player.addChatMessage(new ChatComponentText("\u00a79It seems to have accumulated a patch of moss (+1 repair)"));
 		}
 		else if (rnd < 2 && (!isTool && !(item instanceof Shortbow) || isTool && (item instanceof Pickaxe || item instanceof Hammer)))
 		{
 			mod = new IguanaModLapis(nullItemStack, 10, new int[]{100});
 			if (((IguanaModLapis)mod).canModify(stack, nullItemStack)) {
 				if (!player.worldObj.isRemote)
-					player.addChatMessage("\u00a79Perhaps holding on to it will bring you luck? (+100 luck)");
+					player.addChatMessage(new ChatComponentText("\u00a79Perhaps holding on to it will bring you luck? (+100 luck)"));
 			} else return false;
 		}
 		else if (rnd < 6 && (isTool || item instanceof Shortbow))
@@ -367,7 +376,7 @@ public class IguanaLevelingLogic {
 			mod = new IguanaModRedstone(nullItemStack, 2, 50);
 			if (((IguanaModRedstone)mod).canModify(stack, nullItemStack, true)) {
 				if (!player.worldObj.isRemote)
-					player.addChatMessage("\u00a79You spin it around with a flourish (+1 haste)");
+					player.addChatMessage(new ChatComponentText("\u00a79You spin it around with a flourish (+1 haste)"));
 			} else return false;
 		}
 		else if (rnd < 3 && !isTool && !(item instanceof Shortbow))
@@ -375,54 +384,54 @@ public class IguanaLevelingLogic {
 			mod = new IguanaModAttack("Quartz", nullItemStack, 11, 30);
 			if (((IguanaModAttack)mod).canModify(stack, nullItemStack, true)) {
 				if (!player.worldObj.isRemote)
-					player.addChatMessage("\u00a79You take the time to sharpen the dull edges of the blade (+1 attack)");
+					player.addChatMessage(new ChatComponentText("\u00a79You take the time to sharpen the dull edges of the blade (+1 attack)"));
 			} else return false;
 		}
 		else if (rnd < 4 && !isTool && !(item instanceof Shortbow))
 		{
 			mod = new ModInteger(nullItemStack, 13, "Beheading", 1, "\u00a7d", "Beheading");
 			if (!player.worldObj.isRemote)
-				player.addChatMessage("\u00a79You could take someones head off with that! (+1 beheading)");
+				player.addChatMessage(new ChatComponentText("\u00a79You could take someones head off with that! (+1 beheading)"));
 		}
 		else if (rnd < 5 && !isTool && !(item instanceof Shortbow))
 		{
 			mod = new IguanaModBlaze(nullItemStack, 7, new int[]{25});
 			if (((IguanaModBlaze)mod).canModify(stack, nullItemStack)) {
 				if (!player.worldObj.isRemote)
-					player.addChatMessage("\u00a79It starts to feels more hot to the touch (+1 fire aspect)");
+					player.addChatMessage(new ChatComponentText("\u00a79It starts to feels more hot to the touch (+1 fire aspect)"));
 			} else return false;
 		}
 		else if (rnd < 6 && !isTool && !(item instanceof Shortbow))
 		{
 			mod = new ModInteger(nullItemStack, 8, "Necrotic", 1, "\u00a78", "Life Steal");
 			if (!player.worldObj.isRemote)
-				player.addChatMessage("\u00a79It shudders with a strange energy (+1 life steal)");
+				player.addChatMessage(new ChatComponentText("\u00a79It shudders with a strange energy (+1 life steal)"));
 		}
 		else if (rnd < 7 && !isTool && !(item instanceof Shortbow))
 		{
 			mod = new ModSmite("Smite", 14, nullItemStack, new int[]{ 36});
 			if (!player.worldObj.isRemote)
-				player.addChatMessage("\u00a79It begins to radiate a slight glow (+1 smite)");
+				player.addChatMessage(new ChatComponentText("\u00a79It begins to radiate a slight glow (+1 smite)"));
 		}
 		else if (rnd < 8 && !isTool && !(item instanceof Shortbow))
 		{
 			mod = new ModAntiSpider("Anti-Spider",15, nullItemStack, new int[]{ 4});
 			if (!player.worldObj.isRemote)
-				player.addChatMessage("\u00a79A strange odor emanates from the weapon (+1 bane of arthropods)");
+				player.addChatMessage(new ChatComponentText("\u00a79A strange odor emanates from the weapon (+1 bane of arthropods)"));
 		}
 		else if (rnd < 9 && !isTool)
 		{
 			mod = new IguanaModPiston(nullItemStack, 3, new int[]{10});
 			if (((IguanaModPiston)mod).canModify(stack, nullItemStack)) {
 				if (!player.worldObj.isRemote)
-					player.addChatMessage("\u00a79Feeling more confident, you can more easily keep your assailants at bay (+1 knockback)");
+					player.addChatMessage(new ChatComponentText("\u00a79Feeling more confident, you can more easily keep your assailants at bay (+1 knockback)"));
 			} else return false;
 		}
 		else if (rnd < 10)
 		{
 			mod = new ModReinforced(nullItemStack, 16, 1);
 			if (!player.worldObj.isRemote)
-				player.addChatMessage("\u00a79Fixing up the wear and tear should make it last a little longer (+1 reinforced)");
+				player.addChatMessage(new ChatComponentText("\u00a79Fixing up the wear and tear should make it last a little longer (+1 reinforced)"));
 		}
 
 		if (mod == null) return false;

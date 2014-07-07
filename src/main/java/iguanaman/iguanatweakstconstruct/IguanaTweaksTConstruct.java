@@ -12,7 +12,7 @@ import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
-import tconstruct.common.TContent;
+import tconstruct.tools.TinkerTools;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -22,12 +22,10 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 
 @Mod(modid="IguanaTweaksTConstruct", name="Iguana Tweaks for Tinker's Construct", version="1.6.X-1p",
 dependencies = "required-after:TConstruct;after:*")
-@NetworkMod(clientSideRequired=true, serverSideRequired=true)
 public class IguanaTweaksTConstruct {
 
 	// The instance of your mod that Forge uses.
@@ -45,18 +43,18 @@ public static Logger ITconTweaksLog = Logger.getLogger("IguanaTweaksTConstruct")
 	public void preInit(FMLPreInitializationEvent event) {
 
 		proxy.registerSounds();
-		NetworkRegistry.instance().registerGuiHandler(instance, proxy);
+		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
 
 		IguanaConfig.init(event.getSuggestedConfigurationFile());
 
 		toolParts = Arrays.asList (
-				TContent.toolRod, TContent.pickaxeHead, TContent.shovelHead, TContent.hatchetHead,
-				TContent.binding, TContent.toughBinding, TContent.toughRod, TContent.largePlate,
-				TContent.swordBlade, TContent.wideGuard, TContent.handGuard, TContent.crossbar,
-				TContent.knifeBlade, TContent.fullGuard, TContent.frypanHead, TContent.signHead,
-				TContent.chiselHead, TContent.scytheBlade, TContent.broadAxeHead, TContent.excavatorHead,
-				TContent.largeSwordBlade, TContent.hammerHead, TContent.bowstring, TContent.fletching,
-				TContent.arrowhead );
+				TinkerTools.toolRod, TinkerTools.pickaxeHead, TinkerTools.shovelHead, TinkerTools.hatchetHead,
+				TinkerTools.binding, TinkerTools.toughBinding, TinkerTools.toughRod, TinkerTools.largePlate,
+				TinkerTools.swordBlade, TinkerTools.wideGuard, TinkerTools.handGuard, TinkerTools.crossbar,
+				TinkerTools.knifeBlade, TinkerTools.fullGuard, TinkerTools.frypanHead, TinkerTools.signHead,
+				TinkerTools.chiselHead, TinkerTools.scytheBlade, TinkerTools.broadAxeHead, TinkerTools.excavatorHead,
+				TinkerTools.largeSwordBlade, TinkerTools.hammerHead, TinkerTools.bowstring, TinkerTools.fletching,
+				TinkerTools.arrowhead );
 
 		IguanaBlocks.init();
 		IguanaItems.init();

@@ -4,12 +4,13 @@ import iguanaman.iguanatweakstconstruct.IguanaConfig;
 
 import java.util.List;
 
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemSkull;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -17,9 +18,11 @@ public class IguanaItemSkull extends ItemSkull {
 
 	private static final String[] skullTypes = new String[] {"skeleton", "wither", "zombie", "char", "creeper", "enderman", "pigman", "blaze"};
 	public static final String[] field_94587_a = new String[] {"skeleton", "wither", "zombie", "steve", "creeper", "skull_enderman", "skull_pigman", "skull_blaze"};
+	@SideOnly(Side.CLIENT)
+	private IIcon field_94586_c [];
 
-	public IguanaItemSkull(int par1) {
-		super(par1);
+	public IguanaItemSkull() {
+		super();
 	}
 
 	/**
@@ -42,11 +45,12 @@ public class IguanaItemSkull extends ItemSkull {
 
 	@Override
 	@SideOnly(Side.CLIENT)
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 
 	/**
 	 * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
 	 */
-	public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
+	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List)
 	{
 		for (int j = 0; j < skullTypes.length; ++j)
 			par3List.add(new ItemStack(par1, 1, j));
@@ -57,6 +61,7 @@ public class IguanaItemSkull extends ItemSkull {
 	 */
 	@Override
 	@SideOnly(Side.CLIENT)
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
 	{
 		if (IguanaConfig.mobHeadPickaxeBoost)
@@ -80,7 +85,7 @@ public class IguanaItemSkull extends ItemSkull {
 	/**
 	 * Gets an icon index based on an item's damage value
 	 */
-	public Icon getIconFromDamage(int par1)
+	public IIcon getIconFromDamage(int par1)
 	{
 		if (par1 < 0 || par1 >= skullTypes.length)
 			par1 = 0;
@@ -90,9 +95,9 @@ public class IguanaItemSkull extends ItemSkull {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister par1IconRegister)
+	public void registerIcons(IIconRegister par1IconRegister)
 	{
-		field_94586_c = new Icon[field_94587_a.length];
+		field_94586_c = new IIcon[field_94587_a.length];
 
 		for (int i = 0; i < field_94587_a.length; ++i)
 			if (i >= 5)

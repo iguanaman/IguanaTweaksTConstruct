@@ -27,9 +27,8 @@ public class IguanaActiveToolMod extends ActiveToolMod {
 	{
 		if (!(entity instanceof EntityPlayer)) return false;
 
-		int bID = entity.worldObj.getBlockId(x, y, z);
+		Block block = entity.worldObj.getBlock(x, y, z);
 		int meta = entity.worldObj.getBlockMetadata(x, y, z);
-		Block block = Block.blocksList[bID];
 
 		if (block == null || materialBlacklist.contains(block.blockMaterial)) return false;
 
@@ -47,9 +46,11 @@ public class IguanaActiveToolMod extends ActiveToolMod {
 
 		//IguanaLog.log(tool.canHarvestBlock(block) + " " + Float.toString(tool.getStrVsBlock(stack, block, meta)));
 
-		if (tool.canHarvestBlock(block) && tool.getStrVsBlock(stack, block, meta) > 1f)
+		// TODO: Find replacement for canHarvestBlock and getStrVsBlock
+		//if (tool.canHarvestBlock(block) && tool.getStrVsBlock(stack, block, meta) > 1f)
 			//IguanaLog.log("xp added");
-			IguanaLevelingLogic.addXP(stack, (EntityPlayer)entity, 1L);
+		    // TODO: Find replacement for canHarvestBlock and getStrVsBlock
+			//IguanaLevelingLogic.addXP(stack, (EntityPlayer)entity, 1L);
 
 		if (miningSpeed > 0) tags.setInteger("MiningSpeed", miningSpeed);
 		if (miningSpeed2 > 0) tags.setInteger("MiningSpeed2", miningSpeed2);

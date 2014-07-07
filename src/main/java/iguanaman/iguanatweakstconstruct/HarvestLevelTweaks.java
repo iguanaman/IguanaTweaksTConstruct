@@ -8,13 +8,14 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
-import tconstruct.common.TContent;
 import tconstruct.library.TConstructRegistry;
+import tconstruct.world.TinkerWorld;
 
 public class HarvestLevelTweaks {
 
@@ -76,8 +77,10 @@ public class HarvestLevelTweaks {
 			if (item != null && toolClass.equals("pickaxe"))
 			{
 
-				if (IguanaConfig.pickaxeOverrides.containsKey(item.itemID))
-					harvestLevel = IguanaConfig.pickaxeOverrides.get(item.itemID);
+				// TODO: Find a better way to implement pickaxe overrides
+				/*
+				if (IguanaConfig.pickaxeOverrides.containsKey(item.getUnlocalizedName()))
+					harvestLevel = IguanaConfig.pickaxeOverrides.get(item.itemID);*/
 
 				switch (harvestLevel)
 				{
@@ -181,22 +184,22 @@ public class HarvestLevelTweaks {
 		}
 
 		IguanaLog.log("Modifying required harvest levels of vanilla blocks");
-		MinecraftForge.setBlockHarvestLevel(Block.obsidian,     "pickaxe", harvestLevelBronze);
-		MinecraftForge.setBlockHarvestLevel(Block.oreDiamond, "pickaxe", harvestLevelBronze);
-		MinecraftForge.setBlockHarvestLevel(Block.blockDiamond, "pickaxe", harvestLevelBronze);
-		MinecraftForge.setBlockHarvestLevel(Block.blockGold,    "pickaxe", harvestLevelIron);
-		MinecraftForge.setBlockHarvestLevel(Block.blockIron,   "pickaxe", harvestLevelCopper);
-		MinecraftForge.setBlockHarvestLevel(Block.fenceIron,   "pickaxe", harvestLevelCopper);
-		MinecraftForge.setBlockHarvestLevel(Block.blockLapis,   "pickaxe", harvestLevelIron);
-		MinecraftForge.setBlockHarvestLevel(Block.oreRedstone, "pickaxe", harvestLevelBronze);
-		MinecraftForge.setBlockHarvestLevel(Block.oreRedstoneGlowing, "pickaxe", harvestLevelBronze);
+		Blocks.obsidian.setHarvestLevel("pickaxe", harvestLevelBronze);
+		Blocks.diamond_ore.setHarvestLevel("pickaxe", harvestLevelBronze);
+		Blocks.diamond_block.setHarvestLevel("pickaxe", harvestLevelBronze);
+		Blocks.gold_block.setHarvestLevel("pickaxe", harvestLevelIron);
+		Blocks.iron_block.setHarvestLevel("pickaxe", harvestLevelCopper);
+		Blocks.iron_bars.setHarvestLevel("pickaxe", harvestLevelCopper);
+		Blocks.lapis_block.setHarvestLevel("pickaxe", harvestLevelIron);
+		Blocks.redstone_ore.setHarvestLevel("pickaxe", harvestLevelBronze);
+		Blocks.lit_redstone_ore.setHarvestLevel("pickaxe", harvestLevelBronze);
 
-		MinecraftForge.setBlockHarvestLevel(TContent.oreGravel, 0, "shovel", harvestLevelIron);
-		MinecraftForge.setBlockHarvestLevel(TContent.oreGravel, 1, "shovel", harvestLevelIron);
-		MinecraftForge.setBlockHarvestLevel(TContent.oreGravel, 2, "shovel", harvestLevelFlint);
-		MinecraftForge.setBlockHarvestLevel(TContent.oreGravel, 3, "shovel", harvestLevelIron);
-		MinecraftForge.setBlockHarvestLevel(TContent.oreGravel, 4, "shovel", harvestLevelFlint);
-		MinecraftForge.setBlockHarvestLevel(TContent.oreGravel, 5, "shovel", harvestLevelArdite);
+		TinkerWorld.oreGravel.setHarvestLevel("shovel", harvestLevelIron, 0);
+		TinkerWorld.oreGravel.setHarvestLevel("shovel", harvestLevelIron, 1);
+		TinkerWorld.oreGravel.setHarvestLevel("shovel", harvestLevelFlint, 2);
+		TinkerWorld.oreGravel.setHarvestLevel("shovel", harvestLevelIron, 3);
+		TinkerWorld.oreGravel.setHarvestLevel("shovel", harvestLevelFlint, 4);
+		TinkerWorld.oreGravel.setHarvestLevel("shovel", harvestLevelArdite, 5);
 
 		List[] harvestLevelIds = {
 				IguanaConfig.harvestLevel0Ids, IguanaConfig.harvestLevel1Ids, IguanaConfig.harvestLevel2Ids,
@@ -226,7 +229,8 @@ public class HarvestLevelTweaks {
 					throw new RuntimeException("Config setting harvestLevel" + i + "Ids contains an invalid line (" + idline + ").  Each id must be on a separate line and in this format: id or id:meta");
 				}
 
-				SetHarvestLevel(new ItemStack(blockId, 1, meta), level);
+				// TODO: find a way to implement block harvest override
+				//SetHarvestLevel(new ItemStack(blockId, 1, meta), level);
 			}
 		}
 
@@ -234,11 +238,18 @@ public class HarvestLevelTweaks {
 
 	public static void SetHarvestLevel(ItemStack oreStack, int level)
 	{
+		Block block = Block.getBlockFromItem(oreStack.getItem());
+		if (block == Blocks.air)
+		{
+			IguanaLog.log("Warning: " + oreStack.getUnlocalizedName() + " is invalid block");
+			return;
+		}
+		
 		if (oreStack.getItemDamage() == OreDictionary.WILDCARD_VALUE)
-			MinecraftForge.setBlockHarvestLevel(Block.blocksList[oreStack.itemID], "pickaxe", level);
+			block.setHarvestLevel("pickaxe", level);
 		//FMLLog.warning("IguanaTweaksTConstruct: Setting required harvest level of " + oreStack.getUnlocalizedName() + " to " + level);
 		else
-			MinecraftForge.setBlockHarvestLevel(Block.blocksList[oreStack.itemID], oreStack.getItemDamage(), "pickaxe", level);
+			block.setHarvestLevel("pickaxe", level, oreStack.getItemDamage());
 		//FMLLog.warning("IguanaTweaksTConstruct: Setting required harvest level of " + oreStack.getUnlocalizedName() + ":" + oreStack.getItemDamage() + " to " + level);
 	}
 

@@ -3,6 +3,7 @@ package iguanaman.iguanatweakstconstruct.items;
 import java.util.List;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class IguanaMetalPattern extends IguanaPattern {
@@ -27,11 +28,12 @@ public class IguanaMetalPattern extends IguanaPattern {
 		"knifeblade", "chisel", "largerod", "toughbinding", "largeplate", "broadaxe", "scythe", "excavator", "largeblade", "hammerhead", "fullguard", "", "", "arrowhead", "gem" };
 
 	@Override
-	public void getSubItems (int id, CreativeTabs tab, List list)
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public void getSubItems (Item item, CreativeTabs tab, List list)
 	{
 		for (int i = 0; i < patternName.length; i++)
 			if (!patternName[i].equals(""))
-				list.add(new ItemStack(id, 1, i));
+				list.add(new ItemStack(item, 1, i));
 	}
 
 }

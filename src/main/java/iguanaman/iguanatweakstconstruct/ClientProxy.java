@@ -9,14 +9,14 @@ import iguanaman.iguanatweakstconstruct.util.IguanaClientEventHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import tconstruct.blocks.logic.PartBuilderLogic;
-import tconstruct.blocks.logic.PatternChestLogic;
-import tconstruct.blocks.logic.StencilTableLogic;
-import tconstruct.blocks.logic.ToolForgeLogic;
-import tconstruct.blocks.logic.ToolStationLogic;
 import tconstruct.client.gui.PatternChestGui;
 import tconstruct.client.gui.StencilTableGui;
-import tconstruct.common.TProxyCommon;
+import tconstruct.tools.ToolProxyCommon;
+import tconstruct.tools.logic.PartBuilderLogic;
+import tconstruct.tools.logic.PatternChestLogic;
+import tconstruct.tools.logic.StencilTableLogic;
+import tconstruct.tools.logic.ToolForgeLogic;
+import tconstruct.tools.logic.ToolStationLogic;
 import cpw.mods.fml.client.registry.ClientRegistry;
 
 public class ClientProxy extends CommonProxy {
@@ -32,18 +32,17 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@Override
-	public Object getClientGuiElement (int ID, EntityPlayer player, World world, int x, int y, int z)
-	{
-		if (ID == TProxyCommon.toolStationID)
-			return new IguanaToolStationGui(player.inventory, (ToolStationLogic) world.getBlockTileEntity(x, y, z), world, x, y, z);
-		if (ID == TProxyCommon.partBuilderID)
-			return new IguanaPartCrafterGui(player.inventory, (PartBuilderLogic) world.getBlockTileEntity(x, y, z), world, x, y, z);
-		if (ID == TProxyCommon.patternChestID)
-			return new PatternChestGui(player.inventory, (PatternChestLogic) world.getBlockTileEntity(x, y, z), world, x, y, z);
-		if (ID == TProxyCommon.toolForgeID)
-			return new IguanaToolForgeGui(player.inventory, (ToolForgeLogic) world.getBlockTileEntity(x, y, z), world, x, y, z);
-		if (ID == TProxyCommon.stencilTableID)
-			return new StencilTableGui(player.inventory, (StencilTableLogic) world.getBlockTileEntity(x, y, z), world, x, y, z);
+	public Object getClientGuiElement (int ID, EntityPlayer player, World world, int x, int y, int z) {
+		if (ID == ToolProxyCommon.toolStationID)
+			return new IguanaToolStationGui(player.inventory, (ToolStationLogic) world.getTileEntity(x, y, z), world, x, y, z);
+		if (ID == ToolProxyCommon.partBuilderID)
+			return new IguanaPartCrafterGui(player.inventory, (PartBuilderLogic) world.getTileEntity(x, y, z), world, x, y, z);
+		if (ID == ToolProxyCommon.patternChestID)
+			return new PatternChestGui(player.inventory, (PatternChestLogic) world.getTileEntity(x, y, z), world, x, y, z);
+		if (ID == ToolProxyCommon.toolForgeID)
+			return new IguanaToolForgeGui(player.inventory, (ToolForgeLogic) world.getTileEntity(x, y, z), world, x, y, z);
+		if (ID == ToolProxyCommon.stencilTableID)
+			return new StencilTableGui(player.inventory, (StencilTableLogic) world.getTileEntity(x, y, z), world, x, y, z);
 
 		return null;
 	}

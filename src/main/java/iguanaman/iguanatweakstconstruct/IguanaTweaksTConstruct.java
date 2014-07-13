@@ -73,7 +73,8 @@ public static Logger ITconTweaksLog = Logger.getLogger("IguanaTweaksTConstruct")
 		ModifierTweaks.init();
 		VariousTweaks.init();
 		RemoveVanillaTools.init();
-		HarvestLevelTweaks.init();
+		// TODO: need to re-implement harvest level tweaks
+		//HarvestLevelTweaks.init();
 
 		IguanaLog.log("Starting event handler");
 		MinecraftForge.EVENT_BUS.register(new IguanaEventHandler());

@@ -80,12 +80,6 @@ public class LevelingToolMod extends ActiveToolMod {
             // TODO: maybe give xp depending on WHAT block was mined? (xp determined by hardness, if it was an ore, etc.)
             IguanaLevelingLogic.addXP(stack, (EntityPlayer) entity, 1);
 
-        // TODO: Find replacement for canHarvestBlock and getStrVsBlock
-        //if (tool.canHarvestBlock(block) && tool.getStrVsBlock(stack, block, meta) > 1f)
-        //IguanaLog.log("xp added");
-        // TODO: Find replacement for canHarvestBlock and getStrVsBlock
-        //IguanaLevelingLogic.addXP(stack, (EntityPlayer)entity, 1L);
-
         return false;
     }
 

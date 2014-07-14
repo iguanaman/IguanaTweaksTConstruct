@@ -98,6 +98,7 @@ public class IguanaTweaksTConstruct {
 	@EventHandler
 	public void serverStarting(FMLServerStartingEvent event)
 	{
+        // TODO: change this to a proper isModuleLoaded or something in Pulsar 0.4+ (when released/implemented)
         PulseMeta meta = new PulseMeta(IguanaReference.PULSE_LEVELING, "", false, false);
 		if (pulseCFG.isModuleEnabled(meta))
 		{

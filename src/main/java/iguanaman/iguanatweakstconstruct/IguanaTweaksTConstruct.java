@@ -11,6 +11,8 @@ import java.util.logging.Logger;
 
 import iguanaman.iguanatweakstconstruct.reference.IguanaReference;
 import iguanaman.iguanatweakstconstruct.util.IguanaLog;
+import mantle.pulsar.config.ForgeCFG;
+import mantle.pulsar.control.PulseManager;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.item.Item;
@@ -39,6 +41,10 @@ public class IguanaTweaksTConstruct {
 
 	public static List<Item> toolParts = null;
 
+    // TODO: decide wether or not the same cfg as tcon should be used
+    // use the PulseManager. This allows us to separate the different parts into independend modules and have stuff together. yay.
+    private PulseManager pulsar = new PulseManager(IguanaReference.MOD_ID, new ForgeCFG("TinkersModules", "Modules added by Iguana Tweaks for Tinkers Construct"));
+
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 
@@ -58,11 +64,14 @@ public class IguanaTweaksTConstruct {
 
 		//IguanaBlocks.init();
 		//IguanaItems.init();
+
+        pulsar.preInit(event);
 	}
 
 
 	@EventHandler
 	public void load(FMLInitializationEvent event) {
+        pulsar.init(event);
 	}
 
 	@EventHandler
@@ -78,6 +87,8 @@ public class IguanaTweaksTConstruct {
 
 		IguanaLog.info("Starting event handler");
 		//MinecraftForge.EVENT_BUS.register(new IguanaEventHandler());
+
+        pulsar.postInit(event);
 	}
 
 	@EventHandler

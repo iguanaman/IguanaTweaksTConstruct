@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
-import tconstruct.client.gui.GuiButtonTool;
+//import tconstruct.client.gui.GuiButtonTool;
 import tconstruct.client.gui.NewContainerGui;
 import tconstruct.library.client.TConstructClientRegistry;
 import tconstruct.library.client.ToolGuiElement;
@@ -92,7 +92,7 @@ public class IguanaToolStationGui extends NewContainerGui
 		super.initGui();
 		int cornerX = (width - xSize) / 2;
 		int cornerY = (height - ySize) / 2;
-
+/*
 		buttonList.clear();
 		ToolGuiElement repair = TConstructClientRegistry.toolButtons.get(0);
 		GuiButtonTool repairButton = new GuiButtonTool(0, cornerX - 110, cornerY, repair.buttonIconX, repair.buttonIconY, repair.domain, repair.texture, repair); // Repair
@@ -105,7 +105,7 @@ public class IguanaToolStationGui extends NewContainerGui
 			GuiButtonTool button = new GuiButtonTool(iter, cornerX - 110 + 22 * (iter % 5), cornerY + 22 * (iter / 5), element.buttonIconX, element.buttonIconY, repair.domain, element.texture,
 					element);
 			buttonList.add(button);
-		}
+		}*/
 	}
 
 	@Override

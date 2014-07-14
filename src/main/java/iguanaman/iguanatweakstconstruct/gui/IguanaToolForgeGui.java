@@ -3,7 +3,7 @@ package iguanaman.iguanatweakstconstruct.gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.world.World;
-import tconstruct.client.gui.GuiButtonTool;
+//import tconstruct.client.gui.GuiButtonTool;
 import tconstruct.library.client.TConstructClientRegistry;
 import tconstruct.library.client.ToolGuiElement;
 import tconstruct.tools.logic.ToolForgeLogic;
@@ -19,7 +19,7 @@ public class IguanaToolForgeGui extends IguanaToolStationGui
 	{
 		super(inventoryplayer, stationlogic, world, x, y, z);
 	}
-
+/*
 	@Override
 	protected void mouseClicked (int mouseX, int mouseY, int mouseButton)
 	{
@@ -132,4 +132,5 @@ public class IguanaToolForgeGui extends IguanaToolStationGui
 		}
 		toolSlots.resetSlots(slotX, slotY);
 	}
+	*/
 }

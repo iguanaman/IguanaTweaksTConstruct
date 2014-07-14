@@ -9,8 +9,6 @@ import iguanaman.iguanatweakstconstruct.util.IguanaClientEventHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import tconstruct.client.gui.PatternChestGui;
-import tconstruct.client.gui.StencilTableGui;
 import tconstruct.tools.ToolProxyCommon;
 import tconstruct.tools.logic.PartBuilderLogic;
 import tconstruct.tools.logic.PatternChestLogic;
@@ -33,6 +31,7 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public Object getClientGuiElement (int ID, EntityPlayer player, World world, int x, int y, int z) {
+        /*
 		if (ID == ToolProxyCommon.toolStationID)
 			return new IguanaToolStationGui(player.inventory, (ToolStationLogic) world.getTileEntity(x, y, z), world, x, y, z);
 		if (ID == ToolProxyCommon.partBuilderID)
@@ -43,7 +42,7 @@ public class ClientProxy extends CommonProxy {
 			return new IguanaToolForgeGui(player.inventory, (ToolForgeLogic) world.getTileEntity(x, y, z), world, x, y, z);
 		if (ID == ToolProxyCommon.stencilTableID)
 			return new StencilTableGui(player.inventory, (StencilTableLogic) world.getTileEntity(x, y, z), world, x, y, z);
-
+*/
 		return null;
 	}
 }

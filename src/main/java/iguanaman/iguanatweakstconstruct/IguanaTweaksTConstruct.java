@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
+import iguanaman.iguanatweakstconstruct.reference.IguanaReference;
 import iguanaman.iguanatweakstconstruct.util.IguanaLog;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
@@ -24,16 +25,16 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 
-@Mod(modid="IguanaTweaksTConstruct", name="Iguana Tweaks for Tinker's Construct", version="1.6.X-1p",
-dependencies = "required-after:TConstruct;after:*")
+@Mod(modid= IguanaReference.MOD_ID, name=IguanaReference.MOD_NAME, version="1.6.X-1p",
+dependencies = "required-after:" + IguanaReference.TCON_MOD_ID + ";after:*")
 public class IguanaTweaksTConstruct {
 
 	// The instance of your mod that Forge uses.
-	@Instance("IguanaTweaksTConstruct")
+	@Instance(IguanaReference.TCON_MOD_ID)
 	public static IguanaTweaksTConstruct instance;
 
 	// Says where the client and server 'proxy' code is loaded.
-	@SidedProxy(clientSide="iguanaman.iguanatweakstconstruct.proxy.ClientProxy", serverSide="iguanaman.iguanatweakstconstruct.proxy.CommonProxy")
+	@SidedProxy(clientSide=IguanaReference.PROXY_CLIENT_CLASS, serverSide=IguanaReference.PROXY_SERVER_CLASS)
 	public static CommonProxy proxy;
 
 public static Logger ITconTweaksLog = Logger.getLogger("IguanaTweaksTConstruct");

@@ -1,4 +1,4 @@
-package iguanaman.iguanatweakstconstruct;
+package iguanaman.iguanatweakstconstruct.proxy;
 
 import mantle.blocks.abstracts.InventoryLogic;
 import net.minecraft.entity.player.EntityPlayer;

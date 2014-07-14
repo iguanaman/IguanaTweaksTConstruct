@@ -1,7 +1,7 @@
 package iguanaman.iguanatweakstconstruct.util;
 
-import iguanaman.iguanatweakstconstruct.IguanaConfig;
-import iguanaman.iguanatweakstconstruct.IguanaItems;
+import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
+import iguanaman.iguanatweakstconstruct.reference.IguanaItems;
 import iguanaman.iguanatweakstconstruct.IguanaLevelingLogic;
 import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
 

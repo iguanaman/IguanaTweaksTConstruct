@@ -1,18 +1,16 @@
-package iguanaman.iguanatweakstconstruct;
+package iguanaman.iguanatweakstconstruct.reference;
 
+import iguanaman.iguanatweakstconstruct.util.IguanaLog;
 import iguanaman.iguanatweakstconstruct.items.ClayBucket;
 import iguanaman.iguanatweakstconstruct.items.ClayBucketFilled;
 import iguanaman.iguanatweakstconstruct.items.ClayBucketMilk;
-import iguanaman.iguanatweakstconstruct.items.IguanaItemSkull;
 import iguanaman.iguanatweakstconstruct.items.IguanaPattern;
 import iguanaman.iguanatweakstconstruct.items.IguanaToolPart;
-import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.oredict.OreDictionary;

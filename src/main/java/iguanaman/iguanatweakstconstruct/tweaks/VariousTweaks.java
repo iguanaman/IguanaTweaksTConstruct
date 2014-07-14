@@ -1,15 +1,15 @@
-package iguanaman.iguanatweakstconstruct;
+package iguanaman.iguanatweakstconstruct.tweaks;
 
+import iguanaman.iguanatweakstconstruct.util.IguanaLog;
+import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
+import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
 import iguanaman.iguanatweakstconstruct.util.IguanaPartBuildRecipe;
-import iguanaman.iguanatweakstconstruct.util.IguanaPartCraftingHandler;
-import iguanaman.iguanatweakstconstruct.util.IguanaPatternCraftingHandler;
 import iguanaman.iguanatweakstconstruct.util.IguanaToolBuildRecipe;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;

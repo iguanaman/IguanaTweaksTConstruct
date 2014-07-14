@@ -1,4 +1,4 @@
-package iguanaman.iguanatweakstconstruct;
+package iguanaman.iguanatweakstconstruct.proxy;
 
 import iguanaman.iguanatweakstconstruct.blocks.IguanaTileEntitySkull;
 import iguanaman.iguanatweakstconstruct.gui.IguanaPartCrafterGui;

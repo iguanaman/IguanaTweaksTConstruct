@@ -1,20 +1,13 @@
-package iguanaman.iguanatweakstconstruct;
+package iguanaman.iguanatweakstconstruct.reference;
 
-import iguanaman.iguanatweakstconstruct.blocks.IguanaBlockSkull;
-import iguanaman.iguanatweakstconstruct.blocks.IguanaGravelOre;
-import iguanaman.iguanatweakstconstruct.blocks.IguanaTileEntitySkull;
+import iguanaman.iguanatweakstconstruct.util.IguanaLog;
 import iguanaman.iguanatweakstconstruct.blocks.IguanaToolForgeBlock;
 import iguanaman.iguanatweakstconstruct.blocks.IguanaToolStationBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import tconstruct.common.itemblocks.MetadataItemBlock;
 import tconstruct.tools.TinkerTools;
 import tconstruct.tools.itemblocks.ToolStationItemBlock;
-import tconstruct.util.config.PHConstruct;
-import tconstruct.world.TinkerWorld;
-import tconstruct.world.itemblocks.GravelOreItem;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class IguanaBlocks {
@@ -37,9 +30,9 @@ public class IguanaBlocks {
 		TinkerTools.toolForge = new IguanaToolForgeBlock(Material.iron).setBlockName("ToolForge");
 		GameRegistry.registerBlock(TinkerTools.toolForge, MetadataItemBlock.class, "ToolForgeBlock");
 
-		TinkerWorld.oreGravel = null;
-		TinkerWorld.oreGravel = new IguanaGravelOre().setBlockName("tconstruct.gravelore");
-		GameRegistry.registerBlock(TinkerWorld.oreGravel, GravelOreItem.class, "GravelOre");
+		//TinkerWorld.oreGravel = null;
+		//TinkerWorld.oreGravel = new IguanaGravelOre().setBlockName("tconstruct.gravelore");
+		//GameRegistry.registerBlock(TinkerWorld.oreGravel, GravelOreItem.class, "GravelOre");
 
 
 		//SKULLS

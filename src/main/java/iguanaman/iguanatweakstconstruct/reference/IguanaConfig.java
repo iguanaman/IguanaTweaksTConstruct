@@ -1,4 +1,4 @@
-package iguanaman.iguanatweakstconstruct;
+package iguanaman.iguanatweakstconstruct.reference;
 
 import java.io.File;
 import java.util.ArrayList;

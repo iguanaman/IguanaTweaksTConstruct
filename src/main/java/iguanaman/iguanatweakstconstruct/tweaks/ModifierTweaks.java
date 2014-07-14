@@ -1,5 +1,6 @@
-package iguanaman.iguanatweakstconstruct;
+package iguanaman.iguanatweakstconstruct.tweaks;
 
+import iguanaman.iguanatweakstconstruct.util.IguanaLog;
 import iguanaman.iguanatweakstconstruct.modifiers.IguanaActiveToolMod;
 import iguanaman.iguanatweakstconstruct.modifiers.IguanaModAttack;
 import iguanaman.iguanatweakstconstruct.modifiers.IguanaModClean;
@@ -11,6 +12,7 @@ import iguanaman.iguanatweakstconstruct.modifiers.IguanaModUpgrade;
 
 import java.util.Iterator;
 
+import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;

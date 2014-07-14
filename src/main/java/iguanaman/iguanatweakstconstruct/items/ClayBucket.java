@@ -1,6 +1,6 @@
 package iguanaman.iguanatweakstconstruct.items;
 
-import iguanaman.iguanatweakstconstruct.IguanaItems;
+import iguanaman.iguanatweakstconstruct.reference.IguanaItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.passive.EntityCow;

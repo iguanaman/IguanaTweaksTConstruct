@@ -1,6 +1,6 @@
 package iguanaman.iguanatweakstconstruct.modifiers;
 
-import iguanaman.iguanatweakstconstruct.IguanaLog;
+import iguanaman.iguanatweakstconstruct.util.IguanaLog;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import tconstruct.library.crafting.ToolBuilder;

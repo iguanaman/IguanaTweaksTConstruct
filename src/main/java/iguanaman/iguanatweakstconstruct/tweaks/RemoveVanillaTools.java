@@ -1,5 +1,7 @@
-package iguanaman.iguanatweakstconstruct;
+package iguanaman.iguanatweakstconstruct.tweaks;
 
+import iguanaman.iguanatweakstconstruct.util.IguanaLog;
+import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

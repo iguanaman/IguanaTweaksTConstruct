@@ -2,16 +2,17 @@ package iguanaman.iguanatweakstconstruct;
 
 import iguanaman.iguanatweakstconstruct.commands.IguanaCommandLevelUpTool;
 import iguanaman.iguanatweakstconstruct.commands.IguanaCommandToolXP;
-import iguanaman.iguanatweakstconstruct.util.IguanaEventHandler;
+import iguanaman.iguanatweakstconstruct.proxy.CommonProxy;
+import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
+import iguanaman.iguanatweakstconstruct.util.IguanaLog;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.item.Item;
-import net.minecraftforge.common.MinecraftForge;
 import tconstruct.tools.TinkerTools;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -22,7 +23,6 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
 
 @Mod(modid="IguanaTweaksTConstruct", name="Iguana Tweaks for Tinker's Construct", version="1.6.X-1p",
 dependencies = "required-after:TConstruct;after:*")
@@ -33,7 +33,7 @@ public class IguanaTweaksTConstruct {
 	public static IguanaTweaksTConstruct instance;
 
 	// Says where the client and server 'proxy' code is loaded.
-	@SidedProxy(clientSide="iguanaman.iguanatweakstconstruct.ClientProxy", serverSide="iguanaman.iguanatweakstconstruct.CommonProxy")
+	@SidedProxy(clientSide="iguanaman.iguanatweakstconstruct.proxy.ClientProxy", serverSide="iguanaman.iguanatweakstconstruct.proxy.CommonProxy")
 	public static CommonProxy proxy;
 
 public static Logger ITconTweaksLog = Logger.getLogger("IguanaTweaksTConstruct");
@@ -43,7 +43,7 @@ public static Logger ITconTweaksLog = Logger.getLogger("IguanaTweaksTConstruct")
 	public void preInit(FMLPreInitializationEvent event) {
 
 		proxy.registerSounds();
-		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
+		//NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
 
 		IguanaConfig.init(event.getSuggestedConfigurationFile());
 
@@ -56,8 +56,8 @@ public static Logger ITconTweaksLog = Logger.getLogger("IguanaTweaksTConstruct")
 				TinkerTools.largeSwordBlade, TinkerTools.hammerHead, TinkerTools.bowstring, TinkerTools.fletching,
 				TinkerTools.arrowhead );
 
-		IguanaBlocks.init();
-		IguanaItems.init();
+		//IguanaBlocks.init();
+		//IguanaItems.init();
 	}
 
 
@@ -69,15 +69,15 @@ public static Logger ITconTweaksLog = Logger.getLogger("IguanaTweaksTConstruct")
 	public void postInit(FMLPostInitializationEvent event) {
 		proxy.registerRenderers();
 
-		MaterialTweaks.init();
-		ModifierTweaks.init();
-		VariousTweaks.init();
-		RemoveVanillaTools.init();
+		//MaterialTweaks.init();
+		//ModifierTweaks.init();
+		//VariousTweaks.init();
+		//RemoveVanillaTools.init();
 		// TODO: need to re-implement harvest level tweaks
 		//HarvestLevelTweaks.init();
 
 		IguanaLog.log("Starting event handler");
-		MinecraftForge.EVENT_BUS.register(new IguanaEventHandler());
+		//MinecraftForge.EVENT_BUS.register(new IguanaEventHandler());
 	}
 
 	@EventHandler

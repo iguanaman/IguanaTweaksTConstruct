@@ -1,4 +1,4 @@
-package iguanaman.iguanatweakstconstruct;
+package iguanaman.iguanatweakstconstruct.tweaks;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -7,12 +7,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import iguanaman.iguanatweakstconstruct.util.IguanaLog;
+import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.world.TinkerWorld;

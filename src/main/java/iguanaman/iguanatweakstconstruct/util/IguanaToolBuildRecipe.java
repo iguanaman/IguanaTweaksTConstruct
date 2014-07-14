@@ -1,6 +1,6 @@
 package iguanaman.iguanatweakstconstruct.util;
 
-import iguanaman.iguanatweakstconstruct.IguanaConfig;
+import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
 
 import java.util.ArrayList;
 

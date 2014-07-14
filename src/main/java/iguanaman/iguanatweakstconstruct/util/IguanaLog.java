@@ -1,4 +1,4 @@
-package iguanaman.iguanatweakstconstruct;
+package iguanaman.iguanatweakstconstruct.util;
 
 import static iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct.ITconTweaksLog;
 public class IguanaLog {

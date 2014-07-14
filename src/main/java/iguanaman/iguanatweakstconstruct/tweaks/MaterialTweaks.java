@@ -1,5 +1,7 @@
-package iguanaman.iguanatweakstconstruct;
+package iguanaman.iguanatweakstconstruct.tweaks;
 
+import iguanaman.iguanatweakstconstruct.util.IguanaLog;
+import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.tools.TinkerTools;
 import cpw.mods.fml.common.Loader;

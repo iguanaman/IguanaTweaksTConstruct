@@ -12,7 +12,7 @@ public class RemoveVanillaTools {
 	public static void init()
 	{
 		//Remove vanilla tools
-		IguanaLog.log("Removing vanilla tool recipes");
+		IguanaLog.info("Removing vanilla tool recipes");
 
 		//Wood
 		if (IguanaConfig.restrictedWoodParts.contains(1) || IguanaConfig.restrictedWoodParts.contains(2) || IguanaConfig.restrictedWoodParts.contains(9))

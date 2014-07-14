@@ -37,7 +37,6 @@ public class IguanaTweaksTConstruct {
 	@SidedProxy(clientSide=IguanaReference.PROXY_CLIENT_CLASS, serverSide=IguanaReference.PROXY_SERVER_CLASS)
 	public static CommonProxy proxy;
 
-public static Logger ITconTweaksLog = Logger.getLogger("IguanaTweaksTConstruct");
 	public static List<Item> toolParts = null;
 
 	@EventHandler
@@ -77,7 +76,7 @@ public static Logger ITconTweaksLog = Logger.getLogger("IguanaTweaksTConstruct")
 		// TODO: need to re-implement harvest level tweaks
 		//HarvestLevelTweaks.init();
 
-		IguanaLog.log("Starting event handler");
+		IguanaLog.info("Starting event handler");
 		//MinecraftForge.EVENT_BUS.register(new IguanaEventHandler());
 	}
 

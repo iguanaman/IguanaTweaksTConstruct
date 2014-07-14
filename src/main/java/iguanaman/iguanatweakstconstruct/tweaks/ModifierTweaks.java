@@ -33,7 +33,7 @@ public class ModifierTweaks
     {
 
         // REMOVE OLD MODIFIERS
-        IguanaLog.log("Removing old modifiers");
+        IguanaLog.info("Removing old modifiers");
         Iterator<ItemModifier> i = ModifyBuilder.instance.itemModifiers.iterator();
         while (i.hasNext())
         {
@@ -59,7 +59,7 @@ public class ModifierTweaks
         }
 
         // REPLACE OLD MODIFIERS
-        IguanaLog.log("Replacing old modifiers");
+        IguanaLog.info("Replacing old modifiers");
 
         if (IguanaConfig.partReplacement)
         	ModifyBuilder.registerModifier(new IguanaModUpgrade());
@@ -99,7 +99,7 @@ public class ModifierTweaks
         // MINING BOOST MODIFIERS
         if (IguanaConfig.mobHeadPickaxeBoost)
         {
-            IguanaLog.log("Adding mob head modifiers");
+            IguanaLog.info("Adding mob head modifiers");
 
             // add modifers
             ModifyBuilder.registerModifier(new IguanaModHeads(new ItemStack[] { new ItemStack(Items.skull, 1, 0) }, 20, TConstructRegistry.getMaterial("Iron").harvestLevel(), "Skeleton Skull",
@@ -128,7 +128,7 @@ public class ModifierTweaks
         // LEVELING MODIFIER
         if (IguanaConfig.toolLeveling)
         {
-            IguanaLog.log("Adding leveling active modifier");
+            IguanaLog.info("Adding leveling active modifier");
             TConstructRegistry.activeModifiers.add(0, new IguanaActiveToolMod());
         }
     }

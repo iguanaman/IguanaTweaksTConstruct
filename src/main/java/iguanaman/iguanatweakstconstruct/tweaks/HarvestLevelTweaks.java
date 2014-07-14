@@ -38,7 +38,7 @@ public class HarvestLevelTweaks {
 	public static void init()
 	{
 		// TOOLS
-		IguanaLog.log("Modifying harvest levels of tools");
+		IguanaLog.info("Modifying harvest levels of tools");
 		ForgeHooks hooks = new ForgeHooks();
 		Field f = null;
 		try {
@@ -97,7 +97,7 @@ public class HarvestLevelTweaks {
 
 				if (harvestLevel != newHarvestLevel)
 				{
-					if (IguanaConfig.logMiningLevelChanges) IguanaLog.log("Changing mining level of " + entry.getKey().getUnlocalizedName() + " from " + harvestLevel + " to " + newHarvestLevel);
+					if (IguanaConfig.logMiningLevelChanges) IguanaLog.info("Changing mining level of " + entry.getKey().getUnlocalizedName() + " from " + harvestLevel + " to " + newHarvestLevel);
 					entry.setValue(Arrays.asList(toolClass, newHarvestLevel));
 				}
 
@@ -116,7 +116,7 @@ public class HarvestLevelTweaks {
 		harvestLevelCobalt += boostMod;
 		harvestLevelManyullyn += boostMod;
 
-		IguanaLog.log("Modifying required harvest levels of blocks");
+		IguanaLog.info("Modifying required harvest levels of blocks");
 		try {
 			f = ForgeHooks.class.getDeclaredField("toolHarvestLevels");
 		} catch (NoSuchFieldException e) {
@@ -164,7 +164,7 @@ public class HarvestLevelTweaks {
 
 				if (requiredHarvestLevel != newRequiredHarvestLevel)
 				{
-					if (IguanaConfig.logHarvestLevelChanges) IguanaLog.log("Changing required harvest level of " + block.getUnlocalizedName() + ":" + metadata + " from " + requiredHarvestLevel + " to " + newRequiredHarvestLevel);
+					if (IguanaConfig.logHarvestLevelChanges) IguanaLog.info("Changing required harvest level of " + block.getUnlocalizedName() + ":" + metadata + " from " + requiredHarvestLevel + " to " + newRequiredHarvestLevel);
 					entry.setValue(newRequiredHarvestLevel);
 				}
 
@@ -184,7 +184,7 @@ public class HarvestLevelTweaks {
 			}
 		}
 
-		IguanaLog.log("Modifying required harvest levels of vanilla blocks");
+		IguanaLog.info("Modifying required harvest levels of vanilla blocks");
 		Blocks.obsidian.setHarvestLevel("pickaxe", harvestLevelBronze);
 		Blocks.diamond_ore.setHarvestLevel("pickaxe", harvestLevelBronze);
 		Blocks.diamond_block.setHarvestLevel("pickaxe", harvestLevelBronze);
@@ -242,7 +242,7 @@ public class HarvestLevelTweaks {
 		Block block = Block.getBlockFromItem(oreStack.getItem());
 		if (block == Blocks.air)
 		{
-			IguanaLog.log("Warning: " + oreStack.getUnlocalizedName() + " is invalid block");
+			IguanaLog.warn("Warning: " + oreStack.getUnlocalizedName() + " is invalid block");
 			return;
 		}
 		

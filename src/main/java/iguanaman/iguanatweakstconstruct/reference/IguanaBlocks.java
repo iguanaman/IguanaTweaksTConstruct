@@ -20,7 +20,7 @@ public class IguanaBlocks {
 	{
 
 		//TOOL STATION + FORGE
-		IguanaLog.log("Modifying GUIs");
+		IguanaLog.info("Modifying GUIs");
 
 		TinkerTools.toolStationWood = null;
 		TinkerTools.toolStationWood = new IguanaToolStationBlock(Material.wood).setBlockName("ToolStation");
@@ -36,7 +36,7 @@ public class IguanaBlocks {
 
 
 		//SKULLS
-		IguanaLog.log("Adding skull blocks");
+		IguanaLog.info("Adding skull blocks");
 		// TODO: Find a way to change vanilla skulls
 		/*Blocks.skull = null;
 		newSkullBlock = new IguanaBlockSkull().setHardness(1.0F).setStepSound(Block.soundTypeSand).setBlockName("skull").setBlockTextureName("skull");

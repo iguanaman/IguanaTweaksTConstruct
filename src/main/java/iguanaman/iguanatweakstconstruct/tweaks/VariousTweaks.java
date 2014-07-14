@@ -37,27 +37,27 @@ public class VariousTweaks {
 		}
 		catch (Exception e)
 		{
-			IguanaLog.log("Failed to suppress missing tool logs");
+			IguanaLog.warn("Failed to suppress missing tool logs");
 			e.printStackTrace();
 		}
 
 		//REMOVE STONE TORCH
 		if (IguanaConfig.removeStoneTorchRecipe)
 		{
-			IguanaLog.log("Removing stone torch recipe");
+			IguanaLog.info("Removing stone torch recipe");
 			RecipeRemover.removeAnyRecipe(new ItemStack(TinkerWorld.stoneTorch, 4));
 		}
 
 
 		// GRAVEL TO FLINT RECIPE
 		if (IguanaConfig.addFlintRecipe) {
-			IguanaLog.log("Adding gravel to flint recipe");
+			IguanaLog.info("Adding gravel to flint recipe");
 			GameRegistry.addShapelessRecipe(new ItemStack(Items.flint), new Object[] {Blocks.gravel, Blocks.gravel, Blocks.gravel, Blocks.gravel});
 		}
 
 
 		//SOFTEN SEARED BLOCKS
-		IguanaLog.log("Softening seared blocks");
+		IguanaLog.info("Softening seared blocks");
 		TinkerSmeltery.smeltery.setHardness(1.5F);
 		TinkerSmeltery.lavaTank.setHardness(1.5F);
 		TinkerSmeltery.searedBlock.setHardness(1.5F);
@@ -65,7 +65,7 @@ public class VariousTweaks {
 
 
 		// REUSABLE PARTS
-		IguanaLog.log("Making non-metal parts reusable in part builder");
+		IguanaLog.info("Making non-metal parts reusable in part builder");
 
 		int[] nonMetals = { 0, 1, 3, 4, 5, 6, 7, 8, 9, 17 };
 		PatternBuilder pb = PatternBuilder.instance;
@@ -85,7 +85,7 @@ public class VariousTweaks {
 
 
 		// REMOVE RESTRICTED PARTS FROM TINKERS HOUSE LOOT
-		IguanaLog.log("Removing restricted parts from Tinker House chest");
+		IguanaLog.info("Removing restricted parts from Tinker House chest");
 
 		for (int i = 0; i < IguanaTweaksTConstruct.toolParts.size(); ++i)
 		{
@@ -122,7 +122,7 @@ public class VariousTweaks {
 		// SIMPLE WOOD PATTERN CRAFTING RECIPE
 		if (IguanaConfig.easyBlankPatternRecipe)
 		{
-			IguanaLog.log("Adding easy blank pattern recipe");
+			IguanaLog.info("Adding easy blank pattern recipe");
 			GameRegistry.addShapedRecipe(new ItemStack(TinkerTools.blankPattern), "ss", "ss", 's', new ItemStack(Items.stick));
 		}
 
@@ -130,7 +130,7 @@ public class VariousTweaks {
 		//ROTATING PATTERN CRAFTING
 		if (IguanaConfig.easyPatternCrafting)
 		{
-			IguanaLog.log("Adding rotating pattern crafting recipes");
+			IguanaLog.info("Adding rotating pattern crafting recipes");
 
 			// TODO: Find Crafting Handler replacement 
 			//GameRegistry.registerCraftingHandler(new IguanaPatternCraftingHandler());
@@ -167,7 +167,7 @@ public class VariousTweaks {
 		// ALTERNATIVE PART CRAFTING
 		if (IguanaConfig.easyPartCrafting)
 		{
-			IguanaLog.log("Adding easy part crafting");
+			IguanaLog.info("Adding easy part crafting");
 			GameRegistry.addRecipe(new IguanaPartBuildRecipe());
 			// TODO: Find crafting Handler replacement
 			//GameRegistry.registerCraftingHandler(new IguanaPartCraftingHandler());
@@ -177,7 +177,7 @@ public class VariousTweaks {
 		// ALTERNATIVE TOOL CRAFTING
 		if (IguanaConfig.easyToolCreation || IguanaConfig.easyToolModification)
 		{
-			IguanaLog.log("Adding easy tool crafting");
+			IguanaLog.info("Adding easy tool crafting");
 			GameRegistry.addRecipe(new IguanaToolBuildRecipe());
 		}
 

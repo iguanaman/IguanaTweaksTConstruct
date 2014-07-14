@@ -50,7 +50,7 @@ public class IguanaModClean extends ItemModifier {
 		}
 
 		// Create blank tool
-		IguanaLog.log("replacing tool");
+		IguanaLog.info("replacing tool");
 		tool = ToolBuilder.instance.buildTool(headStack, handleStack, accessoryStack, extraStack, name);
 	}
 

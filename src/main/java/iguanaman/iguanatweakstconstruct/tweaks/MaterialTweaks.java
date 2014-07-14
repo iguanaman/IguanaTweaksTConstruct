@@ -12,7 +12,7 @@ public class MaterialTweaks {
 	{
 
 		// TINKERS
-		IguanaLog.log("Modifying TConstruct materials");
+		IguanaLog.info("Modifying TConstruct materials");
 
 		float durMod = IguanaConfig.durabilityPercentage / 100F;
 		float speedMod = IguanaConfig.miningSpeedPercentage / 100F;

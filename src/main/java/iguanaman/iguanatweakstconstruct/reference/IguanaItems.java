@@ -36,7 +36,7 @@ public class IguanaItems {
 	{
 
 		//CLAY BUCKETS
-		IguanaLog.log("Adding clay buckets");
+		IguanaLog.info("Adding clay buckets");
 		clayBucketUnfired = new Item().setUnlocalizedName("iguanatweakstconstruct:clayBucketUnfired").setTextureName("iguanatweakstconstruct:clayBucketUnfired").setMaxStackSize(16).setCreativeTab(CreativeTabs.tabMisc);
 		clayBucketFired = new ClayBucket(Blocks.air).setUnlocalizedName("iguanatweakstconstruct:clayBucketFired").setTextureName("iguanatweakstconstruct:clayBucketFired").setMaxStackSize(16);
 		clayBucketWater = new ClayBucket(Blocks.flowing_water).setUnlocalizedName("iguanatweakstconstruct:clayBucketWater").setTextureName("iguanatweakstconstruct:clayBucketWater").setContainerItem(clayBucketFired);
@@ -114,7 +114,7 @@ public class IguanaItems {
 		ToolBuilder.addCustomToolRecipe(new BowRecipe(TinkerTools.toolRod, TinkerTools.bowstring, TinkerTools.toolRod, TinkerTools.shortbow));
 
 		//SKULL ITEM
-		IguanaLog.log("Adding skull item");
+		IguanaLog.info("Adding skull item");
 		// TODO: find a way to replace vanilla skull
 		/*Item.itemsList[Item.skull.itemID] = null;
 		Item.skull = new IguanaItemSkull(141).setUnlocalizedName("skull").setTextureName("skull");
@@ -126,7 +126,7 @@ public class IguanaItems {
 		//COBALT ARMOR
 		if (IguanaConfig.cobaltArmor)
 		{
-			IguanaLog.log("Changing diamond armor to cobalt armor");
+			IguanaLog.info("Changing diamond armor to cobalt armor");
 
 			// TODO: Implement Cobalt Armor
 			/*LanguageRegistry.addName(new ItemStack(Item.helmetDiamond), "Cobalt Helmet");

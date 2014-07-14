@@ -1,4 +1,4 @@
-package iguanaman.iguanatweakstconstruct.commands;
+package iguanaman.iguanatweakstconstruct.leveling.commands;
 
 import iguanaman.iguanatweakstconstruct.IguanaLevelingLogic;
 import net.minecraft.command.CommandBase;
@@ -7,6 +7,8 @@ import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.rcon.RConConsoleSource;
+import net.minecraft.util.ChatComponentText;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.tools.ToolCore;
 
@@ -51,6 +53,7 @@ public class IguanaCommandToolXP extends CommandBase {
 						if (entityplayermp != icommandsender)
 						{
 							// TODO: find replacement for notifyAdmins
+                            // possibly RConConsoleSource?
 							//notifyAdmins(icommandsender, 1, "Added " + xp + " to %s's tool", new Object[]{entityplayermp.getEntityName()});
 						}
 						else

@@ -71,7 +71,7 @@ public class IguanaEventHandler {
 				event.setResult(Event.Result.DENY);
 		}
 	}
-
+/*
 	@SubscribeEvent
 	public void onHurt (LivingHurtEvent event)
 	{
@@ -97,7 +97,7 @@ public class IguanaEventHandler {
 		ItemStack stack = event.current;
 		if (stack != null && stack.hasTagCompound() && stack.getItem() instanceof ToolCore)
 			IguanaLevelingLogic.addXP(stack, player, 1L);
-	}
+	}*/
 
 	void addDrops(LivingDropsEvent event, ItemStack dropStack)
 	{
@@ -286,7 +286,8 @@ public class IguanaEventHandler {
 			}
 		}
 
-
+// Leveling
+        /*
 		if (event.tool != TinkerTools.arrow)
 		{
 			// CREATE TOOLTIP LISTS
@@ -374,7 +375,7 @@ public class IguanaEventHandler {
 					if (toolTag.hasKey(replaceTag)) toolTag.setInteger(replaceTag, Math.round(toolTag.getInteger(replaceTag) / 2f));
 			}
 		}
-
+*/
 	}
 
 	/* Crafting */
@@ -425,7 +426,7 @@ public class IguanaEventHandler {
 				if (addGravel) event.drops.add(new ItemStack(Blocks.gravel));
 			}
 	}
-
+/*
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onRenderGameOverlay(RenderGameOverlayEvent.Text event) {
@@ -459,7 +460,7 @@ public class IguanaEventHandler {
 				}
 			}
 		}
-	}
+	}*/
 
 }
 

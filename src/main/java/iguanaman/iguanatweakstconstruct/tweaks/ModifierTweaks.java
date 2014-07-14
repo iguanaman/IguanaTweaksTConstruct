@@ -129,7 +129,7 @@ public class ModifierTweaks
         if (IguanaConfig.toolLeveling)
         {
             IguanaLog.info("Adding leveling active modifier");
-            TConstructRegistry.activeModifiers.add(0, new IguanaActiveToolMod());
+            //TConstructRegistry.activeModifiers.add(0, new IguanaActiveToolMod());
         }
     }
 

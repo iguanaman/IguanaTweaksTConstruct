@@ -1,4 +1,4 @@
-package iguanaman.iguanatweakstconstruct.commands;
+package iguanaman.iguanatweakstconstruct.leveling.commands;
 
 import iguanaman.iguanatweakstconstruct.IguanaLevelingLogic;
 import net.minecraft.command.CommandBase;

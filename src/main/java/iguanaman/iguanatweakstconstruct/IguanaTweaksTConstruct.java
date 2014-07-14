@@ -1,18 +1,20 @@
 package iguanaman.iguanatweakstconstruct;
 
-import iguanaman.iguanatweakstconstruct.commands.IguanaCommandLevelUpTool;
-import iguanaman.iguanatweakstconstruct.commands.IguanaCommandToolXP;
+import iguanaman.iguanatweakstconstruct.leveling.commands.IguanaCommandLevelUpTool;
+import iguanaman.iguanatweakstconstruct.leveling.commands.IguanaCommandToolXP;
+import iguanaman.iguanatweakstconstruct.leveling.Leveling;
 import iguanaman.iguanatweakstconstruct.proxy.CommonProxy;
 import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Logger;
 
 import iguanaman.iguanatweakstconstruct.reference.IguanaReference;
 import iguanaman.iguanatweakstconstruct.util.IguanaLog;
 import mantle.pulsar.config.ForgeCFG;
 import mantle.pulsar.control.PulseManager;
+import mantle.pulsar.pulse.Handler;
+import mantle.pulsar.pulse.PulseMeta;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.item.Item;
@@ -43,7 +45,8 @@ public class IguanaTweaksTConstruct {
 
     // TODO: decide wether or not the same cfg as tcon should be used
     // use the PulseManager. This allows us to separate the different parts into independend modules and have stuff together. yay.
-    private PulseManager pulsar = new PulseManager(IguanaReference.MOD_ID, new ForgeCFG("TinkersModules", "Modules added by Iguana Tweaks for Tinkers Construct"));
+    private ForgeCFG pulseCFG = new ForgeCFG("TinkersModules", "Addon: Iguana Tweaks for Tinkers Construct");
+    private PulseManager pulsar = new PulseManager(IguanaReference.MOD_ID, pulseCFG);
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -65,6 +68,7 @@ public class IguanaTweaksTConstruct {
 		//IguanaBlocks.init();
 		//IguanaItems.init();
 
+        pulsar.registerPulse(new Leveling());
         pulsar.preInit(event);
 	}
 
@@ -94,12 +98,13 @@ public class IguanaTweaksTConstruct {
 	@EventHandler
 	public void serverStarting(FMLServerStartingEvent event)
 	{
-		if (IguanaConfig.toolLeveling)
+        PulseMeta meta = new PulseMeta(IguanaReference.PULSE_LEVELING, "", false, false);
+		if (pulseCFG.isModuleEnabled(meta))
 		{
-			ICommandManager commandManager = FMLCommonHandler.instance().getMinecraftServerInstance().getCommandManager();
-			ServerCommandManager serverCommandManager = (ServerCommandManager) commandManager;
-			serverCommandManager.registerCommand(new IguanaCommandLevelUpTool());
-			serverCommandManager.registerCommand(new IguanaCommandToolXP());
+            IguanaLog.debug("Adding command: leveluptool");
+            event.registerServerCommand(new IguanaCommandLevelUpTool());
+            IguanaLog.debug("Adding command: toolxp");
+            event.registerServerCommand(new IguanaCommandToolXP());
 		}
 	}
 

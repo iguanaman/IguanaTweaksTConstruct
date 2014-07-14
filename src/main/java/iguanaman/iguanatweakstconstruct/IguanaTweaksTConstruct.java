@@ -30,7 +30,7 @@ dependencies = "required-after:" + IguanaReference.TCON_MOD_ID + ";after:*")
 public class IguanaTweaksTConstruct {
 
 	// The instance of your mod that Forge uses.
-	@Instance(IguanaReference.TCON_MOD_ID)
+	@Instance(IguanaReference.MOD_ID)
 	public static IguanaTweaksTConstruct instance;
 
 	// Says where the client and server 'proxy' code is loaded.

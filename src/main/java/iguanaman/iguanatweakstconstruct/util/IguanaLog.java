@@ -7,7 +7,7 @@ import org.apache.logging.log4j.Level;
 public class IguanaLog {
 	public static void log(Level level, Object obj)
 	{
-        FMLLog.log(IguanaReference.MOD_NAME, level, String.valueOf(obj));
+        FMLLog.log("Iguana-TCon", level, String.valueOf(obj));
 	}
 
     public static void info(Object obj) { log(Level.INFO, obj); }

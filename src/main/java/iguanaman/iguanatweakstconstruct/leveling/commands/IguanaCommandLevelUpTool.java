@@ -1,6 +1,6 @@
 package iguanaman.iguanatweakstconstruct.leveling.commands;
 
-import iguanaman.iguanatweakstconstruct.IguanaLevelingLogic;
+import iguanaman.iguanatweakstconstruct.leveling.IguanaLevelingLogic;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;

@@ -1,7 +1,5 @@
 package iguanaman.iguanatweakstconstruct.leveling;
 
-import cpw.mods.fml.common.FMLLog;
-import iguanaman.iguanatweakstconstruct.IguanaLevelingLogic;
 import iguanaman.iguanatweakstconstruct.util.IguanaLog;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

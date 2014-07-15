@@ -102,7 +102,7 @@ public class LevelingEventHandler {
                 {
                     if (IguanaConfig.showTooltipXP)
                     {
-                        tips.add(IguanaLevelingLogic.getXpString(new ItemStack(event.tool), false, toolTag, true));
+                        tips.add(IguanaLevelingLogic.getXpToolTip(new ItemStack(event.tool), false, toolTag, true));
                         modifierTips.add("");
                     }
 

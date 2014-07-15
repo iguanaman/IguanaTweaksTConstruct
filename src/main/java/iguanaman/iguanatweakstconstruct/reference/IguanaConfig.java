@@ -27,6 +27,7 @@ public class IguanaConfig {
 	public static boolean detailedXpTooltip;
 	public static boolean toolLeveling;
 	public static boolean toolLevelingExtraModifiers;
+    public static int[] toolModifiersAtLevels;
 	public static boolean toolLevelingRandomBonuses;
 	public static boolean showTooltipXP;
 	public static boolean showDebugXP;
@@ -153,7 +154,11 @@ public class IguanaConfig {
 		toolLevelingExtraModifiersProperty.comment = "Removes modifiers on new tools and gives them through leveling (requires 'toolLeveling=true')";
 		toolLevelingExtraModifiers = toolLevelingExtraModifiersProperty.getBoolean(true);
 
-		Property toolLevelingRandomBonusesProperty = config.get("leveling", "toolLevelingRandomBonuses", true);
+        Property toolModifiersAtLevelsProperty = config.get("leveling", "toolModifiersAtLevels", new int[]{2,4,6});
+        toolModifiersAtLevelsProperty.comment = "Adds an extra modifier on these levleups if 'toolLevelingExtraModifiers' is enabled";
+        toolModifiersAtLevels = toolModifiersAtLevelsProperty.getIntList();
+
+        Property toolLevelingRandomBonusesProperty = config.get("leveling", "toolLevelingRandomBonuses", true);
 		toolLevelingRandomBonusesProperty.comment = "Gives a random bonus every level, if false and levelling is on modifiers are given at levels 2 and 4 (requires 'toolLeveling=true')";
 		toolLevelingRandomBonuses = toolLevelingRandomBonusesProperty.getBoolean(true);
 

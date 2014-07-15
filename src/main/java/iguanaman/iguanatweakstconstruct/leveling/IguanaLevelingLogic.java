@@ -1,31 +1,16 @@
 package iguanaman.iguanatweakstconstruct.leveling;
 
 import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
-import iguanaman.iguanatweakstconstruct.modifiers.IguanaModAttack;
-import iguanaman.iguanatweakstconstruct.modifiers.IguanaModBlaze;
-import iguanaman.iguanatweakstconstruct.modifiers.IguanaModLapis;
-import iguanaman.iguanatweakstconstruct.modifiers.IguanaModPiston;
-import iguanaman.iguanatweakstconstruct.modifiers.IguanaModRedstone;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import iguanaman.iguanatweakstconstruct.modifiers.*;
 import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
+import iguanaman.iguanatweakstconstruct.reference.IguanaReference;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
-import tconstruct.items.tools.Excavator;
-import tconstruct.items.tools.Hammer;
-import tconstruct.items.tools.Hatchet;
-import tconstruct.items.tools.LumberAxe;
-import tconstruct.items.tools.Mattock;
-import tconstruct.items.tools.Pickaxe;
-import tconstruct.items.tools.Scythe;
-import tconstruct.items.tools.Shortbow;
-import tconstruct.items.tools.Shovel;
+import tconstruct.items.tools.*;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.modifier.ItemModifier;
 import tconstruct.library.tools.HarvestTool;
@@ -35,12 +20,32 @@ import tconstruct.modifiers.tools.ModInteger;
 import tconstruct.modifiers.tools.ModReinforced;
 import tconstruct.modifiers.tools.ModSmite;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Utility class that takes care of all the Tool XP related things.
  */
 public class IguanaLevelingLogic {
     private static final String TAG_EXP = "ToolEXP";
+    private static final String TAG_LEVEL = "ToolLevel";
     private static final String TAG_BOOST_EXP = "HeadEXP"; // HeadEXP for downwards compatibility
+
+    public static final int MAX_LEVEL = 6;
+
+    /**
+     * Add the leveling specific NBT.
+     * @param tag The tag that should recieve the data. Usually InfiTool Tag.
+     */
+    public static void addLevelingTags(NBTTagCompound tag)
+    {
+        // we start with level 1
+        tag.setInteger(TAG_LEVEL, 1);
+        // and no xp :(
+        tag.setLong(TAG_EXP, 0);
+        // mining level boost
+        tag.setLong(TAG_BOOST_EXP, 0);
+    }
 
 	public static String getXpString(ItemStack tool, boolean debug)
 	{
@@ -49,32 +54,33 @@ public class IguanaLevelingLogic {
 
 	public static String getXpString(ItemStack tool, boolean debug, boolean pick)
 	{
-		return getXpString(tool, debug, null, pick);
+		return getXpToolTip(tool, debug, null, pick);
 	}
 
 	public static String getXpString(ItemStack tool, boolean debug, NBTTagCompound tags)
 	{
-		return getXpString(tool, debug, tags, false);
+		return getXpToolTip(tool, debug, tags, false);
 	}
 
-	public static String getXpString(ItemStack tool, boolean debug, NBTTagCompound tags, boolean pick)
+    /**
+     * Returns the XP string for the ToolTip.
+     * @param boostXp If true, the xp for the mining level boost will be returned instead of the xp for the next tool level.
+     */
+	public static String getXpToolTip(ItemStack tool, boolean debug, NBTTagCompound tags, boolean boostXp)
 	{
-        /*
 		if (tags == null) tags = tool.getTagCompound().getCompoundTag("InfiTool");
 
-		int requiredXp = getRequiredXp(tool, tags, pick);
-		long currentXp = pick ? tags.getLong("HeadEXP") : tags.getLong("ToolEXP");
+		int requiredXp = getRequiredXp(tool, tags, boostXp);
+		long currentXp = boostXp ? tags.getLong(TAG_BOOST_EXP) : tags.getLong(TAG_EXP);
 		float xpPercentage = (float)currentXp / (float)requiredXp * 100f;
 		String xpPercentageString = String.format("%.2f", xpPercentage) + "%";
 
-		String prefix = pick ? "Boost XP: " : "XP: ";
+		String prefix = boostXp ? "Mining Boost XP: " : "XP: ";
 
 		if (IguanaConfig.detailedXpTooltip)
 			return prefix + Long.toString(currentXp) + " / " + Integer.toString(requiredXp) + " (" + xpPercentageString + ")";
 		else
 			return prefix + xpPercentageString;
-			*/
-        return "";
 	}
 
 	public static String getLevelTooltip(int level)
@@ -91,50 +97,71 @@ public class IguanaLevelingLogic {
 		}
 	}
 
-	public static void updateXP(ItemStack tool, EntityPlayer player, long toolXP, long headXP)
+    /**
+     * Updates the tool information with the given tool and boost xp. This SETS the xp!
+     * @param player     Required for awesome *ding* sound
+     * @param toolXP     Value the tool XP shall be set to. -1 for no change.
+     * @param boostXP    Value the mining-boost XP shall be set to. -1 for no change.
+     */
+	public static void updateXP(ItemStack tool, EntityPlayer player, long toolXP, long boostXP)
 	{
-/*
 		NBTTagCompound tags = tool.getTagCompound().getCompoundTag("InfiTool");
 
-		if (!tags.hasKey("ToolLevel")) return;
+		if (!tags.hasKey(TAG_LEVEL)) return;
 
-		int level = tags.getInteger("ToolLevel");
-		int hLevel = tags.hasKey("HarvestLevel") ? hLevel = tags.getInteger("HarvestLevel") : -1;
+		int level = tags.getInteger(TAG_LEVEL);
+		int hLevel = tags.hasKey("HarvestLevel") ? tags.getInteger("HarvestLevel") : -1;
 
 		boolean leveled = false;
 		boolean pickLeveled = false;
 
-		if (tags.hasKey("ToolEXP") && level >= 1 && level <= 5 && toolXP >= 0)
+        // Update Tool XP
+		if (tags.hasKey(TAG_EXP) && level > 0 && level < MAX_LEVEL && toolXP >= 0)
 		{
-			tags.setLong("ToolEXP", toolXP);
+            // set new xp value
+			tags.setLong(TAG_EXP, toolXP);
 
-			//CHECK FOR LEVEL UP
+			// check for levelup
 			if (toolXP >= getRequiredXp(tool, tags))
 			{
-				LevelUpTool(tool, player);
+				levelUpTool(tool, player);
+                // re-read updated level
+                level = tags.getInteger(TAG_LEVEL);
+
 				leveled = true;
 			}
 		}
 
-		if (IguanaConfig.levelingPickaxeBoost && tags.hasKey("HeadEXP") && !tags.hasKey("HarvestLevelModified"))
-			if (hLevel >= TConstructRegistry.getMaterial("Copper").harvestLevel() && (!IguanaConfig.pickaxeBoostRequired && hLevel < 6 || IguanaConfig.pickaxeBoostRequired && hLevel < 7))
-			{
-				tags.setLong("HeadEXP", headXP);
+        // handle mining boost XP
+        if(IguanaConfig.levelingPickaxeBoost) {
+            // already got a boost?
+            if (tags.hasKey(TAG_BOOST_EXP) && !tags.hasKey("HarvestLevelModified"))
+                // todo: figure out why this only applies between mining level copper and 7?
+                if (hLevel >= TConstructRegistry.getMaterial("Copper").harvestLevel() &&
+                    (!IguanaConfig.pickaxeBoostRequired && hLevel < 6 || IguanaConfig.pickaxeBoostRequired && hLevel < 7)) {
+                    tags.setLong(TAG_BOOST_EXP, boostXP);
 
-				//CHECK FOR PICK LEVEL UP
-				if (headXP >= getRequiredXp(tool, true))
-				{
-					LevelUpPick(tool, player, leveled);
-					pickLeveled = true;
-				}
-			}
+                    // check for mining boost levelup!
+                    if (boostXP >= getRequiredXp(tool, true)) {
+                        levelUpPick(tool, player, leveled);
+                        // re-read updated harvest level
+                        hLevel = tags.getInteger("HarvestLevel");
 
+                        pickLeveled = true;
+                    }
+                }
+        }
+
+
+        // if we got a levelup, play a sound!
 		if ((leveled || pickLeveled) && !player.worldObj.isRemote)
-			player.worldObj.playSoundAtEntity(player, "iguanatweakstconstruct:chime", 1.0F, 1.0F);
+            // TODO: investigate if there's a better way to play sounds? resourcelocation?
+			player.worldObj.playSoundAtEntity(player, IguanaReference.MOD_ID.toLowerCase() + ":chime", 1.0F, 1.0F);
+
 
 		//Recheck level
-		level = tags.getInteger("ToolLevel");
-		if (tags.hasKey("HarvestLevel")) hLevel = tags.getInteger("HarvestLevel");
+		//level = tags.getInteger("ToolLevel");
+		//if (tags.hasKey("HarvestLevel")) hLevel = tags.getInteger("HarvestLevel");
 
 		//tooltip lists
 		List<String> tips = new ArrayList<String>();
@@ -152,12 +179,14 @@ public class IguanaLevelingLogic {
 
 		if (IguanaConfig.showTooltipXP)
 		{
-			if (level <= 5)
+            // display xp if we're below max level
+			if (level < MAX_LEVEL)
 			{
 				tips.add(getXpString(tool, false, false));
 				modifierTips.add("");
 			}
 
+            // display mining level boost xp if we're not done with it yet
 			if (IguanaConfig.levelingPickaxeBoost)
 				if (hLevel >= TConstructRegistry.getMaterial("Copper").harvestLevel() && hLevel < TConstructRegistry.getMaterial("Manyullyn").harvestLevel()
 				&& !tags.hasKey("HarvestLevelModified")
@@ -176,7 +205,7 @@ public class IguanaLevelingLogic {
 			if (tags.hasKey(tip))
 			{
 				String tipString = tags.getString(tip);
-				if (!tipString.startsWith("XP:") && !tipString.startsWith("Head XP:") && !tipString.startsWith("Boost XP:")
+				if (!tipString.startsWith("XP:") && !tipString.startsWith("Mining Boost XP:")
 						&& !tipString.startsWith("Skill Level:") && !tipString.startsWith("Mining Level:")
 						&& !tipString.contains("Requires boost"))
 				{
@@ -188,6 +217,7 @@ public class IguanaLevelingLogic {
 			}
 			else break;
 		}
+
 
 		if (pickLeveled)
 		{
@@ -205,21 +235,28 @@ public class IguanaLevelingLogic {
 				else
 					tags.setString("ModifierTip" + i, "");
 			}
-        */
 	}
+
 
 	public static void addXP(ItemStack tool, EntityPlayer player, long xp)
 	{
-        /*
 		if (player.capabilities.isCreativeMode) return;
 
 		NBTTagCompound tags = tool.getTagCompound().getCompoundTag("InfiTool");
 
-		Long toolXP = tags.hasKey("ToolEXP") ? tags.getLong("ToolEXP") + xp : -1;
-		Long headXP = tags.hasKey("HeadEXP") ? tags.getLong("HeadEXP") + xp : -1;
+        // tool EXP
+		Long toolXp = -1L;
+        if(tags.hasKey(TAG_EXP))
+            toolXp = tags.getLong(TAG_EXP) + xp;
 
-		updateXP(tool, player, toolXP, headXP);
-		*/
+        // mininglevel boost EXP
+        Long boostXp = -1L;
+        if(tags.hasKey(TAG_BOOST_EXP))
+            boostXp = tags.getLong(TAG_BOOST_EXP) + xp;
+
+
+        // update the tool information
+		updateXP(tool, player, toolXp, boostXp);
 	}
 
 	public static int getRequiredXp(ItemStack tool)
@@ -239,7 +276,6 @@ public class IguanaLevelingLogic {
 
 	public static int getRequiredXp(ItemStack tool, NBTTagCompound tags, boolean pick)
 	{
-        /*
 		if (tags == null) tags = tool.getTagCompound().getCompoundTag("InfiTool");
 
 		float base = 400;
@@ -296,83 +332,108 @@ public class IguanaLevelingLogic {
 		}
 
 		return Math.round(base);
-		*/
-        return 1;
 	}
 
-	public static void LevelUpTool(ItemStack stack, EntityPlayer player)
+    /**
+     * Applies all the logic for increasing the tool level. This is only specific to the *tool* level, and has no relation to the mining-level-boost!
+     */
+	public static void levelUpTool(ItemStack stack, EntityPlayer player)
 	{
-        /*
 		NBTTagCompound tags = stack.getTagCompound().getCompoundTag("InfiTool");
-
 		World world = player.worldObj;
-		int level = tags.getInteger("ToolLevel");
-		tags.setInteger("ToolLevel", ++level);
 
-		boolean isTool = stack.getItem() instanceof HarvestTool ? true : false;
+        // *ding* levelup!
+		int level = tags.getInteger(TAG_LEVEL);
+		tags.setInteger(TAG_LEVEL, ++level);
 
-		updateXP(stack, player, 0l, -1l);
+		boolean isTool = stack.getItem() instanceof HarvestTool;
 
-		if (!world.isRemote)
-		{
-			String message = "";
-			switch (level)
-			{
-			case 2: message = "\u00a73You begin to feel comfortable handling the " + stack.getDisplayName(); break;
-			case 3: message = "\u00a73You are now accustomed to the weight of the " + stack.getDisplayName(); break;
-			case 4: message = "\u00a73You have become adept at handling the " + stack.getDisplayName(); break;
-			case 5: message = "\u00a73You are now an expert at using the " + stack.getDisplayName() + "\u00a73!"; break;
-			case 6: message = "\u00a73You have mastered the " + stack.getDisplayName() + "\u00a73!"; break;
-			}
-			
-			if (!message.equalsIgnoreCase(""))
-			{
-				player.addChatMessage(new ChatComponentText(message));
-			}
+        // reset tool xp to 0, since we're at a new level now
+        tags.setLong(TAG_EXP, 0L);
+		//updateXP(stack, player, 0l, -1l);
 
-			if (!IguanaConfig.toolLevelingRandomBonuses || level % 2 == 0 && IguanaConfig.toolLevelingExtraModifiers)
-				player.addChatMessage(new ChatComponentText("\u00a79You notice room for improvement (+1 modifier)."));
-			
-		}
+        // tell the player how awesome he is
+        // Meaningful messages to the player
+        if (!world.isRemote)
+        {
+            String message = "";
+            switch (level)
+            {
+                case 2: message = "\u00a73You begin to feel comfortable handling the " + stack.getDisplayName(); break;
+                case 3: message = "\u00a73You are now accustomed to the weight of the " + stack.getDisplayName(); break;
+                case 4: message = "\u00a73You have become adept at handling the " + stack.getDisplayName(); break;
+                case 5: message = "\u00a73You are now an expert at using the " + stack.getDisplayName() + "\u00a73!"; break;
+                case 6: message = "\u00a73You have mastered the " + stack.getDisplayName() + "\u00a73!"; break;
+            }
 
-		int currentModifiers = tags.getInteger("Modifiers");
-		if (!IguanaConfig.toolLevelingRandomBonuses || level % 2 == 0 && IguanaConfig.toolLevelingExtraModifiers)
-			tags.setInteger("Modifiers", ++currentModifiers);
+            if (!message.equalsIgnoreCase(""))
+            {
+                player.addChatMessage(new ChatComponentText(message));
+            }
+        }
 
+        int currentModifiers = tags.getInteger("Modifiers");
+
+        // Add Modifier for leveling up?
+        if(IguanaConfig.toolLevelingExtraModifiers)
+        {
+            int modifiersToAdd = 0;
+            // check if we are supposed to add a modifier at this levelup
+            for(int lvl : IguanaConfig.toolModifiersAtLevels)
+                if(level == lvl)
+                    modifiersToAdd++;
+                    // yes, no break. this means if a level is in the list multiple times, you get multiple modifiers
+
+            if(modifiersToAdd > 0)
+            {
+                currentModifiers += modifiersToAdd;
+                tags.setInteger("Modifiers", currentModifiers);
+
+                // fancy message on clientside
+                if(!world.isRemote) {
+                    // todo: solve "modifier(s)" more beautiful because localization
+                    if(world.rand.nextInt(10) < modifiersToAdd)
+                        player.addChatMessage(new ChatComponentText("\u00a79More Bling for your Thing (+" + modifiersToAdd + " modifier" + (modifiersToAdd>1 ? "s" : "") + ")."));
+                    else
+                        player.addChatMessage(new ChatComponentText("\u00a79You notice room for improvement (+" + modifiersToAdd + " modifier" + (modifiersToAdd>1 ? "s" : "") + ")."));
+                }
+            }
+        }
+
+
+        // Add random bonuses on leveling up?
 		if (IguanaConfig.toolLevelingRandomBonuses)
 		{
 			tags.setInteger("Modifiers", currentModifiers + 1);
 			for (int i = 1; i <= 10; ++i) if (tryModify(player, stack, world.rand.nextInt(10), isTool)) break;
 			tags.setInteger("Modifiers", currentModifiers);
 		}
-*/
 	}
 
-	public static void LevelUpPick(ItemStack stack, EntityPlayer player, boolean leveled)
+	public static void levelUpPick(ItemStack stack, EntityPlayer player, boolean leveled)
 	{
-        /*
 		NBTTagCompound tags = stack.getTagCompound().getCompoundTag("InfiTool");
 
 		World world = player.worldObj;
-		tags.getInteger("ToolLevel");
+		tags.getInteger(TAG_LEVEL);
 
-		updateXP(stack, player, -1L, 0L);
+        // reset miningboost xp to 0
+        tags.setLong(TAG_BOOST_EXP, 0L);
+		//updateXP(stack, player, -1L, 0L);
 
 		if (!world.isRemote)
-			if (leveled)
-				player.addChatMessage(new ChatComponentText("\u00a79Suddenly, a flash of light shines from the tip of the pickaxe (+1 mining level)"));
-				
+			if (!leveled)
+                player.addChatMessage(new ChatComponentText("\u00a73Suddenly, a flash of light shines from the tip of your " + stack.getDisplayName() + "\u00a73 (+1 mining level)"));
 			else
-				player.addChatMessage(new ChatComponentText("\u00a73Suddenly, a flash of light shines from the tip of your " + stack.getDisplayName() + "\u00a73 (+1 mining level)"));
+                player.addChatMessage(new ChatComponentText("\u00a79Suddenly, a flash of light shines from the tip of the pickaxe (+1 mining level)"));
 
 		tags.setBoolean("HarvestLevelModified", true);
+        // increase harvest level by 1
 		tags.setInteger("HarvestLevel", tags.getInteger("HarvestLevel") + 1);
-		*/
 	}
 
 	private static boolean tryModify(EntityPlayer player, ItemStack stack, int rnd, boolean isTool)
 	{
-        /*
 		ItemModifier mod = null;
 		Item item = stack.getItem();
 
@@ -459,7 +520,5 @@ public class IguanaLevelingLogic {
 		mod.addMatchingEffect(stack);
 		mod.modify(nullItemStack, stack);
 		return true;
-		*/
-        return true;
 	}
 }

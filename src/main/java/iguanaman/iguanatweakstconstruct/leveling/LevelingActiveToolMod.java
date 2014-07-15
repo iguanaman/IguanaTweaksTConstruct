@@ -18,7 +18,7 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
-public class LevelingToolMod extends ActiveToolMod {
+public class LevelingActiveToolMod extends ActiveToolMod {
     private static Method ToolStrength;
     private static Method EffectiveMaterials;
     static {

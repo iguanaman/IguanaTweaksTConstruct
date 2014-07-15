@@ -1,14 +1,9 @@
 package iguanaman.iguanatweakstconstruct.leveling;
 
 
-import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import iguanaman.iguanatweakstconstruct.leveling.commands.IguanaCommandLevelUpTool;
-import iguanaman.iguanatweakstconstruct.leveling.commands.IguanaCommandToolXP;
 import iguanaman.iguanatweakstconstruct.reference.IguanaReference;
-import iguanaman.iguanatweakstconstruct.util.IguanaLog;
 import mantle.pulsar.pulse.Handler;
 import mantle.pulsar.pulse.Pulse;
 import net.minecraftforge.common.MinecraftForge;
@@ -25,7 +20,7 @@ public class Leveling {
     @Handler
     public void init(FMLInitializationEvent event)
     {
-        TConstructRegistry.registerActiveToolMod(new LevelingToolMod());
+        TConstructRegistry.registerActiveToolMod(new LevelingActiveToolMod());
     }
 
     @Handler

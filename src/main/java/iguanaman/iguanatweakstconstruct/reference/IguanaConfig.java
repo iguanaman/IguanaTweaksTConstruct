@@ -1,13 +1,13 @@
 package iguanaman.iguanatweakstconstruct.reference;
 
+import net.minecraftforge.common.config.ConfigCategory;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import net.minecraftforge.common.config.ConfigCategory;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
 
 
 
@@ -30,6 +30,7 @@ public class IguanaConfig {
     public static int[] toolModifiersAtLevels;
 	public static boolean toolLevelingRandomBonuses;
 	public static boolean showTooltipXP;
+    public static boolean showMinimalTooltipXP;
 	public static boolean showDebugXP;
 	public static int xpRequiredToolsPercentage;
 	public static int xpRequiredWeaponsPercentage;
@@ -165,6 +166,10 @@ public class IguanaConfig {
 		Property showTooltipXPProperty = config.get("leveling", "showTooltipXP", true);
 		showTooltipXPProperty.comment = "Current XP is shown when hovering over a tool (requires 'toolLeveling=true')";
 		showTooltipXP = showTooltipXPProperty.getBoolean(true);
+
+        Property showMinimalTooltipXPProperty = config.get("leveling", "showMinimalTooltipXP", false);
+        showMinimalTooltipXPProperty.comment = "Current XP% is shown after the level (requires 'toolLeveling=true')";
+        showMinimalTooltipXP = showMinimalTooltipXPProperty.getBoolean(true);
 
 		Property showDebugXPProperty = config.get("leveling", "showDebugXP", false);
 		showDebugXPProperty.comment = "Current XP is shown as debug (F3) text (requires 'toolLeveling=true')";

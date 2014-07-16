@@ -283,12 +283,14 @@ public class IguanaModUpgrade extends ItemModifier {
 
 		if (tags.hasKey("HeadEXP"))
 		{
+            /*
 			int requiredXp = IguanaLevelingLogic.getRequiredXp(tool, tags, true);
 			long currentXp = tags.getLong("HeadEXP");
 			float xpPercentage = (float)currentXp / (float)requiredXp;
 			int newRequiredXp = IguanaLevelingLogic.getRequiredXp(newTool, newTags, true);
 			long newXp = Math.round(newRequiredXp * xpPercentage);
 			tags.setLong("HeadEXP", newXp);
+			*/
 		}
 
 
@@ -400,6 +402,7 @@ public class IguanaModUpgrade extends ItemModifier {
 
 		if (IguanaConfig.showTooltipXP)
 		{
+            /*
 			if (level <= 5)
 			{
 				tips.add(IguanaLevelingTooltips.getXpString(tool, false));
@@ -422,6 +425,7 @@ public class IguanaModUpgrade extends ItemModifier {
 					modifierTips.add("");
 				}
 			}
+			*/
 		}
 
 		//get and remove tooltips

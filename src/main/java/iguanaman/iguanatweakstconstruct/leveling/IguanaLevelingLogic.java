@@ -41,6 +41,7 @@ public abstract class IguanaLevelingLogic {
     public static long getXp(NBTTagCompound tags) { return tags.getLong(TAG_EXP); }
     public static long getBoostXp(NBTTagCompound tags) { return tags.getLong(TAG_BOOST_EXP); }
     public static boolean isBoosted(NBTTagCompound tags) { return tags.getBoolean(TAG_IS_BOOSTED); }
+    public static boolean isMaxLevel(NBTTagCompound tags) { return getLevel(tags) >= MAX_LEVEL; }
 
     /**
      * Add the leveling specific NBT.

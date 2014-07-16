@@ -65,6 +65,6 @@ public abstract class IguanaLevelingTooltips {
 
     public static String getBoostedTooltip()
     {
-        return "\u00a76Boosted";
+        return "Mining XP: \u00a76Boosted";
     }
 }

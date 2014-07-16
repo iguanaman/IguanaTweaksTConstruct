@@ -6,7 +6,10 @@ import iguanaman.iguanatweakstconstruct.util.IguanaLog;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import org.lwjgl.input.Keyboard;
 import tconstruct.items.tools.Hammer;
 import tconstruct.items.tools.Pickaxe;
 import tconstruct.library.tools.ToolCore;
@@ -28,9 +31,13 @@ public class ToolTipHandler {
             return;
 
         ItemStack stack = event.itemStack;
+        // find spot to insert our tooltip data
         ListIterator<String> inserter = findInsertSpot(event.toolTip);
+        // does the user hold shift?
+        boolean advanced = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
+        // only allow advanced (xp) tooltip if config option is set
+        advanced &= IguanaConfig.detailedXpTooltip;
 
-        // find spot to insert
 
         ToolCore tool = (ToolCore)event.itemStack.getItem();
         NBTTagCompound tags = stack.getTagCompound().getCompoundTag(tool.getBaseTagName()); // tinker tags
@@ -40,9 +47,14 @@ public class ToolTipHandler {
         if(hasMiningLevel && tags.hasKey(IguanaLevelingLogic.TAG_BOOST_EXP))
         {
             int hLevel = tags.getInteger("HarvestLevel");
-            inserter.add(IguanaLevelingTooltips.getMiningLevelTooltip(hLevel));
-            // mining level boost progress
-            if(IguanaConfig.levelingPickaxeBoost && IguanaConfig.showTooltipXP)
+            String mLvl = IguanaLevelingTooltips.getMiningLevelTooltip(hLevel);
+            // add minimal xp if config option is set
+            //if(!advanced && IguanaConfig.showTooltipXP)
+                //mLvl += " (123%)"; // todo: implement
+            inserter.add(mLvl);
+
+            // advanced mining level boost progress info
+            if(advanced && IguanaConfig.levelingPickaxeBoost && IguanaConfig.showTooltipXP)
             {
                 if(tags.hasKey(IguanaLevelingLogic.TAG_IS_BOOSTED))
                     inserter.add(IguanaLevelingTooltips.getBoostedTooltip());
@@ -56,11 +68,15 @@ public class ToolTipHandler {
         inserter.add(IguanaLevelingTooltips.getLevelTooltip(level));
 
         // skill level progress
-        if(IguanaConfig.showTooltipXP)
+        if(advanced && IguanaConfig.showTooltipXP)
             inserter.add((IguanaLevelingTooltips.getXpToolTip(stack, tags, false)));
 
         // since we added at least one line we'll add an empty spacing line at the end
         inserter.add("");
+
+        // add info that you can hold shift for more details
+        if(!advanced && IguanaConfig.showTooltipXP)
+            event.toolTip.add(EnumChatFormatting.GRAY.toString() + EnumChatFormatting.ITALIC.toString() + "Hold SHIFT for XP");
     }
 
     private ListIterator<String> findInsertSpot(List<String> tooltip)

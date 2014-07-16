@@ -3,11 +3,16 @@ package iguanaman.iguanatweakstconstruct.util;
 import cpw.mods.fml.common.FMLLog;
 import iguanaman.iguanatweakstconstruct.reference.IguanaReference;
 import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.Logger;
+
+import java.util.logging.LogManager;
 
 public class IguanaLog {
+    private static Logger logger = org.apache.logging.log4j.LogManager.getLogger("Iguana-TCon");
+
 	public static void log(Level level, Object obj)
 	{
-        FMLLog.log("Iguana-TCon", level, String.valueOf(obj));
+        logger.log(level, String.valueOf(obj));
 	}
 
     public static void info(Object obj) { log(Level.INFO, obj); }

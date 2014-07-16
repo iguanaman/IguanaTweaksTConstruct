@@ -3,8 +3,8 @@ package iguanaman.iguanatweakstconstruct.leveling;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
 import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
+import iguanaman.iguanatweakstconstruct.util.IguanaLog;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
@@ -66,6 +66,16 @@ public class LevelingEventHandler {
         int accessory = toolTag.getInteger("Accessory");
         int extra = toolTag.hasKey("Extra") ? toolTag.getInteger("Extra") : -1;
 
+        // add tags for tool leveling
+        IguanaLevelingLogic.addLevelingTags(toolTag);
+
+        // add the initial tooltips for leveling info!
+        //IguanaLevelingLogic.addLevelingToolTips(event.tool, toolTag);
+/*
+
+
+
+
         // CREATE TOOLTIP LISTS
         List<String> tips = new ArrayList<String>();
         List<String> modifierTips = new ArrayList<String>();
@@ -75,14 +85,14 @@ public class LevelingEventHandler {
         {
             String mLevel = IguanaTweaksTConstruct.getHarvestLevelName(toolTag.getInteger("HarvestLevel"));
             tips.add("Mining Level: " + mLevel);
-            modifierTips.add("");
+            //modifierTips.add("");
         }
 
         // TOOL LEVELING DATA + TOOLTIP
         if (IguanaConfig.toolLeveling)
         {
             tips.add(IguanaLevelingLogic.getLevelTooltip(1));
-            modifierTips.add("");
+            //modifierTips.add("");
 
             toolTag.setInteger("ToolLevel", 1);
 
@@ -90,7 +100,7 @@ public class LevelingEventHandler {
             if (IguanaConfig.showTooltipXP)
             {
                 tips.add(IguanaLevelingLogic.getXpString(new ItemStack(event.tool), toolTag));
-                modifierTips.add("");
+                //modifierTips.add("");
             }
 
             if (IguanaConfig.levelingPickaxeBoost && (event.tool instanceof Pickaxe || event.tool instanceof Hammer))
@@ -103,11 +113,11 @@ public class LevelingEventHandler {
                     if (IguanaConfig.showTooltipXP)
                     {
                         tips.add(IguanaLevelingLogic.getXpToolTip(new ItemStack(event.tool), toolTag, true));
-                        modifierTips.add("");
+                        //modifierTips.add("");
                     }
 
                     tips.add("\u00A76Requires boost");
-                    modifierTips.add("");
+                    //modifierTips.add("");
                 }
             }
         }
@@ -120,9 +130,9 @@ public class LevelingEventHandler {
             if (toolTag.hasKey(tip))
             {
                 tips.add(toolTag.getString(tip));
-                modifierTips.add(toolTag.getString("ModifierTip" + tipNum));
+                //modifierTips.add(toolTag.getString("ModifierTip" + tipNum));
                 toolTag.removeTag(tip);
-                toolTag.removeTag("ModifierTip" + tipNum);
+                //toolTag.removeTag("ModifierTip" + tipNum);
             }
             else break;
         }
@@ -132,11 +142,13 @@ public class LevelingEventHandler {
             if (tips.get(i - 1) != null)
             {
                 toolTag.setString("Tooltip" + i, tips.get(i - 1));
-                if (modifierTips.get(i - 1) != null)
-                    toolTag.setString("ModifierTip" + i, modifierTips.get(i - 1));
-                else
-                    toolTag.setString("ModifierTip" + i, "");
+                //if (modifierTips.get(i - 1) != null)
+                  //  toolTag.setString("ModifierTip" + i, modifierTips.get(i - 1));
+                //else
+                  //  toolTag.setString("ModifierTip" + i, "");
             }
+*/
+
 
         if (IguanaConfig.toolLeveling && IguanaConfig.toolLevelingExtraModifiers)
             toolTag.setInteger("Modifiers", Math.max(toolTag.getInteger("Modifiers") - 3, 0));
@@ -151,6 +163,7 @@ public class LevelingEventHandler {
                 if (toolTag.hasKey(replaceTag)) toolTag.setInteger(replaceTag, Math.round(toolTag.getInteger(replaceTag) / 2f));
         }
     }
+
 
 
     // Display XP of held tool in debug (F3) if config is set
@@ -176,13 +189,13 @@ public class LevelingEventHandler {
                     if (IguanaConfig.showTooltipXP)
                     {
                         if (level <= 5)
-                            event.left.add(IguanaLevelingLogic.getXpString(equipped));
+                            event.left.add(IguanaLevelingTooltips.getXpString(equipped));
 
                         if (IguanaConfig.levelingPickaxeBoost)
                             if (hLevel >= TConstructRegistry.getMaterial("Copper").harvestLevel() && hLevel < TConstructRegistry.getMaterial("Manyullyn").harvestLevel()
                                     && !tags.hasKey("HarvestLevelModified")
                                     && (equipped.getItem() instanceof Pickaxe || equipped.getItem() instanceof Hammer))
-                                event.left.add(IguanaLevelingLogic.getXpString(equipped, true));
+                                event.left.add(IguanaLevelingTooltips.getXpString(equipped, true));
                     }
                 }
             }

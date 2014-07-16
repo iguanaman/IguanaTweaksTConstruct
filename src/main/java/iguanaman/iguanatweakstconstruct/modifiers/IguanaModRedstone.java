@@ -1,5 +1,6 @@
 package iguanaman.iguanatweakstconstruct.modifiers;
 
+import iguanaman.iguanatweakstconstruct.leveling.IguanaLevelingTooltips;
 import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
 import iguanaman.iguanatweakstconstruct.leveling.IguanaLevelingLogic;
 
@@ -158,7 +159,7 @@ public class IguanaModRedstone extends ItemModifier {
 			int level = tags.getInteger("ToolLevel");
 			if (level <= 5)
 			{
-				tips.add(IguanaLevelingLogic.getXpString(tool, false));
+				tips.add(IguanaLevelingTooltips.getXpString(tool, false));
 				modifierTips.add("");
 			}
 
@@ -169,7 +170,7 @@ public class IguanaModRedstone extends ItemModifier {
 						&& !tags.hasKey("HarvestLevelModified")
 						&& (tool.getItem() instanceof Pickaxe || tool.getItem() instanceof Hammer))
 				{
-					tips.add(IguanaLevelingLogic.getXpString(tool, true));
+					tips.add(IguanaLevelingTooltips.getXpString(tool, true));
 					modifierTips.add("");
 				}
 			}

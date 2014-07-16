@@ -3,6 +3,7 @@ package iguanaman.iguanatweakstconstruct;
 import iguanaman.iguanatweakstconstruct.leveling.commands.IguanaCommandLevelUpTool;
 import iguanaman.iguanatweakstconstruct.leveling.commands.IguanaCommandToolXP;
 import iguanaman.iguanatweakstconstruct.leveling.Leveling;
+import iguanaman.iguanatweakstconstruct.leveling.commands.debug;
 import iguanaman.iguanatweakstconstruct.proxy.CommonProxy;
 import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
 
@@ -51,7 +52,7 @@ public class IguanaTweaksTConstruct {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 
-		proxy.registerSounds();
+		//proxy.registerSounds();
 		//NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
 
 		IguanaConfig.init(event.getSuggestedConfigurationFile());
@@ -80,7 +81,7 @@ public class IguanaTweaksTConstruct {
 
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
-		proxy.registerRenderers();
+		//proxy.registerRenderers();
 
 		//MaterialTweaks.init();
 		//ModifierTweaks.init();

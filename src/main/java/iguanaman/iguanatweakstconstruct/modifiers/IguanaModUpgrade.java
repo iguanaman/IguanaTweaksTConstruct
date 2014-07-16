@@ -1,5 +1,6 @@
 package iguanaman.iguanatweakstconstruct.modifiers;
 
+import iguanaman.iguanatweakstconstruct.leveling.IguanaLevelingTooltips;
 import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
 import iguanaman.iguanatweakstconstruct.leveling.IguanaLevelingLogic;
 import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
@@ -394,14 +395,14 @@ public class IguanaModUpgrade extends ItemModifier {
 
 		int level = tags.getInteger("ToolLevel");
 		int hLevel = tags.hasKey("HarvestLevel") ? hLevel = tags.getInteger("HarvestLevel") : -1;
-		tips.add(IguanaLevelingLogic.getLevelTooltip(level));
+		tips.add(IguanaLevelingTooltips.getLevelTooltip(level));
 		modifierTips.add("");
 
 		if (IguanaConfig.showTooltipXP)
 		{
 			if (level <= 5)
 			{
-				tips.add(IguanaLevelingLogic.getXpString(tool, false));
+				tips.add(IguanaLevelingTooltips.getXpString(tool, false));
 				modifierTips.add("");
 			}
 
@@ -411,7 +412,7 @@ public class IguanaModUpgrade extends ItemModifier {
 						&& !tags.hasKey("HarvestLevelModified")
 						&& (tool.getItem() instanceof Pickaxe || tool.getItem() instanceof Hammer))
 				{
-					tips.add(IguanaLevelingLogic.getXpString(tool, true));
+					tips.add(IguanaLevelingTooltips.getXpString(tool, true));
 					modifierTips.add("");
 				}
 

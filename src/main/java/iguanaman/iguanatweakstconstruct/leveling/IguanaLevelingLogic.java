@@ -43,6 +43,12 @@ public abstract class IguanaLevelingLogic {
     public static boolean isBoosted(NBTTagCompound tags) { return tags.getBoolean(TAG_IS_BOOSTED); }
     public static boolean isMaxLevel(NBTTagCompound tags) { return getLevel(tags) >= MAX_LEVEL; }
 
+    public static boolean canBoostMiningLevel(int hLevel)
+    {
+        return hLevel >= TConstructRegistry.getMaterial("Copper").harvestLevel() &&
+               (!IguanaConfig.pickaxeBoostRequired && hLevel < 6 || IguanaConfig.pickaxeBoostRequired && hLevel < 7);
+    }
+
     /**
      * Add the leveling specific NBT.
      * @param tag The tag that should recieve the data. Usually InfiTool Tag.
@@ -94,8 +100,7 @@ public abstract class IguanaLevelingLogic {
             // already got a boost?
             if (tags.hasKey(TAG_BOOST_EXP) && !tags.hasKey(TAG_IS_BOOSTED))
                 // todo: figure out why this only applies between mining level copper and 7?
-                if (hLevel >= TConstructRegistry.getMaterial("Copper").harvestLevel() &&
-                    (!IguanaConfig.pickaxeBoostRequired && hLevel < 6 || IguanaConfig.pickaxeBoostRequired && hLevel < 7)) {
+                if (canBoostMiningLevel(hLevel)) {
                     tags.setLong(TAG_BOOST_EXP, boostXP);
 
                     // check for mining boost levelup!

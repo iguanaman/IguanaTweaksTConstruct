@@ -45,18 +45,20 @@ public class ToolTipHandler {
         {
             int hLevel = tags.getInteger("HarvestLevel");
             String mLvl = IguanaLevelingTooltips.getMiningLevelTooltip(hLevel);
-            // add minimal xp if config option is set
-            if(!advanced && IguanaConfig.showMinimalTooltipXP && !IguanaLevelingLogic.isBoosted(tags))
-                mLvl += " (" + IguanaLevelingTooltips.getBoostXpString(stack, tags, false) + ")";
-            inserter.add(mLvl);
+            // is the pick applicable for mining level boosting? if yes display xp
+            if(IguanaLevelingLogic.canBoostMiningLevel(hLevel)) {
+                // add minimal xp if config option is set
+                if (!advanced && IguanaConfig.showMinimalTooltipXP && !IguanaLevelingLogic.isBoosted(tags))
+                    mLvl += " (" + IguanaLevelingTooltips.getBoostXpString(stack, tags, false) + ")";
+                inserter.add(mLvl);
 
-            // advanced mining level boost progress info
-            if(advanced && IguanaConfig.levelingPickaxeBoost && IguanaConfig.showTooltipXP)
-            {
-                if(IguanaLevelingLogic.isBoosted(tags))
-                    inserter.add(IguanaLevelingTooltips.getBoostedTooltip());
-                else
-                    inserter.add(IguanaLevelingTooltips.getBoostXpToolTip(stack, tags));
+                // advanced mining level boost progress info
+                if (advanced && IguanaConfig.levelingPickaxeBoost && IguanaConfig.showTooltipXP) {
+                    if (IguanaLevelingLogic.isBoosted(tags))
+                        inserter.add(IguanaLevelingTooltips.getBoostedTooltip());
+                    else
+                        inserter.add(IguanaLevelingTooltips.getBoostXpToolTip(stack, tags));
+                }
             }
         }
 

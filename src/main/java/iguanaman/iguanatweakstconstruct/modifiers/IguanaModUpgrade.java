@@ -1,8 +1,8 @@
 package iguanaman.iguanatweakstconstruct.modifiers;
 
-import iguanaman.iguanatweakstconstruct.leveling.IguanaLevelingTooltips;
+import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
+import iguanaman.iguanatweakstconstruct.leveling.LevelingTooltips;
 import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
-import iguanaman.iguanatweakstconstruct.leveling.IguanaLevelingLogic;
 import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
 
 import java.util.ArrayList;
@@ -273,10 +273,10 @@ public class IguanaModUpgrade extends ItemModifier {
 
 		if (tags.hasKey("ToolEXP"))
 		{
-			int requiredXp = IguanaLevelingLogic.getRequiredXp(tool, tags);
+			int requiredXp = LevelingLogic.getRequiredXp(tool, tags);
 			long currentXp = tags.getLong("ToolEXP");
 			float xpPercentage = (float)currentXp / (float)requiredXp;
-			int newRequiredXp = IguanaLevelingLogic.getRequiredXp(newTool, newTags);
+			int newRequiredXp = LevelingLogic.getRequiredXp(newTool, newTags);
 			long newXp = Math.round(newRequiredXp * xpPercentage);
 			tags.setLong("ToolEXP", newXp);
 		}
@@ -397,7 +397,7 @@ public class IguanaModUpgrade extends ItemModifier {
 
 		int level = tags.getInteger("ToolLevel");
 		int hLevel = tags.hasKey("HarvestLevel") ? hLevel = tags.getInteger("HarvestLevel") : -1;
-		tips.add(IguanaLevelingTooltips.getLevelTooltip(level));
+		tips.add(LevelingTooltips.getLevelTooltip(level));
 		modifierTips.add("");
 
 		if (IguanaConfig.showTooltipXP)

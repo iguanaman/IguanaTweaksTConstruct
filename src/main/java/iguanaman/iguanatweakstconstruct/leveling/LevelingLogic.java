@@ -28,7 +28,7 @@ import tconstruct.modifiers.tools.ModSmite;
  *  - If pick-boosting is enabled, all the xp you gain also fills a secondary xp-bar, the mining-boost-xp
  *  - When your mining-boost-xp is full, your mining level is increased by 1. Only works once per pick.
  */
-public abstract class IguanaLevelingLogic {
+public abstract class LevelingLogic {
     public static final String TAG_EXP = "ToolEXP";
     public static final String TAG_LEVEL = "ToolLevel";
     public static final String TAG_BOOST_EXP = "HeadEXP"; // HeadEXP for downwards compatibility

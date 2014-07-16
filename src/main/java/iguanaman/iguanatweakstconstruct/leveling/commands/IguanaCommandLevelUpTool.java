@@ -1,6 +1,6 @@
 package iguanaman.iguanatweakstconstruct.leveling.commands;
 
-import iguanaman.iguanatweakstconstruct.leveling.IguanaLevelingLogic;
+import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
@@ -42,13 +42,13 @@ public class IguanaCommandLevelUpTool extends CommandBase {
 				{
 					Long toolXP = tags.hasKey("ToolEXP") ? tags.getLong("ToolEXP") : -1;
 					Long headXP = tags.hasKey("HeadEXP") ? tags.getLong("HeadEXP") : -1;
-					long requiredToolXP = IguanaLevelingLogic.getRequiredXp(equipped, tags) - toolXP;
-					long requiredHeadXP = tags.hasKey("HeadEXP") && hLevel >= TConstructRegistry.getMaterial("Copper").harvestLevel() && hLevel < TConstructRegistry.getMaterial("Manyullyn").harvestLevel() ? IguanaLevelingLogic.getRequiredXp(equipped, tags) - headXP : -1;
+					long requiredToolXP = LevelingLogic.getRequiredXp(equipped, tags) - toolXP;
+					long requiredHeadXP = tags.hasKey("HeadEXP") && hLevel >= TConstructRegistry.getMaterial("Copper").harvestLevel() && hLevel < TConstructRegistry.getMaterial("Manyullyn").harvestLevel() ? LevelingLogic.getRequiredXp(equipped, tags) - headXP : -1;
 
 					if (requiredHeadXP < requiredToolXP && requiredHeadXP > 0)
-						IguanaLevelingLogic.updateXP(equipped, entityplayermp, toolXP + requiredHeadXP, headXP + requiredHeadXP);
+						LevelingLogic.updateXP(equipped, entityplayermp, toolXP + requiredHeadXP, headXP + requiredHeadXP);
 					else
-						IguanaLevelingLogic.updateXP(equipped, entityplayermp, toolXP + requiredToolXP, headXP + requiredToolXP);
+						LevelingLogic.updateXP(equipped, entityplayermp, toolXP + requiredToolXP, headXP + requiredToolXP);
 
 					if (entityplayermp != icommandsender)
 					{

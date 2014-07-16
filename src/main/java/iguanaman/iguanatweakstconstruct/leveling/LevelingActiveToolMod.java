@@ -11,11 +11,10 @@ import tconstruct.library.ActiveToolMod;
 import tconstruct.library.tools.HarvestTool;
 import tconstruct.library.tools.ToolCore;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
+// This class is responsible for actually getting XP when mining!
 public class LevelingActiveToolMod extends ActiveToolMod {
     // TODO: make this customizable?
     static List<Material> materialBlacklist = Arrays.asList(
@@ -52,7 +51,7 @@ public class LevelingActiveToolMod extends ActiveToolMod {
         // only give xp if the use makes sense
         if(harvestable && effective && strong)
             // TODO: maybe give xp depending on WHAT block was mined? (xp determined by hardness, if it was an ore, etc.)
-            IguanaLevelingLogic.addXP(stack, (EntityPlayer) entity, 1);
+            LevelingLogic.addXP(stack, (EntityPlayer) entity, 1);
 
         return false;
     }

@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 // utility class for constructing tooltip
-public abstract class IguanaLevelingTooltips {
+public abstract class LevelingTooltips {
 
     /**
      * Returns only the XP progress. Standard is %.
@@ -44,8 +44,8 @@ public abstract class IguanaLevelingTooltips {
     {
         if (tags == null) tags = tool.getTagCompound().getCompoundTag("InfiTool");
 
-        int requiredXp = IguanaLevelingLogic.getRequiredXp(tool, tags, boostXp);
-        long currentXp = boostXp ? tags.getLong(IguanaLevelingLogic.TAG_BOOST_EXP) : tags.getLong(IguanaLevelingLogic.TAG_EXP);
+        int requiredXp = LevelingLogic.getRequiredXp(tool, tags, boostXp);
+        long currentXp = boostXp ? tags.getLong(LevelingLogic.TAG_BOOST_EXP) : tags.getLong(LevelingLogic.TAG_EXP);
         float xpPercentage = (float)currentXp / (float)requiredXp * 100f;
         String xpPercentageString = String.format("%.2f", xpPercentage) + "%";
 

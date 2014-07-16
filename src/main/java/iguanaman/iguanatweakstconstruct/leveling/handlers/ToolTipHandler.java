@@ -1,6 +1,8 @@
-package iguanaman.iguanatweakstconstruct.leveling;
+package iguanaman.iguanatweakstconstruct.leveling.handlers;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
+import iguanaman.iguanatweakstconstruct.leveling.LevelingTooltips;
 import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -41,37 +43,37 @@ public class ToolTipHandler {
         boolean hasMiningLevel = tool instanceof Pickaxe || tool instanceof Hammer;
 
         // add mining level if applicable
-        if(hasMiningLevel && tags.hasKey(IguanaLevelingLogic.TAG_BOOST_EXP))
+        if(hasMiningLevel && tags.hasKey(LevelingLogic.TAG_BOOST_EXP))
         {
             int hLevel = tags.getInteger("HarvestLevel");
-            String mLvl = IguanaLevelingTooltips.getMiningLevelTooltip(hLevel);
+            String mLvl = LevelingTooltips.getMiningLevelTooltip(hLevel);
             // is the pick applicable for mining level boosting? if yes display xp
-            if(IguanaLevelingLogic.canBoostMiningLevel(hLevel)) {
+            if(LevelingLogic.canBoostMiningLevel(hLevel)) {
                 // add minimal xp if config option is set
-                if (!advanced && IguanaConfig.showMinimalTooltipXP && !IguanaLevelingLogic.isBoosted(tags))
-                    mLvl += " (" + IguanaLevelingTooltips.getBoostXpString(stack, tags, false) + ")";
+                if (!advanced && IguanaConfig.showMinimalTooltipXP && !LevelingLogic.isBoosted(tags))
+                    mLvl += " (" + LevelingTooltips.getBoostXpString(stack, tags, false) + ")";
                 inserter.add(mLvl);
 
                 // advanced mining level boost progress info
                 if (advanced && IguanaConfig.levelingPickaxeBoost && IguanaConfig.showTooltipXP) {
-                    if (IguanaLevelingLogic.isBoosted(tags))
-                        inserter.add(IguanaLevelingTooltips.getBoostedTooltip());
+                    if (LevelingLogic.isBoosted(tags))
+                        inserter.add(LevelingTooltips.getBoostedTooltip());
                     else
-                        inserter.add(IguanaLevelingTooltips.getBoostXpToolTip(stack, tags));
+                        inserter.add(LevelingTooltips.getBoostXpToolTip(stack, tags));
                 }
             }
         }
 
         // add skill level
-        int level = IguanaLevelingLogic.getLevel(tags);
-        String lvl = IguanaLevelingTooltips.getLevelTooltip(level);
-        if(!advanced && IguanaConfig.showMinimalTooltipXP && !IguanaLevelingLogic.isMaxLevel(tags))
-            lvl += " (" + IguanaLevelingTooltips.getXpString(stack, tags, false) + ")";
+        int level = LevelingLogic.getLevel(tags);
+        String lvl = LevelingTooltips.getLevelTooltip(level);
+        if(!advanced && IguanaConfig.showMinimalTooltipXP && !LevelingLogic.isMaxLevel(tags))
+            lvl += " (" + LevelingTooltips.getXpString(stack, tags, false) + ")";
         inserter.add(lvl);
 
         // skill level progress
-        if(advanced && IguanaConfig.showTooltipXP && !IguanaLevelingLogic.isMaxLevel(tags))
-            inserter.add(IguanaLevelingTooltips.getXpToolTip(stack, tags));
+        if(advanced && IguanaConfig.showTooltipXP && !LevelingLogic.isMaxLevel(tags))
+            inserter.add(LevelingTooltips.getXpToolTip(stack, tags));
 
         // since we added at least one line we'll add an empty spacing line at the end
         inserter.add("");

@@ -3,6 +3,8 @@ package iguanaman.iguanatweakstconstruct.leveling;
 
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import iguanaman.iguanatweakstconstruct.leveling.handlers.LevelingEventHandler;
+import iguanaman.iguanatweakstconstruct.leveling.handlers.ToolTipHandler;
 import iguanaman.iguanatweakstconstruct.reference.IguanaReference;
 import mantle.pulsar.pulse.Handler;
 import mantle.pulsar.pulse.Pulse;

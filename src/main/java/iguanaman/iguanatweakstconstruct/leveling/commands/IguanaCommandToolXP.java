@@ -1,6 +1,6 @@
 package iguanaman.iguanatweakstconstruct.leveling.commands;
 
-import iguanaman.iguanatweakstconstruct.leveling.IguanaLevelingLogic;
+import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
@@ -46,7 +46,7 @@ public class IguanaCommandToolXP extends CommandBase {
 						Long toolXP = tags.hasKey("ToolEXP") ? tags.getLong("ToolEXP") : -1;
 						Long headXP = tags.hasKey("HeadEXP") ? tags.getLong("HeadEXP") : -1;
 
-						IguanaLevelingLogic.updateXP(equipped, entityplayermp, toolXP + xp, headXP + xp);
+						LevelingLogic.updateXP(equipped, entityplayermp, toolXP + xp, headXP + xp);
 
 						if (entityplayermp != icommandsender)
 						{

@@ -1,8 +1,6 @@
 package iguanaman.iguanatweakstconstruct.modifiers;
 
-import iguanaman.iguanatweakstconstruct.leveling.IguanaLevelingTooltips;
 import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
-import iguanaman.iguanatweakstconstruct.leveling.IguanaLevelingLogic;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -59,7 +59,7 @@ public class ToolTipHandler {
                 if(tags.hasKey(IguanaLevelingLogic.TAG_IS_BOOSTED))
                     inserter.add(IguanaLevelingTooltips.getBoostedTooltip());
                 else
-                    inserter.add(IguanaLevelingTooltips.getXpToolTip(stack, tags, true));
+                    inserter.add(IguanaLevelingTooltips.getBoostXpToolTip(stack, tags));
             }
         }
 
@@ -69,7 +69,7 @@ public class ToolTipHandler {
 
         // skill level progress
         if(advanced && IguanaConfig.showTooltipXP)
-            inserter.add((IguanaLevelingTooltips.getXpToolTip(stack, tags, false)));
+            inserter.add(IguanaLevelingTooltips.getXpToolTip(stack, tags));
 
         // since we added at least one line we'll add an empty spacing line at the end
         inserter.add("");

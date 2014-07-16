@@ -100,18 +100,18 @@ public class IguanaModRedstone extends ItemModifier {
 		float xpPercentage = -1f;
 		if (tags.hasKey("ToolEXP"))
 		{
-			int requiredXp = IguanaLevelingLogic.getRequiredXp(tool, tags, false);
+			//int requiredXp = IguanaLevelingLogic.getRequiredXp(tool, tags, false);
 			long currentXp = tags.getLong("ToolEXP");
-			xpPercentage = (float)currentXp / (float)requiredXp;
+			//xpPercentage = (float)currentXp / (float)requiredXp;
 		}
 
 		// Get current pick xp as a percentage
 		float headXpPercentage = -1f;
 		if (tags.hasKey("HeadEXP"))
 		{
-			int requiredXp = IguanaLevelingLogic.getRequiredXp(tool, tags, true);
+			//int requiredXp = IguanaLevelingLogic.getRequiredXp(tool, tags, true);
 			long currentXp = tags.getLong("HeadEXP");
-			headXpPercentage = (float)currentXp / (float)requiredXp;
+			//headXpPercentage = (float)currentXp / (float)requiredXp;
 		}
 
 
@@ -137,17 +137,17 @@ public class IguanaModRedstone extends ItemModifier {
 		// Reset xp based on previous percentage
 		if (tags.hasKey("ToolEXP"))
 		{
-			int newRequiredXp = IguanaLevelingLogic.getRequiredXp(tool, tags, false);
-			long newXp = Math.round(newRequiredXp * xpPercentage);
-			tags.setLong("ToolEXP", newXp);
+			//int newRequiredXp = IguanaLevelingLogic.getRequiredXp(tool, tags, false);
+			//long newXp = Math.round(newRequiredXp * xpPercentage);
+			//tags.setLong("ToolEXP", newXp);
 		}
 
 		// Reset head xp based on previous percentage
 		if (tags.hasKey("HeadEXP"))
 		{
-			int newRequiredXp = IguanaLevelingLogic.getRequiredXp(tool, tags, true);
-			long newXp = Math.round(newRequiredXp * headXpPercentage);
-			tags.setLong("HeadEXP", newXp);
+			//int newRequiredXp = IguanaLevelingLogic.getRequiredXp(tool, tags, true);
+			//long newXp = Math.round(newRequiredXp * headXpPercentage);
+			//tags.setLong("HeadEXP", newXp);
 		}
 
 		//tooltip lists

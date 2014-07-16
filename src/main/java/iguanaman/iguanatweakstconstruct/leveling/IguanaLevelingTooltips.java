@@ -8,26 +8,39 @@ import net.minecraft.nbt.NBTTagCompound;
 // utility class for constructing tooltip
 public abstract class IguanaLevelingTooltips {
 
-    public static String getXpString(ItemStack tool)
-    {
-        return getXpString(tool, null);
-    }
+    /**
+     * Returns only the XP progress. Standard is %.
+     * @param detailed if true the xp-numbers will be returned too. "X/Y (Z%)"
+     * @return
+     */
+    public static String getXpString(ItemStack tool, NBTTagCompound tags, boolean detailed) { return getXpString(tool, tags, detailed, false); }
+    /**
+     * Returns only the XP progress for the mining level. Standard is %.
+     * @param detailed if true the xp-numbers will be returned too. "X/Y (Z%)"
+     * @return
+     */
+    public static String getBoostXpString(ItemStack tool, NBTTagCompound tags, boolean detailed) { return getXpString(tool, tags, detailed, true); }
 
-    public static String getXpString(ItemStack tool, boolean boostXp)
-    {
-        return getXpToolTip(tool, null, boostXp);
-    }
+    public static String getXpToolTip(ItemStack tool, NBTTagCompound tags) { return getXpToolTip(tool, tags, false); }
+    public static String getBoostXpToolTip(ItemStack tool, NBTTagCompound tags) { return getXpToolTip(tool, tags, false); }
 
-    public static String getXpString(ItemStack tool, NBTTagCompound tags)
+    /**
+    * Returns the XP tooltip for the ToolTip.
+    * @param boostXp If true, the xp for the mining level boost will be returned instead of the xp for the next tool level.
+    */
+    private static String getXpToolTip(ItemStack tool, NBTTagCompound tags, boolean boostXp)
     {
-        return getXpToolTip(tool, tags, false);
+        String prefix = boostXp ? "Mining XP: " : "Skill XP: ";
+        return prefix + getXpString(tool, tags, IguanaConfig.detailedXpTooltip, boostXp);
     }
 
     /**
-* Returns the XP string for the ToolTip.
-* @param boostXp If true, the xp for the mining level boost will be returned instead of the xp for the next tool level.
-*/
-    public static String getXpToolTip(ItemStack tool, NBTTagCompound tags, boolean boostXp)
+     * Returns only the xp part of the xp tooltip.
+     * @param detailed if true the xp-numbers will be returned too.
+     * @param boostXp If true, the xp for the mining level boost will be returned instead of the xp for the next tool level.
+     * @return
+     */
+    private static String getXpString(ItemStack tool, NBTTagCompound tags, boolean detailed, boolean boostXp)
     {
         if (tags == null) tags = tool.getTagCompound().getCompoundTag("InfiTool");
 
@@ -36,12 +49,10 @@ public abstract class IguanaLevelingTooltips {
         float xpPercentage = (float)currentXp / (float)requiredXp * 100f;
         String xpPercentageString = String.format("%.2f", xpPercentage) + "%";
 
-        String prefix = boostXp ? "Mining XP: " : "Skill XP: ";
-
-        if (IguanaConfig.detailedXpTooltip)
-            return prefix + Long.toString(currentXp) + " / " + Integer.toString(requiredXp) + " (" + xpPercentageString + ")";
+        if(detailed)
+            return Long.toString(currentXp) + " / " + Integer.toString(requiredXp) + " (" + xpPercentageString + ")";
         else
-            return prefix + xpPercentageString;
+            return xpPercentageString;
     }
 
     public static String getLevelTooltip(int level)

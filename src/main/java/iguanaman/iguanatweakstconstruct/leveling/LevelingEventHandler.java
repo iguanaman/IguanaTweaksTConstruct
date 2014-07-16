@@ -189,13 +189,13 @@ public class LevelingEventHandler {
                     if (IguanaConfig.showTooltipXP)
                     {
                         if (level <= 5)
-                            event.left.add(IguanaLevelingTooltips.getXpString(equipped));
+                            event.left.add(IguanaLevelingTooltips.getXpToolTip(equipped, null));
 
                         if (IguanaConfig.levelingPickaxeBoost)
                             if (hLevel >= TConstructRegistry.getMaterial("Copper").harvestLevel() && hLevel < TConstructRegistry.getMaterial("Manyullyn").harvestLevel()
                                     && !tags.hasKey("HarvestLevelModified")
                                     && (equipped.getItem() instanceof Pickaxe || equipped.getItem() instanceof Hammer))
-                                event.left.add(IguanaLevelingTooltips.getXpString(equipped, true));
+                                event.left.add(IguanaLevelingTooltips.getBoostXpToolTip(equipped, null));
                     }
                 }
             }

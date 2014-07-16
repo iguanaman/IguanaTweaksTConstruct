@@ -17,20 +17,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class LevelingActiveToolMod extends ActiveToolMod {
-    private static Method ToolStrength;
-    private static Method EffectiveMaterials;
-    static {
-        try {
-            ToolStrength = HarvestTool.class.getDeclaredMethod("calculateStrength", NBTTagCompound.class, Block.class, int.class);
-            ToolStrength.setAccessible(true);
-            EffectiveMaterials = HarvestTool.class.getDeclaredMethod("getEffectiveMaterials");
-            EffectiveMaterials.setAccessible(true);
-        } catch (NoSuchMethodException e) {
-            IguanaLog.error(e);
-            e.printStackTrace();
-        }
-    }
-
     // TODO: make this customizable?
     static List<Material> materialBlacklist = Arrays.asList(
             Material.leaves, Material.vine, Material.circuits,
@@ -54,22 +40,12 @@ public class LevelingActiveToolMod extends ActiveToolMod {
         boolean harvestable = false,
                 effective = false,
                 strong = false;
-        try {
-            harvestable = harvestTool.canHarvestBlock(block, stack);
 
-            Float strength = (Float)ToolStrength.invoke(harvestTool, tags, block, meta);
-            strong = strength >= 1.0f;
-            Material[] materials = (Material[])EffectiveMaterials.invoke(harvestTool);
-            for(Material m : materials)
-                if(m == block.getMaterial())
-                    effective = true;
-        } catch (IllegalAccessException e) {
-            IguanaLog.error(e);
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            IguanaLog.error(e);
-            e.printStackTrace();
-        }
+        harvestable = harvestTool.canHarvestBlock(block, stack);
+
+        Float strength = harvestTool.calculateStrength(tags, block, meta);
+        strong = strength >= 1.0f;
+        effective = harvestTool.isEffective(block.getMaterial());
 
         IguanaLog.trace("Tool is [harvestable: '" + harvestable + "', effective: '" + effective + "', strong: '" + strong + "']");
 

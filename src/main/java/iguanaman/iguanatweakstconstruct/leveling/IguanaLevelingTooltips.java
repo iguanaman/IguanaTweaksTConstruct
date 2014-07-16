@@ -22,7 +22,7 @@ public abstract class IguanaLevelingTooltips {
     public static String getBoostXpString(ItemStack tool, NBTTagCompound tags, boolean detailed) { return getXpString(tool, tags, detailed, true); }
 
     public static String getXpToolTip(ItemStack tool, NBTTagCompound tags) { return getXpToolTip(tool, tags, false); }
-    public static String getBoostXpToolTip(ItemStack tool, NBTTagCompound tags) { return getXpToolTip(tool, tags, false); }
+    public static String getBoostXpToolTip(ItemStack tool, NBTTagCompound tags) { return getXpToolTip(tool, tags, true); }
 
     /**
     * Returns the XP tooltip for the ToolTip.

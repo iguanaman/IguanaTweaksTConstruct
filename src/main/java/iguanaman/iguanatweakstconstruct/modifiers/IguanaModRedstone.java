@@ -158,7 +158,7 @@ public class IguanaModRedstone extends ItemModifier {
 			int level = tags.getInteger("ToolLevel");
 			if (level <= 5)
 			{
-				tips.add(IguanaLevelingLogic.getXpString(tool, false, false));
+				tips.add(IguanaLevelingLogic.getXpString(tool, false));
 				modifierTips.add("");
 			}
 
@@ -169,7 +169,7 @@ public class IguanaModRedstone extends ItemModifier {
 						&& !tags.hasKey("HarvestLevelModified")
 						&& (tool.getItem() instanceof Pickaxe || tool.getItem() instanceof Hammer))
 				{
-					tips.add(IguanaLevelingLogic.getXpString(tool, false, true));
+					tips.add(IguanaLevelingLogic.getXpString(tool, true));
 					modifierTips.add("");
 				}
 			}

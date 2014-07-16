@@ -47,26 +47,26 @@ public class IguanaLevelingLogic {
         tag.setLong(TAG_BOOST_EXP, 0);
     }
 
-	public static String getXpString(ItemStack tool, boolean debug)
+	public static String getXpString(ItemStack tool)
 	{
-		return getXpString(tool, debug, null);
+		return getXpString(tool, null);
 	}
 
-	public static String getXpString(ItemStack tool, boolean debug, boolean pick)
+	public static String getXpString(ItemStack tool, boolean boostXp)
 	{
-		return getXpToolTip(tool, debug, null, pick);
+		return getXpToolTip(tool, null, boostXp);
 	}
 
-	public static String getXpString(ItemStack tool, boolean debug, NBTTagCompound tags)
+	public static String getXpString(ItemStack tool, NBTTagCompound tags)
 	{
-		return getXpToolTip(tool, debug, tags, false);
+		return getXpToolTip(tool, tags, false);
 	}
 
     /**
      * Returns the XP string for the ToolTip.
      * @param boostXp If true, the xp for the mining level boost will be returned instead of the xp for the next tool level.
      */
-	public static String getXpToolTip(ItemStack tool, boolean debug, NBTTagCompound tags, boolean boostXp)
+	public static String getXpToolTip(ItemStack tool, NBTTagCompound tags, boolean boostXp)
 	{
 		if (tags == null) tags = tool.getTagCompound().getCompoundTag("InfiTool");
 
@@ -182,7 +182,7 @@ public class IguanaLevelingLogic {
             // display xp if we're below max level
 			if (level < MAX_LEVEL)
 			{
-				tips.add(getXpString(tool, false, false));
+				tips.add(getXpString(tool, false));
 				modifierTips.add("");
 			}
 
@@ -192,7 +192,7 @@ public class IguanaLevelingLogic {
 				&& !tags.hasKey("HarvestLevelModified")
 				&& (tool.getItem() instanceof Pickaxe || tool.getItem() instanceof Hammer))
 				{
-					tips.add(getXpString(tool, false, true));
+					tips.add(getXpString(tool, true));
 					modifierTips.add("");
 				}
 		}

@@ -89,7 +89,7 @@ public class LevelingEventHandler {
             toolTag.setLong("ToolEXP", 0);
             if (IguanaConfig.showTooltipXP)
             {
-                tips.add(IguanaLevelingLogic.getXpString(new ItemStack(event.tool), false, toolTag));
+                tips.add(IguanaLevelingLogic.getXpString(new ItemStack(event.tool), toolTag));
                 modifierTips.add("");
             }
 
@@ -102,7 +102,7 @@ public class LevelingEventHandler {
                 {
                     if (IguanaConfig.showTooltipXP)
                     {
-                        tips.add(IguanaLevelingLogic.getXpToolTip(new ItemStack(event.tool), false, toolTag, true));
+                        tips.add(IguanaLevelingLogic.getXpToolTip(new ItemStack(event.tool), toolTag, true));
                         modifierTips.add("");
                     }
 
@@ -176,13 +176,13 @@ public class LevelingEventHandler {
                     if (IguanaConfig.showTooltipXP)
                     {
                         if (level <= 5)
-                            event.left.add(IguanaLevelingLogic.getXpString(equipped, true));
+                            event.left.add(IguanaLevelingLogic.getXpString(equipped));
 
                         if (IguanaConfig.levelingPickaxeBoost)
                             if (hLevel >= TConstructRegistry.getMaterial("Copper").harvestLevel() && hLevel < TConstructRegistry.getMaterial("Manyullyn").harvestLevel()
                                     && !tags.hasKey("HarvestLevelModified")
                                     && (equipped.getItem() instanceof Pickaxe || equipped.getItem() instanceof Hammer))
-                                event.left.add(IguanaLevelingLogic.getXpString(equipped, true, true));
+                                event.left.add(IguanaLevelingLogic.getXpString(equipped, true));
                     }
                 }
             }

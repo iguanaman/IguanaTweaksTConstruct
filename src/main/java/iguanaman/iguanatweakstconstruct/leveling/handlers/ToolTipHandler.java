@@ -38,12 +38,13 @@ public class ToolTipHandler {
         advanced &= IguanaConfig.showTooltipXP;
 
 
+
         ToolCore tool = (ToolCore)event.itemStack.getItem();
         NBTTagCompound tags = stack.getTagCompound().getCompoundTag(tool.getBaseTagName()); // tinker tags
         boolean hasMiningLevel = tool instanceof Pickaxe || tool instanceof Hammer;
 
         // add mining level if applicable
-        if(hasMiningLevel && tags.hasKey(LevelingLogic.TAG_BOOST_EXP))
+        if(hasMiningLevel)
         {
             int hLevel = tags.getInteger("HarvestLevel");
             String mLvl = LevelingTooltips.getMiningLevelTooltip(hLevel);
@@ -62,6 +63,7 @@ public class ToolTipHandler {
                         inserter.add(LevelingTooltips.getBoostXpToolTip(stack, tags));
                 }
             }
+            else inserter.add(mLvl);
         }
 
         // add skill level

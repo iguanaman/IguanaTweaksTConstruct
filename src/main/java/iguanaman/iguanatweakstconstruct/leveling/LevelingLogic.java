@@ -1,5 +1,6 @@
 package iguanaman.iguanatweakstconstruct.leveling;
 
+import iguanaman.iguanatweakstconstruct.harvestlevels.IguanaHarvestLevelTweaks;
 import iguanaman.iguanatweakstconstruct.old.modifiers.*;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
@@ -45,8 +46,8 @@ public abstract class LevelingLogic {
 
     public static boolean canBoostMiningLevel(int hLevel)
     {
-        return hLevel >= TConstructRegistry.getMaterial("Copper").harvestLevel() &&
-               (!Config.pickaxeBoostRequired && hLevel < 6 || Config.pickaxeBoostRequired && hLevel < 7);
+        return hLevel >= IguanaHarvestLevelTweaks.HarvestLevels._2_copper &&
+               (!Config.pickaxeBoostRequired && hLevel < IguanaHarvestLevelTweaks.HarvestLevels._8_cobalt || Config.pickaxeBoostRequired && hLevel < IguanaHarvestLevelTweaks.HarvestLevels._9_manyullym);
     }
 
     /**
@@ -99,7 +100,7 @@ public abstract class LevelingLogic {
         if(Config.levelingPickaxeBoost) {
             // already got a boost?
             if (tags.hasKey(TAG_BOOST_EXP) && !tags.hasKey(TAG_IS_BOOSTED))
-                // todo: figure out why this only applies between mining level copper and 7?
+                // we can only if we have a proper material (>stone) and are not max mining level already
                 if (canBoostMiningLevel(hLevel)) {
                     tags.setLong(TAG_BOOST_EXP, boostXP);
 
@@ -196,7 +197,7 @@ public abstract class LevelingLogic {
 
 		if (miningBoost)
 		{
-			int harvestLevelCopper = TConstructRegistry.getMaterial("Copper").harvestLevel();
+			int harvestLevelCopper = IguanaHarvestLevelTweaks.HarvestLevels._2_copper;
 			int harvestLevel = TConstructRegistry.getMaterial(tags.getInteger("Head")).harvestLevel();
 			if (harvestLevel >= harvestLevelCopper) base *= Math.pow(Config.xpPerLevelMultiplier, harvestLevel - harvestLevelCopper);
 			base *= Config.levelingPickaxeBoostXpPercentage / 100f;

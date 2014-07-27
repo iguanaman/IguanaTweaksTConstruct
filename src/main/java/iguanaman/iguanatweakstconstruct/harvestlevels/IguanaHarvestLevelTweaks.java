@@ -1,6 +1,8 @@
 package iguanaman.iguanatweakstconstruct.harvestlevels;
 
+import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
 import mantle.pulsar.pulse.Handler;
 import mantle.pulsar.pulse.Pulse;
@@ -37,8 +39,8 @@ public class IguanaHarvestLevelTweaks {
     };
 
     @Handler
-    public void applyTweaks(FMLPostInitializationEvent event)
+    public void applyTweaks(FMLPreInitializationEvent event)
     {
-
+        TinkerToolTweaks.modifyToolMaterials();
     }
 }

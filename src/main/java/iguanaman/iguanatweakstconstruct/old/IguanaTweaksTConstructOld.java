@@ -29,11 +29,11 @@ import java.util.List;
 public class IguanaTweaksTConstructOld {
 
 	// The instance of your mod that Forge uses.
-	@Instance(Reference.MOD_ID)
+	//@Instance(Reference.MOD_ID)
 	public static IguanaTweaksTConstructOld instance;
 
 	// Says where the client and server 'proxy' code is loaded.
-	@SidedProxy(clientSide= Reference.PROXY_CLIENT_CLASS, serverSide= Reference.PROXY_SERVER_CLASS)
+	//@SidedProxy(clientSide= Reference.PROXY_CLIENT_CLASS, serverSide= Reference.PROXY_SERVER_CLASS)
 	public static CommonProxy proxy;
 
 	public static List<Item> toolParts = null;
@@ -43,7 +43,7 @@ public class IguanaTweaksTConstructOld {
     private ForgeCFG pulseCFG = new ForgeCFG("TinkersModules", "Addon: Iguana Tweaks for Tinkers Construct");
     private PulseManager pulsar = new PulseManager(Reference.MOD_ID, pulseCFG);
 
-	@EventHandler
+//	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 
 		//proxy.registerSounds();
@@ -68,12 +68,12 @@ public class IguanaTweaksTConstructOld {
 	}
 
 
-	@EventHandler
+//	@EventHandler
 	public void load(FMLInitializationEvent event) {
         pulsar.init(event);
 	}
 
-	@EventHandler
+//	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		//proxy.registerRenderers();
 
@@ -90,7 +90,7 @@ public class IguanaTweaksTConstructOld {
         pulsar.postInit(event);
 	}
 
-	@EventHandler
+//	@EventHandler
 	public void serverStarting(FMLServerStartingEvent event)
 	{
         // TODO: change this to a proper isModuleLoaded or something in Pulsar 0.4+ (when released/implemented)

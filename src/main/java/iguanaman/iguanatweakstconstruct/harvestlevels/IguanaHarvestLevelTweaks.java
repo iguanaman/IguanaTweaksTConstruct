@@ -52,8 +52,14 @@ public class IguanaHarvestLevelTweaks {
     };
 
     @Handler
-    public void applyTweaks(FMLPreInitializationEvent event)
+    public void applyTinkerTweaks(FMLPreInitializationEvent event)
     {
         TinkerToolTweaks.modifyToolMaterials();
+    }
+
+    @Handler
+    public void applyTweaks(FMLPostInitializationEvent event)
+    {
+        HarvestLevelTweaks.modifyHarvestLevels();
     }
 }

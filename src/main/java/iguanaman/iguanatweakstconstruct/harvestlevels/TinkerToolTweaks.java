@@ -32,7 +32,7 @@ public abstract class TinkerToolTweaks {
 
     private static void modifyTcon()
     {
-        // mining level 0
+        // mining level 0: stone/wood
         updateMaterial(0, TConstructRegistry.getMaterial("Wood"));
         updateMaterial(0, TConstructRegistry.getMaterial("Stone"));
         updateMaterial(0, TConstructRegistry.getMaterial("Cactus"));
@@ -41,34 +41,34 @@ public abstract class TinkerToolTweaks {
         updateMaterial(0, TConstructRegistry.getMaterial("BlueSlime"));
         updateMaterial(0, TConstructRegistry.getMaterial("Netherrack"));
 
-        // mining level 1
+        // mining level 1: Flint and bone
         updateMaterial(1, TConstructRegistry.getMaterial("Flint"));
         updateMaterial(1, TConstructRegistry.getMaterial("Bone"));
 
-        // mining level 2
+        // mining level 2: Copper
         updateMaterial(2, TConstructRegistry.getMaterial("Copper"));
 
-        // mining level 3
+        // mining level 3: Iron
         updateMaterial(3, TConstructRegistry.getMaterial("Iron"));
         if(TinkerTools.thaumcraftAvailable)
             updateMaterial(3, TConstructRegistry.getMaterial("Thaumium"));
 
-        // mining level 4
+        // mining level 4: Bronze and better metals
         updateMaterial(4, TConstructRegistry.getMaterial("Bronze"));
         updateMaterial(4, TConstructRegistry.getMaterial("Steel"));
         updateMaterial(4, TConstructRegistry.getMaterial("PigIron"));
 
-        // mining level 5
+        // mining level 5: Obsidian and alumite
         updateMaterial(5, TConstructRegistry.getMaterial("Obsidian"));
         updateMaterial(5, TConstructRegistry.getMaterial("Alumite"));
 
-        // mining level 6
+        // mining level 6: Ardite
         updateMaterial(6, TConstructRegistry.getMaterial("Ardite"));
 
-        // mining level 7
+        // mining level 7: Cobalt
         updateMaterial(7, TConstructRegistry.getMaterial("Cobalt"));
 
-        // mining level 8
+        // mining level 8: Manyullyn
         updateMaterial(8, TConstructRegistry.getMaterial("Manyullyn"));
     }
 

@@ -89,4 +89,9 @@ public class IguanaTweaksTConstruct {
 	}
 
 
+    // backwards compatibility
+    public static String getHarvestLevelName (int num)
+    {
+        return Reference.getHarvestLevelName(num);
+    }
 }

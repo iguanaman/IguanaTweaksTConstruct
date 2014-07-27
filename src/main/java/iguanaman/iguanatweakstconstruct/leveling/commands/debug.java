@@ -1,6 +1,6 @@
 package iguanaman.iguanatweakstconstruct.leveling.commands;
 
-import iguanaman.iguanatweakstconstruct.util.IguanaLog;
+import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -38,11 +38,11 @@ public class debug extends CommandBase {
 
                 boolean found = false;
                 if (tags.hasKey(tip)) {
-                    IguanaLog.info(tip + ": " + tags.getString(tip));
+                    Log.info(tip + ": " + tags.getString(tip));
                     found = true;
                 }
                 if (tags.hasKey(modTip)) {
-                    IguanaLog.info(modTip + ": " + tags.getString(tip));
+                    Log.info(modTip + ": " + tags.getString(tip));
                     found = true;
                 }
 

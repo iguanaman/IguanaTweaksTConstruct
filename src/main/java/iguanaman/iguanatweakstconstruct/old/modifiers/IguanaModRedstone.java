@@ -1,6 +1,6 @@
 package iguanaman.iguanatweakstconstruct.old.modifiers;
 
-import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
+import iguanaman.iguanatweakstconstruct.reference.Config;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -152,7 +152,7 @@ public class IguanaModRedstone extends ItemModifier {
 		List<String> tips = new ArrayList<String>();
 		List<String> modifierTips = new ArrayList<String>();
 
-		if (IguanaConfig.showTooltipXP)
+		if (Config.showTooltipXP)
 		{
 			int level = tags.getInteger("ToolLevel");
 			if (level <= 5)
@@ -161,7 +161,7 @@ public class IguanaModRedstone extends ItemModifier {
 				modifierTips.add("");
 			}
 
-			if (IguanaConfig.levelingPickaxeBoost)
+			if (Config.levelingPickaxeBoost)
 			{
 				int hLevel = tags.hasKey("HarvestLevel") ? hLevel = tags.getInteger("HarvestLevel") : -1;
 				if (hLevel >= TConstructRegistry.getMaterial("Copper").harvestLevel() && hLevel < TConstructRegistry.getMaterial("Manyullyn").harvestLevel()

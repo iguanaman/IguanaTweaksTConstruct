@@ -5,7 +5,7 @@ import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
 
-import iguanaman.iguanatweakstconstruct.reference.IguanaReference;
+import iguanaman.iguanatweakstconstruct.reference.Reference;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -402,7 +402,7 @@ public class IguanaToolStationGui extends NewContainerGui
 
 	String getHarvestLevelName (int num)
 	{
-		return IguanaReference.getHarvestLevelName(num);
+		return Reference.getHarvestLevelName(num);
 	}
 
 	private static final ResourceLocation background = new ResourceLocation("tinker", "textures/gui/toolstation.png");

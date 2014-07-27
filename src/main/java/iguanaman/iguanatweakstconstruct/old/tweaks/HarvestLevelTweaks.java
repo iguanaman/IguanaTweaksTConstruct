@@ -7,8 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import iguanaman.iguanatweakstconstruct.util.IguanaLog;
-import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
+import iguanaman.iguanatweakstconstruct.reference.Config;
+import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -38,7 +38,7 @@ public class HarvestLevelTweaks {
 	public static void init()
 	{
 		// TOOLS
-		IguanaLog.info("Modifying harvest levels of tools");
+		Log.info("Modifying harvest levels of tools");
 		ForgeHooks hooks = new ForgeHooks();
 		Field f = null;
 		try {
@@ -97,7 +97,7 @@ public class HarvestLevelTweaks {
 
 				if (harvestLevel != newHarvestLevel)
 				{
-					if (IguanaConfig.logMiningLevelChanges) IguanaLog.info("Changing mining level of " + entry.getKey().getUnlocalizedName() + " from " + harvestLevel + " to " + newHarvestLevel);
+					if (Config.logMiningLevelChanges) Log.info("Changing mining level of " + entry.getKey().getUnlocalizedName() + " from " + harvestLevel + " to " + newHarvestLevel);
 					entry.setValue(Arrays.asList(toolClass, newHarvestLevel));
 				}
 
@@ -106,7 +106,7 @@ public class HarvestLevelTweaks {
 
 
 		//BLOCKS
-		if (IguanaConfig.pickaxeBoostRequired) boostMod = 1;
+		if (Config.pickaxeBoostRequired) boostMod = 1;
 
 		int harvestLevelCopper = TConstructRegistry.getMaterial("Copper").harvestLevel() + boostMod;
 		harvestLevelIron += boostMod;
@@ -116,7 +116,7 @@ public class HarvestLevelTweaks {
 		harvestLevelCobalt += boostMod;
 		harvestLevelManyullyn += boostMod;
 
-		IguanaLog.info("Modifying required harvest levels of blocks");
+		Log.info("Modifying required harvest levels of blocks");
 		try {
 			f = ForgeHooks.class.getDeclaredField("toolHarvestLevels");
 		} catch (NoSuchFieldException e) {
@@ -164,7 +164,7 @@ public class HarvestLevelTweaks {
 
 				if (requiredHarvestLevel != newRequiredHarvestLevel)
 				{
-					if (IguanaConfig.logHarvestLevelChanges) IguanaLog.info("Changing required harvest level of " + block.getUnlocalizedName() + ":" + metadata + " from " + requiredHarvestLevel + " to " + newRequiredHarvestLevel);
+					if (Config.logHarvestLevelChanges) Log.info("Changing required harvest level of " + block.getUnlocalizedName() + ":" + metadata + " from " + requiredHarvestLevel + " to " + newRequiredHarvestLevel);
 					entry.setValue(newRequiredHarvestLevel);
 				}
 
@@ -184,7 +184,7 @@ public class HarvestLevelTweaks {
 			}
 		}
 
-		IguanaLog.info("Modifying required harvest levels of vanilla blocks");
+		Log.info("Modifying required harvest levels of vanilla blocks");
 		Blocks.obsidian.setHarvestLevel("pickaxe", harvestLevelBronze);
 		Blocks.diamond_ore.setHarvestLevel("pickaxe", harvestLevelBronze);
 		Blocks.diamond_block.setHarvestLevel("pickaxe", harvestLevelBronze);
@@ -203,9 +203,9 @@ public class HarvestLevelTweaks {
 		TinkerWorld.oreGravel.setHarvestLevel("shovel", harvestLevelArdite, 5);
 
 		List[] harvestLevelIds = {
-				IguanaConfig.harvestLevel0Ids, IguanaConfig.harvestLevel1Ids, IguanaConfig.harvestLevel2Ids,
-				IguanaConfig.harvestLevel3Ids, IguanaConfig.harvestLevel4Ids, IguanaConfig.harvestLevel5Ids,
-				IguanaConfig.harvestLevel6Ids, IguanaConfig.harvestLevel7Ids
+				Config.harvestLevel0Ids, Config.harvestLevel1Ids, Config.harvestLevel2Ids,
+				Config.harvestLevel3Ids, Config.harvestLevel4Ids, Config.harvestLevel5Ids,
+				Config.harvestLevel6Ids, Config.harvestLevel7Ids
 		};
 
 		for (int i = 0; i < oreDictLevels.length; ++i)
@@ -242,7 +242,7 @@ public class HarvestLevelTweaks {
 		Block block = Block.getBlockFromItem(oreStack.getItem());
 		if (block == Blocks.air)
 		{
-			IguanaLog.warn("Warning: " + oreStack.getUnlocalizedName() + " is invalid block");
+			Log.warn("Warning: " + oreStack.getUnlocalizedName() + " is invalid block");
 			return;
 		}
 		

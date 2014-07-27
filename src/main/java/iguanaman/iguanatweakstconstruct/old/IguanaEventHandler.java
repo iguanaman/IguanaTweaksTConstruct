@@ -1,7 +1,6 @@
 package iguanaman.iguanatweakstconstruct.old;
 
-import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
-import iguanaman.iguanatweakstconstruct.reference.IguanaItems;
+import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
 
 import java.util.Iterator;
@@ -48,7 +47,7 @@ public class IguanaEventHandler {
 	@SubscribeEvent
 	public void onItemExpireEvent(ItemExpireEvent event)
 	{
-		if (IguanaConfig.toolsNeverDespawn && event.entity != null && event.entity instanceof EntityItem)
+		if (Config.toolsNeverDespawn && event.entity != null && event.entity instanceof EntityItem)
 		{
 			ItemStack stack = ((EntityItem)event.entity).getEntityItem();
 			if (stack.getItem() != null && stack.getItem() instanceof ToolCore)
@@ -136,7 +135,7 @@ public class IguanaEventHandler {
 						beheading += 2;
 				}
 
-				if (random.nextInt(100) < beheading * IguanaConfig.beheadingHeadDropChance + IguanaConfig.baseHeadDropChance)
+				if (random.nextInt(100) < beheading * Config.beheadingHeadDropChance + Config.baseHeadDropChance)
 					addDrops(event, new ItemStack(Items.skull, 1, skullID));
 			}
 		}
@@ -222,17 +221,17 @@ public class IguanaEventHandler {
 		int accessory = toolTag.getInteger("Accessory");
 		int extra = toolTag.hasKey("Extra") ? toolTag.getInteger("Extra") : -1;
 
-		if (!IguanaConfig.allowStoneTools && (head == 1 || handle == 1 || event.tool != TinkerTools.arrow && accessory == 1) || extra == 1)
+		if (!Config.allowStoneTools && (head == 1 || handle == 1 || event.tool != TinkerTools.arrow && accessory == 1) || extra == 1)
 		{
 			event.setResult(Event.Result.DENY);
 			return;
 		}
-		else if (IguanaConfig.allowStoneTools)
+		else if (Config.allowStoneTools)
 		{
 			if (head == 1)
 			{
 				int partIndex = IguanaTweaksTConstruct.toolParts.indexOf(event.tool.getHeadItem());
-				if (IguanaConfig.restrictedFlintParts.contains(partIndex+1))
+				if (Config.restrictedFlintParts.contains(partIndex+1))
 				{
 					event.setResult(Event.Result.DENY);
 					return;
@@ -242,7 +241,7 @@ public class IguanaEventHandler {
 			if (handle == 1)
 			{
 				int partIndex = IguanaTweaksTConstruct.toolParts.indexOf(event.tool.getHandleItem());
-				if (IguanaConfig.restrictedFlintParts.contains(partIndex+1))
+				if (Config.restrictedFlintParts.contains(partIndex+1))
 				{
 					event.setResult(Event.Result.DENY);
 					return;
@@ -252,7 +251,7 @@ public class IguanaEventHandler {
 			if (event.tool != TinkerTools.arrow && accessory == 1)
 			{
 				int partIndex = IguanaTweaksTConstruct.toolParts.indexOf(event.tool.getAccessoryItem());
-				if (IguanaConfig.restrictedFlintParts.contains(partIndex+1))
+				if (Config.restrictedFlintParts.contains(partIndex+1))
 				{
 					event.setResult(Event.Result.DENY);
 					return;
@@ -262,7 +261,7 @@ public class IguanaEventHandler {
 			if (extra == 1)
 			{
 				int partIndex = IguanaTweaksTConstruct.toolParts.indexOf(event.tool.getExtraItem());
-				if (IguanaConfig.restrictedFlintParts.contains(partIndex+1))
+				if (Config.restrictedFlintParts.contains(partIndex+1))
 				{
 					event.setResult(Event.Result.DENY);
 					return;
@@ -372,14 +371,14 @@ public class IguanaEventHandler {
 			MaterialSet mat = (MaterialSet) PatternBuilder.instance.materialSets.get(key.key);
 			if (mat != null)
 				if (
-						mat.materialID == 0 && IguanaConfig.restrictedWoodParts.contains(event.pattern.getItemDamage()) ||
-						mat.materialID == 1 && IguanaConfig.restrictedStoneParts.contains(event.pattern.getItemDamage()) ||
-						mat.materialID == 3 && IguanaConfig.restrictedFlintParts.contains(event.pattern.getItemDamage()) ||
-						mat.materialID == 4 && IguanaConfig.restrictedCactusParts.contains(event.pattern.getItemDamage()) ||
-						mat.materialID == 5 && IguanaConfig.restrictedBoneParts.contains(event.pattern.getItemDamage()) ||
-						mat.materialID == 8 && IguanaConfig.restrictedSlimeParts.contains(event.pattern.getItemDamage()) ||
-						mat.materialID == 9 && IguanaConfig.restrictedPaperParts.contains(event.pattern.getItemDamage()) ||
-						mat.materialID == 17 && IguanaConfig.restrictedSlimeParts.contains(event.pattern.getItemDamage())
+						mat.materialID == 0 && Config.restrictedWoodParts.contains(event.pattern.getItemDamage()) ||
+						mat.materialID == 1 && Config.restrictedStoneParts.contains(event.pattern.getItemDamage()) ||
+						mat.materialID == 3 && Config.restrictedFlintParts.contains(event.pattern.getItemDamage()) ||
+						mat.materialID == 4 && Config.restrictedCactusParts.contains(event.pattern.getItemDamage()) ||
+						mat.materialID == 5 && Config.restrictedBoneParts.contains(event.pattern.getItemDamage()) ||
+						mat.materialID == 8 && Config.restrictedSlimeParts.contains(event.pattern.getItemDamage()) ||
+						mat.materialID == 9 && Config.restrictedPaperParts.contains(event.pattern.getItemDamage()) ||
+						mat.materialID == 17 && Config.restrictedSlimeParts.contains(event.pattern.getItemDamage())
 						)
 				{
 					event.setResult(Event.Result.DENY);
@@ -392,7 +391,7 @@ public class IguanaEventHandler {
 	public void onBlockHarvested(HarvestDropsEvent event)
 	{
 		if (event.block != null)
-			if (IguanaConfig.removeFlintDrop && event.block != null && event.block instanceof BlockGravel)
+			if (Config.removeFlintDrop && event.block != null && event.block instanceof BlockGravel)
 			{
 				boolean addGravel = false;
 

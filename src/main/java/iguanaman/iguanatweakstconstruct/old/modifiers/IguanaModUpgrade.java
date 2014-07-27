@@ -2,14 +2,14 @@ package iguanaman.iguanatweakstconstruct.old.modifiers;
 
 import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
 import iguanaman.iguanatweakstconstruct.leveling.LevelingTooltips;
-import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
+import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import iguanaman.iguanatweakstconstruct.reference.IguanaReference;
+import iguanaman.iguanatweakstconstruct.reference.Reference;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import tconstruct.items.tools.Hammer;
@@ -155,7 +155,7 @@ public class IguanaModUpgrade extends ItemModifier {
 
 				// Check for stone parts
 				if (inputStack.getItemDamage() == 1)
-					if (!IguanaConfig.allowStoneTools || IguanaConfig.restrictedFlintParts.contains(partIndex+1)) return false;
+					if (!Config.allowStoneTools || Config.restrictedFlintParts.contains(partIndex+1)) return false;
 			}
 
 		// Check if have enough free modifiers to replace written/thaumic parts
@@ -391,7 +391,7 @@ public class IguanaModUpgrade extends ItemModifier {
 		//add mining level tooltip
 		if (tool.getItem() instanceof Pickaxe || tool.getItem() instanceof Hammer)
 		{
-			String mLevel = IguanaReference.getHarvestLevelName(tags.getInteger("HarvestLevel"));
+			String mLevel = Reference.getHarvestLevelName(tags.getInteger("HarvestLevel"));
 			tips.add("Mining Level: " + mLevel);
 			modifierTips.add("");
 		}
@@ -401,7 +401,7 @@ public class IguanaModUpgrade extends ItemModifier {
 		tips.add(LevelingTooltips.getLevelTooltip(level));
 		modifierTips.add("");
 
-		if (IguanaConfig.showTooltipXP)
+		if (Config.showTooltipXP)
 		{
             /*
 			if (level <= 5)

@@ -1,10 +1,10 @@
 package iguanaman.iguanatweakstconstruct.old.items;
 
-import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
+import iguanaman.iguanatweakstconstruct.reference.Config;
 
 import java.util.List;
 
-import iguanaman.iguanatweakstconstruct.reference.IguanaReference;
+import iguanaman.iguanatweakstconstruct.reference.Reference;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import tconstruct.library.TConstructRegistry;
@@ -24,7 +24,7 @@ public class IguanaToolPart extends ToolPart {
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
 	{
 		tconstruct.library.tools.ToolMaterial material = TConstructRegistry.getMaterial(par1ItemStack.getItemDamage());
-		if (!IguanaConfig.allowStoneTools && material.materialName.equals("Stone"))
+		if (!Config.allowStoneTools && material.materialName.equals("Stone"))
 		{
 			par3List.add("\u00a74Can only be used to make casts,");
 			par3List.add("\u00a74cannot be used to make a tool");
@@ -36,7 +36,7 @@ public class IguanaToolPart extends ToolPart {
 
 			if (partName.equals("PickHead") || partName.equals("HammerHead") || partName.equals("ShovelHead")
 					|| partName.equals("ExcavatorHead"))
-				par3List.add("Mining Level: " + IguanaReference.getHarvestLevelName(material.harvestLevel));
+				par3List.add("Mining Level: " + Reference.getHarvestLevelName(material.harvestLevel));
 
 			if (
 					partName.equals("PickHead") || partName.equals("HammerHead") || partName.equals("ShovelHead") || partName.equals("ExcavatorHead")
@@ -54,7 +54,7 @@ public class IguanaToolPart extends ToolPart {
 				par3List.add("Durability: " + material.durability);
 			}
 
-			if (IguanaConfig.partReplacement)
+			if (Config.partReplacement)
 				if (material.ability.equals("Writable") || material.ability.equals("Thaumic"))
 				{
 					par3List.add("\u00a74Cannot be replaced once added,");

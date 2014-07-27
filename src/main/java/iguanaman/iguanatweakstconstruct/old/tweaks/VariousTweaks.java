@@ -1,8 +1,8 @@
 package iguanaman.iguanatweakstconstruct.old.tweaks;
 
-import iguanaman.iguanatweakstconstruct.util.IguanaLog;
+import iguanaman.iguanatweakstconstruct.reference.Config;
+import iguanaman.iguanatweakstconstruct.util.Log;
 import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
-import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
 import iguanaman.iguanatweakstconstruct.old.IguanaPartBuildRecipe;
 import iguanaman.iguanatweakstconstruct.old.IguanaToolBuildRecipe;
 
@@ -37,27 +37,27 @@ public class VariousTweaks {
 		}
 		catch (Exception e)
 		{
-			IguanaLog.warn("Failed to suppress missing tool logs");
+			Log.warn("Failed to suppress missing tool logs");
 			e.printStackTrace();
 		}
 
 		//REMOVE STONE TORCH
-		if (IguanaConfig.removeStoneTorchRecipe)
+		if (Config.removeStoneTorchRecipe)
 		{
-			IguanaLog.info("Removing stone torch recipe");
+			Log.info("Removing stone torch recipe");
 			RecipeRemover.removeAnyRecipe(new ItemStack(TinkerWorld.stoneTorch, 4));
 		}
 
 
 		// GRAVEL TO FLINT RECIPE
-		if (IguanaConfig.addFlintRecipe) {
-			IguanaLog.info("Adding gravel to flint recipe");
+		if (Config.addFlintRecipe) {
+			Log.info("Adding gravel to flint recipe");
 			GameRegistry.addShapelessRecipe(new ItemStack(Items.flint), new Object[] {Blocks.gravel, Blocks.gravel, Blocks.gravel, Blocks.gravel});
 		}
 
 
 		//SOFTEN SEARED BLOCKS
-		IguanaLog.info("Softening seared blocks");
+		Log.info("Softening seared blocks");
 		TinkerSmeltery.smeltery.setHardness(1.5F);
 		TinkerSmeltery.lavaTank.setHardness(1.5F);
 		TinkerSmeltery.searedBlock.setHardness(1.5F);
@@ -65,7 +65,7 @@ public class VariousTweaks {
 
 
 		// REUSABLE PARTS
-		IguanaLog.info("Making non-metal parts reusable in part builder");
+		Log.info("Making non-metal parts reusable in part builder");
 
 		int[] nonMetals = { 0, 1, 3, 4, 5, 6, 7, 8, 9, 17 };
 		PatternBuilder pb = PatternBuilder.instance;
@@ -85,25 +85,25 @@ public class VariousTweaks {
 
 
 		// REMOVE RESTRICTED PARTS FROM TINKERS HOUSE LOOT
-		IguanaLog.info("Removing restricted parts from Tinker House chest");
+		Log.info("Removing restricted parts from Tinker House chest");
 
 		for (int i = 0; i < IguanaTweaksTConstruct.toolParts.size(); ++i)
 		{
 			Item part = IguanaTweaksTConstruct.toolParts.get(i);
 
-			if (IguanaConfig.restrictedWoodParts.contains(i+1))
+			if (Config.restrictedWoodParts.contains(i+1))
 				TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 0));
-			if (!IguanaConfig.allowStoneTools || IguanaConfig.restrictedStoneParts.contains(i+1))
+			if (!Config.allowStoneTools || Config.restrictedStoneParts.contains(i+1))
 				TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 1));
-			if (IguanaConfig.restrictedFlintParts.contains(i+1))
+			if (Config.restrictedFlintParts.contains(i+1))
 				TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 3));
-			if (IguanaConfig.restrictedCactusParts.contains(i+1))
+			if (Config.restrictedCactusParts.contains(i+1))
 				TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 4));
-			if (IguanaConfig.restrictedBoneParts.contains(i+1))
+			if (Config.restrictedBoneParts.contains(i+1))
 				TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 5));
-			if (IguanaConfig.restrictedPaperParts.contains(i+1))
+			if (Config.restrictedPaperParts.contains(i+1))
 				TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 9));
-			if (IguanaConfig.restrictedSlimeParts.contains(i+1))
+			if (Config.restrictedSlimeParts.contains(i+1))
 			{
 				TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 8));
 				TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 17));
@@ -120,17 +120,17 @@ public class VariousTweaks {
 
 
 		// SIMPLE WOOD PATTERN CRAFTING RECIPE
-		if (IguanaConfig.easyBlankPatternRecipe)
+		if (Config.easyBlankPatternRecipe)
 		{
-			IguanaLog.info("Adding easy blank pattern recipe");
+			Log.info("Adding easy blank pattern recipe");
 			GameRegistry.addShapedRecipe(new ItemStack(TinkerTools.blankPattern), "ss", "ss", 's', new ItemStack(Items.stick));
 		}
 
 
 		//ROTATING PATTERN CRAFTING
-		if (IguanaConfig.easyPatternCrafting)
+		if (Config.easyPatternCrafting)
 		{
-			IguanaLog.info("Adding rotating pattern crafting recipes");
+			Log.info("Adding rotating pattern crafting recipes");
 
 			// TODO: Find Crafting Handler replacement 
 			//GameRegistry.registerCraftingHandler(new IguanaPatternCraftingHandler());
@@ -144,10 +144,10 @@ public class VariousTweaks {
 			List<Integer> patternIds = new ArrayList<Integer>();
 
 			for (int x = 1; x < patternName.length; x++)
-				if (!IguanaConfig.restrictedBoneParts.contains(x) || !IguanaConfig.restrictedCactusParts.contains(x)
-						|| !IguanaConfig.restrictedFlintParts.contains(x) || !IguanaConfig.restrictedPaperParts.contains(x)
-						|| !IguanaConfig.restrictedSlimeParts.contains(x) || !IguanaConfig.restrictedWoodParts.contains(x)
-						|| IguanaConfig.allowStoneTools && !IguanaConfig.restrictedFlintParts.contains(x)
+				if (!Config.restrictedBoneParts.contains(x) || !Config.restrictedCactusParts.contains(x)
+						|| !Config.restrictedFlintParts.contains(x) || !Config.restrictedPaperParts.contains(x)
+						|| !Config.restrictedSlimeParts.contains(x) || !Config.restrictedWoodParts.contains(x)
+						|| Config.allowStoneTools && !Config.restrictedFlintParts.contains(x)
 						|| x >= 23)
 					patternIds.add(x);
 
@@ -165,9 +165,9 @@ public class VariousTweaks {
 
 
 		// ALTERNATIVE PART CRAFTING
-		if (IguanaConfig.easyPartCrafting)
+		if (Config.easyPartCrafting)
 		{
-			IguanaLog.info("Adding easy part crafting");
+			Log.info("Adding easy part crafting");
 			GameRegistry.addRecipe(new IguanaPartBuildRecipe());
 			// TODO: Find crafting Handler replacement
 			//GameRegistry.registerCraftingHandler(new IguanaPartCraftingHandler());
@@ -175,9 +175,9 @@ public class VariousTweaks {
 
 
 		// ALTERNATIVE TOOL CRAFTING
-		if (IguanaConfig.easyToolCreation || IguanaConfig.easyToolModification)
+		if (Config.easyToolCreation || Config.easyToolModification)
 		{
-			IguanaLog.info("Adding easy tool crafting");
+			Log.info("Adding easy tool crafting");
 			GameRegistry.addRecipe(new IguanaToolBuildRecipe());
 		}
 

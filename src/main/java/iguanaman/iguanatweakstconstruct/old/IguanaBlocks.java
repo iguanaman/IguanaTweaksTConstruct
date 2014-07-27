@@ -1,6 +1,6 @@
-package iguanaman.iguanatweakstconstruct.reference;
+package iguanaman.iguanatweakstconstruct.old;
 
-import iguanaman.iguanatweakstconstruct.util.IguanaLog;
+import iguanaman.iguanatweakstconstruct.util.Log;
 import iguanaman.iguanatweakstconstruct.old.blocks.IguanaToolForgeBlock;
 import iguanaman.iguanatweakstconstruct.old.blocks.IguanaToolStationBlock;
 import net.minecraft.block.Block;
@@ -20,7 +20,7 @@ public class IguanaBlocks {
 	{
 
 		//TOOL STATION + FORGE
-		IguanaLog.info("Modifying GUIs");
+		Log.info("Modifying GUIs");
 
 		TinkerTools.toolStationWood = null;
 		TinkerTools.toolStationWood = new IguanaToolStationBlock(Material.wood).setBlockName("ToolStation");
@@ -36,7 +36,7 @@ public class IguanaBlocks {
 
 
 		//SKULLS
-		IguanaLog.info("Adding skull blocks");
+		Log.info("Adding skull blocks");
 		// TODO: Find a way to change vanilla skulls
 		/*Blocks.skull = null;
 		newSkullBlock = new IguanaBlockSkull().setHardness(1.0F).setStepSound(Block.soundTypeSand).setBlockName("skull").setBlockTextureName("skull");

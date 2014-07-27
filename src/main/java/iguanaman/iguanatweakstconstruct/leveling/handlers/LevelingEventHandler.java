@@ -5,7 +5,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
 import iguanaman.iguanatweakstconstruct.leveling.LevelingTooltips;
-import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
+import iguanaman.iguanatweakstconstruct.reference.Config;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
@@ -151,7 +151,7 @@ public class LevelingEventHandler {
 */
 
 
-        if (IguanaConfig.toolLeveling && IguanaConfig.toolLevelingExtraModifiers)
+        if (Config.toolLeveling && Config.toolLevelingExtraModifiers)
             toolTag.setInteger("Modifiers", Math.max(toolTag.getInteger("Modifiers") - 3, 0));
 
         if (event.tool == TinkerTools.hammer || event.tool == TinkerTools.excavator || event.tool == TinkerTools.lumberaxe)
@@ -171,7 +171,7 @@ public class LevelingEventHandler {
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void onRenderGameOverlay(RenderGameOverlayEvent.Text event) {
-        if (IguanaConfig.toolLeveling && IguanaConfig.showDebugXP)
+        if (Config.toolLeveling && Config.showDebugXP)
         {
             Minecraft mc = Minecraft.getMinecraft();
             EntityPlayer player = mc.thePlayer;
@@ -187,12 +187,12 @@ public class LevelingEventHandler {
 
                     event.left.add("");
 
-                    if (IguanaConfig.showTooltipXP)
+                    if (Config.showTooltipXP)
                     {
                         if (level <= 5)
                             event.left.add(LevelingTooltips.getXpToolTip(equipped, null));
 
-                        if (IguanaConfig.levelingPickaxeBoost)
+                        if (Config.levelingPickaxeBoost)
                             if (hLevel >= TConstructRegistry.getMaterial("Copper").harvestLevel() && hLevel < TConstructRegistry.getMaterial("Manyullyn").harvestLevel()
                                     && !tags.hasKey("HarvestLevelModified")
                                     && (equipped.getItem() instanceof Pickaxe || equipped.getItem() instanceof Hammer))

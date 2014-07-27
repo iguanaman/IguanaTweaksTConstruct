@@ -1,8 +1,8 @@
 package iguanaman.iguanatweakstconstruct.leveling;
 
 import iguanaman.iguanatweakstconstruct.old.modifiers.*;
-import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
-import iguanaman.iguanatweakstconstruct.reference.IguanaReference;
+import iguanaman.iguanatweakstconstruct.reference.Config;
+import iguanaman.iguanatweakstconstruct.reference.Reference;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -46,7 +46,7 @@ public abstract class LevelingLogic {
     public static boolean canBoostMiningLevel(int hLevel)
     {
         return hLevel >= TConstructRegistry.getMaterial("Copper").harvestLevel() &&
-               (!IguanaConfig.pickaxeBoostRequired && hLevel < 6 || IguanaConfig.pickaxeBoostRequired && hLevel < 7);
+               (!Config.pickaxeBoostRequired && hLevel < 6 || Config.pickaxeBoostRequired && hLevel < 7);
     }
 
     /**
@@ -60,7 +60,7 @@ public abstract class LevelingLogic {
         // and no xp :(
         tag.setLong(TAG_EXP, 0);
         // mining level boost
-        if(IguanaConfig.levelingPickaxeBoost)
+        if(Config.levelingPickaxeBoost)
             tag.setLong(TAG_BOOST_EXP, 0);
     }
 
@@ -96,7 +96,7 @@ public abstract class LevelingLogic {
 		}
 
         // handle mining boost XP
-        if(IguanaConfig.levelingPickaxeBoost) {
+        if(Config.levelingPickaxeBoost) {
             // already got a boost?
             if (tags.hasKey(TAG_BOOST_EXP) && !tags.hasKey(TAG_IS_BOOSTED))
                 // todo: figure out why this only applies between mining level copper and 7?
@@ -116,7 +116,7 @@ public abstract class LevelingLogic {
         // if we got a levelup, play a sound!
 		if ((leveled || pickLeveled) && !player.worldObj.isRemote)
             // TODO: investigate if there's a better way to play sounds? resourcelocation?
-			player.worldObj.playSoundAtEntity(player, IguanaReference.MOD_ID.toLowerCase() + ":chime", 1.0F, 1.0F);
+			player.worldObj.playSoundAtEntity(player, Reference.MOD_ID.toLowerCase() + ":chime", 1.0F, 1.0F);
 	}
 
 	public static void addXP(ItemStack tool, EntityPlayer player, long xp)
@@ -159,7 +159,7 @@ public abstract class LevelingLogic {
 		if (tool.getItem() instanceof Weapon || tool.getItem() instanceof Shortbow)
 		{
 			if (tool.getItem() instanceof Scythe) base *= 1.5f;
-			base *= IguanaConfig.xpRequiredWeaponsPercentage / 100f;
+			base *= Config.xpRequiredWeaponsPercentage / 100f;
 		}
 		else
 		{
@@ -191,20 +191,20 @@ public abstract class LevelingLogic {
 			else if (tool.getItem() instanceof Hammer) base *= 6f;
 			else if (tool.getItem() instanceof Excavator) base *= 9f;
 
-			base *= IguanaConfig.xpRequiredToolsPercentage / 100f;
+			base *= Config.xpRequiredToolsPercentage / 100f;
 		}
 
 		if (miningBoost)
 		{
 			int harvestLevelCopper = TConstructRegistry.getMaterial("Copper").harvestLevel();
 			int harvestLevel = TConstructRegistry.getMaterial(tags.getInteger("Head")).harvestLevel();
-			if (harvestLevel >= harvestLevelCopper) base *= Math.pow(IguanaConfig.xpPerLevelMultiplier, harvestLevel - harvestLevelCopper);
-			base *= IguanaConfig.levelingPickaxeBoostXpPercentage / 100f;
+			if (harvestLevel >= harvestLevelCopper) base *= Math.pow(Config.xpPerLevelMultiplier, harvestLevel - harvestLevelCopper);
+			base *= Config.levelingPickaxeBoostXpPercentage / 100f;
 		}
 		else
 		{
 			int level = tags.getInteger("ToolLevel");
-			if (level >= 1) base *= Math.pow(IguanaConfig.xpPerLevelMultiplier, level - 1);
+			if (level >= 1) base *= Math.pow(Config.xpPerLevelMultiplier, level - 1);
 		}
 
 		return Math.round(base);
@@ -250,11 +250,11 @@ public abstract class LevelingLogic {
         int currentModifiers = tags.getInteger("Modifiers");
 
         // Add Modifier for leveling up?
-        if(IguanaConfig.toolLevelingExtraModifiers)
+        if(Config.toolLevelingExtraModifiers)
         {
             int modifiersToAdd = 0;
             // check if we are supposed to add a modifier at this levelup
-            for(int lvl : IguanaConfig.toolModifiersAtLevels)
+            for(int lvl : Config.toolModifiersAtLevels)
                 if(level == lvl)
                     modifiersToAdd++;
                     // yes, no break. this means if a level is in the list multiple times, you get multiple modifiers
@@ -277,7 +277,7 @@ public abstract class LevelingLogic {
 
 
         // Add random bonuses on leveling up?
-		if (IguanaConfig.toolLevelingRandomBonuses)
+		if (Config.toolLevelingRandomBonuses)
 		{
 			tags.setInteger("Modifiers", currentModifiers + 1);
 			for (int i = 1; i <= 10; ++i) if (tryModify(player, stack, world.rand.nextInt(10), isTool)) break;
@@ -317,7 +317,7 @@ public abstract class LevelingLogic {
 		ItemStack[] nullItemStack = new ItemStack[] {};
 		if (rnd < 1)
 		{
-			mod = new ModInteger(nullItemStack, 4, "Moss", IguanaConfig.mossRepairSpeed, "\u00a72", "Auto-Repair");
+			mod = new ModInteger(nullItemStack, 4, "Moss", Config.mossRepairSpeed, "\u00a72", "Auto-Repair");
 			if (!player.worldObj.isRemote)
 				player.addChatMessage(new ChatComponentText("\u00a79It seems to have accumulated a patch of moss (+1 repair)"));
 		}

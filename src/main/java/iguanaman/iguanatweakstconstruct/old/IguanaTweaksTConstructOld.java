@@ -1,6 +1,5 @@
 package iguanaman.iguanatweakstconstruct.old;
 
-import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
@@ -8,14 +7,14 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import iguanaman.iguanatweakstconstruct.leveling.Leveling;
+import iguanaman.iguanatweakstconstruct.leveling.IguanaToolLeveling;
 import iguanaman.iguanatweakstconstruct.leveling.commands.IguanaCommandLevelUpTool;
 import iguanaman.iguanatweakstconstruct.leveling.commands.IguanaCommandToolXP;
 import iguanaman.iguanatweakstconstruct.leveling.commands.debug;
 import iguanaman.iguanatweakstconstruct.proxy.CommonProxy;
-import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
-import iguanaman.iguanatweakstconstruct.reference.IguanaReference;
-import iguanaman.iguanatweakstconstruct.util.IguanaLog;
+import iguanaman.iguanatweakstconstruct.reference.Config;
+import iguanaman.iguanatweakstconstruct.reference.Reference;
+import iguanaman.iguanatweakstconstruct.util.Log;
 import mantle.pulsar.config.ForgeCFG;
 import mantle.pulsar.control.PulseManager;
 import mantle.pulsar.pulse.PulseMeta;
@@ -30,11 +29,11 @@ import java.util.List;
 public class IguanaTweaksTConstructOld {
 
 	// The instance of your mod that Forge uses.
-	@Instance(IguanaReference.MOD_ID)
+	@Instance(Reference.MOD_ID)
 	public static IguanaTweaksTConstructOld instance;
 
 	// Says where the client and server 'proxy' code is loaded.
-	@SidedProxy(clientSide=IguanaReference.PROXY_CLIENT_CLASS, serverSide=IguanaReference.PROXY_SERVER_CLASS)
+	@SidedProxy(clientSide= Reference.PROXY_CLIENT_CLASS, serverSide= Reference.PROXY_SERVER_CLASS)
 	public static CommonProxy proxy;
 
 	public static List<Item> toolParts = null;
@@ -42,7 +41,7 @@ public class IguanaTweaksTConstructOld {
     // TODO: decide wether or not the same cfg as tcon should be used
     // use the PulseManager. This allows us to separate the different parts into independend modules and have stuff together. yay.
     private ForgeCFG pulseCFG = new ForgeCFG("TinkersModules", "Addon: Iguana Tweaks for Tinkers Construct");
-    private PulseManager pulsar = new PulseManager(IguanaReference.MOD_ID, pulseCFG);
+    private PulseManager pulsar = new PulseManager(Reference.MOD_ID, pulseCFG);
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -50,7 +49,7 @@ public class IguanaTweaksTConstructOld {
 		//proxy.registerSounds();
 		//NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
 
-		IguanaConfig.init(event.getSuggestedConfigurationFile());
+		Config.init(event.getSuggestedConfigurationFile());
 
 		toolParts = Arrays.asList (
 				TinkerTools.toolRod, TinkerTools.pickaxeHead, TinkerTools.shovelHead, TinkerTools.hatchetHead,
@@ -64,7 +63,7 @@ public class IguanaTweaksTConstructOld {
 		//IguanaBlocks.init();
 		//IguanaItems.init();
 
-        pulsar.registerPulse(new Leveling());
+        pulsar.registerPulse(new IguanaToolLeveling());
         pulsar.preInit(event);
 	}
 
@@ -85,7 +84,7 @@ public class IguanaTweaksTConstructOld {
 		// TODO: need to re-implement harvest level tweaks
 		//HarvestLevelTweaks.init();
 
-		IguanaLog.info("Starting event handler");
+		Log.info("Starting event handler");
 		//MinecraftForge.EVENT_BUS.register(new IguanaEventHandler());
 
         pulsar.postInit(event);
@@ -95,12 +94,12 @@ public class IguanaTweaksTConstructOld {
 	public void serverStarting(FMLServerStartingEvent event)
 	{
         // TODO: change this to a proper isModuleLoaded or something in Pulsar 0.4+ (when released/implemented)
-        PulseMeta meta = new PulseMeta(IguanaReference.PULSE_LEVELING, "", false, false);
+        PulseMeta meta = new PulseMeta(Reference.PULSE_LEVELING, "", false, false);
 		if (pulseCFG.isModuleEnabled(meta))
 		{
-            IguanaLog.debug("Adding command: leveluptool");
+            Log.debug("Adding command: leveluptool");
             event.registerServerCommand(new IguanaCommandLevelUpTool());
-            IguanaLog.debug("Adding command: toolxp");
+            Log.debug("Adding command: toolxp");
             event.registerServerCommand(new IguanaCommandToolXP());
             event.registerServerCommand(new debug());
 		}
@@ -109,7 +108,7 @@ public class IguanaTweaksTConstructOld {
 
 	public static String getHarvestLevelName (int num)
 	{
-		if (IguanaConfig.pickaxeBoostRequired && num > 1) --num;
+		if (Config.pickaxeBoostRequired && num > 1) --num;
 		switch (num)
 		{
 		case 0: return "\u00a77Stone";

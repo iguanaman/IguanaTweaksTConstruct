@@ -1,6 +1,6 @@
 package iguanaman.iguanatweakstconstruct.old.items;
 
-import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
+import iguanaman.iguanatweakstconstruct.reference.Config;
 
 import java.util.List;
 
@@ -64,7 +64,7 @@ public class IguanaItemSkull extends ItemSkull {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
 	{
-		if (IguanaConfig.mobHeadPickaxeBoost)
+		if (Config.mobHeadPickaxeBoost)
 		{
 			int meta = par1ItemStack.getItemDamage();
 			switch (meta)

@@ -1,7 +1,7 @@
 package iguanaman.iguanatweakstconstruct.old.tweaks;
 
-import iguanaman.iguanatweakstconstruct.util.IguanaLog;
-import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
+import iguanaman.iguanatweakstconstruct.reference.Config;
+import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -12,33 +12,33 @@ public class RemoveVanillaTools {
 	public static void init()
 	{
 		//Remove vanilla tools
-		IguanaLog.info("Removing vanilla tool recipes");
+		Log.info("Removing vanilla tool recipes");
 
 		//Wood
-		if (IguanaConfig.restrictedWoodParts.contains(1) || IguanaConfig.restrictedWoodParts.contains(2) || IguanaConfig.restrictedWoodParts.contains(9))
+		if (Config.restrictedWoodParts.contains(1) || Config.restrictedWoodParts.contains(2) || Config.restrictedWoodParts.contains(9))
 			RemoveVanillaTool(Items.wooden_pickaxe);
 
-		if (IguanaConfig.restrictedWoodParts.contains(1) || IguanaConfig.restrictedWoodParts.contains(3))
+		if (Config.restrictedWoodParts.contains(1) || Config.restrictedWoodParts.contains(3))
 			RemoveVanillaTool(Items.wooden_shovel);
 
-		if (IguanaConfig.restrictedWoodParts.contains(1) || IguanaConfig.restrictedWoodParts.contains(4))
+		if (Config.restrictedWoodParts.contains(1) || Config.restrictedWoodParts.contains(4))
 			RemoveVanillaTool(Items.wooden_axe);
 
-		if (IguanaConfig.restrictedWoodParts.contains(1) || IguanaConfig.restrictedWoodParts.contains(5) || IguanaConfig.restrictedWoodParts.contains(6))
+		if (Config.restrictedWoodParts.contains(1) || Config.restrictedWoodParts.contains(5) || Config.restrictedWoodParts.contains(6))
 			RemoveVanillaTool(Items.wooden_sword);
 
 		//Stone
-		if (!IguanaConfig.allowStoneTools || IguanaConfig.restrictedWoodParts.contains(1)
-				|| IguanaConfig.restrictedFlintParts.contains(2) || IguanaConfig.restrictedWoodParts.contains(9))
+		if (!Config.allowStoneTools || Config.restrictedWoodParts.contains(1)
+				|| Config.restrictedFlintParts.contains(2) || Config.restrictedWoodParts.contains(9))
 			RemoveVanillaTool(Items.stone_pickaxe);
 
-		if (!IguanaConfig.allowStoneTools || IguanaConfig.restrictedWoodParts.contains(1) || IguanaConfig.restrictedFlintParts.contains(3))
+		if (!Config.allowStoneTools || Config.restrictedWoodParts.contains(1) || Config.restrictedFlintParts.contains(3))
 			RemoveVanillaTool(Items.stone_shovel);
 
-		if (!IguanaConfig.allowStoneTools || IguanaConfig.restrictedWoodParts.contains(1) || IguanaConfig.restrictedFlintParts.contains(4))
+		if (!Config.allowStoneTools || Config.restrictedWoodParts.contains(1) || Config.restrictedFlintParts.contains(4))
 			RemoveVanillaTool(Items.stone_axe);
 
-		if (!IguanaConfig.allowStoneTools || IguanaConfig.restrictedWoodParts.contains(1) || IguanaConfig.restrictedFlintParts.contains(5) || IguanaConfig.restrictedWoodParts.contains(6))
+		if (!Config.allowStoneTools || Config.restrictedWoodParts.contains(1) || Config.restrictedFlintParts.contains(5) || Config.restrictedWoodParts.contains(6))
 			RemoveVanillaTool(Items.stone_sword);
 	}
 

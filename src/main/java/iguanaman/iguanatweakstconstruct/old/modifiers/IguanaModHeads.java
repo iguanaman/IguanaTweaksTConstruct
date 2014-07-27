@@ -3,7 +3,7 @@ package iguanaman.iguanatweakstconstruct.old.modifiers;
 import java.util.ArrayList;
 import java.util.List;
 
-import iguanaman.iguanatweakstconstruct.reference.IguanaReference;
+import iguanaman.iguanatweakstconstruct.reference.Reference;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import tconstruct.items.tools.Hammer;
@@ -67,7 +67,7 @@ public class IguanaModHeads extends ItemModifier {
 		List<String> tips = new ArrayList<String>();
 		List<String> modifierTips = new ArrayList<String>();
 
-		tips.add("Mining Level: " + IguanaReference.getHarvestLevelName(toolTag.getInteger("HarvestLevel")));
+		tips.add("Mining Level: " + Reference.getHarvestLevelName(toolTag.getInteger("HarvestLevel")));
 		modifierTips.add("");
 
 

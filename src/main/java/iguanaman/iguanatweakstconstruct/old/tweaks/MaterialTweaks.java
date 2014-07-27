@@ -1,7 +1,7 @@
 package iguanaman.iguanatweakstconstruct.old.tweaks;
 
-import iguanaman.iguanatweakstconstruct.util.IguanaLog;
-import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
+import iguanaman.iguanatweakstconstruct.reference.Config;
+import iguanaman.iguanatweakstconstruct.util.Log;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.tools.TinkerTools;
 import cpw.mods.fml.common.Loader;
@@ -12,10 +12,10 @@ public class MaterialTweaks {
 	{
 
 		// TINKERS
-		IguanaLog.info("Modifying TConstruct materials");
+		Log.info("Modifying TConstruct materials");
 
-		float durMod = IguanaConfig.durabilityPercentage / 100F;
-		float speedMod = IguanaConfig.miningSpeedPercentage / 100F;
+		float durMod = Config.durabilityPercentage / 100F;
+		float speedMod = Config.miningSpeedPercentage / 100F;
 
 		TConstructRegistry.toolMaterials.remove(0);
 		TConstructRegistry.addToolMaterial(0, "Wood", "Wooden ", 0, Math.round(59F * durMod), Math.round(150f * speedMod), 1, 1.0F, 0, 0f, "\u00A7e", "");

@@ -1,6 +1,6 @@
 package iguanaman.iguanatweakstconstruct.old.items;
 
-import iguanaman.iguanatweakstconstruct.reference.IguanaItems;
+import iguanaman.iguanatweakstconstruct.old.IguanaItems;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemBucketMilk;

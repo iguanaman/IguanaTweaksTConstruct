@@ -1,6 +1,6 @@
 package iguanaman.iguanatweakstconstruct.reference;
 
-public class IguanaReference {
+public class Reference {
     public static final String MOD_ID = "IguanaTweaksTConstruct";
     public static final String MOD_NAME = "Iguana Tweaks for Tinker's Construct";
     public static final String TCON_MOD_ID = "TConstruct";
@@ -12,7 +12,7 @@ public class IguanaReference {
 
     public static String getHarvestLevelName (int num)
     {
-        if (IguanaConfig.pickaxeBoostRequired && num > 1) --num;
+        if (Config.pickaxeBoostRequired && num > 1) --num;
         switch (num)
         {
         case 0: return "\u00a77Stone";

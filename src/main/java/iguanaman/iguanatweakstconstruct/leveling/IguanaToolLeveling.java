@@ -5,7 +5,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import iguanaman.iguanatweakstconstruct.leveling.handlers.LevelingEventHandler;
 import iguanaman.iguanatweakstconstruct.leveling.handlers.ToolTipHandler;
-import iguanaman.iguanatweakstconstruct.reference.IguanaReference;
+import iguanaman.iguanatweakstconstruct.reference.Reference;
 import mantle.pulsar.pulse.Handler;
 import mantle.pulsar.pulse.Pulse;
 import net.minecraftforge.common.MinecraftForge;
@@ -16,8 +16,8 @@ import tconstruct.library.TConstructRegistry;
  * This pulse contains all the stuff that has to do with tool leveling.
  */
 
-@Pulse(id = IguanaReference.PULSE_LEVELING, description = "The Iguana Tweaks Leveling System for Tinker's Tools")
-public class Leveling {
+@Pulse(id = Reference.PULSE_LEVELING, description = "The Iguana Tweaks Leveling System for Tinker's Tools")
+public class IguanaToolLeveling {
 
     @Handler
     public void init(FMLInitializationEvent event)

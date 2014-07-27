@@ -2,7 +2,7 @@ package iguanaman.iguanatweakstconstruct.old.proxy;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
 import iguanaman.iguanatweakstconstruct.old.blocks.IguanaTileEntitySkull;
-import iguanaman.iguanatweakstconstruct.proxy.CommonProxy;
+import iguanaman.iguanatweakstconstruct.old.proxy.CommonProxy;
 import iguanaman.iguanatweakstconstruct.old.renderer.IguanaSkullRenderer;
 import iguanaman.iguanatweakstconstruct.old.IguanaClientEventHandler;
 import net.minecraft.entity.player.EntityPlayer;

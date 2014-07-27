@@ -1,6 +1,6 @@
 package iguanaman.iguanatweakstconstruct.leveling;
 
-import iguanaman.iguanatweakstconstruct.util.IguanaLog;
+import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
@@ -46,7 +46,7 @@ public class LevelingActiveToolMod extends ActiveToolMod {
         strong = strength >= 1.0f;
         effective = harvestTool.isEffective(block.getMaterial());
 
-        IguanaLog.trace("Tool is [harvestable: '" + harvestable + "', effective: '" + effective + "', strong: '" + strong + "']");
+        Log.trace("Tool is [harvestable: '" + harvestable + "', effective: '" + effective + "', strong: '" + strong + "']");
 
         // only give xp if the use makes sense
         if(harvestable && effective && strong)
@@ -58,7 +58,7 @@ public class LevelingActiveToolMod extends ActiveToolMod {
 
     @Override
     public boolean afterBlockBreak() {
-        IguanaLog.debug("afterBlockBreak is implemented. Somebody tell me that so I can update xp giving.");
+        Log.debug("afterBlockBreak is implemented. Somebody tell me that so I can update xp giving.");
         return super.afterBlockBreak();
     }
 }

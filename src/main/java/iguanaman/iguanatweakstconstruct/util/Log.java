@@ -1,13 +1,9 @@
 package iguanaman.iguanatweakstconstruct.util;
 
-import cpw.mods.fml.common.FMLLog;
-import iguanaman.iguanatweakstconstruct.reference.IguanaReference;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 
-import java.util.logging.LogManager;
-
-public class IguanaLog {
+public class Log {
     private static Logger logger = org.apache.logging.log4j.LogManager.getLogger("Iguana-TCon");
 
 	public static void log(Level level, Object obj)

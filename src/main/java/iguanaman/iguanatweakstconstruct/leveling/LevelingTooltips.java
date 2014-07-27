@@ -1,7 +1,7 @@
 package iguanaman.iguanatweakstconstruct.leveling;
 
-import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
-import iguanaman.iguanatweakstconstruct.reference.IguanaReference;
+import iguanaman.iguanatweakstconstruct.reference.Config;
+import iguanaman.iguanatweakstconstruct.reference.Reference;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -31,7 +31,7 @@ public abstract class LevelingTooltips {
     private static String getXpToolTip(ItemStack tool, NBTTagCompound tags, boolean boostXp)
     {
         String prefix = boostXp ? "Mining XP: " : "Skill XP: ";
-        return prefix + getXpString(tool, tags, IguanaConfig.detailedXpTooltip, boostXp);
+        return prefix + getXpString(tool, tags, Config.detailedXpTooltip, boostXp);
     }
 
     /**
@@ -71,7 +71,7 @@ public abstract class LevelingTooltips {
 
     public static String getMiningLevelTooltip(int hLevel)
     {
-        return "Mining Level: " + IguanaReference.getHarvestLevelName(hLevel);
+        return "Mining Level: " + Reference.getHarvestLevelName(hLevel);
     }
 
     public static String getBoostedTooltip()

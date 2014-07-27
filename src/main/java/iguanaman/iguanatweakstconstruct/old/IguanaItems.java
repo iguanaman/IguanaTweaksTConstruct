@@ -1,6 +1,7 @@
-package iguanaman.iguanatweakstconstruct.reference;
+package iguanaman.iguanatweakstconstruct.old;
 
-import iguanaman.iguanatweakstconstruct.util.IguanaLog;
+import iguanaman.iguanatweakstconstruct.reference.*;
+import iguanaman.iguanatweakstconstruct.util.Log;
 import iguanaman.iguanatweakstconstruct.old.items.ClayBucket;
 import iguanaman.iguanatweakstconstruct.old.items.ClayBucketFilled;
 import iguanaman.iguanatweakstconstruct.old.items.ClayBucketMilk;
@@ -36,7 +37,7 @@ public class IguanaItems {
 	{
 
 		//CLAY BUCKETS
-		IguanaLog.info("Adding clay buckets");
+		Log.info("Adding clay buckets");
 		clayBucketUnfired = new Item().setUnlocalizedName("iguanatweakstconstruct:clayBucketUnfired").setTextureName("iguanatweakstconstruct:clayBucketUnfired").setMaxStackSize(16).setCreativeTab(CreativeTabs.tabMisc);
 		clayBucketFired = new ClayBucket(Blocks.air).setUnlocalizedName("iguanatweakstconstruct:clayBucketFired").setTextureName("iguanatweakstconstruct:clayBucketFired").setMaxStackSize(16);
 		clayBucketWater = new ClayBucket(Blocks.flowing_water).setUnlocalizedName("iguanatweakstconstruct:clayBucketWater").setTextureName("iguanatweakstconstruct:clayBucketWater").setContainerItem(clayBucketFired);
@@ -114,7 +115,7 @@ public class IguanaItems {
 		ToolBuilder.addCustomToolRecipe(new BowRecipe(TinkerTools.toolRod, TinkerTools.bowstring, TinkerTools.toolRod, TinkerTools.shortbow));
 
 		//SKULL ITEM
-		IguanaLog.info("Adding skull item");
+		Log.info("Adding skull item");
 		// TODO: find a way to replace vanilla skull
 		/*Item.itemsList[Item.skull.itemID] = null;
 		Item.skull = new IguanaItemSkull(141).setUnlocalizedName("skull").setTextureName("skull");
@@ -124,9 +125,9 @@ public class IguanaItems {
 
 
 		//COBALT ARMOR
-		if (IguanaConfig.cobaltArmor)
+		if (Config.cobaltArmor)
 		{
-			IguanaLog.info("Changing diamond armor to cobalt armor");
+			Log.info("Changing diamond armor to cobalt armor");
 
 			// TODO: Implement Cobalt Armor
 			/*LanguageRegistry.addName(new ItemStack(Item.helmetDiamond), "Cobalt Helmet");

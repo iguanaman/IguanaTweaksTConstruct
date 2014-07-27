@@ -1,6 +1,6 @@
 package iguanaman.iguanatweakstconstruct.old.modifiers;
 
-import iguanaman.iguanatweakstconstruct.util.IguanaLog;
+import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import tconstruct.library.crafting.ToolBuilder;
@@ -50,7 +50,7 @@ public class IguanaModClean extends ItemModifier {
 		}
 
 		// Create blank tool
-		IguanaLog.info("replacing tool");
+		Log.info("replacing tool");
 		tool = ToolBuilder.instance.buildTool(headStack, handleStack, accessoryStack, extraStack, name);
 	}
 

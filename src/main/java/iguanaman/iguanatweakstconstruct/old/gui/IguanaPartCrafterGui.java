@@ -1,6 +1,6 @@
 package iguanaman.iguanatweakstconstruct.old.gui;
 
-import iguanaman.iguanatweakstconstruct.reference.IguanaReference;
+import iguanaman.iguanatweakstconstruct.reference.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -132,7 +132,7 @@ public class IguanaPartCrafterGui extends NewContainerGui
 
 	public static String getHarvestLevelName (int num)
 	{
-		return IguanaReference.getHarvestLevelName(num);
+		return Reference.getHarvestLevelName(num);
 	}
 
 	private static final ResourceLocation background = new ResourceLocation("tinker", "textures/gui/toolparts.png");

@@ -1,6 +1,7 @@
 package iguanaman.iguanatweakstconstruct.old.tweaks;
 
-import iguanaman.iguanatweakstconstruct.util.IguanaLog;
+import iguanaman.iguanatweakstconstruct.reference.Config;
+import iguanaman.iguanatweakstconstruct.util.Log;
 import iguanaman.iguanatweakstconstruct.old.modifiers.IguanaModAttack;
 import iguanaman.iguanatweakstconstruct.old.modifiers.IguanaModClean;
 import iguanaman.iguanatweakstconstruct.old.modifiers.IguanaModHeads;
@@ -11,7 +12,6 @@ import iguanaman.iguanatweakstconstruct.old.modifiers.IguanaModUpgrade;
 
 import java.util.Iterator;
 
-import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -32,41 +32,41 @@ public class ModifierTweaks
     {
 
         // REMOVE OLD MODIFIERS
-        IguanaLog.info("Removing old modifiers");
+        Log.info("Removing old modifiers");
         Iterator<ItemModifier> i = ModifyBuilder.instance.itemModifiers.iterator();
         while (i.hasNext())
         {
             ItemModifier mod = i.next();
-            if (mod.key == "Emerald" || mod.key == "Diamond" || mod.key == "Tier1Free" && IguanaConfig.toolLeveling || mod.key == "Tier2Free" || mod.key == "Moss" || mod.key == "Lapis"
+            if (mod.key == "Emerald" || mod.key == "Diamond" || mod.key == "Tier1Free" && Config.toolLeveling || mod.key == "Tier2Free" || mod.key == "Moss" || mod.key == "Lapis"
                     || mod.key == "ModAttack" || mod.key == "Redstone" || mod.key == "")
                 //IguanaLog.log("Removing old " + mod.key + " modifier");
                 i.remove();
         }
 
         // Change recipes
-        if (IguanaConfig.moreExpensiveSilkyCloth)
+        if (Config.moreExpensiveSilkyCloth)
         {
             RecipeRemover.removeAnyRecipe(new ItemStack(TinkerTools.materials, 1, 25));
             GameRegistry.addRecipe(new ItemStack(TinkerTools.materials, 1, 25), "sss", "sns", "sss", 'n', new ItemStack(TinkerTools.materials, 1, 14), 's', new ItemStack(Items.string)); //Silky Cloth
             GameRegistry.addRecipe(new ItemStack(TinkerTools.materials, 1, 25), "sss", "sns", "sss", 'n', new ItemStack(Items.gold_ingot), 's', new ItemStack(Items.string)); //Silky Cloth
         }
 
-        if (IguanaConfig.moreExpensiveSilkyJewel)
+        if (Config.moreExpensiveSilkyJewel)
         {
             RecipeRemover.removeAnyRecipe(new ItemStack(TinkerTools.materials, 1, 26));
             GameRegistry.addRecipe(new ItemStack(TinkerTools.materials, 1, 26), " c ", "cec", " c ", 'c', new ItemStack(TinkerTools.materials, 1, 25), 'e', new ItemStack(Blocks.emerald_block)); //Silky Jewel
         }
 
         // REPLACE OLD MODIFIERS
-        IguanaLog.info("Replacing old modifiers");
+        Log.info("Replacing old modifiers");
 
-        if (IguanaConfig.partReplacement)
+        if (Config.partReplacement)
         	ModifyBuilder.registerModifier(new IguanaModUpgrade());
         ModifyBuilder.registerModifier(new IguanaModRepair());
         // TODO: Find a way to replace vanilla skull
         /*if (!IguanaConfig.toolLevelingRandomBonuses)
         	ModifyBuilder.registerModifier(new ModExtraModifier(new ItemStack[] { new ItemStack(Items.sk, 1, 6), new ItemStack(Item.skull, 1, 7) }, "Tier2Free"));*/
-        ModifyBuilder.registerModifier(new ModInteger(new ItemStack[] { new ItemStack(TinkerTools.materials, 1, 6) }, 4, "Moss", IguanaConfig.mossRepairSpeed, "\u00a72", "Auto-Repair"));
+        ModifyBuilder.registerModifier(new ModInteger(new ItemStack[] { new ItemStack(TinkerTools.materials, 1, 6) }, 4, "Moss", Config.mossRepairSpeed, "\u00a72", "Auto-Repair"));
         ModifyBuilder.registerModifier(new ModDurability(new ItemStack[] { new ItemStack(Items.emerald) }, 1, 0, 0.5f, TConstructRegistry.getMaterial("Bronze").harvestLevel(), "Emerald",
                 "\u00a72Durability +50%", "\u00a72"));
         ModifyBuilder.registerModifier(new ModDurability(new ItemStack[] { new ItemStack(Items.diamond) }, 0, 500, 0f, 0, "Diamond", "\u00a7bDurability +500", "\u00a7b"));
@@ -92,13 +92,13 @@ public class ModifierTweaks
         ModifyBuilder.registerModifier(new IguanaModRedstone(new ItemStack[] { redstoneBlock, redstoneBlock }, 2, 18));
 
         // CLEAN MODIFIER
-        if (IguanaConfig.addCleanModifier)
+        if (Config.addCleanModifier)
         	ModifyBuilder.registerModifier(new IguanaModClean());
 
         // MINING BOOST MODIFIERS
-        if (IguanaConfig.mobHeadPickaxeBoost)
+        if (Config.mobHeadPickaxeBoost)
         {
-            IguanaLog.info("Adding mob head modifiers");
+            Log.info("Adding mob head modifiers");
 
             // add modifers
             ModifyBuilder.registerModifier(new IguanaModHeads(new ItemStack[] { new ItemStack(Items.skull, 1, 0) }, 20, TConstructRegistry.getMaterial("Iron").harvestLevel(), "Skeleton Skull",
@@ -125,9 +125,9 @@ public class ModifierTweaks
         }
 
         // LEVELING MODIFIER
-        if (IguanaConfig.toolLeveling)
+        if (Config.toolLeveling)
         {
-            IguanaLog.info("Adding leveling active modifier");
+            Log.info("Adding leveling active modifier");
             //TConstructRegistry.activeModifiers.add(0, new IguanaActiveToolMod());
         }
     }

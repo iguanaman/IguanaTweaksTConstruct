@@ -48,11 +48,13 @@ public abstract class HarvestLevelTweaks {
         Blocks.redstone_ore.setHarvestLevel("pickaxe", HarvestLevels._3_iron);
         Blocks.lit_redstone_ore.setHarvestLevel("pickaxe", HarvestLevels._3_iron);
 
-        Blocks.obsidian.setHarvestLevel("pickaxe", HarvestLevels._4_diamond);
-        Blocks.diamond_ore.setHarvestLevel("pickaxe", HarvestLevels._4_diamond); // yes, diamond requires diamond level. good thing there's bronze/steel ;)
-        Blocks.diamond_block.setHarvestLevel("pickaxe", HarvestLevels._4_diamond);
-        Blocks.emerald_ore.setHarvestLevel("pickaxe", HarvestLevels._4_diamond);
-        Blocks.emerald_block.setHarvestLevel("pickaxe", HarvestLevels._4_diamond);
+        Blocks.diamond_ore.setHarvestLevel("pickaxe", HarvestLevels._4_bronze); // yes, diamond requires diamond level. good thing there's bronze/steel ;)
+        Blocks.diamond_block.setHarvestLevel("pickaxe", HarvestLevels._4_bronze);
+        Blocks.emerald_ore.setHarvestLevel("pickaxe", HarvestLevels._4_bronze);
+        Blocks.emerald_block.setHarvestLevel("pickaxe", HarvestLevels._4_bronze);
+
+        Blocks.obsidian.setHarvestLevel("pickaxe", HarvestLevels._5_diamond);
+
         Log.trace("Modified vanilla blocks");
     }
 
@@ -113,7 +115,7 @@ public abstract class HarvestLevelTweaks {
                 // iron tool
                 case 2: hlvl = HarvestLevels._3_iron; break;
                 // diamond tool
-                case 3: hlvl = HarvestLevels._4_diamond;  break;
+                case 3: hlvl = HarvestLevels._5_diamond;  break;
                 // default... we just increase it?
                 default: hlvl = old+1;
             }
@@ -127,23 +129,24 @@ public abstract class HarvestLevelTweaks {
 
     // HarvestLevels
     public static String[][] oreDictLevels = {
-            // 0: stone
+            // 0: Stone
             {},
-            // 1: flint
+            // 1: Flint
             {"Copper", "Coal", "Tetrahedrite", "Aluminum", "Aluminium", "NaturalAluminum", "AluminumBrass", "Shard", "Bauxite", "Zinc"},
-            // 2: copper
+            // 2: Copper
             {"Iron", "Pyrite", "Lead", "Silver", "Lapis"},
-            // 3: iron
+            // 3: Iron
             {"Tin", "Cassiterite", "Gold", "Redstone", "Steel", "Galena", "Nickel", "Invar", "Electrum", "Sphalerite"},
-            // 4: diamond/bronze
-            {"Diamond", "Emerald", "Ruby", "Sapphire", "Cinnabar", "Quartz",
-                    "Obsidian", "CertusQuartz", "Tungstate", "Sodalite", "GreenSapphire", "BlackGranite", "RedGranite"},
-            // 5: Obsidian/Alumite
+            // 4: Bronze
+            {"Diamond", "Emerald", "Ruby", "Sapphire", "Cinnabar", "GreenSapphire", "BlackGranite", "RedGranite"},
+            // 5: Diamond
+            {"Obsidian", "Tungstate", "Sodalite", "Quartz", "CertusQuartz"},
+            // 6: Obsidian/Alumite
             {"Ardite", "Uranium", "Olivine", "Sheldonite", "Osmium", "Platinum"},
-            // 6: Ardite
+            // 7: Ardite
             {"Cobalt", "Iridium", "Cooperite", "Titanium"},
-            // 7: Cobalt
+            // 8: Cobalt
             {"Manyullyn"}
-            // 8: Manyullyn (empty)
+            // 9: Manyullyn (empty)
     };
 }

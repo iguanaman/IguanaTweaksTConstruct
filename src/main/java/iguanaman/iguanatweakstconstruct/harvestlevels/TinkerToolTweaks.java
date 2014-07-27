@@ -6,6 +6,8 @@ import tconstruct.library.TConstructRegistry;
 import tconstruct.library.tools.ToolMaterial;
 import tconstruct.tools.TinkerTools;
 
+import static iguanaman.iguanatweakstconstruct.harvestlevels.IguanaHarvestLevelTweaks.HarvestLevels.*;
+
 /**
  * Used to modify the harvest levels and speeds of the tinker tool parts.
  * Has to be used together with the HarvestLevel Tweaks or everything will be messed up. :)
@@ -33,43 +35,45 @@ public abstract class TinkerToolTweaks {
     private static void modifyTcon()
     {
         // mining level 0: stone/wood
-        updateMaterial(0, TConstructRegistry.getMaterial("Wood"));
-        updateMaterial(0, TConstructRegistry.getMaterial("Stone"));
-        updateMaterial(0, TConstructRegistry.getMaterial("Cactus"));
-        updateMaterial(0, TConstructRegistry.getMaterial("Paper"));
-        updateMaterial(0, TConstructRegistry.getMaterial("Slime"));
-        updateMaterial(0, TConstructRegistry.getMaterial("BlueSlime"));
-        updateMaterial(0, TConstructRegistry.getMaterial("Netherrack"));
+        updateMaterial(_0_stone, TConstructRegistry.getMaterial("Wood"));
+        updateMaterial(_0_stone, TConstructRegistry.getMaterial("Stone"));
+        updateMaterial(_0_stone, TConstructRegistry.getMaterial("Cactus"));
+        updateMaterial(_0_stone, TConstructRegistry.getMaterial("Paper"));
+        updateMaterial(_0_stone, TConstructRegistry.getMaterial("Slime"));
+        updateMaterial(_0_stone, TConstructRegistry.getMaterial("BlueSlime"));
+        updateMaterial(_0_stone, TConstructRegistry.getMaterial("Netherrack"));
 
         // mining level 1: Flint and bone
-        updateMaterial(1, TConstructRegistry.getMaterial("Flint"));
-        updateMaterial(1, TConstructRegistry.getMaterial("Bone"));
+        updateMaterial(_1_flint, TConstructRegistry.getMaterial("Flint"));
+        updateMaterial(_1_flint, TConstructRegistry.getMaterial("Bone"));
 
         // mining level 2: Copper
-        updateMaterial(2, TConstructRegistry.getMaterial("Copper"));
+        updateMaterial(_2_copper, TConstructRegistry.getMaterial("Copper"));
 
         // mining level 3: Iron
-        updateMaterial(3, TConstructRegistry.getMaterial("Iron"));
+        updateMaterial(_3_iron, TConstructRegistry.getMaterial("Iron"));
         if(TinkerTools.thaumcraftAvailable)
-            updateMaterial(3, TConstructRegistry.getMaterial("Thaumium"));
+            updateMaterial(_3_iron, TConstructRegistry.getMaterial("Thaumium"));
 
         // mining level 4: Bronze and better metals
-        updateMaterial(4, TConstructRegistry.getMaterial("Bronze"));
-        updateMaterial(4, TConstructRegistry.getMaterial("Steel"));
-        updateMaterial(4, TConstructRegistry.getMaterial("PigIron"));
+        updateMaterial(_4_bronze, TConstructRegistry.getMaterial("Bronze"));
+        updateMaterial(_4_bronze, TConstructRegistry.getMaterial("PigIron"));
 
-        // mining level 5: Obsidian and alumite
-        updateMaterial(5, TConstructRegistry.getMaterial("Obsidian"));
-        updateMaterial(5, TConstructRegistry.getMaterial("Alumite"));
+        // mining level 5: diamond
+        updateMaterial(_5_diamond, TConstructRegistry.getMaterial("Steel"));
 
-        // mining level 6: Ardite
-        updateMaterial(6, TConstructRegistry.getMaterial("Ardite"));
+        // mining level 6: Obsidian and alumite
+        updateMaterial(_6_obsidian, TConstructRegistry.getMaterial("Obsidian"));
+        updateMaterial(_6_obsidian, TConstructRegistry.getMaterial("Alumite"));
 
-        // mining level 7: Cobalt
-        updateMaterial(7, TConstructRegistry.getMaterial("Cobalt"));
+        // mining level 7: Ardite
+        updateMaterial(_7_ardite, TConstructRegistry.getMaterial("Ardite"));
 
-        // mining level 8: Manyullyn
-        updateMaterial(8, TConstructRegistry.getMaterial("Manyullyn"));
+        // mining level 8: Cobalt
+        updateMaterial(_8_cobalt, TConstructRegistry.getMaterial("Cobalt"));
+
+        // mining level 9: Manyullyn
+        updateMaterial(_9_manyullym, TConstructRegistry.getMaterial("Manyullyn"));
     }
 
     private static void updateMaterial(int harvestLevel, ToolMaterial old)

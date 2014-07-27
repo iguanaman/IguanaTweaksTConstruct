@@ -25,6 +25,19 @@ import mantle.pulsar.pulse.Pulse;
 
 @Pulse(id = Reference.PULSE_HARVESTTWEAKS, description = "Modify tool and block mining levels to create a tiered-ish progression")
 public class IguanaHarvestLevelTweaks {
+    // strength of the tool-material. stone == strength of a stone pick etc.
+    public abstract class HarvestLevels {
+        public static final int _0_stone = 0;
+        public static final int _1_flint = 1;
+        public static final int _2_copper = 2;
+        public static final int _3_iron = 3;
+        public static final int _4_diamond = 4;
+        public static final int _5_obsidian = 5;
+        public static final int _6_ardite = 6;
+        public static final int _7_cobalt = 7;
+        public static final int _8_manyullym = 8;
+    }
+
     // HarvestLevels
     public static String[][] oreDictLevels = {
             {},

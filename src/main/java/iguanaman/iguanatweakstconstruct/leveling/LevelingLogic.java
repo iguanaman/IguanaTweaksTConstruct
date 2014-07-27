@@ -1,6 +1,6 @@
 package iguanaman.iguanatweakstconstruct.leveling;
 
-import iguanaman.iguanatweakstconstruct.modifiers.*;
+import iguanaman.iguanatweakstconstruct.old.modifiers.*;
 import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
 import iguanaman.iguanatweakstconstruct.reference.IguanaReference;
 import net.minecraft.entity.player.EntityPlayer;

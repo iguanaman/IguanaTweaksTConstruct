@@ -1,11 +1,11 @@
 package iguanaman.iguanatweakstconstruct.reference;
 
 import iguanaman.iguanatweakstconstruct.util.IguanaLog;
-import iguanaman.iguanatweakstconstruct.items.ClayBucket;
-import iguanaman.iguanatweakstconstruct.items.ClayBucketFilled;
-import iguanaman.iguanatweakstconstruct.items.ClayBucketMilk;
-import iguanaman.iguanatweakstconstruct.items.IguanaPattern;
-import iguanaman.iguanatweakstconstruct.items.IguanaToolPart;
+import iguanaman.iguanatweakstconstruct.old.items.ClayBucket;
+import iguanaman.iguanatweakstconstruct.old.items.ClayBucketFilled;
+import iguanaman.iguanatweakstconstruct.old.items.ClayBucketMilk;
+import iguanaman.iguanatweakstconstruct.old.items.IguanaPattern;
+import iguanaman.iguanatweakstconstruct.old.items.IguanaToolPart;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;

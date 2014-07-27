@@ -1,8 +1,8 @@
 package iguanaman.iguanatweakstconstruct.reference;
 
 import iguanaman.iguanatweakstconstruct.util.IguanaLog;
-import iguanaman.iguanatweakstconstruct.blocks.IguanaToolForgeBlock;
-import iguanaman.iguanatweakstconstruct.blocks.IguanaToolStationBlock;
+import iguanaman.iguanatweakstconstruct.old.blocks.IguanaToolForgeBlock;
+import iguanaman.iguanatweakstconstruct.old.blocks.IguanaToolStationBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import tconstruct.common.itemblocks.MetadataItemBlock;

@@ -8,5 +8,22 @@ public class IguanaReference {
     public static final String PULSE_LEVELING = "ToolLeveling";
 
     public static final String PROXY_CLIENT_CLASS = "iguanaman.iguanatweakstconstruct.proxy.ClientProxy";
-    public static final String PROXY_SERVER_CLASS = "iguanaman.iguanatweakstconstruct.proxy.CommonProxy";
+    public static final String PROXY_SERVER_CLASS = "iguanaman.iguanatweakstconstruct.proxy.ServerProxy";
+
+    public static String getHarvestLevelName (int num)
+    {
+        if (IguanaConfig.pickaxeBoostRequired && num > 1) --num;
+        switch (num)
+        {
+        case 0: return "\u00a77Stone";
+        case 1: return "\u00a76Copper";
+        case 2: return "\u00a74Iron";
+        case 3: return "\u00a7fTin";
+        case 4: return "\u00a7bDiamond";
+        case 5: return "\u00a7cArdite";
+        case 6: return "\u00a79Cobalt";
+        case 7: return "\u00a75Manyullyn";
+        default: return "\u00a7k\u00a7k\u00a7k\u00a7k\u00a7k\u00a7k";
+        }
+    }
 }

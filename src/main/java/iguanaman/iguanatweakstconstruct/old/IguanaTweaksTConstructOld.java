@@ -1,4 +1,4 @@
-package iguanaman.iguanatweakstconstruct;
+package iguanaman.iguanatweakstconstruct.old;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -25,13 +25,13 @@ import tconstruct.tools.TinkerTools;
 import java.util.Arrays;
 import java.util.List;
 
-@Mod(modid= IguanaReference.MOD_ID, name=IguanaReference.MOD_NAME, version="1.6.X-1p",
-dependencies = "required-after:" + IguanaReference.TCON_MOD_ID + ";after:*")
-public class IguanaTweaksTConstruct {
+//@Mod(modid= IguanaReference.MOD_ID, name=IguanaReference.MOD_NAME, version="1.6.X-1p",
+//dependencies = "required-after:" + IguanaReference.TCON_MOD_ID + ";after:*")
+public class IguanaTweaksTConstructOld {
 
 	// The instance of your mod that Forge uses.
 	@Instance(IguanaReference.MOD_ID)
-	public static IguanaTweaksTConstruct instance;
+	public static IguanaTweaksTConstructOld instance;
 
 	// Says where the client and server 'proxy' code is loaded.
 	@SidedProxy(clientSide=IguanaReference.PROXY_CLIENT_CLASS, serverSide=IguanaReference.PROXY_SERVER_CLASS)
@@ -46,9 +46,13 @@ public class IguanaTweaksTConstruct {
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
+
+		//proxy.registerSounds();
+		//NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
+
 		IguanaConfig.init(event.getSuggestedConfigurationFile());
 
-		/*toolParts = Arrays.asList (
+		toolParts = Arrays.asList (
 				TinkerTools.toolRod, TinkerTools.pickaxeHead, TinkerTools.shovelHead, TinkerTools.hatchetHead,
 				TinkerTools.binding, TinkerTools.toughBinding, TinkerTools.toughRod, TinkerTools.largePlate,
 				TinkerTools.swordBlade, TinkerTools.wideGuard, TinkerTools.handGuard, TinkerTools.crossbar,
@@ -56,7 +60,9 @@ public class IguanaTweaksTConstruct {
 				TinkerTools.chiselHead, TinkerTools.scytheBlade, TinkerTools.broadAxeHead, TinkerTools.excavatorHead,
 				TinkerTools.largeSwordBlade, TinkerTools.hammerHead, TinkerTools.bowstring, TinkerTools.fletching,
 				TinkerTools.arrowhead );
-*/
+
+		//IguanaBlocks.init();
+		//IguanaItems.init();
 
         pulsar.registerPulse(new Leveling());
         pulsar.preInit(event);
@@ -70,6 +76,18 @@ public class IguanaTweaksTConstruct {
 
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
+		//proxy.registerRenderers();
+
+		//MaterialTweaks.init();
+		//ModifierTweaks.init();
+		//VariousTweaks.init();
+		//RemoveVanillaTools.init();
+		// TODO: need to re-implement harvest level tweaks
+		//HarvestLevelTweaks.init();
+
+		IguanaLog.info("Starting event handler");
+		//MinecraftForge.EVENT_BUS.register(new IguanaEventHandler());
+
         pulsar.postInit(event);
 	}
 
@@ -84,8 +102,26 @@ public class IguanaTweaksTConstruct {
             event.registerServerCommand(new IguanaCommandLevelUpTool());
             IguanaLog.debug("Adding command: toolxp");
             event.registerServerCommand(new IguanaCommandToolXP());
+            event.registerServerCommand(new debug());
 		}
 	}
 
+
+	public static String getHarvestLevelName (int num)
+	{
+		if (IguanaConfig.pickaxeBoostRequired && num > 1) --num;
+		switch (num)
+		{
+		case 0: return "\u00a77Stone";
+		case 1: return "\u00a76Copper";
+		case 2: return "\u00a74Iron";
+		case 3: return "\u00a7fTin";
+		case 4: return "\u00a7bDiamond";
+		case 5: return "\u00a7cArdite";
+		case 6: return "\u00a79Cobalt";
+		case 7: return "\u00a75Manyullyn";
+		default: return "\u00a7k\u00a7k\u00a7k\u00a7k\u00a7k\u00a7k";
+		}
+	}
 
 }

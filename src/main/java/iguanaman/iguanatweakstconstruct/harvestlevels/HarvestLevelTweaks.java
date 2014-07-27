@@ -9,6 +9,8 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.oredict.OreDictionary;
+import tconstruct.world.TinkerWorld;
 
 import static net.minecraft.init.Blocks.*;
 import static net.minecraft.init.Blocks.lit_redstone_ore;
@@ -21,6 +23,7 @@ public abstract class HarvestLevelTweaks {
     public static void modifyHarvestLevels() {
         Log.info("Modifying HarvestLevel of blocks and items");
 
+        modifyOredictBlocks();
         modifyVanillaBlocks();
 
         modifyTools();
@@ -33,17 +36,57 @@ public abstract class HarvestLevelTweaks {
         // ensure that the forgehooks are in place
         new ForgeHooks(); // this ensures that the static initializer of ForgeHooks is called already. Otherwise it overwrites our Harvestlevel changes.
         // see ForgeHooks.initTools()
-        Blocks.obsidian.setHarvestLevel("pickaxe", HarvestLevels._4_diamond);
-        for (Block block : new Block[]{emerald_ore, emerald_block, diamond_ore, diamond_block, gold_ore, gold_block, redstone_ore, lit_redstone_ore})
-        {
-            block.setHarvestLevel("pickaxe", HarvestLevels._4_diamond);
-        }
+
         Blocks.iron_ore.setHarvestLevel("pickaxe", HarvestLevels._2_copper);
         Blocks.iron_block.setHarvestLevel("pickaxe", HarvestLevels._2_copper);
+        Blocks.iron_bars.setHarvestLevel("pickaxe", HarvestLevels._2_copper);
         Blocks.lapis_ore.setHarvestLevel("pickaxe", HarvestLevels._2_copper);
         Blocks.lapis_block.setHarvestLevel("pickaxe", HarvestLevels._2_copper);
 
+        Blocks.gold_ore.setHarvestLevel("pickaxe", HarvestLevels._3_iron);
+        Blocks.gold_block.setHarvestLevel("pickaxe", HarvestLevels._3_iron);
+        Blocks.redstone_ore.setHarvestLevel("pickaxe", HarvestLevels._3_iron);
+        Blocks.lit_redstone_ore.setHarvestLevel("pickaxe", HarvestLevels._3_iron);
+
+        Blocks.obsidian.setHarvestLevel("pickaxe", HarvestLevels._4_diamond);
+        Blocks.diamond_ore.setHarvestLevel("pickaxe", HarvestLevels._4_diamond); // yes, diamond requires diamond level. good thing there's bronze/steel ;)
+        Blocks.diamond_block.setHarvestLevel("pickaxe", HarvestLevels._4_diamond);
+        Blocks.emerald_ore.setHarvestLevel("pickaxe", HarvestLevels._4_diamond);
+        Blocks.emerald_block.setHarvestLevel("pickaxe", HarvestLevels._4_diamond);
         Log.trace("Modified vanilla blocks");
+    }
+
+    private static void modifyOredictBlocks()
+    {
+        for (int i = 0; i < oreDictLevels.length; ++i)
+        {
+            for (String materialName : oreDictLevels[i]) {
+                // regular ore variants
+                for (ItemStack oreStack : OreDictionary.getOres("ore" + materialName)) modifyBlock(oreStack, i);
+                // nether ore variants
+                for (ItemStack oreStack : OreDictionary.getOres("oreNether" + materialName)) modifyBlock(oreStack, i);
+                // full blocks (metal-blocks)
+                for (ItemStack oreStack : OreDictionary.getOres("block" + materialName)) modifyBlock(oreStack, i);
+                // stone-ores? dunno which mod adds that. leave it in for compatibility
+                for (ItemStack oreStack : OreDictionary.getOres("stone" + materialName)) modifyBlock(oreStack, i);
+                // bricks from metallurgy
+                for (ItemStack oreStack : OreDictionary.getOres("brick" + materialName)) modifyBlock(oreStack, i);
+            }
+        }
+
+        // metal-blocks
+        Log.trace("Modified oredicted blocks");
+    }
+
+
+
+    private static void modifyBlock(ItemStack stack, int harvestLevel)
+    {
+        Block block = Block.getBlockFromItem(stack.getItem());
+
+        Log.trace(String.format("Changed Harvest Level of %s from %d to %d", block.getLocalizedName(), block.getHarvestLevel(stack.getItemDamage()), harvestLevel));
+
+        block.setHarvestLevel("pickaxe", harvestLevel, stack.getItemDamage());
     }
 
     private static void modifyTools()
@@ -81,4 +124,26 @@ public abstract class HarvestLevelTweaks {
 
         Log.trace("Modified tools");
     }
+
+    // HarvestLevels
+    public static String[][] oreDictLevels = {
+            // 0: stone
+            {},
+            // 1: flint
+            {"Copper", "Coal", "Tetrahedrite", "Aluminum", "Aluminium", "NaturalAluminum", "AluminumBrass", "Shard", "Bauxite", "Zinc"},
+            // 2: copper
+            {"Iron", "Pyrite", "Lead", "Silver", "Lapis"},
+            // 3: iron
+            {"Tin", "Cassiterite", "Gold", "Redstone", "Steel", "Galena", "Nickel", "Invar", "Electrum", "Sphalerite"},
+            // 4: diamond/bronze
+            {"Diamond", "Emerald", "Ruby", "Sapphire", "Cinnabar", "Quartz",
+                    "Obsidian", "CertusQuartz", "Tungstate", "Sodalite", "GreenSapphire", "BlackGranite", "RedGranite"},
+            // 5: Obsidian/Alumite
+            {"Ardite", "Uranium", "Olivine", "Sheldonite", "Osmium", "Platinum"},
+            // 6: Ardite
+            {"Cobalt", "Iridium", "Cooperite", "Titanium"},
+            // 7: Cobalt
+            {"Manyullyn"}
+            // 8: Manyullyn (empty)
+    };
 }

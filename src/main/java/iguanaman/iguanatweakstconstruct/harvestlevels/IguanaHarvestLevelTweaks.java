@@ -38,19 +38,6 @@ public class IguanaHarvestLevelTweaks {
         public static final int _8_manyullym = 8;
     }
 
-    // HarvestLevels
-    public static String[][] oreDictLevels = {
-            {},
-            {"Copper", "Coal", "Tetrahedrite", "Aluminum", "Aluminium", "NaturalAluminum", "AluminumBrass", "Shard", "Bauxite", "Zinc"},
-            {"Iron", "Pyrite", "Lead", "Silver"},
-            {"Tin", "Cassiterite", "Gold", "Lapis", "Steel", "Galena", "Nickel", "Invar", "Electrum", "Sphalerite"},
-            {"Diamond", "Emerald", "Redstone", "Ruby", "Sapphire", "Cinnabar", "Quartz",
-                    "Obsidian", "CertusQuartz", "Tungstate", "Sodalite", "GreenSapphire", "BlackGranite", "RedGranite"},
-            {"Ardite", "Uranium", "Olivine", "Sheldonite", "Osmium", "Platinum"},
-            {"Cobalt", "Iridium", "Cooperite", "Titanium"},
-            {"Manyullyn"}
-    };
-
     @Handler
     public void applyTinkerTweaks(FMLPreInitializationEvent event)
     {

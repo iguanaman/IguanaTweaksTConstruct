@@ -45,7 +45,7 @@ public abstract class LevelingTooltips {
         if (tags == null) tags = tool.getTagCompound().getCompoundTag("InfiTool");
 
         int requiredXp = LevelingLogic.getRequiredXp(tool, tags, boostXp);
-        long currentXp = boostXp ? LevelingLogic.getBoostXp(tags) : LevelingLogic.getBoostXp(tags);
+        long currentXp = boostXp ? LevelingLogic.getBoostXp(tags) : LevelingLogic.getXp(tags);
         float xpPercentage = (float)currentXp / (float)requiredXp * 100f;
         String xpPercentageString = String.format("%.2f", xpPercentage) + "%";
 

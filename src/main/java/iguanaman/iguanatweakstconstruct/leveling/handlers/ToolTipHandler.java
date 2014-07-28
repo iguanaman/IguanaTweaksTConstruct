@@ -54,22 +54,25 @@ public class ToolTipHandler {
         {
             int hLevel = tags.getInteger("HarvestLevel");
             String mLvl = LevelingTooltips.getMiningLevelTooltip(hLevel);
-            // is the pick applicable for mining level boosting? if yes display xp
-            if(LevelingLogic.hasBoostXp(tags) && LevelingLogic.canBoostMiningLevel(tags)) {
-                // add minimal xp if config option is set
-                if (!advanced && Config.showMinimalTooltipXP && !LevelingLogic.isBoosted(tags))
+            // display minimal tooltip?
+            if(Config.showMinimalTooltipXP && !advanced)
+            {
+                if(LevelingLogic.hasBoostXp(tags) && LevelingLogic.canBoostMiningLevel(tags))
                     mLvl += " (" + LevelingTooltips.getBoostXpString(stack, tags, false) + ")";
-                inserter.add(mLvl);
-
-                // advanced mining level boost progress info
-                if (advanced && Config.levelingPickaxeBoost && Config.showTooltipXP) {
-                    if (LevelingLogic.isBoosted(tags))
-                        inserter.add(LevelingTooltips.getBoostedTooltip());
-                    else
-                        inserter.add(LevelingTooltips.getBoostXpToolTip(stack, tags));
-                }
             }
-            else inserter.add(mLvl);
+
+            inserter.add(mLvl);
+
+            // display extended tooltip?
+            if(Config.showTooltipXP && advanced && LevelingLogic.hasBoostXp(tags))
+            {
+                // xp if not boosted
+                if(LevelingLogic.canBoostMiningLevel(tags))
+                    inserter.add(LevelingTooltips.getBoostXpToolTip(stack, tags));
+                // otherwise boosted message
+                else if(LevelingLogic.isBoosted(tags))
+                    inserter.add(LevelingTooltips.getBoostedTooltip());
+            }
         }
 
         // add skill level

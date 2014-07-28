@@ -67,10 +67,9 @@ public abstract class HarvestLevels {
             case 1: return DARK_RED + "Iron";
             case 2: return RED + "Redstone";
             case 3: return LIGHT_PURPLE + "Obsidian";
-            case 4: return RED + "Ardite";
-            case 5: return BLUE + "Cobalt";
-            case 6: return DARK_PURPLE + "Manyullyn";
-            case 7: return DARK_PURPLE + "Manyullyn" + LIGHT_PURPLE + "+";
+            case 4: return BLUE + "Cobalt";
+            case 5: return DARK_PURPLE + "Manyullyn";
+            case 6: return DARK_PURPLE + "Manyullyn" + LIGHT_PURPLE + "+";
             default: return String.format("%s%s%s%s%s%s", OBFUSCATED ,OBFUSCATED, OBFUSCATED, OBFUSCATED, OBFUSCATED, OBFUSCATED);
         }
     }

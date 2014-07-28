@@ -31,7 +31,7 @@ import tconstruct.tools.ToolProxyCommon;
 
 @Pulse(id = Reference.PULSE_HARVESTTWEAKS, description = "Modify tool and block mining levels to create a tiered-ish progression")
 public class IguanaHarvestLevelTweaks {
-    @SidedProxy(clientSide = "iguanaman.iguanatweakstconstruct.harvestlevels.proxy.HarvestClientProxy", serverSide = "\"iguanaman.iguanatweakstconstruct.harvestlevels.proxy.HarvestCommonProxy")
+    @SidedProxy(clientSide = "iguanaman.iguanatweakstconstruct.harvestlevels.proxy.HarvestClientProxy", serverSide = "iguanaman.iguanatweakstconstruct.harvestlevels.proxy.HarvestCommonProxy")
     public static HarvestCommonProxy proxy;
 
     @Handler
@@ -44,6 +44,7 @@ public class IguanaHarvestLevelTweaks {
     @Handler
     public void registerHandlers(FMLInitializationEvent event)
     {
+        // the only thing this does is replacing GUIs with our own GUIs to display the correct harvest levels
         proxy.initialize();
     }
 

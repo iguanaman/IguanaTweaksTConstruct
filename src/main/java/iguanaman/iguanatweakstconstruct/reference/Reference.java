@@ -9,6 +9,8 @@ public class Reference {
     public static final String MOD_NAME = "Iguana Tweaks for Tinker's Construct";
     public static final String TCON_MOD_ID = "TConstruct";
 
+    public static final String RESOURCE = MOD_ID.toLowerCase();
+
     public static final String PULSE_LEVELING = "ToolLeveling";
     public static final String PULSE_HARVESTTWEAKS = "HarvestLevelTweaks";
 

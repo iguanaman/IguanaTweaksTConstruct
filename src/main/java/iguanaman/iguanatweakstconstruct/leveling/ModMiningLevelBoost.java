@@ -9,8 +9,8 @@ import tconstruct.modifiers.tools.ModBoolean;
 public class ModMiningLevelBoost extends ModBoolean {
     private int maxLvl = 0;
 
-    public ModMiningLevelBoost(ItemStack[] recipe, int maxLvl) {
-        super(recipe, 0, "Mining Level Boost", EnumChatFormatting.GREEN.toString(), "MobHead");
+    public ModMiningLevelBoost(ItemStack[] recipe, int effect, int maxLvl) {
+        super(recipe, effect, "Mining Level Boost", EnumChatFormatting.GREEN.toString(), recipe[0].getDisplayName());
 
         this.maxLvl = maxLvl;
     }
@@ -36,10 +36,5 @@ public class ModMiningLevelBoost extends ModBoolean {
         LevelingLogic.levelUpMiningLevel(tool, null, false);
 
         super.modify(input, tool);
-    }
-
-    @Override
-    public void addMatchingEffect(ItemStack input) {
-        // no effect to display :(
     }
 }

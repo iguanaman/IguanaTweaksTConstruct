@@ -13,7 +13,10 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import tconstruct.library.TConstructRegistry;
+import tconstruct.library.client.TConstructClientRegistry;
 import tconstruct.library.crafting.ModifyBuilder;
+import tconstruct.library.tools.ToolCore;
+import tconstruct.tools.TinkerTools;
 
 /**
  * The Leveling Pulse. If Leveling were a separate mod instead of pulse-model, this'd be a @Mod
@@ -34,13 +37,22 @@ public class IguanaToolLeveling {
         TConstructRegistry.registerActiveToolMod(new LevelingActiveToolMod());
 
         // mobhead modifiers for mining boost
-        ModifyBuilder.registerModifier(new ModMiningLevelBoost(getMobHead(HEAD_Zombie), HarvestLevels._2_copper));
-        ModifyBuilder.registerModifier(new ModMiningLevelBoost(getMobHead(HEAD_Skeleton), HarvestLevels._3_iron));
-        ModifyBuilder.registerModifier(new ModMiningLevelBoost(getMobHead(HEAD_Creeper), HarvestLevels._4_bronze));
+        ModifyBuilder.registerModifier(new ModMiningLevelBoost(getMobHead(HEAD_Zombie), 20, HarvestLevels._2_copper));
+        ModifyBuilder.registerModifier(new ModMiningLevelBoost(getMobHead(HEAD_Skeleton), 21, HarvestLevels._3_iron));
+        ModifyBuilder.registerModifier(new ModMiningLevelBoost(getMobHead(HEAD_Creeper), 22, HarvestLevels._4_bronze));
         // blaze
         // enderman
-        ModifyBuilder.registerModifier(new ModMiningLevelBoost(getMobHead(HEAD_Wither), HarvestLevels._7_ardite));
-        ModifyBuilder.registerModifier(new ModMiningLevelBoost(new ItemStack[]{new ItemStack(Items.nether_star)}, HarvestLevels._8_cobalt));
+        ModifyBuilder.registerModifier(new ModMiningLevelBoost(getMobHead(HEAD_Wither), 25, HarvestLevels._7_ardite));
+        ModifyBuilder.registerModifier(new ModMiningLevelBoost(new ItemStack[]{new ItemStack(Items.nether_star)}, 26, HarvestLevels._8_cobalt));
+
+        // rendering code
+        ToolCore[] tools = new ToolCore[] { TinkerTools.pickaxe, TinkerTools.hammer };
+        int[] modifierIds = new int[] { 20, 21, 22, 24, 25, 26 };
+        String[] renderNames = new String[] { "zombiehead", "skeletonskull", "creeperhead", "endermanhead", "witherskeletonskull", "netherstar" };
+
+        for (ToolCore tool : tools)
+            for (int index = 0; index < modifierIds.length; ++index)
+                TConstructClientRegistry.addEffectRenderMapping(tool, modifierIds[index], Reference.RESOURCE, renderNames[index], true);
     }
 
     private ItemStack[] getMobHead(int meta)

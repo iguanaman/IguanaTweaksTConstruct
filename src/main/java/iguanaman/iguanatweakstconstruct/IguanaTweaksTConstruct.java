@@ -36,6 +36,9 @@ public class IguanaTweaksTConstruct {
 	@SidedProxy(clientSide= Reference.PROXY_CLIENT_CLASS, serverSide= Reference.PROXY_SERVER_CLASS)
 	public static CommonProxy proxy;
 
+    public static boolean isToolLevelingActive = false;
+    public static boolean isHarvestTweaksActive = false;
+
 	public static List<Item> toolParts = null;
 
     // TODO: decide wether or not the same cfg as tcon should be used
@@ -46,6 +49,11 @@ public class IguanaTweaksTConstruct {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		Config.init(event.getSuggestedConfigurationFile());
+        // workaround to know which modules are active.. :I
+        PulseMeta meta = new PulseMeta(Reference.PULSE_LEVELING, "", false, false);
+        isToolLevelingActive = pulseCFG.isModuleEnabled(meta);
+        meta = new PulseMeta(Reference.PULSE_HARVESTTWEAKS, "", false, false);
+        isHarvestTweaksActive = pulseCFG.isModuleEnabled(meta);
 
 		/*toolParts = Arrays.asList (
 				TinkerTools.toolRod, TinkerTools.pickaxeHead, TinkerTools.shovelHead, TinkerTools.hatchetHead,
@@ -77,8 +85,7 @@ public class IguanaTweaksTConstruct {
 	public void serverStarting(FMLServerStartingEvent event)
 	{
         // TODO: change this to a proper isModuleLoaded or something in Pulsar 0.4+ (when released/implemented)
-        PulseMeta meta = new PulseMeta(Reference.PULSE_LEVELING, "", false, false);
-		if (pulseCFG.isModuleEnabled(meta))
+		if (isToolLevelingActive)
 		{
             Log.debug("Adding command: leveluptool");
             event.registerServerCommand(new IguanaCommandLevelUpTool());

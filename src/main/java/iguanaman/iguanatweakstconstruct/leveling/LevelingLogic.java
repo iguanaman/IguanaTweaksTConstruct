@@ -1,9 +1,9 @@
 package iguanaman.iguanatweakstconstruct.leveling;
 
-import iguanaman.iguanatweakstconstruct.harvestlevels.IguanaHarvestLevelTweaks;
 import iguanaman.iguanatweakstconstruct.old.modifiers.*;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
+import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -46,8 +46,8 @@ public abstract class LevelingLogic {
 
     public static boolean canBoostMiningLevel(int hLevel)
     {
-        return hLevel >= IguanaHarvestLevelTweaks.HarvestLevels._2_copper &&
-               (!Config.pickaxeBoostRequired && hLevel < IguanaHarvestLevelTweaks.HarvestLevels._8_cobalt || Config.pickaxeBoostRequired && hLevel < IguanaHarvestLevelTweaks.HarvestLevels._9_manyullym);
+        return hLevel >= HarvestLevels._2_copper &&
+               (!Config.pickaxeBoostRequired && hLevel < HarvestLevels._8_cobalt || Config.pickaxeBoostRequired && hLevel < HarvestLevels._9_manyullym);
     }
 
     /**
@@ -197,7 +197,7 @@ public abstract class LevelingLogic {
 
 		if (miningBoost)
 		{
-			int harvestLevelCopper = IguanaHarvestLevelTweaks.HarvestLevels._2_copper;
+			int harvestLevelCopper = HarvestLevels._2_copper;
 			int harvestLevel = TConstructRegistry.getMaterial(tags.getInteger("Head")).harvestLevel();
 			if (harvestLevel >= harvestLevelCopper) base *= Math.pow(Config.xpPerLevelMultiplier, harvestLevel - harvestLevelCopper);
 			base *= Config.levelingPickaxeBoostXpPercentage / 100f;

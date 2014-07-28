@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import iguanaman.iguanatweakstconstruct.reference.Reference;
+import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import tconstruct.items.tools.Hammer;
@@ -391,7 +391,7 @@ public class IguanaModUpgrade extends ItemModifier {
 		//add mining level tooltip
 		if (tool.getItem() instanceof Pickaxe || tool.getItem() instanceof Hammer)
 		{
-			String mLevel = Reference.getHarvestLevelName(tags.getInteger("HarvestLevel"));
+			String mLevel = HarvestLevels.getHarvestLevelName(tags.getInteger("HarvestLevel"));
 			tips.add("Mining Level: " + mLevel);
 			modifierTips.add("");
 		}

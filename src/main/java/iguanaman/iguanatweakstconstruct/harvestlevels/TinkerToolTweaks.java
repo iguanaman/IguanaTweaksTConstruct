@@ -6,7 +6,7 @@ import tconstruct.library.TConstructRegistry;
 import tconstruct.library.tools.ToolMaterial;
 import tconstruct.tools.TinkerTools;
 
-import static iguanaman.iguanatweakstconstruct.harvestlevels.IguanaHarvestLevelTweaks.HarvestLevels.*;
+import static iguanaman.iguanatweakstconstruct.util.HarvestLevels.*;
 
 /**
  * Used to modify the harvest levels and speeds of the tinker tool parts.

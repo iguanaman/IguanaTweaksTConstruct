@@ -1,7 +1,7 @@
 package iguanaman.iguanatweakstconstruct.leveling;
 
 import iguanaman.iguanatweakstconstruct.reference.Config;
-import iguanaman.iguanatweakstconstruct.reference.Reference;
+import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -71,7 +71,7 @@ public abstract class LevelingTooltips {
 
     public static String getMiningLevelTooltip(int hLevel)
     {
-        return "Mining Level: " + Reference.getHarvestLevelName(hLevel);
+        return "Mining Level: " + HarvestLevels.getHarvestLevelName(hLevel);
     }
 
     public static String getBoostedTooltip()

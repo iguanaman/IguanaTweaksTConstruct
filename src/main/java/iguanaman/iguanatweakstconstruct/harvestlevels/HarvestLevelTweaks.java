@@ -1,6 +1,6 @@
 package iguanaman.iguanatweakstconstruct.harvestlevels;
 
-import iguanaman.iguanatweakstconstruct.harvestlevels.IguanaHarvestLevelTweaks.HarvestLevels;
+import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 
 import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.block.Block;
@@ -10,10 +10,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.oredict.OreDictionary;
-import tconstruct.world.TinkerWorld;
-
-import static net.minecraft.init.Blocks.*;
-import static net.minecraft.init.Blocks.lit_redstone_ore;
 
 /**
  * Used to modify the harvest levels of all known/findable tools and blocks. Vanilla and modded.

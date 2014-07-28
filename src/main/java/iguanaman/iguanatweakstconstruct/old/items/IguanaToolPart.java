@@ -4,7 +4,7 @@ import iguanaman.iguanatweakstconstruct.reference.Config;
 
 import java.util.List;
 
-import iguanaman.iguanatweakstconstruct.reference.Reference;
+import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import tconstruct.library.TConstructRegistry;
@@ -36,7 +36,7 @@ public class IguanaToolPart extends ToolPart {
 
 			if (partName.equals("PickHead") || partName.equals("HammerHead") || partName.equals("ShovelHead")
 					|| partName.equals("ExcavatorHead"))
-				par3List.add("Mining Level: " + Reference.getHarvestLevelName(material.harvestLevel));
+				par3List.add("Mining Level: " + HarvestLevels.getHarvestLevelName(material.harvestLevel));
 
 			if (
 					partName.equals("PickHead") || partName.equals("HammerHead") || partName.equals("ShovelHead") || partName.equals("ExcavatorHead")

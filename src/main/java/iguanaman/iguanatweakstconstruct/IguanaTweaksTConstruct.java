@@ -16,6 +16,7 @@ import iguanaman.iguanatweakstconstruct.leveling.commands.debug;
 import iguanaman.iguanatweakstconstruct.proxy.CommonProxy;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
+import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import mantle.pulsar.config.ForgeCFG;
 import mantle.pulsar.control.PulseManager;
@@ -65,6 +66,10 @@ public class IguanaTweaksTConstruct {
 				TinkerTools.arrowhead );
 */
 
+        // if we don't use our custom harvest levels, we have to adjust what we're using
+        if(!isHarvestTweaksActive)
+            HarvestLevels.adjustToVanillaLevels();
+
         pulsar.registerPulse(new IguanaToolLeveling());
         pulsar.registerPulse(new IguanaHarvestLevelTweaks());
         pulsar.preInit(event);
@@ -99,6 +104,6 @@ public class IguanaTweaksTConstruct {
     // backwards compatibility
     public static String getHarvestLevelName (int num)
     {
-        return Reference.getHarvestLevelName(num);
+        return HarvestLevels.getHarvestLevelName(num);
     }
 }

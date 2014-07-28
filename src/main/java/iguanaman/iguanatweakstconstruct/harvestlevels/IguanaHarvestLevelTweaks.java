@@ -1,12 +1,17 @@
 package iguanaman.iguanatweakstconstruct.harvestlevels;
 
+import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import iguanaman.iguanatweakstconstruct.harvestlevels.proxy.HarvestCommonProxy;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
+import iguanaman.iguanatweakstconstruct.util.Log;
 import mantle.pulsar.pulse.Handler;
 import mantle.pulsar.pulse.Pulse;
 import net.minecraftforge.common.MinecraftForge;
+import tconstruct.common.TProxyCommon;
+import tconstruct.tools.ToolProxyCommon;
 
 /**
  * The Harvest-Tweaks Pulse. If this were a separate mod instead of pulse-module, it'd be a @Mod
@@ -26,11 +31,20 @@ import net.minecraftforge.common.MinecraftForge;
 
 @Pulse(id = Reference.PULSE_HARVESTTWEAKS, description = "Modify tool and block mining levels to create a tiered-ish progression")
 public class IguanaHarvestLevelTweaks {
+    @SidedProxy(clientSide = "iguanaman.iguanatweakstconstruct.harvestlevels.proxy.HarvestClientProxy", serverSide = "\"iguanaman.iguanatweakstconstruct.harvestlevels.proxy.HarvestCommonProxy")
+    public static HarvestCommonProxy proxy;
 
     @Handler
     public void applyTinkerTweaks(FMLPreInitializationEvent event)
     {
         TinkerToolTweaks.modifyToolMaterials();
+
+    }
+
+    @Handler
+    public void registerHandlers(FMLInitializationEvent event)
+    {
+        proxy.initialize();
     }
 
     @Handler

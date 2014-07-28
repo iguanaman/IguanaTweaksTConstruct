@@ -41,6 +41,8 @@ public abstract class LevelingLogic {
     public static int getHarvestLevel(NBTTagCompound tags) { return tags.hasKey("HarvestLevel") ? tags.getInteger("HarvestLevel") : -1; }
     public static long getXp(NBTTagCompound tags) { return tags.getLong(TAG_EXP); }
     public static long getBoostXp(NBTTagCompound tags) { return tags.getLong(TAG_BOOST_EXP); }
+    public static boolean hasXp(NBTTagCompound tags) { return tags.hasKey(TAG_EXP); }
+    public static boolean hasBoostXp(NBTTagCompound tags) { return tags.hasKey(TAG_BOOST_EXP); }
     public static boolean isBoosted(NBTTagCompound tags) { return tags.getBoolean(TAG_IS_BOOSTED); }
     public static boolean isMaxLevel(NBTTagCompound tags) { return getLevel(tags) >= MAX_LEVEL; }
 
@@ -99,7 +101,7 @@ public abstract class LevelingLogic {
         // handle mining boost XP
         if(Config.levelingPickaxeBoost) {
             // already got a boost?
-            if (tags.hasKey(TAG_BOOST_EXP) && !tags.hasKey(TAG_IS_BOOSTED))
+            if (hasBoostXp(tags) && !isBoosted(tags))
                 // we can only if we have a proper material (>stone) and are not max mining level already
                 if (canBoostMiningLevel(hLevel)) {
                     tags.setLong(TAG_BOOST_EXP, boostXP);
@@ -126,15 +128,19 @@ public abstract class LevelingLogic {
 
 		NBTTagCompound tags = tool.getTagCompound().getCompoundTag("InfiTool");
 
+        // only if we have a level or xp
+        if(!tags.hasKey(TAG_LEVEL) || !hasXp(tags))
+            return;
+
         // tool EXP
 		Long toolXp = -1L;
-        if(tags.hasKey(TAG_EXP))
-            toolXp = tags.getLong(TAG_EXP) + xp;
+        if(hasXp(tags))
+            toolXp = getXp(tags) + xp;
 
         // mininglevel boost EXP
         Long boostXp = -1L;
-        if(tags.hasKey(TAG_BOOST_EXP))
-            boostXp = tags.getLong(TAG_BOOST_EXP) + xp;
+        if(hasBoostXp(tags))
+            boostXp = getBoostXp(tags) + xp;
 
 
         // update the tool information
@@ -296,7 +302,8 @@ public abstract class LevelingLogic {
             return;
 
         // reset miningboost xp to 0
-        tags.setLong(TAG_BOOST_EXP, 0L);
+        if(hasBoostXp(tags))
+            tags.setLong(TAG_BOOST_EXP, 0L);
 
         // fancy message
 		if (!world.isRemote)

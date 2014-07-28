@@ -15,6 +15,8 @@ public abstract class HarvestLevels {
     public static int _8_cobalt = 8;
     public static int _9_manyullym = 9;
 
+    public static int max = 9;
+
     private static boolean vanilla = false;
 
     // needed if HarvestLevels module is deactivated to achieve vanilla mining levels
@@ -29,6 +31,8 @@ public abstract class HarvestLevels {
         _7_ardite = 5;
         _8_cobalt = 6;
         _9_manyullym = 7;
+
+        max = 7;
 
         vanilla = true;
     }

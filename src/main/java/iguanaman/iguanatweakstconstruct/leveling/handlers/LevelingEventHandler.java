@@ -12,6 +12,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import tconstruct.items.tools.Hammer;
@@ -35,21 +36,26 @@ public class LevelingEventHandler {
             if (event.source.getEntity() instanceof EntityPlayer)
             {
                 EntityPlayer player = (EntityPlayer) event.source.getEntity();
-                ItemStack stack = player.getCurrentEquippedItem();
-                if (stack != null && stack.hasTagCompound())
-                    if (stack.getItem() instanceof Weapon || stack.getItem() instanceof Shortbow && event.source.damageType.equals("arrow"))
-                    {
-                        long xp = Math.round(event.ammount);
-                        if (event.entityLiving instanceof EntityAnimal) xp = Math.round(event.ammount / 4f);
+                // fake player?
+                if(!(player instanceof FakePlayer))
+                {
+                    ItemStack stack = player.getCurrentEquippedItem();
+                    if (stack != null && stack.hasTagCompound())
+                        if (stack.getItem() instanceof Weapon || stack.getItem() instanceof Shortbow && event.source.damageType.equals("arrow")) {
+                            long xp = Math.round(event.ammount);
+                            if (event.entityLiving instanceof EntityAnimal) xp = Math.round(event.ammount / 4f);
 
-                        if (xp > 0) LevelingLogic.addXP(stack, player, xp);
-                    }
+                            if (xp > 0) LevelingLogic.addXP(stack, player, xp);
+                        }
+                }
             }
     }
 
     @SubscribeEvent
     public void onUseHoe(UseHoeEvent event) {
         EntityPlayer player = event.entityPlayer;
+        // no fake players
+        if(player instanceof FakePlayer) return;
         ItemStack stack = event.current;
         if (stack != null && stack.hasTagCompound() && stack.getItem() instanceof ToolCore)
             LevelingLogic.addXP(stack, player, 1L);

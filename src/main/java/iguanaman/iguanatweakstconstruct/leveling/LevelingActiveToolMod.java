@@ -7,6 +7,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.util.FakePlayer;
 import tconstruct.library.ActiveToolMod;
 import tconstruct.library.tools.HarvestTool;
 import tconstruct.library.tools.ToolCore;
@@ -25,6 +26,8 @@ public class LevelingActiveToolMod extends ActiveToolMod {
     @Override
     public boolean beforeBlockBreak(ToolCore tool, ItemStack stack, int x, int y, int z, EntityLivingBase entity) {
         if (!(entity instanceof EntityPlayer)) return false;
+        // nope, you don't use an autonomous activator!
+        if(entity instanceof FakePlayer) return false;
         // why are you breaking this block with that tool! It's not a harvest tool derp!
         if(!(tool instanceof HarvestTool)) return false;
 
@@ -46,7 +49,7 @@ public class LevelingActiveToolMod extends ActiveToolMod {
         strong = strength >= 1.0f;
         effective = harvestTool.isEffective(block.getMaterial());
 
-        Log.trace("Tool is [harvestable: '" + harvestable + "', effective: '" + effective + "', strong: '" + strong + "']");
+        //Log.trace("Tool is [harvestable: '" + harvestable + "', effective: '" + effective + "', strong: '" + strong + "']");
 
         // only give xp if the use makes sense
         if(harvestable && effective && strong)

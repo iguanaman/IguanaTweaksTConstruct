@@ -48,7 +48,7 @@ public abstract class HarvestLevels {
         case 1: return GOLD + "Copper";
         case 2: return DARK_RED + "Iron";
         case 3: return WHITE + "Tin";
-        case 4: return AQUA + "Diamond";
+        case 4: return RED + "Redstone";
         case 5: return LIGHT_PURPLE + "Obsidian";
         case 6: return RED + "Ardite";
         case 7: return BLUE + "Cobalt";
@@ -65,7 +65,7 @@ public abstract class HarvestLevels {
         {
             case 0: return GRAY + "Stone";
             case 1: return DARK_RED + "Iron";
-            case 2: return AQUA + "Diamond";
+            case 2: return RED + "Redstone";
             case 3: return LIGHT_PURPLE + "Obsidian";
             case 4: return RED + "Ardite";
             case 5: return BLUE + "Cobalt";

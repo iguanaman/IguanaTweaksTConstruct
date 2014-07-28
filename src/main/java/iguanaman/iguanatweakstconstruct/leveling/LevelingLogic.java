@@ -41,15 +41,21 @@ public abstract class LevelingLogic {
     public static int getHarvestLevel(NBTTagCompound tags) { return tags.hasKey("HarvestLevel") ? tags.getInteger("HarvestLevel") : -1; }
     public static long getXp(NBTTagCompound tags) { return tags.getLong(TAG_EXP); }
     public static long getBoostXp(NBTTagCompound tags) { return tags.getLong(TAG_BOOST_EXP); }
+    public static boolean hasLevel(NBTTagCompound tags) { return tags.hasKey(TAG_LEVEL); }
     public static boolean hasXp(NBTTagCompound tags) { return tags.hasKey(TAG_EXP); }
     public static boolean hasBoostXp(NBTTagCompound tags) { return tags.hasKey(TAG_BOOST_EXP); }
     public static boolean isBoosted(NBTTagCompound tags) { return tags.getBoolean(TAG_IS_BOOSTED); }
     public static boolean isMaxLevel(NBTTagCompound tags) { return getLevel(tags) >= MAX_LEVEL; }
 
-    public static boolean canBoostMiningLevel(int hLevel)
+    /**
+    * can only be boosted if:
+    * - tool was created while pick boosting was active
+    * - tool hasn't been boosted yet
+    * - tool doesn't have max mining level already
+    */
+    public static boolean canBoostMiningLevel(NBTTagCompound tags)
     {
-        return hLevel >= HarvestLevels._2_copper &&
-               (!Config.pickaxeBoostRequired && hLevel < HarvestLevels._8_cobalt || Config.pickaxeBoostRequired && hLevel < HarvestLevels._9_manyullym);
+        return tags.hasKey(TAG_IS_BOOSTED) && !isBoosted(tags) && getHarvestLevel(tags) < HarvestLevels.max;
     }
 
     /**
@@ -62,9 +68,19 @@ public abstract class LevelingLogic {
         tag.setInteger(TAG_LEVEL, 1);
         // and no xp :(
         tag.setLong(TAG_EXP, 0);
+
         // mining level boost
-        if(Config.levelingPickaxeBoost)
+        int hlvl = tag.getInteger("HarvestLevel");
+        // only tools with >stone level can be boosted
+        if(Config.levelingPickaxeBoost && hlvl > 0) {
             tag.setLong(TAG_BOOST_EXP, 0);
+            tag.setBoolean(TAG_IS_BOOSTED, false);
+
+            // reduce harvestlevel by 1 if pickaxe boosting is required
+            if(Config.pickaxeBoostRequired) {
+                    tag.setInteger("HarvestLevel", hlvl - 1);
+            }
+        }
     }
 
     /**
@@ -76,16 +92,15 @@ public abstract class LevelingLogic {
 	public static void updateXP(ItemStack tool, EntityPlayer player, long toolXP, long boostXP)
 	{
 		NBTTagCompound tags = tool.getTagCompound().getCompoundTag("InfiTool");
-		if (!tags.hasKey(TAG_LEVEL)) return;
+		if (!hasLevel(tags)) return;
 
 		int level = getLevel(tags);
-		int hLevel = getHarvestLevel(tags);
 
 		boolean leveled = false;
 		boolean pickLeveled = false;
 
         // Update Tool XP
-		if (toolXP >= 0 && tags.hasKey(TAG_EXP) && level > 0 && level < MAX_LEVEL)
+		if (toolXP >= 0 && hasXp(tags) && level > 0 && level < MAX_LEVEL)
 		{
             // set new xp value
 			tags.setLong(TAG_EXP, toolXP);
@@ -100,19 +115,17 @@ public abstract class LevelingLogic {
 
         // handle mining boost XP
         if(Config.levelingPickaxeBoost) {
-            // already got a boost?
-            if (hasBoostXp(tags) && !isBoosted(tags))
-                // we can only if we have a proper material (>stone) and are not max mining level already
-                if (canBoostMiningLevel(hLevel)) {
-                    tags.setLong(TAG_BOOST_EXP, boostXP);
+            // we can only if we have a proper material (>stone) and are not max mining level already
+            if (canBoostMiningLevel(tags)) {
+                tags.setLong(TAG_BOOST_EXP, boostXP);
 
-                    // check for mining boost levelup!
-                    if (boostXP >= getRequiredBoostXp(tool)) {
-                        levelUpMiningLevel(tool, player, leveled);
+                // check for mining boost levelup!
+                if (boostXP >= getRequiredBoostXp(tool)) {
+                    levelUpMiningLevel(tool, player, leveled);
 
-                        pickLeveled = true;
-                    }
+                    pickLeveled = true;
                 }
+            }
         }
 
 
@@ -129,7 +142,7 @@ public abstract class LevelingLogic {
 		NBTTagCompound tags = tool.getTagCompound().getCompoundTag("InfiTool");
 
         // only if we have a level or xp
-        if(!tags.hasKey(TAG_LEVEL) || !hasXp(tags))
+        if(!hasLevel(tags) || !hasXp(tags))
             return;
 
         // tool EXP

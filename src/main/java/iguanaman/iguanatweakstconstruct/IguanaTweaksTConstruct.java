@@ -70,8 +70,8 @@ public class IguanaTweaksTConstruct {
         if(!isHarvestTweaksActive)
             HarvestLevels.adjustToVanillaLevels();
 
-        pulsar.registerPulse(new IguanaToolLeveling());
         pulsar.registerPulse(new IguanaHarvestLevelTweaks());
+        pulsar.registerPulse(new IguanaToolLeveling());
         pulsar.preInit(event);
 	}
 

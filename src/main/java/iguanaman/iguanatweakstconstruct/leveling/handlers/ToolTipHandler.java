@@ -55,7 +55,7 @@ public class ToolTipHandler {
             int hLevel = tags.getInteger("HarvestLevel");
             String mLvl = LevelingTooltips.getMiningLevelTooltip(hLevel);
             // is the pick applicable for mining level boosting? if yes display xp
-            if(LevelingLogic.hasBoostXp(tags) && LevelingLogic.canBoostMiningLevel(hLevel)) {
+            if(LevelingLogic.hasBoostXp(tags) && LevelingLogic.canBoostMiningLevel(tags)) {
                 // add minimal xp if config option is set
                 if (!advanced && Config.showMinimalTooltipXP && !LevelingLogic.isBoosted(tags))
                     mLvl += " (" + LevelingTooltips.getBoostXpString(stack, tags, false) + ")";

@@ -1,20 +1,27 @@
 package iguanaman.iguanatweakstconstruct.replacing;
 
+import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
+import tconstruct.library.TConstructRegistry;
 import tconstruct.library.crafting.ToolBuilder;
 import tconstruct.library.crafting.ToolRecipe;
 import tconstruct.library.tools.ToolCore;
+import tconstruct.library.tools.ToolMaterial;
 import tconstruct.tools.items.ToolPart;
+
+import java.util.logging.Level;
 
 import static iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic.PartTypes.*;
 
 public abstract class ReplacementLogic {
 
 
-    public static void exchangeToolPart(ToolCore tool, NBTTagCompound tags, PartTypes type, ItemStack partStack)
+    public static void exchangeToolPart(ToolCore tool, NBTTagCompound tags, PartTypes type, ItemStack partStack, ItemStack oldTool)
     {
         ToolPart part = (ToolPart)partStack.getItem();
 
@@ -33,48 +40,163 @@ public abstract class ReplacementLogic {
         if(getPart(tool, EXTRA) != null)
             extraStack = new ItemStack(getPart(tool, EXTRA), 1, getToolPartMaterial(tags, EXTRA));
 
-        int partMaterialId = part.getMaterialID(partStack);
+        ItemStack originalTool = ToolBuilder.instance.buildTool(headStack, handleStack, accessoryStack, extraStack, "Original Tool");
+        if(originalTool == null) {
+            Log.error("Tool to modify is impossible?");
+        }
 
-        if(type == HEAD && headStack != null)
+        int partMaterialId = part.getMaterialID(partStack);
+        int oldMaterialId = -1;
+
+        if(type == HEAD && headStack != null) {
             headStack.setItemDamage(partMaterialId);
-        if(type == HANDLE && handleStack != null)
+            oldMaterialId = getToolPartMaterial(tags, HEAD);
+        }
+        if(type == HANDLE && handleStack != null) {
             handleStack.setItemDamage(partMaterialId);
-        if(type == ACCESSORY && accessoryStack != null)
+            oldMaterialId = getToolPartMaterial(tags, HANDLE);
+        }
+        if(type == ACCESSORY && accessoryStack != null) {
             accessoryStack.setItemDamage(partMaterialId);
-        if(type == EXTRA && extraStack != null)
+            oldMaterialId = getToolPartMaterial(tags, ACCESSORY);
+        }
+        if(type == EXTRA && extraStack != null) {
             extraStack.setItemDamage(partMaterialId);
+            oldMaterialId = getToolPartMaterial(tags, EXTRA);
+        }
 
         ItemStack newTool = ToolBuilder.instance.buildTool(headStack, handleStack, accessoryStack, extraStack, "Modified Tool");
         NBTTagCompound newTags = newTool.getTagCompound();
-        /*
-        if(newTool == null)
-            Log.info("fail");
-        else {
-            Log.info("-----------------------");
-            // compare
-            for (Object tag : newTool.getTagCompound().getCompoundTag("InfiTool").func_150296_c()) {
-                if (tags.func_150296_c().contains(tag)) {
-                    if (!tags.getTag((String) tag).equals(newTool.getTagCompound().getCompoundTag("InfiTool").getTag((String) tag)))
-                        Log.info(tag.toString() + ": " + newTool.getTagCompound().getCompoundTag("InfiTool").getTag((String) tag).toString());
-                    else
-                        Log.info(tag.toString() + ": equal");
-                } else
-                    Log.info(tag.toString() + "(new): " + newTool.getTagCompound().getCompoundTag("InfiTool").getTag((String) tag).toString());
-            }
-            for(Object tag : tags.func_150296_c())
-                if(! newTool.getTagCompound().getCompoundTag("InfiTool").func_150296_c().contains(tag))
-                    Log.info(tag.toString() + "(missing): " + tags.getTag((String) tag).toString());
+
+        // Things that can change from replacing a part:
+        // - durability
+        // - mining speed
+        // - mining level
+        // - attack
+        // - reinforced
+        // - shoddy/stonebound
+        // - Material Traits/Abilities that are not reinforced/stonebound (mostly from other mods)
+        // - XP
+
+        // update part materials and rendering
+        updateTag(newTags, tags, "Head");
+        updateTag(newTags, tags, "RenderHead");
+        updateTag(newTags, tags, "Handle");
+        updateTag(newTags, tags, "RenderHandle");
+        updateTag(newTags, tags, "Accessory");
+        updateTag(newTags, tags, "RenderAccessory");
+        updateTag(newTags, tags, "Extra");
+        updateTag(newTags, tags, "RenderExtra");
+
+        // update durability
+        int base = newTags.getInteger("BaseDurability");
+        int bonus = tags.getInteger("BonusDurability"); // not changed through material, modifier
+        float modDur = tags.getFloat("ModDurability"); // not changed through material, modifier
+
+        int total = Math.max((int) ((base + bonus) * (modDur + 1f)), 1);
+        tags.setInteger("BaseDurability", base);
+        tags.setInteger("TotalDurability", total);
+
+        // update damage
+        updateTag(newTags, tags, "Attack");
+
+        // update mining speed
+        updateTag(newTags, tags, "MiningSpeed");
+        updateTag(newTags, tags, "MiningSpeed2");
+        updateTag(newTags, tags, "MiningSpeedHandle");
+        updateTag(newTags, tags, "MiningSpeedExtra");
+
+        // update harvest level (boosting/xp will be applied later)
+        updateTag(newTags, tags, "HarvestSpeed");
+        updateTag(newTags, tags, "HarvestSpeed2");
+        updateTag(newTags, tags, "HarvestSpeedHandle");
+        updateTag(newTags, tags, "HarvestSpeedExtra");
+
+        // handle Leveling/xp
+        if(LevelingLogic.hasXp(tags))
+        {
+            // do a percentage wise transfer
+            float percentage = LevelingLogic.getXp(tags) / LevelingLogic.getRequiredXp(oldTool, tags);
+            int newXp = Math.round(LevelingLogic.getRequiredXp(newTool, newTags) * percentage);
+            tags.setInteger(LevelingLogic.TAG_EXP, newXp);
         }
-        */
+
+        // handle boost leveling/xp
+        if(LevelingLogic.hasBoostXp(tags))
+        {
+            // do a percentage wise transfer
+            float percentage = LevelingLogic.getBoostXp(tags) / LevelingLogic.getRequiredBoostXp(oldTool);
+            int newXp = Math.round(LevelingLogic.getRequiredBoostXp(newTool) * percentage);
+            tags.setInteger(LevelingLogic.TAG_BOOST_EXP, newXp);
+        }
+
+        // stonebound. Shoddy is always present and never changed, we can simply update it.
+        updateTag(newTags, tags, "Shoddy");
+
+        // reinforced is kinda complicated, since the actual level you get out of the materials is complicated
+        // simply calculate difference between current and newly built tool to know how much has been added afterwards
+        int currentReinforced = tags.getInteger("Unbreaking");
+        int oldReinforced = originalTool.getTagCompound().getCompoundTag("InfiTool").getInteger("Unbreaking");
+        int newReinforced = newTags.getInteger("Unbreaking");
+        newReinforced += currentReinforced - oldReinforced;
+        tags.setInteger("Unbreaking", newReinforced);
+
+        // now for the scary part... handle material traits >_<
+        handleMaterialTraits(tags, oldMaterialId, partMaterialId);
+    }
+
+    // update tag if it already exists.
+    // this saves us lots of hasFoo code,since there should be no general situation where a tag doesn't exist on the target
+    private static void updateTag(NBTTagCompound from, NBTTagCompound to, String tag)
+    {
+        if(to.hasKey(tag))
+            to.setTag(tag, from.getTag(tag));
+    }
+
+    // List of known material traits:
+    // - Writeable
+    // - Thaumic
+    private static void handleMaterialTraits(NBTTagCompound tags, int oldMaterialId, int newMaterialId)
+    {
+        // nothing to do fi they're the same :)
+        if(oldMaterialId == newMaterialId)
+            return;
+        ToolMaterial oldMat = TConstructRegistry.getMaterial(oldMaterialId);
+        ToolMaterial newMat = TConstructRegistry.getMaterial(newMaterialId);
+
+        // stonebound/jagged has to be handeled separately, see exchangeToolPart
+
+        /************ first add the new traits *************/
+        String ability = newMat.ability();
+        // writeable & thaumic (equal since we only exchange 1 part)
+        if(ability.equals(StatCollector.translateToLocal("materialtraits.writable")) ||
+           ability.equals(StatCollector.translateToLocal("materialtraits.thaumic"))) {
+            tags.setInteger("Modifiers", tags.getInteger("Modifiers") + 1);
+        }
 
 
-        // Update base stats
+
+        /************ then remove the old traits *************/
+        ability = oldMat.ability();
+        // writeable & thaumic (equal since we only exchange 1 part)
+        if(ability.equals(StatCollector.translateToLocal("materialtraits.writable")) ||
+           ability.equals(StatCollector.translateToLocal("materialtraits.thaumic"))) {
+            int newMods = tags.getInteger("Modifiers") - 1;
+            // theoretically this should never happen, but.. rather be safe than sorry
+            if(newMods < 0) newMods = 0;
+            tags.setInteger("Modifiers", newMods);
+        }
+        // tasty - handled per ActiveToolMod, no NBT required
 
     }
 
-    private static void replaceTag(String tag, NBTTagCompound source, NBTTagCompound target)
+    private static void adjustModifierTag(NBTTagCompound tags, String tag, boolean decrease)
     {
-        target.setTag(tag, source.getTag(tag));
+        NBTBase baseTag = tags.getTag(tag);
+
+        // boolean modifier.. tag gets added or removed
+        //if(baseTag.getId() == NBTB)
+
     }
 
     /**

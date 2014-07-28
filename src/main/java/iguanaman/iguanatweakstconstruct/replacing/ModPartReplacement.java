@@ -34,6 +34,10 @@ public class ModPartReplacement extends ItemModifier {
             return false;
 
         ToolCore tool = (ToolCore) itemStack.getItem();
+        NBTTagCompound tags = itemStack.getTagCompound().getCompoundTag("InfiTool");
+
+        if(tags.getInteger("Damage") > 0)
+            return false;
 
         // collect which part types we can use for this tool
         Set<Item> toolParts = new HashSet<Item>(4);
@@ -89,7 +93,6 @@ public class ModPartReplacement extends ItemModifier {
         if(replacementPart == null || partIndex == -1)
             return false;
 
-        NBTTagCompound tags = itemStack.getTagCompound().getCompoundTag("InfiTool");
         int modifiers = tags.getInteger("Modifiers");
 
         // detect possible secondary position for part (e.g. hammer has 2 plates, etc.)
@@ -137,7 +140,7 @@ public class ModPartReplacement extends ItemModifier {
         for(int i = partIndex; i > 0; i--)
             partType = detectAdditionalPartType(recipe, replacementPart, partType);
 
-        exchangeToolPart(tool, tags, partType, parts[partIndex]);
+        exchangeToolPart(tool, tags, partType, parts[partIndex], itemStack);
 /*
         // ok. we got the needed info. now we can do the actual exchange :)
         int matId = ToolBuilder.instance.getMaterialID(parts[partIndex]);

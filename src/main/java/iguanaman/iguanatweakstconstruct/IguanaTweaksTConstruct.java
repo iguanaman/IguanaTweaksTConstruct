@@ -16,6 +16,7 @@ import iguanaman.iguanatweakstconstruct.leveling.commands.debug;
 import iguanaman.iguanatweakstconstruct.proxy.CommonProxy;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
+import iguanaman.iguanatweakstconstruct.replacing.IguanaToolPartReplacing;
 import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import mantle.pulsar.config.ForgeCFG;
@@ -72,6 +73,7 @@ public class IguanaTweaksTConstruct {
 
         pulsar.registerPulse(new IguanaHarvestLevelTweaks());
         pulsar.registerPulse(new IguanaToolLeveling());
+        pulsar.registerPulse(new IguanaToolPartReplacing());
         pulsar.preInit(event);
 	}
 

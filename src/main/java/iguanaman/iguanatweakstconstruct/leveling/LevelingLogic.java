@@ -308,7 +308,6 @@ public abstract class LevelingLogic {
 	public static void levelUpMiningLevel(ItemStack stack, EntityPlayer player, boolean leveled)
 	{
 		NBTTagCompound tags = stack.getTagCompound().getCompoundTag("InfiTool");
-		World world = player.worldObj;
 
         // we only apply that once
         if(isBoosted(tags))
@@ -319,11 +318,14 @@ public abstract class LevelingLogic {
             tags.setLong(TAG_BOOST_EXP, 0L);
 
         // fancy message
-		if (!world.isRemote)
-			if (!leveled)
-                player.addChatMessage(new ChatComponentText("\u00a73Suddenly, a flash of light shines from the tip of your " + stack.getDisplayName() + "\u00a73 (+1 mining level)"));
-			else
-                player.addChatMessage(new ChatComponentText("\u00a79Suddenly, a flash of light shines from the tip of the pickaxe (+1 mining level)"));
+		if (player != null) {
+            if(!player.worldObj.isRemote) {
+                if (!leveled)
+                    player.addChatMessage(new ChatComponentText("\u00a73Suddenly, a flash of light shines from the tip of your " + stack.getDisplayName() + "\u00a73 (+1 mining level)"));
+                else
+                    player.addChatMessage(new ChatComponentText("\u00a79Suddenly, a flash of light shines from the tip of the pickaxe (+1 mining level)"));
+            }
+        }
 
 		tags.setBoolean(TAG_IS_BOOSTED, true);
         // increase harvest level by 1

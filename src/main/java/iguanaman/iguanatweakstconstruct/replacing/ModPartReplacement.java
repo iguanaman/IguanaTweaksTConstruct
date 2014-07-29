@@ -114,6 +114,9 @@ public class ModPartReplacement extends ItemModifier {
         if(modifiers < 0)
             return false;
 
+        // is it the same material as the one we want to replace?
+        if(newMatId == oldMatId)
+            return false;
 
         return true;
     }

@@ -232,9 +232,6 @@ public abstract class ReplacementLogic {
                 // reapply redstone
                 while(rLvl-- > 0)
                     modRedstone.modify(new ItemStack[]{new ItemStack(Items.redstone)}, itemStack); // tags belong to oldTool
-
-                // check if it actually used the same tipindex
-                Log.info(tipIndex + "   " + tags.getIntArray("Redstone")[2]);
             }
     }
 
@@ -265,20 +262,7 @@ public abstract class ReplacementLogic {
                 // reapply redstone
                 while(qLvl-- > 0)
                     modAttack.modify(new ItemStack[]{new ItemStack(Items.quartz)}, itemStack); // tags belong to oldTool
-
-                // check if it actually used the same tipindex
-                Log.info(tipIndex + "   " + tags.getIntArray("ModAttack")[2]);
             }
-    }
-
-    // todo: remove this function stub :D
-    private static void adjustModifierTag(NBTTagCompound tags, String tag, boolean decrease)
-    {
-        NBTBase baseTag = tags.getTag(tag);
-
-        // boolean modifier.. tag gets added or removed
-        //if(baseTag.getId() == NBTB)
-
     }
 
     /**

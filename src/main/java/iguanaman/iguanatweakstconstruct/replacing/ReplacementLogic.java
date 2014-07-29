@@ -117,6 +117,10 @@ public abstract class ReplacementLogic {
         updateTag(newTags, tags, "HarvestLevelHandle");
         updateTag(newTags, tags, "HarvestLevelExtra");
 
+        // bows have additional tags to consider
+        updateTag(newTags, tags, "DrawSpeed");
+        updateTag(newTags, tags, "BaseDrawSpeed");
+
         // handle Leveling/xp
         if(LevelingLogic.hasXp(tags))
         {
@@ -153,6 +157,7 @@ public abstract class ReplacementLogic {
 
         // now for the scary part... handle material traits >_<
         handleMaterialTraits(tags, oldMaterialId, partMaterialId);
+        // material tooltips are handled by tcon internally
 
         // redstone modifier
         reapplyRedstone(tags, toolStack);

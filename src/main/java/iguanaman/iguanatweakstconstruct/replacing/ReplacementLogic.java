@@ -132,6 +132,10 @@ public abstract class ReplacementLogic {
             float percentage = LevelingLogic.getBoostXp(tags) / LevelingLogic.getRequiredBoostXp(toolStack);
             int newXp = Math.round(LevelingLogic.getRequiredBoostXp(newTool) * percentage);
             tags.setInteger(LevelingLogic.TAG_BOOST_EXP, newXp);
+
+            // already full xp?
+            if(LevelingLogic.isBoosted(tags))
+                tags.setInteger("HarvestLevel", tags.getInteger("HarvestLevel") + 1);
         }
 
         // stonebound. Shoddy is always present and never changed, we can simply update it.

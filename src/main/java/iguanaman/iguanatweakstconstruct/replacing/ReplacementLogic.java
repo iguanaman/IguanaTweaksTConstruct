@@ -2,16 +2,20 @@ package iguanaman.iguanatweakstconstruct.replacing;
 
 import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
 import iguanaman.iguanatweakstconstruct.util.Log;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import tconstruct.library.TConstructRegistry;
+import tconstruct.library.crafting.ModifyBuilder;
 import tconstruct.library.crafting.ToolBuilder;
 import tconstruct.library.crafting.ToolRecipe;
+import tconstruct.library.modifier.ItemModifier;
 import tconstruct.library.tools.ToolCore;
 import tconstruct.library.tools.ToolMaterial;
+import tconstruct.modifiers.tools.ModRedstone;
 import tconstruct.tools.items.ToolPart;
 
 import java.util.logging.Level;
@@ -21,7 +25,7 @@ import static iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic.PartTy
 public abstract class ReplacementLogic {
 
 
-    public static void exchangeToolPart(ToolCore tool, NBTTagCompound tags, PartTypes type, ItemStack partStack, ItemStack oldTool)
+    public static void exchangeToolPart(ToolCore tool, NBTTagCompound tags, PartTypes type, ItemStack partStack, ItemStack toolStack)
     {
         ToolPart part = (ToolPart)partStack.getItem();
 
@@ -66,7 +70,7 @@ public abstract class ReplacementLogic {
         }
 
         ItemStack newTool = ToolBuilder.instance.buildTool(headStack, handleStack, accessoryStack, extraStack, "Modified Tool");
-        NBTTagCompound newTags = newTool.getTagCompound();
+        NBTTagCompound newTags = newTool.getTagCompound().getCompoundTag("InfiTool");
 
         // Things that can change from replacing a part:
         // - durability
@@ -107,16 +111,16 @@ public abstract class ReplacementLogic {
         updateTag(newTags, tags, "MiningSpeedExtra");
 
         // update harvest level (boosting/xp will be applied later)
-        updateTag(newTags, tags, "HarvestSpeed");
-        updateTag(newTags, tags, "HarvestSpeed2");
-        updateTag(newTags, tags, "HarvestSpeedHandle");
-        updateTag(newTags, tags, "HarvestSpeedExtra");
+        updateTag(newTags, tags, "HarvestLevel");
+        updateTag(newTags, tags, "HarvestLevel2");
+        updateTag(newTags, tags, "HarvestLevelHandle");
+        updateTag(newTags, tags, "HarvestLevelExtra");
 
         // handle Leveling/xp
         if(LevelingLogic.hasXp(tags))
         {
             // do a percentage wise transfer
-            float percentage = LevelingLogic.getXp(tags) / LevelingLogic.getRequiredXp(oldTool, tags);
+            float percentage = LevelingLogic.getXp(tags) / LevelingLogic.getRequiredXp(toolStack, tags);
             int newXp = Math.round(LevelingLogic.getRequiredXp(newTool, newTags) * percentage);
             tags.setInteger(LevelingLogic.TAG_EXP, newXp);
         }
@@ -125,7 +129,7 @@ public abstract class ReplacementLogic {
         if(LevelingLogic.hasBoostXp(tags))
         {
             // do a percentage wise transfer
-            float percentage = LevelingLogic.getBoostXp(tags) / LevelingLogic.getRequiredBoostXp(oldTool);
+            float percentage = LevelingLogic.getBoostXp(tags) / LevelingLogic.getRequiredBoostXp(toolStack);
             int newXp = Math.round(LevelingLogic.getRequiredBoostXp(newTool) * percentage);
             tags.setInteger(LevelingLogic.TAG_BOOST_EXP, newXp);
         }
@@ -140,9 +144,13 @@ public abstract class ReplacementLogic {
         int newReinforced = newTags.getInteger("Unbreaking");
         newReinforced += currentReinforced - oldReinforced;
         tags.setInteger("Unbreaking", newReinforced);
+        // reinforced tooltip is handled internally by tcon automagically
 
         // now for the scary part... handle material traits >_<
         handleMaterialTraits(tags, oldMaterialId, partMaterialId);
+
+        // redstone modifier
+        reapplyRedstone(tags, toolStack);
     }
 
     // update tag if it already exists.
@@ -152,6 +160,7 @@ public abstract class ReplacementLogic {
         if(to.hasKey(tag))
             to.setTag(tag, from.getTag(tag));
     }
+
 
     // List of known material traits:
     // - Writeable
@@ -187,9 +196,41 @@ public abstract class ReplacementLogic {
             tags.setInteger("Modifiers", newMods);
         }
         // tasty - handled per ActiveToolMod, no NBT required
-
     }
 
+    private static void reapplyRedstone(NBTTagCompound tags, ItemStack itemStack)
+    {
+        // only do if we actually have redstone
+        if(!tags.hasKey("Redstone"))
+            return;
+
+        // find the redstone modifier
+        for(ItemModifier mod : ModifyBuilder.instance.itemModifiers)
+            if(mod.key.equals("Redstone"))
+            {
+                ModRedstone modRedstone = (ModRedstone)mod;
+                int[] keyPair = tags.getIntArray("Redstone");
+                // get amount of redstone applied
+                int rLvl = keyPair[0];
+                // reset redstone modifier
+                tags.removeTag("Redstone");
+
+                // remove the old tooltip
+                int tipIndex = keyPair[2];
+                tags.removeTag("Tooltip" + tipIndex);
+                tags.removeTag("ModifierTip" + tipIndex);
+
+
+                // reapply redstone
+                while(rLvl-- > 0)
+                    modRedstone.modify(new ItemStack[]{new ItemStack(Items.redstone)}, itemStack); // tags belong to oldTool
+
+                // check if it actually used the same tipindex
+                Log.info(tipIndex + "   " + tags.getIntArray("Redstone")[2]);
+            }
+    }
+
+    // todo: remove this function stub :D
     private static void adjustModifierTag(NBTTagCompound tags, String tag, boolean decrease)
     {
         NBTBase baseTag = tags.getTag(tag);

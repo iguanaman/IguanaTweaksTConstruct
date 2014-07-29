@@ -15,6 +15,7 @@ import tconstruct.library.crafting.ToolRecipe;
 import tconstruct.library.modifier.ItemModifier;
 import tconstruct.library.tools.ToolCore;
 import tconstruct.library.tools.ToolMaterial;
+import tconstruct.modifiers.tools.ModAttack;
 import tconstruct.modifiers.tools.ModRedstone;
 import tconstruct.tools.items.ToolPart;
 
@@ -155,6 +156,8 @@ public abstract class ReplacementLogic {
 
         // redstone modifier
         reapplyRedstone(tags, toolStack);
+        // quartz/attack modifier
+        reapplyAttack(tags, toolStack);
     }
 
     // update tag if it already exists.
@@ -202,6 +205,7 @@ public abstract class ReplacementLogic {
         // tasty - handled per ActiveToolMod, no NBT required
     }
 
+    // strips the redstone modifier off a tool and reapplies it (to get the correct mining level modification)
     private static void reapplyRedstone(NBTTagCompound tags, ItemStack itemStack)
     {
         // only do if we actually have redstone
@@ -231,6 +235,39 @@ public abstract class ReplacementLogic {
 
                 // check if it actually used the same tipindex
                 Log.info(tipIndex + "   " + tags.getIntArray("Redstone")[2]);
+            }
+    }
+
+    // same as reapplyRedstone but for Attack modifier
+    private static void reapplyAttack(NBTTagCompound tags, ItemStack itemStack)
+    {
+        // only do if we actually have attack modifier
+        if(!tags.hasKey("ModAttack"))
+            return;
+
+        // find the redstone modifier
+        for(ItemModifier mod : ModifyBuilder.instance.itemModifiers)
+            if(mod.key.equals("ModAttack"))
+            {
+                ModAttack modAttack = (ModAttack)mod;
+                int[] keyPair = tags.getIntArray("ModAttack");
+                // get amount of redstone applied
+                int qLvl = keyPair[0];
+                // reset redstone modifier
+                tags.removeTag("ModAttack");
+
+                // remove the old tooltip
+                int tipIndex = keyPair[2];
+                tags.removeTag("Tooltip" + tipIndex);
+                tags.removeTag("ModifierTip" + tipIndex);
+
+
+                // reapply redstone
+                while(qLvl-- > 0)
+                    modAttack.modify(new ItemStack[]{new ItemStack(Items.quartz)}, itemStack); // tags belong to oldTool
+
+                // check if it actually used the same tipindex
+                Log.info(tipIndex + "   " + tags.getIntArray("ModAttack")[2]);
             }
     }
 

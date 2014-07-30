@@ -95,7 +95,8 @@ public abstract class TinkerToolTweaks {
             TConstructRegistry.toolMaterials.put(id, newMaterial);
             TConstructRegistry.toolMaterialStrings.put(newMaterial.name(), newMaterial);
 
-            Log.trace(String.format("Modified tool material %d: %s (level: %d, durability: %d, speed: %d)", id, old.name(), harvestLevel, durability, speed));
+            if(Config.logToolMaterialChanges)
+                Log.debug(String.format("Modified tool material %d: %s (level: %d, durability: %d, speed: %d)", id, old.name(), harvestLevel, durability, speed));
         }
         else
             Log.error("Couldn't find ToolMaterial ID for " + old.name());

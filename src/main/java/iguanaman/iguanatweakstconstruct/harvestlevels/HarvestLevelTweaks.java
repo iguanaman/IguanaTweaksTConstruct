@@ -1,5 +1,6 @@
 package iguanaman.iguanatweakstconstruct.harvestlevels;
 
+import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 
 import iguanaman.iguanatweakstconstruct.util.Log;
@@ -51,7 +52,8 @@ public abstract class HarvestLevelTweaks {
 
         Blocks.obsidian.setHarvestLevel("pickaxe", HarvestLevels._5_diamond);
 
-        Log.trace("Modified vanilla blocks");
+        if(Config.logHarvestLevelChanges)
+            Log.debug("Modified vanilla blocks");
     }
 
     private static void modifyOredictBlocks()
@@ -73,7 +75,8 @@ public abstract class HarvestLevelTweaks {
         }
 
         // metal-blocks
-        Log.trace("Modified oredicted blocks");
+        if(Config.logHarvestLevelChanges)
+            Log.debug("Modified oredicted blocks");
     }
 
 
@@ -82,7 +85,8 @@ public abstract class HarvestLevelTweaks {
     {
         Block block = Block.getBlockFromItem(stack.getItem());
 
-        Log.trace(String.format("Changed Harvest Level of %s from %d to %d", block.getLocalizedName(), block.getHarvestLevel(stack.getItemDamage()), harvestLevel));
+        if(Config.logHarvestLevelChanges)
+            Log.debug(String.format("Changed Harvest Level of %s from %d to %d", block.getLocalizedName(), block.getHarvestLevel(stack.getItemDamage()), harvestLevel));
 
         block.setHarvestLevel("pickaxe", harvestLevel, stack.getItemDamage());
     }
@@ -117,10 +121,12 @@ public abstract class HarvestLevelTweaks {
             }
 
             item.setHarvestLevel("pickaxe", hlvl);
-            Log.trace(String.format("Changed Harvest Level of %s from %d to %d", item.getUnlocalizedName(), old, hlvl));
+            if(Config.logMiningLevelChanges)
+                Log.debug(String.format("Changed Harvest Level of %s from %d to %d", item.getUnlocalizedName(), old, hlvl));
         }
 
-        Log.trace("Modified tools");
+        if(Config.logMiningLevelChanges)
+            Log.debug("Modified tools");
     }
 
     // HarvestLevels

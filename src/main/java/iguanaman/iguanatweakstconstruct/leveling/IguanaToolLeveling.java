@@ -4,7 +4,7 @@ package iguanaman.iguanatweakstconstruct.leveling;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import iguanaman.iguanatweakstconstruct.leveling.handlers.LevelingEventHandler;
-import iguanaman.iguanatweakstconstruct.leveling.handlers.ToolTipHandler;
+import iguanaman.iguanatweakstconstruct.leveling.handlers.LevelingToolTipHandler;
 import iguanaman.iguanatweakstconstruct.leveling.modifiers.ModMiningLevelBoost;
 import iguanaman.iguanatweakstconstruct.leveling.modifiers.ModXpAwareRedstone;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
@@ -12,17 +12,14 @@ import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import mantle.pulsar.pulse.Handler;
 import mantle.pulsar.pulse.Pulse;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.MinecraftForge;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.client.TConstructClientRegistry;
 import tconstruct.library.crafting.ModifyBuilder;
 import tconstruct.library.modifier.ItemModifier;
 import tconstruct.library.tools.ToolCore;
-import tconstruct.modifiers.tools.ModAttack;
 import tconstruct.modifiers.tools.ModRedstone;
 import tconstruct.tools.TinkerTools;
 
@@ -64,7 +61,7 @@ public class IguanaToolLeveling {
     public void postInit(FMLPostInitializationEvent event)
     {
         MinecraftForge.EVENT_BUS.register(new LevelingEventHandler());
-        MinecraftForge.EVENT_BUS.register(new ToolTipHandler());
+        MinecraftForge.EVENT_BUS.register(new LevelingToolTipHandler());
     }
 
     // replace modifiers with our own, adjusted, modifiers

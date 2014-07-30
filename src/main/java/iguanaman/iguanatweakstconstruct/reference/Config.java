@@ -35,6 +35,10 @@ public class Config {
 	public static boolean levelingPickaxeBoost;
 	public static int levelingPickaxeBoostXpPercentage;
 
+    // Harvest Leveling
+    public static int durabilityPercentage;
+    public static int miningSpeedPercentage;
+
 	// heads
 	public static int baseHeadDropChance;
 	public static int beheadingHeadDropChance;
@@ -43,8 +47,7 @@ public class Config {
     public static boolean removeFlintDrop;
     public static boolean addFlintRecipe;
     public static int recipeGravelPerFlint;
-    public static int durabilityPercentage;
-    public static int miningSpeedPercentage;
+    public static boolean disableStoneTools;
     public static boolean removeStoneTorchRecipe;
     public static boolean toolsNeverDespawn;
 
@@ -132,6 +135,8 @@ public class Config {
         addFlintRecipe = configfile.getBoolean("addFlintRecipe", CATEGORY_Tweaks, true, "Adds a shapeless recipe to get flint from gravel");
         recipeGravelPerFlint = configfile.getInt("gravelPerFlint", CATEGORY_Tweaks, 4, 1, 9, "How many gravel are required to craft one Flint");
 
+        // ticon tweaks
+        disableStoneTools = configfile.getBoolean("disablestoneTools", CATEGORY_Tweaks, true, "Stone Tools can only be used to create casts, but no tools");
 
         // stuff
         // todo: implement

@@ -18,7 +18,7 @@ import tconstruct.library.tools.ToolCore;
 import java.util.List;
 import java.util.ListIterator;
 
-public class ToolTipHandler {
+public class LevelingToolTipHandler {
     // the prefix used for "+ X attack damage". Thanks Tic Tooltips ;)
     private static String plusPrefix = "\u00A79+";
 

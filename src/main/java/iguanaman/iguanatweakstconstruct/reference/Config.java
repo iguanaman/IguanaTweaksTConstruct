@@ -67,7 +67,8 @@ public class Config {
     public void sync()
     {
         final String CATEGORY_Leveling = "ToolLeveling";
-        final String CATEGORY_PickLeveling = "Pickleveling";
+        final String CATEGORY_PickLeveling = "PickLeveling";
+        final String CATEGORY_HarvestLevels = "HarvestLevelTweaks";
         final String CATEGORY_Heads = "MobHeads";
         final String CATEGORY_Tweaks = "Tweaks";
         final String CATEGORY_Debug = "Debug";
@@ -106,6 +107,12 @@ public class Config {
 
         levelingPickaxeBoostXpPercentage = configfile.getInt("xpRequiredPickBoostPercentage", CATEGORY_PickLeveling, 100, 1, 999, "Change the percentage of XP required to boost a pick (i.e. 200 means 2x normal boost xp required)");
 
+        /** HarvestLevel Module **/
+        configfile.setCategoryComment(CATEGORY_HarvestLevels, "Harvest Level Tweak Module: Introduces a slower mining level progression.");
+
+        // Tool durability/speed changes
+        durabilityPercentage = configfile.getInt("durabilityPercentage", CATEGORY_HarvestLevels, 80, 1, 999, "Change durability of all tool materials (in percent)");
+        miningSpeedPercentage = configfile.getInt("miningSpeedPercentage", CATEGORY_HarvestLevels, 100, 1, 999, "Change mining speed of all tool materials (in percent)");
 
         /** MobHeads **/
         // todo: implement
@@ -124,10 +131,6 @@ public class Config {
         removeFlintDrop = configfile.getBoolean("removeFlintDrop", CATEGORY_Tweaks, true, "Removes the random chance of getting flint from gravel");
         addFlintRecipe = configfile.getBoolean("addFlintRecipe", CATEGORY_Tweaks, true, "Adds a shapeless recipe to get flint from gravel");
         recipeGravelPerFlint = configfile.getInt("gravelPerFlint", CATEGORY_Tweaks, 4, 1, 9, "How many gravel are required to craft one Flint");
-
-        // Tool durability/speed changes
-        durabilityPercentage = configfile.getInt("durabilityPercentage", CATEGORY_Tweaks, 80, 1, 999, "Change durability of all tool materials (in percent)");
-        miningSpeedPercentage = configfile.getInt("miningSpeedPercentage", CATEGORY_Tweaks, 100, 1, 999, "Change mining speed of all tool materials (in percent)");
 
 
         // stuff

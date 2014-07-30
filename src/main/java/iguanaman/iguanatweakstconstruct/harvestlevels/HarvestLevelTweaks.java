@@ -85,8 +85,9 @@ public abstract class HarvestLevelTweaks {
     {
         Block block = Block.getBlockFromItem(stack.getItem());
 
-        if(Config.logHarvestLevelChanges)
-            Log.debug(String.format("Changed Harvest Level of %s from %d to %d", block.getLocalizedName(), block.getHarvestLevel(stack.getItemDamage()), harvestLevel));
+        if(Config.logHarvestLevelChanges) {
+            Log.debug(String.format("Changed Harvest Level of %s from %d to %d", stack.getUnlocalizedName(), block.getHarvestLevel(stack.getItemDamage()), harvestLevel));
+        }
 
         block.setHarvestLevel("pickaxe", harvestLevel, stack.getItemDamage());
     }

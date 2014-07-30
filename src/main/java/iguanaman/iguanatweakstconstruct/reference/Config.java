@@ -104,9 +104,9 @@ public class Config {
         configfile.setCategoryComment(CATEGORY_PickLeveling, "Leveling Module: Allows pickaxes to gain a mining level with enough XP. Should be used with the HarvestLevel Module.");
 
         // pick boosting behaviour
-        pickaxeBoostRequired = configfile.getBoolean("pickaxeBoostRequired", CATEGORY_PickLeveling, false, "Every Pickaxes Mining Level is reduced by 1 and need a mob head modifier OR mining levelup (separate from tool level) to advance");
-        mobHeadPickaxeBoost  = configfile.getBoolean("allowMobHeadBoost", CATEGORY_PickLeveling, true, "Mob heads can be used to boost a pickaxe's mining level");
-        levelingPickaxeBoost = configfile.getBoolean("allowLevelingBoost", CATEGORY_PickLeveling, true, "A pickaxes mining level can be boosted through gaining XP");
+        pickaxeBoostRequired = configfile.getBoolean("pickaxeBoostRequired", CATEGORY_PickLeveling, false, "Every Pickaxes Mining Level is reduced by 1 and needs a mining levelup (separate from tool level) or, if enabled, a mob head modifier to advance");
+        levelingPickaxeBoost = configfile.getBoolean("allowLevelingBoost", CATEGORY_PickLeveling, true, "Pickaxes gain Mining Xp. A pickaxes mining level can be boosted through gaining XP");
+        mobHeadPickaxeBoost  = configfile.getBoolean("addMobHeadBoost", CATEGORY_PickLeveling, true, "Mob heads can be used to boost a pickaxe's mining xp (REQUIRES allowLevelBoost)");
 
         levelingPickaxeBoostXpPercentage = configfile.getInt("xpRequiredPickBoostPercentage", CATEGORY_PickLeveling, 100, 1, 999, "Change the percentage of XP required to boost a pick (i.e. 200 means 2x normal boost xp required)");
 
@@ -114,7 +114,7 @@ public class Config {
         configfile.setCategoryComment(CATEGORY_HarvestLevels, "Harvest Level Tweak Module: Introduces a slower mining level progression.");
 
         // Tool durability/speed changes
-        durabilityPercentage = configfile.getInt("durabilityPercentage", CATEGORY_HarvestLevels, 80, 1, 999, "Change durability of all tool materials (in percent)");
+        durabilityPercentage  = configfile.getInt("durabilityPercentage", CATEGORY_HarvestLevels, 80, 1, 999, "Change durability of all tool materials (in percent)");
         miningSpeedPercentage = configfile.getInt("miningSpeedPercentage", CATEGORY_HarvestLevels, 100, 1, 999, "Change mining speed of all tool materials (in percent)");
 
         /** MobHeads **/

@@ -1,6 +1,7 @@
 package iguanaman.iguanatweakstconstruct.replacing;
 
 import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
+import iguanaman.iguanatweakstconstruct.leveling.modifiers.ModXpAwareRedstone;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -8,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
+import net.minecraftforge.oredict.OreDictionary;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.crafting.ModifyBuilder;
 import tconstruct.library.crafting.ToolBuilder;
@@ -83,6 +85,10 @@ public abstract class ReplacementLogic {
         // - Material Traits/Abilities that are not reinforced/stonebound (mostly from other mods)
         // - XP
 
+        // save unmodified old required xp for later use
+        long oldRequiredXp = LevelingLogic.getRequiredXp(toolStack, tags);
+        long oldRequiredBoostXp = LevelingLogic.getRequiredBoostXp(toolStack);
+
         // update part materials and rendering
         updateTag(newTags, tags, "Head");
         updateTag(newTags, tags, "RenderHead");
@@ -121,28 +127,6 @@ public abstract class ReplacementLogic {
         updateTag(newTags, tags, "DrawSpeed");
         updateTag(newTags, tags, "BaseDrawSpeed");
 
-        // handle Leveling/xp
-        if(LevelingLogic.hasXp(tags))
-        {
-            // do a percentage wise transfer
-            float percentage = LevelingLogic.getXp(tags) / LevelingLogic.getRequiredXp(toolStack, tags);
-            int newXp = Math.round(LevelingLogic.getRequiredXp(newTool, newTags) * percentage);
-            tags.setInteger(LevelingLogic.TAG_EXP, newXp);
-        }
-
-        // handle boost leveling/xp
-        if(LevelingLogic.hasBoostXp(tags))
-        {
-            // do a percentage wise transfer
-            float percentage = LevelingLogic.getBoostXp(tags) / LevelingLogic.getRequiredBoostXp(toolStack);
-            int newXp = Math.round(LevelingLogic.getRequiredBoostXp(newTool) * percentage);
-            tags.setInteger(LevelingLogic.TAG_BOOST_EXP, newXp);
-
-            // already full xp?
-            if(LevelingLogic.isBoosted(tags))
-                tags.setInteger("HarvestLevel", tags.getInteger("HarvestLevel") + 1);
-        }
-
         // stonebound. Shoddy is always present and never changed, we can simply update it.
         updateTag(newTags, tags, "Shoddy");
 
@@ -163,6 +147,37 @@ public abstract class ReplacementLogic {
         reapplyRedstone(tags, toolStack);
         // quartz/attack modifier
         reapplyAttack(tags, toolStack);
+
+        // handle Leveling/xp (has to be done first before we change the stats so we get the correct old values)
+        if(LevelingLogic.hasXp(tags))
+        {
+            float newRequiredXp = LevelingLogic.getRequiredXp(toolStack, tags);
+            float xp = LevelingLogic.getXp(tags);
+
+            // apply transition
+            xp *= newRequiredXp / (float) oldRequiredXp;
+
+            tags.setInteger(LevelingLogic.TAG_EXP, Math.round(xp));
+        }
+
+        // handle boost leveling/xp
+        if(LevelingLogic.hasBoostXp(tags))
+        {
+            float newRequiredBoostXp = LevelingLogic.getRequiredBoostXp(toolStack);
+            float xp = LevelingLogic.getBoostXp(tags);
+
+            float percentage = xp / oldRequiredBoostXp;
+
+            // apply transition
+            xp *= newRequiredBoostXp / (float) oldRequiredBoostXp;
+
+            tags.setInteger(LevelingLogic.TAG_BOOST_EXP, Math.round(xp));
+
+            // already full xp?
+            if(LevelingLogic.isBoosted(tags))
+                tags.setInteger("HarvestLevel", tags.getInteger("HarvestLevel") + 1);
+        }
+
     }
 
     // update tag if it already exists.
@@ -222,6 +237,8 @@ public abstract class ReplacementLogic {
             if(mod.key.equals("Redstone"))
             {
                 ModRedstone modRedstone = (ModRedstone)mod;
+                if(modRedstone instanceof ModXpAwareRedstone)
+                    modRedstone = ((ModXpAwareRedstone)modRedstone).originalModifier;
                 int[] keyPair = tags.getIntArray("Redstone");
                 // get amount of redstone applied
                 int rLvl = keyPair[0];

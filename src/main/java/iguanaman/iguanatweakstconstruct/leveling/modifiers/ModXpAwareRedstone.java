@@ -13,13 +13,11 @@ import java.util.List;
  * Basically: You get XP when applying it, because the required XP for the next level also increases. XP% stays the same.
  */
 public class ModXpAwareRedstone extends ModRedstone {
-
-    public ModXpAwareRedstone(int effect, ItemStack[] items, int[] values) {
-        super(effect, items, values);
-    }
+    public final ModRedstone originalModifier;
 
     public ModXpAwareRedstone(ModRedstone modifier) {
         super(modifier.effectIndex, ListStackToStackArray(modifier.stacks), ListIntToIntArray(modifier.increase));
+        originalModifier = modifier;
     }
 
     @Override

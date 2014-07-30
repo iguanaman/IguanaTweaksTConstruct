@@ -7,30 +7,10 @@ import net.minecraft.world.World;
 import tconstruct.tools.ToolProxyCommon;
 import cpw.mods.fml.common.network.IGuiHandler;
 
-public class CommonProxy implements IGuiHandler
+public class CommonProxy
 {
 
 	public void registerRenderers() {}
 
 	public void registerSounds() {}
-
-	@Override
-	public Object getServerGuiElement (int ID, EntityPlayer player, World world, int x, int y, int z)
-	{
-		if (ID == ToolProxyCommon.toolStationID || ID == ToolProxyCommon.partBuilderID || ID == ToolProxyCommon.patternChestID
-				|| ID == ToolProxyCommon.toolForgeID || ID == ToolProxyCommon.stencilTableID)
-		{
-			TileEntity tile = world.getTileEntity(x, y, z);
-			if (tile != null && tile instanceof InventoryLogic)
-				return ((InventoryLogic) tile).getGuiContainer(player.inventory, world, x, y, z);
-		}
-
-		return null;
-	}
-
-	@Override
-	public Object getClientGuiElement(int ID, EntityPlayer player,
-			World world, int x, int y, int z) {
-		return null;
-	}
 }

@@ -4,7 +4,7 @@ import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
 import iguanaman.iguanatweakstconstruct.leveling.LevelingTooltips;
-import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
+import iguanaman.iguanatweakstconstruct.reference.Config;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -41,7 +41,7 @@ public class ToolTipHandler {
         // does the user hold shift?
         boolean advanced = shiftHeld();
         // only allow advanced (xp) tooltip if config option is set
-        advanced &= IguanaConfig.showTooltipXP;
+        advanced &= Config.showTooltipXP;
 
 
 
@@ -54,40 +54,43 @@ public class ToolTipHandler {
         {
             int hLevel = tags.getInteger("HarvestLevel");
             String mLvl = LevelingTooltips.getMiningLevelTooltip(hLevel);
-            // is the pick applicable for mining level boosting? if yes display xp
-            if(LevelingLogic.canBoostMiningLevel(hLevel)) {
-                // add minimal xp if config option is set
-                if (!advanced && IguanaConfig.showMinimalTooltipXP && !LevelingLogic.isBoosted(tags))
+            // display minimal tooltip?
+            if(Config.showMinimalTooltipXP && !advanced)
+            {
+                if(LevelingLogic.hasBoostXp(tags) && LevelingLogic.canBoostMiningLevel(tags))
                     mLvl += " (" + LevelingTooltips.getBoostXpString(stack, tags, false) + ")";
-                inserter.add(mLvl);
-
-                // advanced mining level boost progress info
-                if (advanced && IguanaConfig.levelingPickaxeBoost && IguanaConfig.showTooltipXP) {
-                    if (LevelingLogic.isBoosted(tags))
-                        inserter.add(LevelingTooltips.getBoostedTooltip());
-                    else
-                        inserter.add(LevelingTooltips.getBoostXpToolTip(stack, tags));
-                }
             }
-            else inserter.add(mLvl);
+
+            inserter.add(mLvl);
+
+            // display extended tooltip?
+            if(Config.showTooltipXP && advanced && LevelingLogic.hasBoostXp(tags))
+            {
+                // xp if not boosted
+                if(LevelingLogic.canBoostMiningLevel(tags))
+                    inserter.add(LevelingTooltips.getBoostXpToolTip(stack, tags));
+                // otherwise boosted message
+                else if(LevelingLogic.isBoosted(tags))
+                    inserter.add(LevelingTooltips.getBoostedTooltip());
+            }
         }
 
         // add skill level
         int level = LevelingLogic.getLevel(tags);
         String lvl = LevelingTooltips.getLevelTooltip(level);
-        if(!advanced && IguanaConfig.showMinimalTooltipXP && !LevelingLogic.isMaxLevel(tags))
+        if(!advanced && Config.showMinimalTooltipXP && !LevelingLogic.isMaxLevel(tags))
             lvl += " (" + LevelingTooltips.getXpString(stack, tags, false) + ")";
         inserter.add(lvl);
 
         // skill level progress
-        if(advanced && IguanaConfig.showTooltipXP && !LevelingLogic.isMaxLevel(tags))
+        if(advanced && Config.showTooltipXP && !LevelingLogic.isMaxLevel(tags))
             inserter.add(LevelingTooltips.getXpToolTip(stack, tags));
 
         // since we added at least one line we'll add an empty spacing line at the end
         inserter.add("");
 
         // add info that you can hold shift for more details
-        if(!advanced && IguanaConfig.showTooltipXP && !Loader.isModLoaded("TiCTooltips")) // don't display if TicToolTips is installed
+        if(!advanced && Config.showTooltipXP && !Loader.isModLoaded("TiCTooltips")) // don't display if TicToolTips is installed
             event.toolTip.add(EnumChatFormatting.GRAY.toString() + EnumChatFormatting.ITALIC.toString() + "Hold SHIFT for XP");
     }
 

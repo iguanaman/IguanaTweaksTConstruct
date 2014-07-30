@@ -1,6 +1,5 @@
-package iguanaman.iguanatweakstconstruct;
+package iguanaman.iguanatweakstconstruct.old;
 
-import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
@@ -8,7 +7,6 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import iguanaman.iguanatweakstconstruct.harvestlevels.IguanaHarvestLevelTweaks;
 import iguanaman.iguanatweakstconstruct.leveling.IguanaToolLeveling;
 import iguanaman.iguanatweakstconstruct.leveling.commands.IguanaCommandLevelUpTool;
 import iguanaman.iguanatweakstconstruct.leveling.commands.IguanaCommandToolXP;
@@ -16,34 +14,27 @@ import iguanaman.iguanatweakstconstruct.leveling.commands.debug;
 import iguanaman.iguanatweakstconstruct.proxy.CommonProxy;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
-import iguanaman.iguanatweakstconstruct.replacing.IguanaToolPartReplacing;
-import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import mantle.pulsar.config.ForgeCFG;
 import mantle.pulsar.control.PulseManager;
 import mantle.pulsar.pulse.PulseMeta;
 import net.minecraft.item.Item;
+import tconstruct.tools.TinkerTools;
 
+import java.util.Arrays;
 import java.util.List;
 
-// inofficial todo list:
-// todo: find a solution to stone-head-tools not having xp even when head is replaced (maybe like old iguana, disallow stone tools?)
-// todo: add randomly generated weapons with random bonuses(!!!!) to dungeon loot :D:D:D
-
-@Mod(modid= Reference.MOD_ID, name= Reference.MOD_NAME, version="1.7.X-1p",
-dependencies = "required-after:" + Reference.TCON_MOD_ID + ";after:*")
-public class IguanaTweaksTConstruct {
+//@Mod(modid= IguanaReference.MOD_ID, name=IguanaReference.MOD_NAME, version="1.6.X-1p",
+//dependencies = "required-after:" + IguanaReference.TCON_MOD_ID + ";after:*")
+public class IguanaTweaksTConstructOld {
 
 	// The instance of your mod that Forge uses.
-	@Instance(Reference.MOD_ID)
-	public static IguanaTweaksTConstruct instance;
+	//@Instance(Reference.MOD_ID)
+	public static IguanaTweaksTConstructOld instance;
 
 	// Says where the client and server 'proxy' code is loaded.
-	@SidedProxy(clientSide= Reference.PROXY_CLIENT_CLASS, serverSide= Reference.PROXY_SERVER_CLASS)
+	//@SidedProxy(clientSide= Reference.PROXY_CLIENT_CLASS, serverSide= Reference.PROXY_SERVER_CLASS)
 	public static CommonProxy proxy;
-
-    public static boolean isToolLevelingActive = false;
-    public static boolean isHarvestTweaksActive = false;
 
 	public static List<Item> toolParts = null;
 
@@ -52,16 +43,15 @@ public class IguanaTweaksTConstruct {
     private ForgeCFG pulseCFG = new ForgeCFG("TinkersModules", "Addon: Iguana Tweaks for Tinkers Construct");
     private PulseManager pulsar = new PulseManager(Reference.MOD_ID, pulseCFG);
 
-	@EventHandler
+//	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		Config.init(event.getSuggestedConfigurationFile());
-        // workaround to know which modules are active.. :I
-        PulseMeta meta = new PulseMeta(Reference.PULSE_LEVELING, "", false, false);
-        isToolLevelingActive = pulseCFG.isModuleEnabled(meta);
-        meta = new PulseMeta(Reference.PULSE_HARVESTTWEAKS, "", false, false);
-        isHarvestTweaksActive = pulseCFG.isModuleEnabled(meta);
 
-		/*toolParts = Arrays.asList (
+		//proxy.registerSounds();
+		//NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
+
+		Config.init(event.getSuggestedConfigurationFile());
+
+		toolParts = Arrays.asList (
 				TinkerTools.toolRod, TinkerTools.pickaxeHead, TinkerTools.shovelHead, TinkerTools.hatchetHead,
 				TinkerTools.binding, TinkerTools.toughBinding, TinkerTools.toughRod, TinkerTools.largePlate,
 				TinkerTools.swordBlade, TinkerTools.wideGuard, TinkerTools.handGuard, TinkerTools.crossbar,
@@ -69,34 +59,43 @@ public class IguanaTweaksTConstruct {
 				TinkerTools.chiselHead, TinkerTools.scytheBlade, TinkerTools.broadAxeHead, TinkerTools.excavatorHead,
 				TinkerTools.largeSwordBlade, TinkerTools.hammerHead, TinkerTools.bowstring, TinkerTools.fletching,
 				TinkerTools.arrowhead );
-*/
 
-        // if we don't use our custom harvest levels, we have to adjust what we're using
-        if(!isHarvestTweaksActive)
-            HarvestLevels.adjustToVanillaLevels();
+		//IguanaBlocks.init();
+		//IguanaItems.init();
 
-        pulsar.registerPulse(new IguanaHarvestLevelTweaks());
         pulsar.registerPulse(new IguanaToolLeveling());
-        pulsar.registerPulse(new IguanaToolPartReplacing());
         pulsar.preInit(event);
 	}
 
 
-	@EventHandler
+//	@EventHandler
 	public void load(FMLInitializationEvent event) {
         pulsar.init(event);
 	}
 
-	@EventHandler
+//	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
+		//proxy.registerRenderers();
+
+		//MaterialTweaks.init();
+		//ModifierTweaks.init();
+		//VariousTweaks.init();
+		//RemoveVanillaTools.init();
+		// TODO: need to re-implement harvest level tweaks
+		//HarvestLevelTweaks.init();
+
+		Log.info("Starting event handler");
+		//MinecraftForge.EVENT_BUS.register(new IguanaEventHandler());
+
         pulsar.postInit(event);
 	}
 
-	@EventHandler
+//	@EventHandler
 	public void serverStarting(FMLServerStartingEvent event)
 	{
         // TODO: change this to a proper isModuleLoaded or something in Pulsar 0.4+ (when released/implemented)
-		if (isToolLevelingActive)
+        PulseMeta meta = new PulseMeta(Reference.PULSE_LEVELING, "", false, false);
+		if (pulseCFG.isModuleEnabled(meta))
 		{
             Log.debug("Adding command: leveluptool");
             event.registerServerCommand(new IguanaCommandLevelUpTool());
@@ -107,9 +106,21 @@ public class IguanaTweaksTConstruct {
 	}
 
 
-    // backwards compatibility
-    public static String getHarvestLevelName (int num)
-    {
-        return HarvestLevels.getHarvestLevelName(num);
-    }
+	public static String getHarvestLevelName (int num)
+	{
+		if (Config.pickaxeBoostRequired && num > 1) --num;
+		switch (num)
+		{
+		case 0: return "\u00a77Stone";
+		case 1: return "\u00a76Copper";
+		case 2: return "\u00a74Iron";
+		case 3: return "\u00a7fTin";
+		case 4: return "\u00a7bDiamond";
+		case 5: return "\u00a7cArdite";
+		case 6: return "\u00a79Cobalt";
+		case 7: return "\u00a75Manyullyn";
+		default: return "\u00a7k\u00a7k\u00a7k\u00a7k\u00a7k\u00a7k";
+		}
+	}
+
 }

@@ -1,7 +1,7 @@
 package iguanaman.iguanatweakstconstruct.leveling;
 
-import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
-import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
+import iguanaman.iguanatweakstconstruct.reference.Config;
+import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -31,7 +31,7 @@ public abstract class LevelingTooltips {
     private static String getXpToolTip(ItemStack tool, NBTTagCompound tags, boolean boostXp)
     {
         String prefix = boostXp ? "Mining XP: " : "Skill XP: ";
-        return prefix + getXpString(tool, tags, IguanaConfig.detailedXpTooltip, boostXp);
+        return prefix + getXpString(tool, tags, Config.detailedXpTooltip, boostXp);
     }
 
     /**
@@ -45,7 +45,7 @@ public abstract class LevelingTooltips {
         if (tags == null) tags = tool.getTagCompound().getCompoundTag("InfiTool");
 
         int requiredXp = LevelingLogic.getRequiredXp(tool, tags, boostXp);
-        long currentXp = boostXp ? tags.getLong(LevelingLogic.TAG_BOOST_EXP) : tags.getLong(LevelingLogic.TAG_EXP);
+        long currentXp = boostXp ? LevelingLogic.getBoostXp(tags) : LevelingLogic.getXp(tags);
         float xpPercentage = (float)currentXp / (float)requiredXp * 100f;
         String xpPercentageString = String.format("%.2f", xpPercentage) + "%";
 
@@ -71,7 +71,7 @@ public abstract class LevelingTooltips {
 
     public static String getMiningLevelTooltip(int hLevel)
     {
-        return "Mining Level: " + IguanaTweaksTConstruct.getHarvestLevelName(hLevel);
+        return "Mining Level: " + HarvestLevels.getHarvestLevelName(hLevel);
     }
 
     public static String getBoostedTooltip()

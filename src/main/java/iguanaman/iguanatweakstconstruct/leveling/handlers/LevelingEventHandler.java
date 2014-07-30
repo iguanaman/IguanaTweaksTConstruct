@@ -5,13 +5,14 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
 import iguanaman.iguanatweakstconstruct.leveling.LevelingTooltips;
-import iguanaman.iguanatweakstconstruct.reference.IguanaConfig;
+import iguanaman.iguanatweakstconstruct.reference.Config;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import tconstruct.items.tools.Hammer;
@@ -35,21 +36,26 @@ public class LevelingEventHandler {
             if (event.source.getEntity() instanceof EntityPlayer)
             {
                 EntityPlayer player = (EntityPlayer) event.source.getEntity();
-                ItemStack stack = player.getCurrentEquippedItem();
-                if (stack != null && stack.hasTagCompound())
-                    if (stack.getItem() instanceof Weapon || stack.getItem() instanceof Shortbow && event.source.damageType.equals("arrow"))
-                    {
-                        long xp = Math.round(event.ammount);
-                        if (event.entityLiving instanceof EntityAnimal) xp = Math.round(event.ammount / 4f);
+                // fake player?
+                if(!(player instanceof FakePlayer))
+                {
+                    ItemStack stack = player.getCurrentEquippedItem();
+                    if (stack != null && stack.hasTagCompound())
+                        if (stack.getItem() instanceof Weapon || stack.getItem() instanceof Shortbow && event.source.damageType.equals("arrow")) {
+                            long xp = Math.round(event.ammount);
+                            if (event.entityLiving instanceof EntityAnimal) xp = Math.round(event.ammount / 4f);
 
-                        if (xp > 0) LevelingLogic.addXP(stack, player, xp);
-                    }
+                            if (xp > 0) LevelingLogic.addXP(stack, player, xp);
+                        }
+                }
             }
     }
 
     @SubscribeEvent
     public void onUseHoe(UseHoeEvent event) {
         EntityPlayer player = event.entityPlayer;
+        // no fake players
+        if(player instanceof FakePlayer) return;
         ItemStack stack = event.current;
         if (stack != null && stack.hasTagCompound() && stack.getItem() instanceof ToolCore)
             LevelingLogic.addXP(stack, player, 1L);
@@ -151,7 +157,7 @@ public class LevelingEventHandler {
 */
 
 
-        if (IguanaConfig.toolLeveling && IguanaConfig.toolLevelingExtraModifiers)
+        if (Config.toolLeveling && Config.toolLevelingExtraModifiers)
             toolTag.setInteger("Modifiers", Math.max(toolTag.getInteger("Modifiers") - 3, 0));
 
         if (event.tool == TinkerTools.hammer || event.tool == TinkerTools.excavator || event.tool == TinkerTools.lumberaxe)
@@ -171,7 +177,7 @@ public class LevelingEventHandler {
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void onRenderGameOverlay(RenderGameOverlayEvent.Text event) {
-        if (IguanaConfig.toolLeveling && IguanaConfig.showDebugXP)
+        if (Config.toolLeveling && Config.showDebugXP)
         {
             Minecraft mc = Minecraft.getMinecraft();
             EntityPlayer player = mc.thePlayer;
@@ -187,12 +193,12 @@ public class LevelingEventHandler {
 
                     event.left.add("");
 
-                    if (IguanaConfig.showTooltipXP)
+                    if (Config.showTooltipXP)
                     {
                         if (level <= 5)
                             event.left.add(LevelingTooltips.getXpToolTip(equipped, null));
 
-                        if (IguanaConfig.levelingPickaxeBoost)
+                        if (Config.levelingPickaxeBoost)
                             if (hLevel >= TConstructRegistry.getMaterial("Copper").harvestLevel() && hLevel < TConstructRegistry.getMaterial("Manyullyn").harvestLevel()
                                     && !tags.hasKey("HarvestLevelModified")
                                     && (equipped.getItem() instanceof Pickaxe || equipped.getItem() instanceof Hammer))

@@ -26,7 +26,12 @@ import net.minecraft.item.Item;
 
 import java.util.List;
 
-@Mod(modid= Reference.MOD_ID, name= Reference.MOD_NAME, version="1.6.X-1p",
+// inofficial todo list:
+// todo: find a solution to stone-head-tools not having xp even when head is replaced (maybe like old iguana, disallow stone tools?)
+// todo: PR a ToolModifyEvent in ModifyBuilder to Tinkers to update XP when a modifier that modifies XP needed is applied.
+// todo: refactor adding modifiers on levelup from that long chaotic function + normal modifiers ;o
+
+@Mod(modid= Reference.MOD_ID, name= Reference.MOD_NAME, version="1.7.X-1p",
 dependencies = "required-after:" + Reference.TCON_MOD_ID + ";after:*")
 public class IguanaTweaksTConstruct {
 

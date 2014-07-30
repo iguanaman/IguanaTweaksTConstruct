@@ -1,5 +1,6 @@
-package iguanaman.iguanatweakstconstruct.leveling;
+package iguanaman.iguanatweakstconstruct.leveling.modifiers;
 
+import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;

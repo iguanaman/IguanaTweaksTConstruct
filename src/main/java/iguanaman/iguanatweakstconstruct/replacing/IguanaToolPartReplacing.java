@@ -1,13 +1,8 @@
 package iguanaman.iguanatweakstconstruct.replacing;
 
-import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import iguanaman.iguanatweakstconstruct.harvestlevels.HarvestLevelTweaks;
-import iguanaman.iguanatweakstconstruct.harvestlevels.TinkerToolTweaks;
-import iguanaman.iguanatweakstconstruct.harvestlevels.VanillaToolTipHandler;
-import iguanaman.iguanatweakstconstruct.harvestlevels.proxy.HarvestCommonProxy;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
 import mantle.pulsar.pulse.Handler;
 import mantle.pulsar.pulse.Pulse;
@@ -37,6 +32,6 @@ public class IguanaToolPartReplacing {
     @Handler
     public void postInit(FMLPostInitializationEvent event)
     {
-
+        MinecraftForge.EVENT_BUS.register(new PartToolTipHandler());
     }
 }

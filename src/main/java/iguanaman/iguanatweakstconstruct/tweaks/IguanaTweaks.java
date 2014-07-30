@@ -36,7 +36,7 @@ public class IguanaTweaks {
         if(Config.addFlintRecipe) {
             Log.info("Adding shapeless Flint recipe from " + Config.recipeGravelPerFlint + " Gravel");
             // create recipe
-            ItemStack[] recipe = new ItemStack[Config.recipeGravelPerFlint];
+            Object[] recipe = new ItemStack[Config.recipeGravelPerFlint];
             for(int i = 0; i < Config.recipeGravelPerFlint; i++)
                 recipe[i] = new ItemStack(Blocks.gravel);
 

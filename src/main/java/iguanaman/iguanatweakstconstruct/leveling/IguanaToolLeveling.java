@@ -39,6 +39,8 @@ public class IguanaToolLeveling {
     private static final int HEAD_Creeper = 4;
     private static final int HEAD_Wither = 1;
 
+
+
     @Handler
     public void init(FMLInitializationEvent event)
     {
@@ -52,17 +54,17 @@ public class IguanaToolLeveling {
         registerBoostModifiers();
     }
 
-    private ItemStack[] getMobHead(int meta)
-    {
-        return new ItemStack[]{new ItemStack(Items.skull, 1, meta)};
-    }
-
     @Handler
     public void postInit(FMLPostInitializationEvent event)
     {
         MinecraftForge.EVENT_BUS.register(new LevelingEventHandler());
         MinecraftForge.EVENT_BUS.register(new LevelingToolTipHandler());
     }
+
+
+
+
+
 
     // replace modifiers with our own, adjusted, modifiers
     private void takeOverModifiers()
@@ -97,5 +99,10 @@ public class IguanaToolLeveling {
         for (ToolCore tool : tools)
             for (int index = 0; index < modifierIds.length; ++index)
                 TConstructClientRegistry.addEffectRenderMapping(tool, modifierIds[index], Reference.RESOURCE, renderNames[index], true);
+    }
+
+    private ItemStack[] getMobHead(int meta)
+    {
+        return new ItemStack[]{new ItemStack(Items.skull, 1, meta)};
     }
 }

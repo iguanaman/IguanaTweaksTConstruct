@@ -131,8 +131,7 @@ public abstract class LevelingLogic {
 
         // if we got a levelup, play a sound!
 		if ((leveled || pickLeveled) && !player.worldObj.isRemote)
-            // TODO: investigate if there's a better way to play sounds? resourcelocation?
-			player.worldObj.playSoundAtEntity(player, Reference.MOD_ID.toLowerCase() + ":chime", 1.0F, 1.0F);
+            player.worldObj.playSoundAtEntity(player, Reference.RESOURCE + ":chime", 0.9f, 1.0f);
 	}
 
 	public static void addXP(ItemStack tool, EntityPlayer player, long xp)

@@ -125,7 +125,7 @@ public class Config {
 
         // Tool durability/speed changes
         durabilityPercentage = configfile.getInt("durabilityPercentage", CATEGORY_Tweaks, 80, 1, 999, "Change durability of all tool materials (in percent)");
-        durabilityPercentage = configfile.getInt("miningSpeedPercentage", CATEGORY_Tweaks, 100, 1, 999, "Change mining speed of all tool materials (in percent)");
+        miningSpeedPercentage = configfile.getInt("miningSpeedPercentage", CATEGORY_Tweaks, 100, 1, 999, "Change mining speed of all tool materials (in percent)");
 
 
         // stuff

@@ -2,6 +2,7 @@ package iguanaman.iguanatweakstconstruct.old.modifiers;
 
 import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
 import iguanaman.iguanatweakstconstruct.leveling.LevelingTooltips;
+import iguanaman.iguanatweakstconstruct.old.IguanaConfig;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
 
@@ -155,7 +156,7 @@ public class IguanaModUpgrade extends ItemModifier {
 
 				// Check for stone parts
 				if (inputStack.getItemDamage() == 1)
-					if (!Config.allowStoneTools || Config.restrictedFlintParts.contains(partIndex+1)) return false;
+					if (!IguanaConfig.allowStoneTools || IguanaConfig.restrictedFlintParts.contains(partIndex+1)) return false;
 			}
 
 		// Check if have enough free modifiers to replace written/thaumic parts

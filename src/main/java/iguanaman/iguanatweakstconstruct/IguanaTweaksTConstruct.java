@@ -1,5 +1,6 @@
 package iguanaman.iguanatweakstconstruct;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -30,6 +31,10 @@ import java.util.List;
 // todo: find a solution to stone-head-tools not having xp even when head is replaced (maybe like old iguana, disallow stone tools?)
 // todo: add randomly generated weapons with random bonuses(!!!!) to dungeon loot :D:D:D
 
+// todo: Unknown blocks get incorrect mining level. (just check if they're higher than the places where i added additional harvest levels and add the proper ammount to match up with the old mining level)
+// todo: can't mine TE tin with tin level?
+// todo: tartarite pick mines manyullum. tartarite tinker head mines ardite.
+
 @Mod(modid= Reference.MOD_ID, name= Reference.MOD_NAME, version="1.7.X-1p",
 dependencies = "required-after:" + Reference.TCON_MOD_ID + ";after:*")
 public class IguanaTweaksTConstruct {
@@ -54,7 +59,11 @@ public class IguanaTweaksTConstruct {
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		Config.init(event.getSuggestedConfigurationFile());
+        Config config = new Config();
+        config.init(event.getSuggestedConfigurationFile());
+        // register config as eventhandler to get config changed updates
+        FMLCommonHandler.instance().bus().register(config);
+
         // workaround to know which modules are active.. :I
         PulseMeta meta = new PulseMeta(Reference.PULSE_LEVELING, "", false, false);
         isToolLevelingActive = pulseCFG.isModuleEnabled(meta);

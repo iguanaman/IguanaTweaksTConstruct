@@ -49,7 +49,7 @@ public class IguanaTweaksTConstructOld {
 		//proxy.registerSounds();
 		//NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
 
-		Config.init(event.getSuggestedConfigurationFile());
+        IguanaConfig.init(event.getSuggestedConfigurationFile());
 
 		toolParts = Arrays.asList (
 				TinkerTools.toolRod, TinkerTools.pickaxeHead, TinkerTools.shovelHead, TinkerTools.hatchetHead,

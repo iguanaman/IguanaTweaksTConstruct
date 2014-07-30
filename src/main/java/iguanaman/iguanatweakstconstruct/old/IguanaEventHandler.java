@@ -221,17 +221,17 @@ public class IguanaEventHandler {
 		int accessory = toolTag.getInteger("Accessory");
 		int extra = toolTag.hasKey("Extra") ? toolTag.getInteger("Extra") : -1;
 
-		if (!Config.allowStoneTools && (head == 1 || handle == 1 || event.tool != TinkerTools.arrow && accessory == 1) || extra == 1)
+		if (!IguanaConfig.allowStoneTools && (head == 1 || handle == 1 || event.tool != TinkerTools.arrow && accessory == 1) || extra == 1)
 		{
 			event.setResult(Event.Result.DENY);
 			return;
 		}
-		else if (Config.allowStoneTools)
+		else if (IguanaConfig.allowStoneTools)
 		{
 			if (head == 1)
 			{
 				int partIndex = IguanaTweaksTConstruct.toolParts.indexOf(event.tool.getHeadItem());
-				if (Config.restrictedFlintParts.contains(partIndex+1))
+				if (IguanaConfig.restrictedFlintParts.contains(partIndex+1))
 				{
 					event.setResult(Event.Result.DENY);
 					return;
@@ -241,7 +241,7 @@ public class IguanaEventHandler {
 			if (handle == 1)
 			{
 				int partIndex = IguanaTweaksTConstruct.toolParts.indexOf(event.tool.getHandleItem());
-				if (Config.restrictedFlintParts.contains(partIndex+1))
+				if (IguanaConfig.restrictedFlintParts.contains(partIndex+1))
 				{
 					event.setResult(Event.Result.DENY);
 					return;
@@ -251,7 +251,7 @@ public class IguanaEventHandler {
 			if (event.tool != TinkerTools.arrow && accessory == 1)
 			{
 				int partIndex = IguanaTweaksTConstruct.toolParts.indexOf(event.tool.getAccessoryItem());
-				if (Config.restrictedFlintParts.contains(partIndex+1))
+				if (IguanaConfig.restrictedFlintParts.contains(partIndex+1))
 				{
 					event.setResult(Event.Result.DENY);
 					return;
@@ -261,7 +261,7 @@ public class IguanaEventHandler {
 			if (extra == 1)
 			{
 				int partIndex = IguanaTweaksTConstruct.toolParts.indexOf(event.tool.getExtraItem());
-				if (Config.restrictedFlintParts.contains(partIndex+1))
+				if (IguanaConfig.restrictedFlintParts.contains(partIndex+1))
 				{
 					event.setResult(Event.Result.DENY);
 					return;
@@ -371,14 +371,14 @@ public class IguanaEventHandler {
 			MaterialSet mat = (MaterialSet) PatternBuilder.instance.materialSets.get(key.key);
 			if (mat != null)
 				if (
-						mat.materialID == 0 && Config.restrictedWoodParts.contains(event.pattern.getItemDamage()) ||
-						mat.materialID == 1 && Config.restrictedStoneParts.contains(event.pattern.getItemDamage()) ||
-						mat.materialID == 3 && Config.restrictedFlintParts.contains(event.pattern.getItemDamage()) ||
-						mat.materialID == 4 && Config.restrictedCactusParts.contains(event.pattern.getItemDamage()) ||
-						mat.materialID == 5 && Config.restrictedBoneParts.contains(event.pattern.getItemDamage()) ||
-						mat.materialID == 8 && Config.restrictedSlimeParts.contains(event.pattern.getItemDamage()) ||
-						mat.materialID == 9 && Config.restrictedPaperParts.contains(event.pattern.getItemDamage()) ||
-						mat.materialID == 17 && Config.restrictedSlimeParts.contains(event.pattern.getItemDamage())
+						mat.materialID == 0 && IguanaConfig.restrictedWoodParts.contains(event.pattern.getItemDamage()) ||
+						mat.materialID == 1 && IguanaConfig.restrictedStoneParts.contains(event.pattern.getItemDamage()) ||
+						mat.materialID == 3 && IguanaConfig.restrictedFlintParts.contains(event.pattern.getItemDamage()) ||
+						mat.materialID == 4 && IguanaConfig.restrictedCactusParts.contains(event.pattern.getItemDamage()) ||
+						mat.materialID == 5 && IguanaConfig.restrictedBoneParts.contains(event.pattern.getItemDamage()) ||
+						mat.materialID == 8 && IguanaConfig.restrictedSlimeParts.contains(event.pattern.getItemDamage()) ||
+						mat.materialID == 9 && IguanaConfig.restrictedPaperParts.contains(event.pattern.getItemDamage()) ||
+						mat.materialID == 17 && IguanaConfig.restrictedSlimeParts.contains(event.pattern.getItemDamage())
 						)
 				{
 					event.setResult(Event.Result.DENY);

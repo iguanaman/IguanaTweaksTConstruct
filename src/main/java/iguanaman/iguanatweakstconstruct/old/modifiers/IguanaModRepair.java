@@ -1,5 +1,6 @@
 package iguanaman.iguanatweakstconstruct.old.modifiers;
 
+import iguanaman.iguanatweakstconstruct.old.IguanaConfig;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -106,14 +107,14 @@ public class IguanaModRepair extends ItemModifier {
 
 		float repairCount = (float)repair / (float)durtotal;
 
-		if (Config.repairLimitActive && repairCount >= Config.repairLimit)
+		if (IguanaConfig.repairLimitActive && repairCount >= IguanaConfig.repairLimit)
 			return 0;
 
-		increase = Math.round(increase / (Config.repairCostPercentage / 100f));
+		increase = Math.round(increase / (IguanaConfig.repairCostPercentage / 100f));
 
-		if (Config.repairCostScaling)
+		if (IguanaConfig.repairCostScaling)
 		{
-			repairCount /= Config.repairScalingModifier;
+			repairCount /= IguanaConfig.repairScalingModifier;
 			repairCount += 1F;
 			increase = Math.round(increase / repairCount);
 		}

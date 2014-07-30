@@ -1,7 +1,5 @@
 package iguanaman.iguanatweakstconstruct.old;
 
-import iguanaman.iguanatweakstconstruct.reference.Config;
-
 import java.util.ArrayList;
 
 import net.minecraft.init.Blocks;
@@ -33,10 +31,10 @@ public class IguanaToolBuildRecipe implements IRecipe {
 			if (slot != null)
 			{
 				//Too many items
-				if (!Config.easyToolCreation && inputs.size() == 3 || inputs.size() == 4) return false;
+				if (!IguanaConfig.easyToolCreation && inputs.size() == 3 || inputs.size() == 4) return false;
 
 				// if a tool is found, make sure easy modifications are allowed first
-				if (!Config.easyToolModification && slot.getItem() instanceof ToolCore) return false;
+				if (!IguanaConfig.easyToolModification && slot.getItem() instanceof ToolCore) return false;
 
 				if (slot.getItem() instanceof ToolCore) toolFound = true;
 
@@ -48,7 +46,7 @@ public class IguanaToolBuildRecipe implements IRecipe {
 		if (inputs.size() < 2) return false;
 
 		// Only modification allowed and no tool found
-		if (!Config.easyToolCreation && !toolFound) return false;
+		if (!IguanaConfig.easyToolCreation && !toolFound) return false;
 
 		// Make sure size is 4 "itemstacks"
 		while (inputs.size() < 4) inputs.add(null);
@@ -57,7 +55,7 @@ public class IguanaToolBuildRecipe implements IRecipe {
 		for (int i1 = 0; i1 < 4; ++i1)
 		{
 			ItemStack input1 = inputs.get(i1);
-			if (input1 == null || !Config.easyToolCreation && !(input1.getItem() instanceof ToolCore)) continue;
+			if (input1 == null || !IguanaConfig.easyToolCreation && !(input1.getItem() instanceof ToolCore)) continue;
 
 			for (int i2 = 0; i2 < 4; ++i2)
 			{
@@ -78,7 +76,7 @@ public class IguanaToolBuildRecipe implements IRecipe {
 						if (i3 == i4) continue;
 
 						// try to build / modify something
-						if (Config.easyToolCreation && !toolFound)
+						if (IguanaConfig.easyToolCreation && !toolFound)
 							output = ToolBuilder.instance.buildTool(input1, input2, input3, input4, "");
 						else if (input1.getItem() instanceof ToolCore && input1.hasTagCompound() && input1.getTagCompound().getCompoundTag("InfiTool") != null)
 							output = ModifyBuilder.instance.modifyItem(input1, new ItemStack[] {input2, input3, input4});
@@ -87,7 +85,7 @@ public class IguanaToolBuildRecipe implements IRecipe {
 						if (output != null) return true;
 
 						// Only tool modification allowed so input4 will always be null
-						if (!Config.easyToolCreation) break;
+						if (!IguanaConfig.easyToolCreation) break;
 					}
 				}
 			}

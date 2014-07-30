@@ -1,6 +1,6 @@
 package iguanaman.iguanatweakstconstruct.old.tweaks;
 
-import iguanaman.iguanatweakstconstruct.reference.Config;
+import iguanaman.iguanatweakstconstruct.old.IguanaConfig;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
 import iguanaman.iguanatweakstconstruct.old.IguanaPartBuildRecipe;
@@ -42,7 +42,7 @@ public class VariousTweaks {
 		}
 
 		//REMOVE STONE TORCH
-		if (Config.removeStoneTorchRecipe)
+		if (IguanaConfig.removeStoneTorchRecipe)
 		{
 			Log.info("Removing stone torch recipe");
 			RecipeRemover.removeAnyRecipe(new ItemStack(TinkerWorld.stoneTorch, 4));
@@ -50,7 +50,7 @@ public class VariousTweaks {
 
 
 		// GRAVEL TO FLINT RECIPE
-		if (Config.addFlintRecipe) {
+		if (IguanaConfig.addFlintRecipe) {
 			Log.info("Adding gravel to flint recipe");
 			GameRegistry.addShapelessRecipe(new ItemStack(Items.flint), new Object[] {Blocks.gravel, Blocks.gravel, Blocks.gravel, Blocks.gravel});
 		}
@@ -91,19 +91,19 @@ public class VariousTweaks {
 		{
 			Item part = IguanaTweaksTConstruct.toolParts.get(i);
 
-			if (Config.restrictedWoodParts.contains(i+1))
+			if (IguanaConfig.restrictedWoodParts.contains(i+1))
 				TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 0));
-			if (!Config.allowStoneTools || Config.restrictedStoneParts.contains(i+1))
+			if (!IguanaConfig.allowStoneTools || IguanaConfig.restrictedStoneParts.contains(i+1))
 				TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 1));
-			if (Config.restrictedFlintParts.contains(i+1))
+			if (IguanaConfig.restrictedFlintParts.contains(i+1))
 				TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 3));
-			if (Config.restrictedCactusParts.contains(i+1))
+			if (IguanaConfig.restrictedCactusParts.contains(i+1))
 				TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 4));
-			if (Config.restrictedBoneParts.contains(i+1))
+			if (IguanaConfig.restrictedBoneParts.contains(i+1))
 				TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 5));
-			if (Config.restrictedPaperParts.contains(i+1))
+			if (IguanaConfig.restrictedPaperParts.contains(i+1))
 				TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 9));
-			if (Config.restrictedSlimeParts.contains(i+1))
+			if (IguanaConfig.restrictedSlimeParts.contains(i+1))
 			{
 				TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 8));
 				TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(part, 1, 17));
@@ -120,7 +120,7 @@ public class VariousTweaks {
 
 
 		// SIMPLE WOOD PATTERN CRAFTING RECIPE
-		if (Config.easyBlankPatternRecipe)
+		if (IguanaConfig.easyBlankPatternRecipe)
 		{
 			Log.info("Adding easy blank pattern recipe");
 			GameRegistry.addShapedRecipe(new ItemStack(TinkerTools.blankPattern), "ss", "ss", 's', new ItemStack(Items.stick));
@@ -128,7 +128,7 @@ public class VariousTweaks {
 
 
 		//ROTATING PATTERN CRAFTING
-		if (Config.easyPatternCrafting)
+		if (IguanaConfig.easyPatternCrafting)
 		{
 			Log.info("Adding rotating pattern crafting recipes");
 
@@ -144,10 +144,10 @@ public class VariousTweaks {
 			List<Integer> patternIds = new ArrayList<Integer>();
 
 			for (int x = 1; x < patternName.length; x++)
-				if (!Config.restrictedBoneParts.contains(x) || !Config.restrictedCactusParts.contains(x)
-						|| !Config.restrictedFlintParts.contains(x) || !Config.restrictedPaperParts.contains(x)
-						|| !Config.restrictedSlimeParts.contains(x) || !Config.restrictedWoodParts.contains(x)
-						|| Config.allowStoneTools && !Config.restrictedFlintParts.contains(x)
+				if (!IguanaConfig.restrictedBoneParts.contains(x) || !IguanaConfig.restrictedCactusParts.contains(x)
+						|| !IguanaConfig.restrictedFlintParts.contains(x) || !IguanaConfig.restrictedPaperParts.contains(x)
+						|| !IguanaConfig.restrictedSlimeParts.contains(x) || !IguanaConfig.restrictedWoodParts.contains(x)
+						|| IguanaConfig.allowStoneTools && !IguanaConfig.restrictedFlintParts.contains(x)
 						|| x >= 23)
 					patternIds.add(x);
 
@@ -165,7 +165,7 @@ public class VariousTweaks {
 
 
 		// ALTERNATIVE PART CRAFTING
-		if (Config.easyPartCrafting)
+		if (IguanaConfig.easyPartCrafting)
 		{
 			Log.info("Adding easy part crafting");
 			GameRegistry.addRecipe(new IguanaPartBuildRecipe());
@@ -175,7 +175,7 @@ public class VariousTweaks {
 
 
 		// ALTERNATIVE TOOL CRAFTING
-		if (Config.easyToolCreation || Config.easyToolModification)
+		if (IguanaConfig.easyToolCreation || IguanaConfig.easyToolModification)
 		{
 			Log.info("Adding easy tool crafting");
 			GameRegistry.addRecipe(new IguanaToolBuildRecipe());

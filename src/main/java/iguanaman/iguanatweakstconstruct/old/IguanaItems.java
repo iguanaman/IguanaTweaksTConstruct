@@ -125,7 +125,7 @@ public class IguanaItems {
 
 
 		//COBALT ARMOR
-		if (Config.cobaltArmor)
+		if (IguanaConfig.cobaltArmor)
 		{
 			Log.info("Changing diamond armor to cobalt armor");
 

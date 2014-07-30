@@ -1,5 +1,6 @@
 package iguanaman.iguanatweakstconstruct.old.items;
 
+import iguanaman.iguanatweakstconstruct.old.IguanaConfig;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class IguanaToolPart extends ToolPart {
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
 	{
 		tconstruct.library.tools.ToolMaterial material = TConstructRegistry.getMaterial(par1ItemStack.getItemDamage());
-		if (!Config.allowStoneTools && material.materialName.equals("Stone"))
+		if (!IguanaConfig.allowStoneTools && material.materialName.equals("Stone"))
 		{
 			par3List.add("\u00a74Can only be used to make casts,");
 			par3List.add("\u00a74cannot be used to make a tool");
@@ -54,7 +55,7 @@ public class IguanaToolPart extends ToolPart {
 				par3List.add("Durability: " + material.durability);
 			}
 
-			if (Config.partReplacement)
+			if (IguanaConfig.partReplacement)
 				if (material.ability.equals("Writable") || material.ability.equals("Thaumic"))
 				{
 					par3List.add("\u00a74Cannot be replaced once added,");

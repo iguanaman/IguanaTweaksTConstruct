@@ -178,6 +178,15 @@ public abstract class ReplacementLogic {
                 tags.setInteger("HarvestLevel", tags.getInteger("HarvestLevel") + 1);
         }
 
+        // Update the tool name if we replaced the head and it was a automagic name
+        if(type == HEAD) {
+            String materialName = TConstructRegistry.getMaterial(oldMaterialId).displayName;
+            String toolName = tool.getToolName();
+            if (toolStack.getDisplayName().endsWith(materialName + toolName)) {
+                materialName = TConstructRegistry.getMaterial(partMaterialId).displayName;
+                toolStack.setStackDisplayName("\u00a7r" + materialName + toolName);
+            }
+        }
     }
 
     // update tag if it already exists.

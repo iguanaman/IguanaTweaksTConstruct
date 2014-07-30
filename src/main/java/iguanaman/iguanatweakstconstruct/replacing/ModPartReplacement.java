@@ -143,18 +143,8 @@ public class ModPartReplacement extends ItemModifier {
         for(int i = partIndex; i > 0; i--)
             partType = detectAdditionalPartType(recipe, replacementPart, partType);
 
+        // actually do the exchange
         exchangeToolPart(tool, tags, partType, parts[partIndex], itemStack);
-/*
-        // ok. we got the needed info. now we can do the actual exchange :)
-        int matId = ToolBuilder.instance.getMaterialID(parts[partIndex]);
-        switch (partType) {
-            case HEAD: tags.setInteger("Head", matId); tags.setInteger("RenderHead", matId); break;
-            case HANDLE: tags.setInteger("Handle", matId); tags.setInteger("RenderHandle", matId); break;
-            case ACCESSORY: tags.setInteger("Accessory", matId); tags.setInteger("RenderAccessory", matId); break;
-            case EXTRA: tags.setInteger("Extra", matId); tags.setInteger("RenderExtra", matId); break;
-        }
-
-*/
     }
 
 

@@ -28,6 +28,7 @@ import java.util.List;
 
 // inofficial todo list:
 // todo: find a solution to stone-head-tools not having xp even when head is replaced (maybe like old iguana, disallow stone tools?)
+// todo: add randomly generated weapons with random bonuses(!!!!) to dungeon loot :D:D:D
 
 @Mod(modid= Reference.MOD_ID, name= Reference.MOD_NAME, version="1.7.X-1p",
 dependencies = "required-after:" + Reference.TCON_MOD_ID + ";after:*")

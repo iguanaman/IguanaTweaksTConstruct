@@ -299,9 +299,7 @@ public abstract class LevelingLogic {
         // Add random bonuses on leveling up?
 		if (Config.toolLevelingRandomBonuses)
 		{
-			tags.setInteger("Modifiers", currentModifiers + 1);
-			for (int i = 1; i <= 10; ++i) if (tryModify(player, stack, world.rand.nextInt(10), isTool)) break;
-			tags.setInteger("Modifiers", currentModifiers);
+            RandomBonusses.tryModifying(player, stack);
 		}
 	}
 
@@ -332,6 +330,7 @@ public abstract class LevelingLogic {
 		tags.setInteger("HarvestLevel", tags.getInteger("HarvestLevel") + 1);
 	}
 
+    /*
 	private static boolean tryModify(EntityPlayer player, ItemStack stack, int rnd, boolean isTool)
 	{
 		ItemModifier mod = null;
@@ -421,4 +420,5 @@ public abstract class LevelingLogic {
 		mod.modify(nullItemStack, stack);
 		return true;
 	}
+	*/
 }

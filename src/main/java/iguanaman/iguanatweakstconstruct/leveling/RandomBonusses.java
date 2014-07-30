@@ -6,6 +6,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentText;
+import tconstruct.TConstruct;
 import tconstruct.library.crafting.ModifyBuilder;
 import tconstruct.library.modifier.ItemModifier;
 import tconstruct.modifiers.tools.ModRedstone;
@@ -19,31 +20,36 @@ import java.util.Set;
 public class RandomBonusses {
     private static Map<String, ItemModifier> modCache = new HashMap<String, ItemModifier>();
 
-    public static void tryModifying(EntityPlayer player, ItemStack tool, int i, boolean isTool)
+    public static void tryModifying(EntityPlayer player, ItemStack tool)
     {
-        boolean modified = true;
+        boolean modified = false;
         // add a modifier for it
         NBTTagCompound tags = tool.getTagCompound().getCompoundTag("InfiTool");
-        tags.setInteger("Modifiers", tags.getInteger("Modifiers")+1);
+        int modifiers = tags.getInteger("Modifiers");
+        tags.setInteger("Modifiers", modifiers+1);
 
-        if(i-- == 0) addRedstoneModifier(player, tool);
-        if(i-- == 0) addLapisModifier(player, tool);
-        //if(i-- == 0) addAutoSmeltModifier(player, tool);
-        //if(i-- == 0) addSilktouchModifier(player, tool);
-        //if(i-- == 0) addDiamondModifier(player, tool);
-        //if(i-- == 0) addEmeraldModifier(player, tool);
-        if(i-- == 0) addRepairModifier(player, tool);
-        if(i-- == 0) addAttackModifier(player, tool);
-        if(i-- == 0) addBlazeModifier(player, tool);
-        if(i-- == 0) addSmiteModifier(player, tool);
-        if(i-- == 0) addAntiSpiderModifier(player, tool);
-        if(i-- == 0) addBeheadingModifier(player, tool);
-        if(i-- == 0) addLifeStealModifier(player, tool);
-        if(i-- == 0) addKnockbackModifier(player, tool);
+        // we can do this without getting an infinite loop, because redstone, lapis,... can be applied infinitely often
+        while(!modified) {
+            int i = TConstruct.random.nextInt(14);
+            Log.info("Trying modifier # " + i);
+            if (i-- == 0) modified = addRedstoneModifier(player, tool);  //0
+            if (i-- == 0) modified = addLapisModifier(player, tool);     //1
+            if (i-- == 0) modified = addAutoSmeltModifier(player, tool); //2
+            if (i-- == 0) modified = addSilktouchModifier(player, tool); //3
+            if (i-- == 0) modified = addDiamondModifier(player, tool);   //4
+            if (i-- == 0) modified = addEmeraldModifier(player, tool);   //5
+            if (i-- == 0) modified = addRepairModifier(player, tool);    //6
+            if (i-- == 0) modified = addAttackModifier(player, tool);    //7
+            if (i-- == 0) modified = addBlazeModifier(player, tool);     //8
+            if (i-- == 0) modified = addSmiteModifier(player, tool);     //9
+            if (i-- == 0) modified = addAntiSpiderModifier(player, tool);//10
+            if (i-- == 0) modified = addBeheadingModifier(player, tool); //11
+            if (i-- == 0) modified = addLifeStealModifier(player, tool); //12
+            if (i-- == 0) modified = addKnockbackModifier(player, tool); //13
+        }
 
-        // no modifier applicable? remove the added modifier again
-        if(!modified)
-            tags.setInteger("Modifiers", tags.getInteger("Modifiers")-1);
+        // restore modifiers
+        tags.setInteger("Modifiers", modifiers);
     }
 
 

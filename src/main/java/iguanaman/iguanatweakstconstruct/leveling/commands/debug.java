@@ -1,5 +1,6 @@
 package iguanaman.iguanatweakstconstruct.leveling.commands;
 
+import iguanaman.iguanatweakstconstruct.leveling.RandomBonusses;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
@@ -12,7 +13,7 @@ public class debug extends CommandBase {
 
     @Override
     public String getCommandName() {
-        return "shownbt";
+        return "igdebug";
     }
 
     /**
@@ -24,11 +25,14 @@ public class debug extends CommandBase {
         return 2;
     }
 
+
     @Override
     public void processCommand(ICommandSender icommandsender, String[] astring) {
         EntityPlayerMP entityplayermp = astring.length >= 1 ? getPlayer(icommandsender, astring[0]) : getCommandSenderAsPlayer(icommandsender);
         ItemStack equipped = entityplayermp.getCurrentEquippedItem();
         if (equipped != null && equipped.getItem() instanceof ToolCore) {
+            RandomBonusses.tryModifying(entityplayermp, equipped);
+            /*
             NBTTagCompound tags = equipped.getTagCompound().getCompoundTag("InfiTool");
             int tipNum = 0;
             while (true) {
@@ -49,6 +53,7 @@ public class debug extends CommandBase {
                 if (!found)
                     break;
             }
+            */
         }
     }
 

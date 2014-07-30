@@ -14,6 +14,9 @@ public class Reference {
     public static final String PULSE_LEVELING = "ToolLeveling";
     public static final String PULSE_HARVESTTWEAKS = "HarvestLevelTweaks";
     public static final String PULSE_REPLACING = "ToolPartReplacing";
+    public static final String PULSE_MOBHEADS = "MobHeads";
+    public static final String PULSE_TWEAKS = "IguanaTweaks";
+    public static final String PULSE_ITEMS = "IguanaItems";
 
     public static final String PROXY_CLIENT_CLASS = "iguanaman.iguanatweakstconstruct.proxy.ClientProxy";
     public static final String PROXY_SERVER_CLASS = "iguanaman.iguanatweakstconstruct.proxy.ServerProxy";

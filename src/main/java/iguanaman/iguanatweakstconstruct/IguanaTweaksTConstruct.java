@@ -37,7 +37,7 @@ import java.util.List;
 // todo: can't mine TE tin with tin level?
 // todo: tartarite pick mines manyullum. tartarite tinker head mines ardite.
 
-@Mod(modid= Reference.MOD_ID, name= Reference.MOD_NAME, version="1.7.X-1p",
+@Mod(modid= Reference.MOD_ID, name= Reference.MOD_NAME, version="${version}",
 dependencies = "required-after:" + Reference.TCON_MOD_ID + ";after:*")
 public class IguanaTweaksTConstruct {
 

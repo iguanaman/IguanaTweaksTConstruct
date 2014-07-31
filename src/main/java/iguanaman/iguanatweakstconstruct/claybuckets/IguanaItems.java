@@ -7,6 +7,7 @@ import iguanaman.iguanatweakstconstruct.claybuckets.items.ClayBucket;
 import iguanaman.iguanatweakstconstruct.claybuckets.items.ClayBucketMilk;
 import iguanaman.iguanatweakstconstruct.claybuckets.items.ClayBucketTinkerLiquids;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
+import iguanaman.iguanatweakstconstruct.util.Log;
 import mantle.pulsar.pulse.Handler;
 import mantle.pulsar.pulse.Pulse;
 import net.minecraft.creativetab.CreativeTabs;
@@ -36,6 +37,7 @@ public class IguanaItems {
     @Handler
     public void preInit(FMLPreInitializationEvent event)
     {
+        Log.info("Adding Items");
         // unfired clay bucket is a regular item
         clayBucketUnfired = new Item().setUnlocalizedName(Reference.MOD_ID + ".clayBucketUnfired").setTextureName(Reference.resource("clayBucketUnfired")).setMaxStackSize(16).setCreativeTab(CreativeTabs.tabMisc);
         GameRegistry.registerItem(clayBucketUnfired, "clayBucketUnfired");
@@ -67,6 +69,8 @@ public class IguanaItems {
 
         for(int i = 0; i < tinkerFluids.length; i++)
             FluidContainerRegistry.registerFluidContainer(tinkerFluids[i], new ItemStack(clayBucketsTinkers, 1, i), emptyClayBucket);
+
+        Log.info("Added Items");
     }
 
     @Handler

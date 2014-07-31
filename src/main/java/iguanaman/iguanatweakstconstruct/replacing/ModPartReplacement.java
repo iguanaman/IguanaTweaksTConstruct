@@ -41,14 +41,6 @@ public class ModPartReplacement extends ItemModifier {
         if(tags.getInteger("Damage") > 0)
             return false;
 
-        // collect which part types we can use for this tool
-        Set<Item> toolParts = new HashSet<Item>(4);
-        toolParts.add(tool.getHeadItem());
-        toolParts.add(tool.getHandleItem());
-        toolParts.add(tool.getAccessoryItem());
-        toolParts.add(tool.getExtraItem());
-        toolParts.remove(null); // one of those adds probably added null. remove it.
-
         // get the recipe of the tool
         ToolRecipe recipe = ToolBuilder.instance.recipeList.get(tool.getToolName());
         if(recipe == null)
@@ -67,9 +59,6 @@ public class ModPartReplacement extends ItemModifier {
             // is it a toolpart?
             if (!(item instanceof IToolPart || item == Items.bone || item == Items.stick))
                 return false;
-
-            //if(!toolParts.contains(item))
-//                return false;
 
             // we only allow single part replacement. sorry i'm lazy. ;/
             if(replacementPartItem != null)

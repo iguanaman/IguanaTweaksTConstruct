@@ -17,6 +17,7 @@ import tconstruct.library.crafting.ToolRecipe;
 import tconstruct.library.modifier.ItemModifier;
 import tconstruct.library.tools.ToolCore;
 import tconstruct.library.tools.ToolMaterial;
+import tconstruct.library.util.IToolPart;
 import tconstruct.modifiers.tools.ModAttack;
 import tconstruct.modifiers.tools.ModRedstone;
 import tconstruct.tools.items.ToolPart;
@@ -30,7 +31,7 @@ public abstract class ReplacementLogic {
 
     public static void exchangeToolPart(ToolCore tool, NBTTagCompound tags, PartTypes type, ItemStack partStack, ItemStack toolStack)
     {
-        ToolPart part = (ToolPart)partStack.getItem();
+        IToolPart part = (IToolPart)partStack.getItem();
 
         // create a new tool that'd be the old one with the new part exchanged
         ItemStack headStack = null;

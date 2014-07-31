@@ -10,6 +10,7 @@ import tconstruct.library.crafting.ToolRecipe;
 import tconstruct.library.modifier.ItemModifier;
 import tconstruct.library.tools.ToolCore;
 import tconstruct.library.tools.ToolMaterial;
+import tconstruct.library.util.IToolPart;
 import tconstruct.tools.items.ToolPart;
 import static iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic.*;
 import static iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic.PartTypes.*;
@@ -53,7 +54,8 @@ public class ModPartReplacement extends ItemModifier {
             return false;
 
         // check if all parts are actually parts and compatible with the allowed parts
-        ToolPart replacementPart = null;
+        IToolPart replacementPart = null;
+        Item replacementPartItem = null;
         int partIndex = -1;
         PartTypes partType = HEAD;
         for(int i = 0; i < parts.length; i++)
@@ -63,11 +65,11 @@ public class ModPartReplacement extends ItemModifier {
             Item item = parts[i].getItem();
 
             // is it a toolpart?
-            if (!(item instanceof ToolPart))
+            if (!(item instanceof IToolPart))
                 return false;
 
-            if(!toolParts.contains(item))
-                return false;
+            //if(!toolParts.contains(item))
+//                return false;
 
             // we only allow single part replacement. sorry i'm lazy. ;/
             if(replacementPart != null)
@@ -85,7 +87,8 @@ public class ModPartReplacement extends ItemModifier {
             else
                 return false;
 
-            replacementPart = (ToolPart)item;
+            replacementPart = (IToolPart)item;
+            replacementPartItem = item;
             partIndex = i;
         }
 
@@ -102,7 +105,7 @@ public class ModPartReplacement extends ItemModifier {
         // index >2 = crafting station
         // todo: special behaviour that left side of crafting station is left hammer/battleaxe part and right is right component ;)
         for(int i = partIndex; i > 0; i--)
-            partType = detectAdditionalPartType(recipe, replacementPart, partType);
+            partType = detectAdditionalPartType(recipe, replacementPartItem, partType);
 
         // do we have enough modifiers left if we exchange this part?
         int newMatId = replacementPart.getMaterialID(parts[partIndex]);
@@ -129,19 +132,19 @@ public class ModPartReplacement extends ItemModifier {
         NBTTagCompound tags = itemStack.getTagCompound().getCompoundTag("InfiTool");
 
         // get item
-        ToolPart replacementPart = null;
+        Item replacementPartItem = null;
         int partIndex = -1;
         for(int i = 0; i < parts.length; i++) {
             if (parts[i] == null)
                 continue;
-            replacementPart = (ToolPart)parts[i].getItem();
+            replacementPartItem = parts[i].getItem();
             partIndex = i;
         }
 
         // detect which part to replace
-        PartTypes partType = detectAdditionalPartType(recipe, replacementPart, HEAD);
+        PartTypes partType = detectAdditionalPartType(recipe, replacementPartItem, HEAD);
         for(int i = partIndex; i > 0; i--)
-            partType = detectAdditionalPartType(recipe, replacementPart, partType);
+            partType = detectAdditionalPartType(recipe, replacementPartItem, partType);
 
         // actually do the exchange
         exchangeToolPart(tool, tags, partType, parts[partIndex], itemStack);

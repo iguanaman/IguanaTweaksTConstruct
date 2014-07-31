@@ -388,7 +388,8 @@ public abstract class ReplacementLogic {
         }
 
         // add a modifier for the removed modifier ;o
-        tags.setInteger("Modifiers", tags.getInteger("Modifiers")+1);
+        if(Config.mobHeadRequiresModifier)
+            tags.setInteger("Modifiers", tags.getInteger("Modifiers")+1);
     }
 
     /**

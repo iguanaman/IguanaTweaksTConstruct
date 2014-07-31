@@ -1,6 +1,7 @@
 package iguanaman.iguanatweakstconstruct.leveling.modifiers;
 
 import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
+import iguanaman.iguanatweakstconstruct.reference.Config;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
@@ -20,8 +21,12 @@ public class ModMiningLevelBoost extends ModBoolean {
     protected boolean canModify(ItemStack input, ItemStack[] recipe) {
         NBTTagCompound tags = input.getTagCompound().getCompoundTag("InfiTool");
 
-        // modifiers left and not yet modified?
-        if(!super.canModify(input, recipe))
+        // Modifier available?
+        if(Config.mobHeadRequiresModifier && tags.getInteger("Modifiers") <= 0)
+            return false;
+
+        // already applied?
+        if(tags.getBoolean(key))
             return false;
 
         // got required harvest level?
@@ -35,6 +40,12 @@ public class ModMiningLevelBoost extends ModBoolean {
     @Override
     public void modify(ItemStack[] input, ItemStack tool) {
         LevelingLogic.levelUpMiningLevel(tool, null, false);
+
+        // add a modifier if it doesn't require one, because ModBoolean will substract one on modify
+        if(!Config.mobHeadRequiresModifier) {
+            NBTTagCompound tags = tool.getTagCompound().getCompoundTag("InfiTool");
+            tags.setInteger("Modifiers", tags.getInteger("Modifiers") + 1);
+        }
 
         super.modify(input, tool);
     }

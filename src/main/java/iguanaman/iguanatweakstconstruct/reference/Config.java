@@ -32,6 +32,7 @@ public class Config {
 	// pick boost
 	public static boolean pickaxeBoostRequired;
 	public static boolean mobHeadPickaxeBoost;
+    public static boolean mobHeadRequiresModifier;
 	public static boolean levelingPickaxeBoost;
 	public static int levelingPickaxeBoostXpPercentage;
 
@@ -108,9 +109,10 @@ public class Config {
         configfile.setCategoryComment(CATEGORY_PickLeveling, "Leveling Module: Allows pickaxes to gain a mining level with enough XP. Should be used with the HarvestLevel Module.");
 
         // pick boosting behaviour
-        pickaxeBoostRequired = configfile.getBoolean("pickaxeBoostRequired", CATEGORY_PickLeveling, false, "Every Pickaxes Mining Level is reduced by 1 and needs a mining levelup (separate from tool level) or, if enabled, a mob head modifier to advance");
-        levelingPickaxeBoost = configfile.getBoolean("allowLevelingBoost", CATEGORY_PickLeveling, true, "Pickaxes gain Mining Xp. A pickaxes mining level can be boosted through gaining XP");
-        mobHeadPickaxeBoost  = configfile.getBoolean("addMobHeadBoost", CATEGORY_PickLeveling, true, "Mob heads can be used to boost a pickaxe's mining xp (REQUIRES allowLevelBoost)");
+        pickaxeBoostRequired    = configfile.getBoolean("pickaxeBoostRequired", CATEGORY_PickLeveling, false, "Every Pickaxes Mining Level is reduced by 1 and needs a mining levelup (separate from tool level) or, if enabled, a mob head modifier to advance");
+        levelingPickaxeBoost    = configfile.getBoolean("allowLevelingBoost", CATEGORY_PickLeveling, true, "Pickaxes gain Mining Xp. A pickaxes mining level can be boosted through gaining XP");
+        mobHeadPickaxeBoost     = configfile.getBoolean("addMobHeadBoost", CATEGORY_PickLeveling, true, "Mob heads can be used to boost a pickaxe's mining xp (REQUIRES allowLevelBoost)");
+        mobHeadRequiresModifier = configfile.getBoolean("mobHeadBoostNeedsModifier", CATEGORY_PickLeveling, false, "Mob head boosting requires a free modifier");
 
         levelingPickaxeBoostXpPercentage = configfile.getInt("xpRequiredPickBoostPercentage", CATEGORY_PickLeveling, 100, 1, 999, "Change the percentage of XP required to boost a pick (i.e. 200 means 2x normal boost xp required)");
 

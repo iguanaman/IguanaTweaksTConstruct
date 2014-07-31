@@ -180,7 +180,7 @@ public abstract class ReplacementLogic {
             xp *= newRequiredBoostXp / (float) oldRequiredBoostXp;
 
             // xp penality?
-            if(Config.partReplacementBoostXpPenality > 0)
+            if(Config.partReplacementBoostXpPenality > 0 && type == HEAD)
             {
                 if(LevelingLogic.isBoosted(tags)) {
                     tags.setBoolean(LevelingLogic.TAG_IS_BOOSTED, false);

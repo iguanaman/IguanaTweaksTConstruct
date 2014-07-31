@@ -124,7 +124,7 @@ public class Config {
 
         /** PartReplacement Module **/
         partReplacementXpPenality      = configfile.getInt("XpPenality", CATEGORY_PartReplacement, 0, 0, 100, "How much of the current XP% shall be removed when replacing parts (So if you had 50%, and penality is 10% it'll remove 5% xp, resulting in 45%). Does not remove Skill Levels.");
-        partReplacementBoostXpPenality = configfile.getInt("PickBoostXpPenality", CATEGORY_PartReplacement, 5, 0, 100, "How much of the current XP% to the next mining level shall be removed when replacing parts. Useful to remove the mining level boost on part replacement.");
+        partReplacementBoostXpPenality = configfile.getInt("PickBoostXpPenality", CATEGORY_PartReplacement, 5, 0, 100, "How much of the current XP% to the next mining level shall be removed when replacing the pickaxe head. Useful to remove the mining level boost on part replacement.");
 
         /** MobHeads **/
         // todo: implement

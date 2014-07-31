@@ -35,8 +35,6 @@ public abstract class ReplacementLogic {
 
     public static void exchangeToolPart(ToolCore tool, NBTTagCompound tags, PartTypes type, ItemStack partStack, ItemStack toolStack)
     {
-        IToolPart part = (IToolPart)partStack.getItem();
-
         // create a new tool that'd be the old one with the new part exchanged
         ItemStack headStack = null;
         ItemStack handleStack = null;
@@ -57,7 +55,7 @@ public abstract class ReplacementLogic {
             Log.error("Tool to modify is impossible?");
         }
 
-        int partMaterialId = part.getMaterialID(partStack);
+        int partMaterialId = ToolBuilder.instance.getMaterialID(partStack);
         int oldMaterialId = -1;
 
         if(type == HEAD && headStack != null) {

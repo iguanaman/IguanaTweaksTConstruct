@@ -1,6 +1,7 @@
 package iguanaman.iguanatweakstconstruct.replacing;
 
 import iguanaman.iguanatweakstconstruct.util.Log;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -54,7 +55,6 @@ public class ModPartReplacement extends ItemModifier {
             return false;
 
         // check if all parts are actually parts and compatible with the allowed parts
-        IToolPart replacementPart = null;
         Item replacementPartItem = null;
         int partIndex = -1;
         PartTypes partType = HEAD;
@@ -65,14 +65,14 @@ public class ModPartReplacement extends ItemModifier {
             Item item = parts[i].getItem();
 
             // is it a toolpart?
-            if (!(item instanceof IToolPart))
+            if (!(item instanceof IToolPart || item == Items.bone || item == Items.stick))
                 return false;
 
             //if(!toolParts.contains(item))
 //                return false;
 
             // we only allow single part replacement. sorry i'm lazy. ;/
-            if(replacementPart != null)
+            if(replacementPartItem != null)
                 return false;
 
             // which part is it, and is it a valid part?
@@ -87,15 +87,19 @@ public class ModPartReplacement extends ItemModifier {
             else
                 return false;
 
-            replacementPart = (IToolPart)item;
             replacementPartItem = item;
             partIndex = i;
         }
 
         // no usable part present? :(
-        if(replacementPart == null || partIndex == -1)
+        if(replacementPartItem == null && replacementPartItem != Items.bone && replacementPartItem != Items.stick)
+            return false;
+        if(partIndex == -1)
             return false;
 
+        // determine materials
+        int newMatId = ToolBuilder.instance.getMaterialID(parts[partIndex]);
+        int oldMatId = getToolPartMaterial(tags, partType);
         int modifiers = tags.getInteger("Modifiers");
 
         // detect possible secondary position for part (e.g. hammer has 2 plates, etc.)
@@ -108,8 +112,6 @@ public class ModPartReplacement extends ItemModifier {
             partType = detectAdditionalPartType(recipe, replacementPartItem, partType);
 
         // do we have enough modifiers left if we exchange this part?
-        int newMatId = replacementPart.getMaterialID(parts[partIndex]);
-        int oldMatId = getToolPartMaterial(tags, partType);
         if(hasExtraModifier(oldMatId)) // paper or thaumium. sadly hardcoded.
             modifiers--;
         if(hasExtraModifier(newMatId))

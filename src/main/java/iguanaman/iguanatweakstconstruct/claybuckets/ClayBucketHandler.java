@@ -4,6 +4,7 @@ import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import mantle.world.WorldHelper;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -54,6 +55,8 @@ public class ClayBucketHandler {
             }
 
             Block bID = evt.world.getBlock(hitX, hitY, hitZ);
+
+            // tinkers fluids
             for (int id = 0; id < TinkerSmeltery.fluidBlocks.length; id++)
             {
                 if (bID == TinkerSmeltery.fluidBlocks[id])
@@ -75,8 +78,25 @@ public class ClayBucketHandler {
 
                         evt.setResult(Event.Result.ALLOW);
                         evt.result = new ItemStack(IguanaItems.clayBucketsTinkers, 1, id);
+                        return;
                     }
                 }
+            }
+
+            // water and lava
+            if(bID.getMaterial() == Material.water)
+            {
+                evt.setResult(Event.Result.ALLOW);
+                evt.result = new ItemStack(IguanaItems.clayBucketWater);
+                WorldHelper.setBlockToAir(evt.world, hitX, hitY, hitZ);
+                return;
+            }
+            if(bID.getMaterial() == Material.lava)
+            {
+                evt.setResult(Event.Result.ALLOW);
+                evt.result = new ItemStack(IguanaItems.clayBucketLava);
+                WorldHelper.setBlockToAir(evt.world, hitX, hitY, hitZ);
+                return;
             }
         }
     }

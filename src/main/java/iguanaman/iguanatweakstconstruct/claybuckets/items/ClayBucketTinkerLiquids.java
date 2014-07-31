@@ -12,21 +12,45 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import tconstruct.smeltery.items.FilledBucket;
 
 public class ClayBucketTinkerLiquids extends FilledBucket {
+    private final boolean isHot;
 
     public ClayBucketTinkerLiquids(Block b) {
         super(b);
 
         this.setUnlocalizedName(Reference.MOD_ID + ".clayBucketTinkerLiquid");
         this.setContainerItem(IguanaItems.clayBucketFired);
+
+        // all fluids above 1000° are hot. Lava has 1300.
+        Fluid fluid = FluidRegistry.lookupFluidForBlock(b);
+        if(fluid == null)
+            isHot = false;
+        else
+            isHot = fluid.getTemperature() >= 1000;
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack p_77659_1_, World p_77659_2_, EntityPlayer p_77659_3_) {
-        ItemStack result = super.onItemRightClick(p_77659_1_, p_77659_2_, p_77659_3_);
-        if(result.getItem() == Items.bucket) return new ItemStack(IguanaItems.clayBucketFired);
+    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
+        ItemStack result = super.onItemRightClick(itemStack, world, player);
+
+        if(result.getItem() == Items.bucket)
+        {
+            FluidStack fluidStack = FluidContainerRegistry.getFluidForFilledItem(itemStack);
+            // bucket is destroyed if it's a hot fluid
+            if(fluidStack != null && fluidStack.getFluid().getTemperature() >= 1000)
+            {
+                itemStack.stackSize--;
+                return itemStack;
+            }
+
+            return new ItemStack(IguanaItems.clayBucketFired);
+        }
         return result;
     }
 

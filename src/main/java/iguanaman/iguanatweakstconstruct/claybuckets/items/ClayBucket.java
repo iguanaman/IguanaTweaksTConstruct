@@ -22,6 +22,8 @@ import net.minecraftforge.fluids.IFluidBlock;
 
 public class ClayBucket extends ItemBucket
 {
+    private final boolean isHot;
+
     public ClayBucket(Block contents, String name, String texture)
     {
         this(contents);
@@ -34,15 +36,31 @@ public class ClayBucket extends ItemBucket
     {
         super(contents);
         this.setContainerItem(iguanaman.iguanatweakstconstruct.claybuckets.IguanaItems.clayBucketFired);
+
+        if(contents == Blocks.flowing_lava)
+            isHot = true;
+        else
+            isHot = false;
     }
 
 
     @Override
-    public ItemStack onItemRightClick(ItemStack p_77659_1_, World p_77659_2_, EntityPlayer p_77659_3_) {
-        ItemStack result = super.onItemRightClick(p_77659_1_, p_77659_2_, p_77659_3_);
-        if(result.getItem() == Items.bucket) return new ItemStack(IguanaItems.clayBucketFired);
-        if(result.getItem() == Items.water_bucket) return new ItemStack(IguanaItems.clayBucketWater);
-        if(result.getItem() == Items.lava_bucket) return new ItemStack(IguanaItems.clayBucketLava);
+    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
+        ItemStack result = super.onItemRightClick(itemStack, world, player);
+
+        if(result.getItem() == Items.bucket) {
+            // bucket is destroyed if it's a hot fluid
+            if(isHot)
+            {
+                itemStack.stackSize--;
+                return itemStack;
+            }
+
+            return new ItemStack(IguanaItems.clayBucketFired);
+        }
+        // water/lava pickup is handled in the ClayBucketHandler
+        //if(result.getItem() == Items.water_bucket) return new ItemStack(IguanaItems.clayBucketWater);
+        //if(result.getItem() == Items.lava_bucket) return new ItemStack(IguanaItems.clayBucketLava);
         return result;
     }
 }

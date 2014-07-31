@@ -11,8 +11,18 @@ import mantle.pulsar.pulse.Handler;
 import mantle.pulsar.pulse.Pulse;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidRegistry;
+import tconstruct.blocks.slime.SlimeFluid;
+import tconstruct.smeltery.TinkerSmeltery;
+import tconstruct.world.TinkerWorld;
+
+import static tconstruct.smeltery.TinkerSmeltery.*;
 
 @Pulse(id = Reference.PULSE_ITEMS, description = "All the Items Iguana Tweaks for TConstruct adds (Clay Buckets,...)")
 public class IguanaItems {
@@ -42,6 +52,21 @@ public class IguanaItems {
         GameRegistry.registerItem(clayBucketLava,  "clayBucketLava");
         GameRegistry.registerItem(clayBucketMilk,  "clayBucketMilk");
         GameRegistry.registerItem(clayBucketsTinkers, "clayBucketsTinkers");
+
+        // register the buckets with the fluid container registry
+        ItemStack emptyClayBucket = new ItemStack(clayBucketFired);
+        FluidContainerRegistry.registerFluidContainer(FluidRegistry.WATER, new ItemStack(clayBucketWater), emptyClayBucket);
+        FluidContainerRegistry.registerFluidContainer(FluidRegistry.LAVA, new ItemStack(clayBucketLava), emptyClayBucket);
+
+        // tinker metals
+        Fluid[] tinkerFluids = new Fluid[] {moltenIronFluid, moltenGoldFluid, moltenCopperFluid, moltenTinFluid, moltenAluminumFluid,
+                                            moltenCobaltFluid, moltenArditeFluid, moltenBronzeFluid, moltenAlubrassFluid, moltenManyullynFluid,
+                                            moltenAlumiteFluid, moltenObsidianFluid, moltenSteelFluid, moltenGlassFluid, moltenStoneFluid, moltenEmeraldFluid,
+                                            bloodFluid, moltenNickelFluid, moltenLeadFluid, moltenSilverFluid, moltenShinyFluid, moltenInvarFluid,
+                                            moltenElectrumFluid, moltenEnderFluid, TinkerWorld.blueSlimeFluid, glueFluid, pigIronFluid};
+
+        for(int i = 0; i < tinkerFluids.length; i++)
+            FluidContainerRegistry.registerFluidContainer(tinkerFluids[i], new ItemStack(clayBucketsTinkers, 1, i), emptyClayBucket);
     }
 
     @Handler

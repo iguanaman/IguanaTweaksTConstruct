@@ -39,6 +39,10 @@ public class Config {
     public static int durabilityPercentage;
     public static int miningSpeedPercentage;
 
+    // part replacement
+    public static int partReplacementXpPenality;
+    public static int partReplacementBoostXpPenality;
+
 	// heads
 	public static int baseHeadDropChance;
 	public static int beheadingHeadDropChance;
@@ -72,6 +76,7 @@ public class Config {
         final String CATEGORY_Leveling = "ToolLeveling";
         final String CATEGORY_PickLeveling = "PickLeveling";
         final String CATEGORY_HarvestLevels = "HarvestLevelTweaks";
+        final String CATEGORY_PartReplacement = "PartReplacement";
         final String CATEGORY_Heads = "MobHeads";
         final String CATEGORY_Tweaks = "Tweaks";
         final String CATEGORY_Debug = "Debug";
@@ -116,6 +121,10 @@ public class Config {
         // Tool durability/speed changes
         durabilityPercentage  = configfile.getInt("durabilityPercentage", CATEGORY_HarvestLevels, 80, 1, 999, "Change durability of all tool materials (in percent)");
         miningSpeedPercentage = configfile.getInt("miningSpeedPercentage", CATEGORY_HarvestLevels, 100, 1, 999, "Change mining speed of all tool materials (in percent)");
+
+        /** PartReplacement Module **/
+        partReplacementXpPenality      = configfile.getInt("XpPenality", CATEGORY_PartReplacement, 0, 0, 100, "How much of the current XP% shall be removed when replacing parts (So if you had 50%, and penality is 10% it'll remove 5% xp, resulting in 45%). Does not remove Skill Levels.");
+        partReplacementBoostXpPenality = configfile.getInt("PickBoostXpPenality", CATEGORY_PartReplacement, 5, 0, 100, "How much of the current XP% to the next mining level shall be removed when replacing parts. Useful to remove the mining level boost on part replacement.");
 
         /** MobHeads **/
         // todo: implement

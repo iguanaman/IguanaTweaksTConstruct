@@ -2,6 +2,7 @@ package iguanaman.iguanatweakstconstruct.replacing;
 
 import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
 import iguanaman.iguanatweakstconstruct.leveling.modifiers.ModXpAwareRedstone;
+import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -158,6 +159,12 @@ public abstract class ReplacementLogic {
             // apply transition
             xp *= newRequiredXp / (float) oldRequiredXp;
 
+            // xp penality?
+            if(Config.partReplacementXpPenality > 0)
+            {
+                xp *= (100.0f-Config.partReplacementXpPenality)/100.0f;
+            }
+
             tags.setInteger(LevelingLogic.TAG_EXP, Math.round(xp));
         }
 
@@ -171,6 +178,17 @@ public abstract class ReplacementLogic {
 
             // apply transition
             xp *= newRequiredBoostXp / (float) oldRequiredBoostXp;
+
+            // xp penality?
+            if(Config.partReplacementBoostXpPenality > 0)
+            {
+                if(LevelingLogic.isBoosted(tags)) {
+                    tags.setBoolean(LevelingLogic.TAG_IS_BOOSTED, false);
+                    xp = newRequiredBoostXp;
+                }
+
+                xp *= (100.0f-Config.partReplacementBoostXpPenality)/100.0f;
+            }
 
             tags.setInteger(LevelingLogic.TAG_BOOST_EXP, Math.round(xp));
 

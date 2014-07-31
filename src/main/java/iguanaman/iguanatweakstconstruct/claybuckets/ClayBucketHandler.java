@@ -4,15 +4,41 @@ import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import mantle.world.WorldHelper;
 import net.minecraft.block.Block;
+import net.minecraft.entity.passive.EntityCow;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
 import tconstruct.smeltery.TinkerSmeltery;
 import tconstruct.smeltery.blocks.LiquidMetalFinite;
 
 public class ClayBucketHandler {
-    // filling buckets, same behaviour as regular buckets from TConstruct, but with clay buckets
+    // milking cows
+    @SubscribeEvent
+    public void EntityInteract(EntityInteractEvent event)
+    {
+        if (event != null && event.target != null && event.target instanceof EntityCow)
+        {
+            ItemStack equipped = event.entityPlayer.getCurrentEquippedItem();
+            if(equipped.getItem() != IguanaItems.clayBucketFired)
+                return;
+
+            EntityPlayer player = event.entityPlayer;
+
+            if (equipped.stackSize-- == 1)
+            {
+                player.inventory.setInventorySlotContents(player.inventory.currentItem, new ItemStack(IguanaItems.clayBucketMilk));
+            }
+            else if (!player.inventory.addItemStackToInventory(new ItemStack(IguanaItems.clayBucketMilk)))
+            {
+                player.dropPlayerItemWithRandomChoice(new ItemStack(IguanaItems.clayBucketMilk, 1, 0), false);
+            }
+        }
+    }
+
+    // filling buckets with molten metal, same behaviour as regular buckets from TConstruct, but with clay buckets
     @SubscribeEvent
     public void bucketFill (FillBucketEvent evt)
     {

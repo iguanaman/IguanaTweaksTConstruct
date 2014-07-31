@@ -109,7 +109,6 @@ public class RandomBonusses {
     {
         ItemStack[] quarzStack = new ItemStack[]{new ItemStack(Items.quartz, 1)};
 
-        // todo: use correct attack modifier
         return addGenericModifier(player, tool, "ModAttack", quarzStack, 24, "\u00a79You take the time to sharpen the dull edges of the blade (+1 attack)");
     }
 
@@ -193,6 +192,13 @@ public class RandomBonusses {
     {
         if(modCache.containsKey(key))
             return modCache.get(key);
+
+        if(key.equals("ModAttack"))
+        {
+            modCache.put(key, TinkerTools.modAttack);
+            return TinkerTools.modAttack;
+        }
+
 
         for(ItemModifier modifier : ModifyBuilder.instance.itemModifiers)
             if(modifier.key.equals(key)) {

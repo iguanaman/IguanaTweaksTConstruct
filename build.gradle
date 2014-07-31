@@ -153,3 +153,29 @@ task deobfJar(type: Jar) {
 artifacts {
     archives deobfJar
 }
+
+task("uploadJars", dependsOn:"signJar") {
+
+    description = "uploads JARs"
+
+    if (project.hasProperty("local_maven") || project.hasProperty("sftp_maven")) {
+        apply plugin: 'maven'
+        uploadArchives {
+            repositories {
+                if(project.hasProperty("local_maven"))
+                {
+                    mavenDeployer {
+                        repository(url: "file://${local_maven}")
+                    }
+                }
+                if(project.hasProperty("sftp_maven")) {
+                    repositories.mavenDeployer {
+                        configuration = configurations.deployerJars
+                        repository(url: "sftp://${sftp_maven}"){
+                            authentication(userName: "${sftp_username}",privateKey: "${sftp_key}")}
+                    }
+                }
+            }
+        }
+    }
+}

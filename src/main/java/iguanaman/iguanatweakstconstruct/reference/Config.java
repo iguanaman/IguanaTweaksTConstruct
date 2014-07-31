@@ -40,6 +40,7 @@ public class Config {
     public static int miningSpeedPercentage;
 
     // part replacement
+    public static boolean removeMobHeadOnPartReplacement;
     public static int partReplacementXpPenality;
     public static int partReplacementBoostXpPenality;
 
@@ -60,8 +61,6 @@ public class Config {
 	public static boolean logHarvestLevelChanges;
 	public static boolean logMiningLevelChanges;
     public static boolean logToolMaterialChanges;
-
-
 
 
     public void init(File file) {
@@ -123,6 +122,7 @@ public class Config {
         miningSpeedPercentage = configfile.getInt("miningSpeedPercentage", CATEGORY_HarvestLevels, 100, 1, 999, "Change mining speed of all tool materials (in percent)");
 
         /** PartReplacement Module **/
+        removeMobHeadOnPartReplacement = configfile.getBoolean("removeMobHead", CATEGORY_PartReplacement, false, "Removes the Mob Head Modifier on Tool-Head replacement, allowing it to be reapplied. Sholud be used with PickBoostXpPenality.");
         partReplacementXpPenality      = configfile.getInt("XpPenality", CATEGORY_PartReplacement, 0, 0, 100, "How much of the current XP% shall be removed when replacing parts (So if you had 50%, and penality is 10% it'll remove 5% xp, resulting in 45%). Does not remove Skill Levels.");
         partReplacementBoostXpPenality = configfile.getInt("PickBoostXpPenality", CATEGORY_PartReplacement, 5, 0, 100, "How much of the current XP% to the next mining level shall be removed when replacing the pickaxe head. Useful to remove the mining level boost on part replacement.");
 

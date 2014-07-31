@@ -11,6 +11,7 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.oredict.OreDictionary;
+import scala.actors.threadpool.Arrays;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.crafting.ModifyBuilder;
 import tconstruct.library.crafting.ToolBuilder;
@@ -23,6 +24,8 @@ import tconstruct.modifiers.tools.ModAttack;
 import tconstruct.modifiers.tools.ModRedstone;
 import tconstruct.tools.items.ToolPart;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 
 import static iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic.PartTypes.*;
@@ -149,6 +152,9 @@ public abstract class ReplacementLogic {
         reapplyRedstone(tags, toolStack);
         // quartz/attack modifier
         reapplyAttack(tags, toolStack);
+
+        if(Config.removeMobHeadOnPartReplacement && type == HEAD)
+            removeMobHeadModifier(tags);
 
         // handle Leveling/xp (has to be done first before we change the stats so we get the correct old values)
         if(LevelingLogic.hasXp(tags))
@@ -313,6 +319,76 @@ public abstract class ReplacementLogic {
                 while(qLvl-- > 0)
                     modAttack.modify(new ItemStack[]{new ItemStack(Items.quartz)}, itemStack); // tags belong to oldTool
             }
+    }
+
+    // removes the mobhead modifier and rendering
+    private static void removeMobHeadModifier(NBTTagCompound tags)
+    {
+        // only if we actually are boosted by the modifier
+        if(!tags.hasKey("Mining Level Boost"))
+            return;
+
+        // remove the modifier
+        tags.removeTag("Mining Level Boost");
+
+        // remove the rendering effect
+        int i = 1;
+        boolean removed = false;
+        while(true)
+        {
+            String effect = "Effect" + i;
+            i++;
+
+            // we iterated over all effects
+            if(!tags.hasKey(effect))
+                break;
+
+            // if we removed the tag, but there are other effects left, we have to fill the gap
+            if(removed)
+            {
+                tags.setInteger("Effect" + (i-2), tags.getInteger(effect));
+                tags.removeTag(effect);
+                continue;
+            }
+
+            int effectId = tags.getInteger(effect);
+            // mobheads occupy id's 20 to 26. see IguanaToolLeveling.registerBoostModifiers
+            if(effectId >= 20 && effectId <= 26 ) {
+                tags.removeTag(effect);
+                removed = true;
+            }
+        }
+
+        // find the tooltip
+        i = 1;
+        removed = false;
+        while(true)
+        {
+            String modTip = "ModifierTip" + i;
+            String toolTip = "Tooltip" + i;
+            i++;
+
+            if(!tags.hasKey(modTip))
+                break;
+
+            // same deal as above, fill the gap
+            if(removed)
+            {
+                tags.setString("ModifierTip" + (i-2), tags.getString(modTip));
+                tags.setString("Tooltip" + (i-2), tags.getString(toolTip));
+                continue;
+            }
+
+            if(tags.getString(modTip).endsWith("Mining Level Boost"))
+            {
+                tags.removeTag(modTip);
+                tags.removeTag(toolTip);
+                removed = true;
+            }
+        }
+
+        // add a modifier for the removed modifier ;o
+        tags.setInteger("Modifiers", tags.getInteger("Modifiers")+1);
     }
 
     /**

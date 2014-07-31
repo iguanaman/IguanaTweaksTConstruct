@@ -15,7 +15,7 @@ public abstract class HarvestLevels {
     public static int _8_cobalt = 8;
     public static int _9_manyullym = 9;
 
-    public static int max = 9;
+    public static int max = 8;
 
     private static boolean vanilla = false;
 
@@ -32,7 +32,7 @@ public abstract class HarvestLevels {
         _8_cobalt = 6;
         _9_manyullym = 7;
 
-        max = 7;
+        max = 6;
 
         vanilla = true;
     }

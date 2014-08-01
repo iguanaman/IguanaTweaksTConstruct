@@ -61,16 +61,26 @@ public class IguanaTileEntitySkullRenderer extends TileEntitySpecialRenderer {
 
     public void renderSkull(float x, float y, float z, float r, int sidePlacement, int meta)
     {
-        ModelBase model = modelSkull;
-
-        // chose model
         if(meta == 0)
-            model = modelEnderManHead;
-        if(meta == 1)
-            model = modelZombie;
+            renderSkull(x,y,z, r, sidePlacement, modelEnderManHead, textures[0]);
+        else if(meta == 1)
+            renderSkull(x,y,z, r, sidePlacement, modelZombie, textures[1]);
+        else
+            renderSkull(x,y,z, r, sidePlacement, modelSkull, textures[meta]);
+    }
 
+    public void renderBucket(float x, float y, float z, float r, int sidePlacement, int meta)
+    {
+        if(meta == 0)
+            renderSkull(x,y,z, r, sidePlacement, modelBucketHelmet, textureBucketHelmet);
+        else if(meta == 1)
+            renderSkull(x,y,z, r, sidePlacement, modelEnderManJaw, textures[0]);
+    }
+
+    public void renderSkull(float x, float y, float z, float r, int sidePlacement, ModelBase model, ResourceLocation texture)
+    {
         // chose texture
-        this.bindTexture(textures[meta]);
+        this.bindTexture(texture);
 
         // debug
         //model = new ModelSkeletonHead(0,16,64,32);
@@ -115,10 +125,9 @@ public class IguanaTileEntitySkullRenderer extends TileEntitySpecialRenderer {
 
         model.render(null, 0.0f, 0.0f, 0.0f, r, 0.0f, f4);
 
-        // also render endermanstuff!
-        if(meta == 0)
+        // also render enderman eyes!
+        if(model == modelEnderManHead)
         {
-            //modelEnderManJaw.render(null, 0.0f, 0.0f, 0.0f, r, 0.0f, f4);
             this.bindTexture(enderManEyes);
             model.render(null, 0.0f, 0.0f, 0.0f, r, 0.0f, f4);
         }

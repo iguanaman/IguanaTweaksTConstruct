@@ -7,4 +7,6 @@ import net.minecraft.world.World;
 public class MobHeadCommonProxy {
 
     public void initialize() {}
+
+    public void postInit() {}
 }

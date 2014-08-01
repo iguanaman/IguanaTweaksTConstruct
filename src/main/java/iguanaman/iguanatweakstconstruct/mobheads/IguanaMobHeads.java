@@ -44,5 +44,7 @@ public class IguanaMobHeads {
     public void postInit(FMLPostInitializationEvent event)
     {
         MinecraftForge.EVENT_BUS.register(new RenderPlayerHandler());
+
+        proxy.postInit();
     }
 }

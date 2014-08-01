@@ -1,5 +1,7 @@
 package iguanaman.iguanatweakstconstruct.mobheads.renderers;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import iguanaman.iguanatweakstconstruct.mobheads.models.ModelBucketHelmet;
 import iguanaman.iguanatweakstconstruct.mobheads.models.ModelEnderManHead;
 import iguanaman.iguanatweakstconstruct.mobheads.models.ModelHeadwear;
@@ -14,17 +16,17 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+
+@SideOnly(Side.CLIENT)
 public class IguanaTileEntitySkullRenderer extends TileEntitySpecialRenderer {
     public static IguanaTileEntitySkullRenderer renderer = new IguanaTileEntitySkullRenderer();
 
-    private ModelSkeletonHead modelSkull = new ModelSkeletonHead(0,0,64,32); // standard skull model
-    private ModelSkeletonHead modelZombie = new ModelSkeletonHead(0,0,64,64); // zombie skull model
+    // Skull stuff
+    private final ModelSkeletonHead modelSkull = new ModelSkeletonHead(0,0,64,32); // standard skull model
+    private final ModelSkeletonHead modelZombie = new ModelSkeletonHead(0,0,64,64); // zombie skull model
+    private final ModelEnderManHead modelEnderManHead = new ModelEnderManHead();
 
-    private ModelHeadwear modelEnderManJaw = new ModelHeadwear(0,16,64,32);
-
-    private ModelEnderManHead modelEnderManHead = new ModelEnderManHead();
-
-    private ResourceLocation[] textures = new ResourceLocation[] {
+    private final ResourceLocation[] textures = new ResourceLocation[] {
             new ResourceLocation("textures/entity/enderman/enderman.png"),
             new ResourceLocation("textures/entity/zombie_pigman.png"),
             new ResourceLocation("textures/entity/blaze.png"),
@@ -32,7 +34,13 @@ public class IguanaTileEntitySkullRenderer extends TileEntitySpecialRenderer {
             new ResourceLocation("thermalfoundation","textures/entity/Blizz.png")
     };
 
-    private ResourceLocation enderManEyes = new ResourceLocation("textures/entity/enderman/enderman_eyes.png");
+    private final ResourceLocation enderManEyes = new ResourceLocation("textures/entity/enderman/enderman_eyes.png");
+
+
+    // fun stuff ;)
+    private final ModelHeadwear modelEnderManJaw = new ModelHeadwear(0,16,64,32);
+    private final ModelBucketHelmet modelBucketHelmet = new ModelBucketHelmet();
+    private final ResourceLocation textureBucketHelmet = new ResourceLocation(Reference.RESOURCE, "textures/models/bucket_helmet.png");
 
     public IguanaTileEntitySkullRenderer()
     {

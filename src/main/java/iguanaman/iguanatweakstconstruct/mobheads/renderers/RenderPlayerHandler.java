@@ -1,11 +1,14 @@
 package iguanaman.iguanatweakstconstruct.mobheads.renderers;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import iguanaman.iguanatweakstconstruct.mobheads.IguanaMobHeads;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import org.lwjgl.opengl.GL11;
 
+@SideOnly(Side.CLIENT)
 public class RenderPlayerHandler {
     @SubscribeEvent
     public void renderSkullHelmet(RenderPlayerEvent.SetArmorModel event)

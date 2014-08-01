@@ -41,6 +41,8 @@ import java.util.List;
 
 // todo: add batman-hat (enderman-head without jaw and eyes)
 // todo: add enderman-jaw helmet as a very rare enderman drop :D
+// todo: bucket hattt
+// todo: cracked clay bucket? randomly obtainable when transporting lava? :D
 
 @Mod(modid= Reference.MOD_ID, name= Reference.MOD_NAME, version="${version}",
 dependencies = "required-after:" + Reference.TCON_MOD_ID + ";after:*")

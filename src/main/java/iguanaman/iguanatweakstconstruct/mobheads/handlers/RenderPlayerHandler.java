@@ -1,4 +1,4 @@
-package iguanaman.iguanatweakstconstruct.mobheads.renderers;
+package iguanaman.iguanatweakstconstruct.mobheads.handlers;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
@@ -6,6 +6,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
 import iguanaman.iguanatweakstconstruct.claybuckets.IguanaItems;
 import iguanaman.iguanatweakstconstruct.mobheads.IguanaMobHeads;
+import iguanaman.iguanatweakstconstruct.mobheads.renderers.IguanaTileEntitySkullRenderer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.RenderPlayerEvent;

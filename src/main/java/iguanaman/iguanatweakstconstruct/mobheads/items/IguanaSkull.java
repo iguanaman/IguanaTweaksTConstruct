@@ -21,13 +21,9 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class IguanaSkull extends net.minecraft.item.ItemSkull {
-    public static final int META_ZOMBIE = 2;
-    public static final int META_SKELETON = 0;
-    public static final int META_ENDERMAN = 5;
-    public static final int META_PIGMAN = 6;
-    public static final int META_BLAZE = 7;
-    public static final int META_STEVE = 3;
-    public static final int META_CREEPER = 4;
+    public static final int META_ENDERMAN  = 0;
+    public static final int META_PIGZOMBIE = 1;
+    public static final int META_BLAZE     = 2;
 
 	private static final String[] skullTypes = new String[] {"enderman", "pigman", "blaze"};
 	public static final String[] field_94587_a = new String[] {"skull_enderman", "skull_pigman", "skull_blaze"};

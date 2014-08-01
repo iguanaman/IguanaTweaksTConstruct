@@ -5,9 +5,10 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import iguanaman.iguanatweakstconstruct.mobheads.blocks.IguanaSkullBlock;
+import iguanaman.iguanatweakstconstruct.mobheads.handlers.MobHeadHandler;
 import iguanaman.iguanatweakstconstruct.mobheads.items.IguanaSkull;
 import iguanaman.iguanatweakstconstruct.mobheads.proxy.MobHeadCommonProxy;
-import iguanaman.iguanatweakstconstruct.mobheads.renderers.RenderPlayerHandler;
+import iguanaman.iguanatweakstconstruct.mobheads.handlers.RenderPlayerHandler;
 import iguanaman.iguanatweakstconstruct.mobheads.tileentities.IguanaSkullTileEntity;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
 import mantle.pulsar.pulse.Handler;
@@ -44,6 +45,7 @@ public class IguanaMobHeads {
     public void postInit(FMLPostInitializationEvent event)
     {
         MinecraftForge.EVENT_BUS.register(new RenderPlayerHandler());
+        MinecraftForge.EVENT_BUS.register(new MobHeadHandler());
 
         proxy.postInit();
     }

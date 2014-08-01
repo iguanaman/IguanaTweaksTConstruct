@@ -1,5 +1,6 @@
 package iguanaman.iguanatweakstconstruct.claybuckets;
 
+import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -19,6 +20,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 import tconstruct.blocks.slime.SlimeFluid;
 import tconstruct.smeltery.TinkerSmeltery;
 import tconstruct.world.TinkerWorld;
@@ -55,6 +58,9 @@ public class IguanaItems {
         GameRegistry.registerItem(clayBucketMilk,  "clayBucketMilk");
         GameRegistry.registerItem(clayBucketsTinkers, "clayBucketsTinkers");
 
+        // register milkbucket to the ordictionary
+        OreDictionary.registerOre("listAllmilk", clayBucketMilk); // i suppose this is for pams harvestcraft.
+
         // register the buckets with the fluid container registry
         ItemStack emptyClayBucket = new ItemStack(clayBucketFired);
         FluidContainerRegistry.registerFluidContainer(FluidRegistry.WATER, new ItemStack(clayBucketWater), emptyClayBucket);
@@ -69,6 +75,12 @@ public class IguanaItems {
 
         for(int i = 0; i < tinkerFluids.length; i++)
             FluidContainerRegistry.registerFluidContainer(tinkerFluids[i], new ItemStack(clayBucketsTinkers, 1, i), emptyClayBucket);
+
+
+
+        // add recipes
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(clayBucketUnfired), "c c", " c ", 'c', new ItemStack(Items.clay_ball)));
+        GameRegistry.addSmelting(clayBucketUnfired, new ItemStack(clayBucketFired), 0.0F);
 
         Log.info("Added Items");
     }

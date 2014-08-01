@@ -24,7 +24,7 @@ public class ClayBucketTinkerLiquids extends FilledBucket {
     public ClayBucketTinkerLiquids(Block b) {
         super(b);
 
-        this.setUnlocalizedName(Reference.MOD_ID + ".clayBucketTinkerLiquid");
+        this.setUnlocalizedName(Reference.item("clayBucketTinkerLiquid"));
         this.setContainerItem(IguanaItems.clayBucketFired);
 
         // all fluids above 1000° are hot. Lava has 1300.

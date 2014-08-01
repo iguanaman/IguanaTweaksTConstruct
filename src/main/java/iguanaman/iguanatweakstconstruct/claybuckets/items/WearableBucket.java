@@ -20,7 +20,7 @@ public class WearableBucket extends Item {
     public WearableBucket() {
         super();
         this.setContainerItem(IguanaItems.wearableBuckets);
-        this.setUnlocalizedName(Reference.MOD_ID + ".wearable_bucket");
+        this.setUnlocalizedName(Reference.item(".wearable_bucket"));
 
         this.setMaxStackSize(1);
     }
@@ -38,7 +38,7 @@ public class WearableBucket extends Item {
         if (i < 0 || i >= textureTypes.length)
             i = 0;
 
-        return Reference.resource(textureTypes[i]);
+        return Reference.item(textureTypes[i]);
     }
 
     @Override

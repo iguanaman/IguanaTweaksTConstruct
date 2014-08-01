@@ -26,4 +26,6 @@ public class Reference {
     {
         return String.format("%s:%s", RESOURCE, res);
     }
+    public static String item(String name) { return String.format("%s.item.%s", MOD_ID, name);}
+    public static String block(String name) { return String.format("%s.block.%s", MOD_ID, name);}
 }

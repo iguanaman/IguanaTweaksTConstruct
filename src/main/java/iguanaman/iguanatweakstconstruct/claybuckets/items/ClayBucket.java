@@ -28,7 +28,7 @@ public class ClayBucket extends ItemBucket
     {
         this(contents);
 
-        this.setUnlocalizedName(Reference.MOD_ID + "." + name);
+        this.setUnlocalizedName(Reference.item(name));
         this.setTextureName(Reference.resource(texture));
     }
 

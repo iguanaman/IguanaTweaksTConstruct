@@ -12,7 +12,7 @@ public class ClayBucketMilk extends ItemBucketMilk {
     public ClayBucketMilk() {
         this.setContainerItem(IguanaItems.clayBucketFired);
 
-        this.setUnlocalizedName(Reference.MOD_ID + ".clayBucketMilk");
+        this.setUnlocalizedName(Reference.item("clayBucketMilk"));
         this.setTextureName(Reference.resource("clayBucketMilk"));
     }
 

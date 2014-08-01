@@ -136,7 +136,6 @@ public class Config {
 
 
         /** Vanilla/TConstruct Tweaks **/
-        // todo: implement
         configfile.setCategoryComment(CATEGORY_Tweaks, "Tweak Module: Tweaks to vanilla Minecraft and Tinker's Construct");
 
         // gravel/flint tweaks
@@ -148,7 +147,6 @@ public class Config {
         disableStoneTools = configfile.getBoolean("disablestoneTools", CATEGORY_Tweaks, true, "Stone Tools can only be used to create casts, but no tools");
 
         // stuff
-        // todo: implement
         removeStoneTorchRecipe = configfile.getBoolean("removeStoneTorchRecipe", CATEGORY_Tweaks, false, "Removes the recipe for Tinker's Construct's stone torch");
         toolsNeverDespawn      = configfile.getBoolean("toolsNeverDespawn", CATEGORY_Tweaks, true, "Causes Tinker's tools to never despawn");
 

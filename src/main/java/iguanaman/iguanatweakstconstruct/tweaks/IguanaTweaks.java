@@ -6,12 +6,15 @@ import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
 import iguanaman.iguanatweakstconstruct.tweaks.handler.FlintHandler;
 import iguanaman.iguanatweakstconstruct.util.Log;
+import iguanaman.iguanatweakstconstruct.util.RecipeRemover;
 import mantle.pulsar.pulse.Handler;
 import mantle.pulsar.pulse.Pulse;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
+import tconstruct.world.TinkerWorld;
 
 /**
  * Various Tweaks for Tinkers Construct and Vanilla Minecraft. See Config.
@@ -23,7 +26,15 @@ public class IguanaTweaks {
     @Handler
     public void postInit(FMLPostInitializationEvent event)
     {
+        // flint recipes n stuff
         FlintTweaks();
+
+        // stonetorches
+        if(Config.removeStoneTorchRecipe)
+        {
+            Log.info("Removing stone torch recipe");
+            RecipeRemover.removeAnyRecipeFor(Item.getItemFromBlock(TinkerWorld.stoneTorch));
+        }
     }
 
     private void FlintTweaks()

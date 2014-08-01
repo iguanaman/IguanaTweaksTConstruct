@@ -30,6 +30,7 @@ import net.minecraft.item.Item;
 import java.util.List;
 
 // inofficial todo list:
+// todo: check out what mining-maxlvl i wont for emerald/diamond modifier.
 // todo: check if it's possible to remove pickaxe harvestability from regular picks... or make them stone mininglevel
 // todo: find a solution to stone-head-tools not having xp even when head is replaced (maybe like old iguana, disallow stone tools?)
 // todo: add randomly generated weapons with random bonuses(!!!!) to dungeon loot :D:D:D

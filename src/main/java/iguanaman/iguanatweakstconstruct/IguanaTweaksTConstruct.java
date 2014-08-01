@@ -52,6 +52,10 @@ public class IguanaTweaksTConstruct {
 
     public static boolean isToolLevelingActive = false;
     public static boolean isHarvestTweaksActive = false;
+    public static boolean isMobHeadsActive = false;
+    public static boolean isTweaksActive = false;
+    public static boolean isItemsActive = false;
+    public static boolean isPartReplacementActive = false;
 
 	public static List<Item> toolParts = null;
 
@@ -68,20 +72,13 @@ public class IguanaTweaksTConstruct {
         FMLCommonHandler.instance().bus().register(config);
 
         // workaround to know which modules are active.. :I
-        PulseMeta meta = new PulseMeta(Reference.PULSE_LEVELING, "", false, false);
-        isToolLevelingActive = pulseCFG.isModuleEnabled(meta);
-        meta = new PulseMeta(Reference.PULSE_HARVESTTWEAKS, "", false, false);
-        isHarvestTweaksActive = pulseCFG.isModuleEnabled(meta);
+        isToolLevelingActive = pulseCFG.isModuleEnabled(new PulseMeta(Reference.PULSE_LEVELING, "", false, false));
+        isHarvestTweaksActive = pulseCFG.isModuleEnabled(new PulseMeta(Reference.PULSE_HARVESTTWEAKS, "", false, false));
+        isMobHeadsActive = pulseCFG.isModuleEnabled(new PulseMeta(Reference.PULSE_MOBHEADS, "", false, false));
+        isTweaksActive = pulseCFG.isModuleEnabled(new PulseMeta(Reference.PULSE_TWEAKS, "", false, false));
+        isItemsActive = pulseCFG.isModuleEnabled(new PulseMeta(Reference.PULSE_ITEMS, "", false, false));
+        isPartReplacementActive = pulseCFG.isModuleEnabled(new PulseMeta(Reference.PULSE_REPLACING, "", false, false));
 
-		/*toolParts = Arrays.asList (
-				TinkerTools.toolRod, TinkerTools.pickaxeHead, TinkerTools.shovelHead, TinkerTools.hatchetHead,
-				TinkerTools.binding, TinkerTools.toughBinding, TinkerTools.toughRod, TinkerTools.largePlate,
-				TinkerTools.swordBlade, TinkerTools.wideGuard, TinkerTools.handGuard, TinkerTools.crossbar,
-				TinkerTools.knifeBlade, TinkerTools.fullGuard, TinkerTools.frypanHead, TinkerTools.signHead,
-				TinkerTools.chiselHead, TinkerTools.scytheBlade, TinkerTools.broadAxeHead, TinkerTools.excavatorHead,
-				TinkerTools.largeSwordBlade, TinkerTools.hammerHead, TinkerTools.bowstring, TinkerTools.fletching,
-				TinkerTools.arrowhead );
-*/
 
         // if we don't use our custom harvest levels, we have to adjust what we're using
         if(!isHarvestTweaksActive)

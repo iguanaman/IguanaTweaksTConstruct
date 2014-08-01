@@ -3,6 +3,7 @@ package iguanaman.iguanatweakstconstruct.mobheads.renderers;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
+import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelSkeletonHead;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySkullRenderer;
@@ -22,11 +23,19 @@ public class IguanaTileEntitySkullRenderer extends TileEntitySpecialRenderer {
     private ModelSkeletonHead modelSkull = new ModelSkeletonHead(0,0,64,32); // standard skull model
     private ModelSkeletonHead modelZombie = new ModelSkeletonHead(0,0,64,64); // zombie skull model
 
+    private ModelHeadwear modelEnderManJaw = new ModelHeadwear(0,16,64,32);
+
+    private ModelEnderManHead modelEnderManHead = new ModelEnderManHead();
+
     private ResourceLocation[] textures = new ResourceLocation[] {
             new ResourceLocation("textures/entity/enderman/enderman.png"),
             new ResourceLocation("textures/entity/zombie_pigman.png"),
-            new ResourceLocation("textures/entity/blaze.png")
+            new ResourceLocation("textures/entity/blaze.png"),
+            // modsupport: Thermal Expansion
+            new ResourceLocation("thermalfoundation","textures/entity/Blizz.png")
     };
+
+    private ResourceLocation enderManEyes = new ResourceLocation("textures/entity/enderman/enderman_eyes.png");
 
     public IguanaTileEntitySkullRenderer()
     {
@@ -47,14 +56,21 @@ public class IguanaTileEntitySkullRenderer extends TileEntitySpecialRenderer {
 
     public void renderSkull(float x, float y, float z, float r, int sidePlacement, int meta)
     {
-        ModelSkeletonHead model = modelSkull;
+        ModelBase model = modelSkull;
+
         // chose model
+        if(meta == 0)
+            model = modelEnderManHead;
         if(meta == 1)
             model = modelZombie;
 
         // chose texture
         this.bindTexture(textures[meta]);
 
+
+        // debug
+        //model = new ModelSkeletonHead(0,16,64,32);
+        //this.bindTexture(new ResourceLocation("textures/entity/enderman/enderman_eyes.png"));
 
         // begin rendering
         GL11.glPushMatrix();
@@ -94,6 +110,14 @@ public class IguanaTileEntitySkullRenderer extends TileEntitySpecialRenderer {
         GL11.glEnable(GL11.GL_ALPHA_TEST);
 
         model.render(null, 0.0f, 0.0f, 0.0f, r, 0.0f, f4);
+
+        // also render endermanstuff!
+        if(meta == 0)
+        {
+            //modelEnderManJaw.render(null, 0.0f, 0.0f, 0.0f, r, 0.0f, f4);
+            this.bindTexture(enderManEyes);
+            model.render(null, 0.0f, 0.0f, 0.0f, r, 0.0f, f4);
+        }
 
         GL11.glPopMatrix();
     }

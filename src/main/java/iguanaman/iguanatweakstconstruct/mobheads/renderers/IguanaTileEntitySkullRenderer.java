@@ -2,6 +2,7 @@ package iguanaman.iguanatweakstconstruct.mobheads.renderers;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import iguanaman.iguanatweakstconstruct.mobheads.items.IguanaSkull;
 import iguanaman.iguanatweakstconstruct.mobheads.models.ModelBucketHelmet;
 import iguanaman.iguanatweakstconstruct.mobheads.models.ModelEnderManHead;
 import iguanaman.iguanatweakstconstruct.mobheads.models.ModelHeadwear;
@@ -65,8 +66,12 @@ public class IguanaTileEntitySkullRenderer extends TileEntitySpecialRenderer {
             renderSkull(x,y,z, r, sidePlacement, modelEnderManHead, textures[0]);
         else if(meta == 1)
             renderSkull(x,y,z, r, sidePlacement, modelZombie, textures[1]);
-        else
-            renderSkull(x,y,z, r, sidePlacement, modelSkull, textures[meta]);
+        else {
+            // draw blaze if head doesn't exist (anymore)
+            if(!IguanaSkull.isHeadRegistered(meta))
+                meta = 2;
+            renderSkull(x, y, z, r, sidePlacement, modelSkull, textures[meta]);
+        }
     }
 
     public void renderBucket(float x, float y, float z, float r, int sidePlacement, int meta)

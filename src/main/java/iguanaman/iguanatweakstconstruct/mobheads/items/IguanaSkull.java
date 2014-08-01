@@ -1,5 +1,6 @@
 package iguanaman.iguanatweakstconstruct.mobheads.items;
 
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import iguanaman.iguanatweakstconstruct.mobheads.IguanaMobHeads;
@@ -18,15 +19,42 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class IguanaSkull extends net.minecraft.item.ItemSkull {
     public static final int META_ENDERMAN  = 0;
     public static final int META_PIGZOMBIE = 1;
     public static final int META_BLAZE     = 2;
+    public static final int META_BLIZZ     = 3;
 
-	private static final String[] skullTypes = new String[] {"enderman", "pigman", "blaze"};
-	public static final String[] field_94587_a = new String[] {"skull_enderman", "skull_pigman", "skull_blaze"};
+    // an entry for a head
+    public static class HeadEntry {
+        public String name;
+        public String iconString;
+        public IIcon icon;
+
+        public HeadEntry(String name, String iconString) {
+            this.name = name;
+            this.iconString = iconString;
+        }
+    }
+
+    private static final Map<Integer, HeadEntry> headEntries = new HashMap<Integer, HeadEntry>();
+    // add vanilla heads
+    static {
+        addHead(0, "enderman", "skull_enderman");
+        addHead(1, "pigman", "skull_pigman");
+        addHead(2, "blaze", "skull_blaze");
+    }
+
+    public static void addHead(int meta, String name, String icon) {
+        headEntries.put(meta, new HeadEntry(name, icon));
+    }
+
+    public static boolean isHeadRegistered(int meta) { return headEntries.containsKey(meta); }
 
 	@SideOnly(Side.CLIENT)
 	private IIcon field_94586_c [];
@@ -43,12 +71,11 @@ public class IguanaSkull extends net.minecraft.item.ItemSkull {
 	@Override
 	public String getUnlocalizedName(ItemStack par1ItemStack)
 	{
-		int i = par1ItemStack.getItemDamage();
+		Integer i = par1ItemStack.getItemDamage();
+        if(!headEntries.containsKey(i))
+            i = 0;
 
-		if (i < 0 || i >= skullTypes.length)
-			i = 0;
-
-    	return Reference.resource(field_94587_a[i]);
+    	return Reference.item(headEntries.get(i).name);
 	}
 
     /**
@@ -59,8 +86,8 @@ public class IguanaSkull extends net.minecraft.item.ItemSkull {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List)
 	{
-		for (int j = 0; j < skullTypes.length; ++j)
-			par3List.add(new ItemStack(par1, 1, j));
+        for(Integer meta : headEntries.keySet())
+            par3List.add(new ItemStack(par1, 1, meta));
 	}
 
     /**
@@ -68,22 +95,20 @@ public class IguanaSkull extends net.minecraft.item.ItemSkull {
      */
 	@Override
 	@SideOnly(Side.CLIENT)
-	public IIcon getIconFromDamage(int par1)
+	public IIcon getIconFromDamage(int meta)
 	{
-		if (par1 < 0 || par1 >= skullTypes.length)
-			par1 = 0;
+        if(!headEntries.containsKey(meta))
+            meta = 0;
 
-		return field_94586_c[par1];
+        return headEntries.get(meta).icon;
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IIconRegister par1IconRegister)
+	public void registerIcons(IIconRegister iconRegister)
 	{
-		field_94586_c = new IIcon[field_94587_a.length];
-
-		for (int i = 0; i < field_94587_a.length; ++i)
-			field_94586_c[i] = par1IconRegister.registerIcon(Reference.resource(field_94587_a[i]));
+        for(HeadEntry entry : headEntries.values())
+            entry.icon = iconRegister.registerIcon(Reference.resource(entry.iconString));
 	}
 
     @Override

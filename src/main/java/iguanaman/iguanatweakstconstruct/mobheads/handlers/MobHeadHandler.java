@@ -8,6 +8,7 @@ import iguanaman.iguanatweakstconstruct.mobheads.items.IguanaSkull;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.*;
 import net.minecraft.entity.player.EntityPlayer;
@@ -92,6 +93,16 @@ public class MobHeadHandler {
         else if (mob instanceof EntityBlaze) {
             skullItem = IguanaMobHeads.skullItem;
             skullId = IguanaSkull.META_BLAZE;
+        }
+        // mod support
+        else {
+            String mobName = EntityList.getEntityString(mob);
+            // thermal expansion
+            if(mobName.equals("Blizz"))
+            {
+                skullItem = IguanaMobHeads.skullItem;
+                skullId = IguanaSkull.META_BLIZZ;
+            }
         }
 
         // no skull found?

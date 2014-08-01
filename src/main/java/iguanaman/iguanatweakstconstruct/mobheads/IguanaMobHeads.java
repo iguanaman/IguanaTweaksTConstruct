@@ -1,5 +1,6 @@
 package iguanaman.iguanatweakstconstruct.mobheads;
 
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -10,7 +11,9 @@ import iguanaman.iguanatweakstconstruct.mobheads.items.IguanaSkull;
 import iguanaman.iguanatweakstconstruct.mobheads.proxy.MobHeadCommonProxy;
 import iguanaman.iguanatweakstconstruct.mobheads.handlers.RenderPlayerHandler;
 import iguanaman.iguanatweakstconstruct.mobheads.tileentities.IguanaSkullTileEntity;
+import iguanaman.iguanatweakstconstruct.old.blocks.IguanaTileEntitySkull;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
+import iguanaman.iguanatweakstconstruct.util.Log;
 import mantle.pulsar.pulse.Handler;
 import mantle.pulsar.pulse.Pulse;
 import net.minecraft.block.Block;
@@ -33,12 +36,16 @@ public class IguanaMobHeads {
     {
         proxy.initialize();
 
+        if(Loader.isModLoaded("ThermalFoundation"))
+            integrateThermalExpansion();
+
         skullItem = new IguanaSkull();
         GameRegistry.registerItem(skullItem, "SkullItem");
 
-        skullBlock = new IguanaSkullBlock().setHardness(1.0F).setStepSound(Block.soundTypeSand).setBlockName("skullItem").setBlockTextureName("skullItem");
+        skullBlock = new IguanaSkullBlock();
         GameRegistry.registerBlock(skullBlock, "SkullBlock");
         GameRegistry.registerTileEntity(IguanaSkullTileEntity.class, "SkullEntity");
+
     }
 
     @Handler
@@ -48,5 +55,11 @@ public class IguanaMobHeads {
         MinecraftForge.EVENT_BUS.register(new MobHeadHandler());
 
         proxy.postInit();
+    }
+
+    private void integrateThermalExpansion()
+    {
+        Log.info("Adding Blizz head");
+        IguanaSkull.addHead(3, "blizz", "skull_blizz");
     }
 }

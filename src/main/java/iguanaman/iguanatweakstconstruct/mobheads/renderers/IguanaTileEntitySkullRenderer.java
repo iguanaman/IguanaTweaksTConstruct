@@ -1,21 +1,18 @@
 package iguanaman.iguanatweakstconstruct.mobheads.renderers;
 
-import com.mojang.authlib.minecraft.MinecraftProfileTexture;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.AbstractClientPlayer;
+import iguanaman.iguanatweakstconstruct.mobheads.models.ModelBucketHelmet;
+import iguanaman.iguanatweakstconstruct.mobheads.models.ModelEnderManHead;
+import iguanaman.iguanatweakstconstruct.mobheads.models.ModelHeadwear;
+import iguanaman.iguanatweakstconstruct.reference.Reference;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelSkeletonHead;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.client.renderer.tileentity.TileEntitySkullRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
-
-import java.util.Map;
 
 public class IguanaTileEntitySkullRenderer extends TileEntitySpecialRenderer {
     public static IguanaTileEntitySkullRenderer renderer = new IguanaTileEntitySkullRenderer();
@@ -66,7 +63,6 @@ public class IguanaTileEntitySkullRenderer extends TileEntitySpecialRenderer {
 
         // chose texture
         this.bindTexture(textures[meta]);
-
 
         // debug
         //model = new ModelSkeletonHead(0,16,64,32);

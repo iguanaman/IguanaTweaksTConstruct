@@ -1,4 +1,4 @@
-package iguanaman.iguanatweakstconstruct.mobheads.renderers;
+package iguanaman.iguanatweakstconstruct.mobheads.models;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;

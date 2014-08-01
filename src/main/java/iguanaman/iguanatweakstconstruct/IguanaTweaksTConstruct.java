@@ -15,6 +15,7 @@ import iguanaman.iguanatweakstconstruct.leveling.IguanaToolLeveling;
 import iguanaman.iguanatweakstconstruct.leveling.commands.IguanaCommandLevelUpTool;
 import iguanaman.iguanatweakstconstruct.leveling.commands.IguanaCommandToolXP;
 import iguanaman.iguanatweakstconstruct.leveling.commands.debug;
+import iguanaman.iguanatweakstconstruct.mobheads.IguanaMobHeads;
 import iguanaman.iguanatweakstconstruct.proxy.CommonProxy;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
@@ -87,6 +88,7 @@ public class IguanaTweaksTConstruct {
         pulsar.registerPulse(new IguanaHarvestLevelTweaks());
         pulsar.registerPulse(new IguanaToolLeveling());
         pulsar.registerPulse(new IguanaToolPartReplacing());
+        pulsar.registerPulse(new IguanaMobHeads());
         pulsar.registerPulse(new IguanaItems());
         pulsar.registerPulse(new IguanaTweaks());
         pulsar.preInit(event);

@@ -36,11 +36,11 @@ public class IguanaBlocks {
 
 
 		//SKULLS
-		Log.info("Adding skull blocks");
+		Log.info("Adding skullItem blocks");
 		// TODO: Find a way to change vanilla skulls
-		/*Blocks.skull = null;
-		newSkullBlock = new IguanaBlockSkull().setHardness(1.0F).setStepSound(Block.soundTypeSand).setBlockName("skull").setBlockTextureName("skull");
-		Blocks.skull = newSkullBlock;
+		/*Blocks.skullItem = null;
+		newSkullBlock = new IguanaBlockSkull().setHardness(1.0F).setStepSound(Block.soundTypeSand).setBlockName("skullItem").setBlockTextureName("skullItem");
+		Blocks.skullItem = newSkullBlock;
 		GameRegistry.registerBlock(newSkullBlock, "Skull");
 		GameRegistry.registerTileEntity(IguanaTileEntitySkull.class, "SkullEntity");*/
 

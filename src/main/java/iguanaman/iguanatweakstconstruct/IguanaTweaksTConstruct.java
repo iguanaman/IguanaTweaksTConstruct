@@ -35,8 +35,7 @@ import java.util.List;
 // todo: add randomly generated weapons with random bonuses(!!!!) to dungeon loot :D:D:D
 
 // todo: Unknown blocks get incorrect mining level. (just check if they're higher than the places where i added additional harvest levels and add the proper ammount to match up with the old mining level)
-// todo: can't mine TE tin with tin level?
-// todo: tartarite pick mines manyullum. tartarite tinker head mines ardite.
+// todo: add hardcoded ExtraTic mining levels
 
 @Mod(modid= Reference.MOD_ID, name= Reference.MOD_NAME, version="${version}",
 dependencies = "required-after:" + Reference.TCON_MOD_ID + ";after:*")

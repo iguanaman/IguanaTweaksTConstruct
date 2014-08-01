@@ -1,14 +1,20 @@
 package iguanaman.iguanatweakstconstruct.leveling;
 
+import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentText;
 import tconstruct.TConstruct;
+import tconstruct.items.tools.BowBase;
 import tconstruct.library.crafting.ModifyBuilder;
 import tconstruct.library.modifier.ItemModifier;
+import tconstruct.library.tools.HarvestTool;
+import tconstruct.library.tools.ToolCore;
+import tconstruct.library.tools.Weapon;
 import tconstruct.modifiers.tools.ModRedstone;
 import tconstruct.tools.TinkerTools;
 
@@ -20,36 +26,88 @@ import java.util.Set;
 public class RandomBonusses {
     private static Map<String, ItemModifier> modCache = new HashMap<String, ItemModifier>();
 
-    public static void tryModifying(EntityPlayer player, ItemStack tool)
+    public static Modifier tryModifying(EntityPlayer player, ItemStack tool)
     {
-        boolean modified = false;
         // add a modifier for it
         NBTTagCompound tags = tool.getTagCompound().getCompoundTag("InfiTool");
         int modifiers = tags.getInteger("Modifiers");
         tags.setInteger("Modifiers", modifiers+1);
 
+        // construct possibility "matrix"
+        Modifier[] mods = Modifier.values();
+        int[] chances = new int[mods.length];
+        int total = 0;
+        int i = 0;
+        for(Modifier mod : mods)
+        {
+            if(Config.randomBonusesAreRandom)
+                chances[i] = 1;
+            else if(tool.getItem() instanceof HarvestTool)
+                chances[i] = getToolModifierWeight(mod);
+            else if(tool.getItem() instanceof Weapon)
+                chances[i] = getWeaponModifierWeight(mod);
+            else if(tool.getItem() instanceof BowBase)
+                chances[i] = getBowModifierWeight(mod);
+
+            total += chances[i];
+            i++;
+        }
+
+
+        // try modifying
         // we can do this without getting an infinite loop, because redstone, lapis,... can be applied infinitely often
+        boolean modified = false;
+        Modifier choice = null;
         while(!modified) {
-            int i = TConstruct.random.nextInt(14);
-            Log.info("Trying modifier # " + i);
-            if (i-- == 0) modified = addRedstoneModifier(player, tool);  //0
-            if (i-- == 0) modified = addLapisModifier(player, tool);     //1
-            if (i-- == 0) modified = addAutoSmeltModifier(player, tool); //2
-            if (i-- == 0) modified = addSilktouchModifier(player, tool); //3
-            if (i-- == 0) modified = addDiamondModifier(player, tool);   //4
-            if (i-- == 0) modified = addEmeraldModifier(player, tool);   //5
-            if (i-- == 0) modified = addRepairModifier(player, tool);    //6
-            if (i-- == 0) modified = addAttackModifier(player, tool);    //7
-            if (i-- == 0) modified = addBlazeModifier(player, tool);     //8
-            if (i-- == 0) modified = addSmiteModifier(player, tool);     //9
-            if (i-- == 0) modified = addAntiSpiderModifier(player, tool);//10
-            if (i-- == 0) modified = addBeheadingModifier(player, tool); //11
-            if (i-- == 0) modified = addLifeStealModifier(player, tool); //12
-            if (i-- == 0) modified = addKnockbackModifier(player, tool); //13
+            // get a random decision number
+            int random = TConstruct.random.nextInt(total);
+            int counter = 0;
+
+            // determine which modifier to use. basically we increase by each weight and check if the random number landed there.
+            i = 0;
+            for(Modifier mod : mods)
+            {
+                counter += chances[i];
+                i++;
+
+                if(counter > random)
+                {
+                    choice = mod;
+                    break;
+                }
+            }
+
+            if(choice == null)
+                return null;
+
+            // try to apply chosen modifier. WTB function pointers..
+            switch (choice)
+            {
+                // mining mods
+                case REDSTONE:  modified = addRedstoneModifier(player, tool); break;
+                case LAPIS:     modified = addLapisModifier(player, tool); break;
+                case AUTOSMELT: modified = addAutoSmeltModifier(player, tool); break;
+                case SILKTOUCH: modified = addSilktouchModifier(player, tool); break;
+                // general modifiers
+                case DIAMOND:   modified = addDiamondModifier(player, tool); break;
+                case EMERALD:   modified = addEmeraldModifier(player, tool); break;
+                case REPAIR:    modified = addRepairModifier(player, tool); break;
+                // combat modifiers
+                case ATTACK:    modified = addAttackModifier(player, tool); break;
+                case BLAZE:     modified = addBlazeModifier(player, tool); break;
+                case SMITE:     modified = addSmiteModifier(player, tool); break;
+                case BANE:      modified = addAntiSpiderModifier(player, tool); break;
+                case BEHEADING: modified = addBeheadingModifier(player, tool); break;
+                case LIFESTEAL: modified = addLifeStealModifier(player, tool); break;
+                case KNOCKBACK: modified = addKnockbackModifier(player, tool); break;
+                default: modified = false;
+            }
         }
 
         // restore modifiers
         tags.setInteger("Modifiers", modifiers);
+
+        return choice;
     }
 
 
@@ -219,5 +277,102 @@ public class RandomBonusses {
             stack[i++] = (ItemStack)s;
 
         return stack;
+    }
+
+
+    /* Modifier weights */
+    private static int getToolModifierWeight(Modifier mod)
+    {
+        switch(mod)
+        {
+            // mining mods
+            case REDSTONE:  return 100;
+            case LAPIS:     return 100;
+            case AUTOSMELT: return 20;
+            case SILKTOUCH: return 15;
+            // general modifiers
+            case DIAMOND:   return 30;
+            case EMERALD:   return 35;
+            case REPAIR:    return 50;
+            // combat modifiers
+            case ATTACK:    return 15;
+            case BLAZE:     return 5;
+            case SMITE:     return 5;
+            case BANE:      return 5;
+            case BEHEADING: return 5;
+            case LIFESTEAL: return 5;
+            case KNOCKBACK: return 10;
+            default: return 0;
+        }
+    }
+
+    private static int getWeaponModifierWeight(Modifier mod)
+    {
+        switch(mod)
+        {
+            // mining mods
+            case REDSTONE:  return 0;
+            case LAPIS:     return 75;
+            case AUTOSMELT: return 15;
+            case SILKTOUCH: return 5;
+            // general modifiers
+            case DIAMOND:   return 15;
+            case EMERALD:   return 30;
+            case REPAIR:    return 55;
+            // combat modifiers
+            case ATTACK:    return 110;
+            case BLAZE:     return 45;
+            case SMITE:     return 50;
+            case BANE:      return 50;
+            case BEHEADING: return 50;
+            case LIFESTEAL: return 30;
+            case KNOCKBACK: return 50;
+            default: return 0;
+        }
+    }
+
+    private static int getBowModifierWeight(Modifier mod)
+    {
+        switch(mod)
+        {
+            // mining mods
+            case REDSTONE:  return 100;
+            case LAPIS:     return 75;
+            case AUTOSMELT: return 1;
+            case SILKTOUCH: return 1;
+            // general modifiers
+            case DIAMOND:   return 15;
+            case EMERALD:   return 30;
+            case REPAIR:    return 50;
+            // combat modifiers
+            case ATTACK:    return 100;
+            case BLAZE:     return 55;
+            case SMITE:     return 40;
+            case BANE:      return 40;
+            case BEHEADING: return 30;
+            case LIFESTEAL: return 40;
+            case KNOCKBACK: return 40;
+            default: return 0;
+        }
+    }
+
+    public enum Modifier {
+        // mining modifiers
+        REDSTONE,
+        LAPIS,
+        AUTOSMELT,
+        SILKTOUCH,
+        // general modifiers
+        DIAMOND,
+        EMERALD,
+        REPAIR,
+        // weapon modifiers
+        ATTACK,
+        BLAZE,
+        SMITE,
+        BANE,
+        BEHEADING,
+        LIFESTEAL,
+        KNOCKBACK
     }
 }

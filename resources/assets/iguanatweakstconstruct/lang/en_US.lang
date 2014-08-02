@@ -40,6 +40,12 @@ item.iguana.tcon.skull.blaze.name=Blaze Head
 item.iguana.tcon.skull.blizz.name=Blizz Head
 
 
-item.iguana.tcon.wearableBucket.bucketHoley.name=Holey Bucket
-item.iguana.tcon.wearableBucket.clayBucketCracked.name=Cracked Clay Bucket
-item.iguana.tcon.wearableBucket.endermanJaw.name=Enderman Jaw
+item.iguana.tcon.wearable.bucketHoley.name=Holey Bucket
+item.iguana.tcon.wearable.clayBucketCracked.name=Cracked Clay Bucket
+item.iguana.tcon.wearable.endermanJaw.name=Enderman Jaw
+item.iguana.tcon.wearable.bathat.name=Bat Hat
+
+tooltip.bucketHoley=A bucket with holes. How useful.
+tooltip.clayBucketCracked=It broke. :(
+tooltip.endermanJaw=A distinct lack of head is noticable.
+tooltip.bathat=NANANANANANANANA

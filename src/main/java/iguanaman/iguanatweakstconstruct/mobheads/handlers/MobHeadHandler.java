@@ -2,11 +2,10 @@ package iguanaman.iguanatweakstconstruct.mobheads.handlers;
 
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.registry.EntityRegistry;
+import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
 import iguanaman.iguanatweakstconstruct.mobheads.IguanaMobHeads;
 import iguanaman.iguanatweakstconstruct.mobheads.items.IguanaSkull;
 import iguanaman.iguanatweakstconstruct.reference.Config;
-import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.item.EntityItem;
@@ -17,16 +16,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import tconstruct.TConstruct;
 import tconstruct.library.tools.ToolCore;
 import tconstruct.tools.TinkerTools;
 
 import java.util.Iterator;
-import java.util.Random;
 
 public class MobHeadHandler {
-    private static Random random = new Random();
-
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void LivingDrops(LivingDropsEvent event)
     {
@@ -62,7 +57,7 @@ public class MobHeadHandler {
                 beheading += 2;
         }
         // roll the dice
-        if(random.nextInt(100) > beheading * Config.beheadingHeadDropChance + Config.baseHeadDropChance)
+        if(IguanaTweaksTConstruct.random.nextInt(100) > beheading * Config.beheadingHeadDropChance + Config.baseHeadDropChance)
             return;
 
         Item skullItem = null;
@@ -89,6 +84,13 @@ public class MobHeadHandler {
         else if (mob instanceof EntityEnderman) {
             skullItem = IguanaMobHeads.skullItem;
             skullId = IguanaSkull.META_ENDERMAN;
+
+            // sometimes, very very rarely, you'll only get the jaw :D
+            if(IguanaTweaksTConstruct.random.nextInt(2) == 0)
+            {
+                skullItem = IguanaMobHeads.wearables;
+                skullId = 2;
+            }
         }
         else if (mob instanceof EntityBlaze) {
             skullItem = IguanaMobHeads.skullItem;

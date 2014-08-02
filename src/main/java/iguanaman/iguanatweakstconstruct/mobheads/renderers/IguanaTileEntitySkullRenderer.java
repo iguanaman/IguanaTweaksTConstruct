@@ -83,6 +83,8 @@ public class IguanaTileEntitySkullRenderer extends TileEntitySpecialRenderer {
             renderSkull(x,y,z, r, sidePlacement, modelBucketHelmet, textureClayBucketHelmet);
         else if(meta == 2)
             renderSkull(x,y,z, r, sidePlacement, modelEnderManJaw, textures[0]);
+        else if(meta == 3)
+            renderSkull(x,y,z, r, sidePlacement, modelSkull, textures[0]);
     }
 
     public void renderSkull(float x, float y, float z, float r, int sidePlacement, ModelBase model, ResourceLocation texture)

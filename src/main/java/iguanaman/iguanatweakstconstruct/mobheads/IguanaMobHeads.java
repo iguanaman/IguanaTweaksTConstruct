@@ -1,6 +1,5 @@
 package iguanaman.iguanatweakstconstruct.mobheads;
 
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -9,11 +8,10 @@ import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
 import iguanaman.iguanatweakstconstruct.mobheads.blocks.IguanaSkullBlock;
 import iguanaman.iguanatweakstconstruct.mobheads.handlers.MobHeadHandler;
 import iguanaman.iguanatweakstconstruct.mobheads.items.IguanaSkull;
-import iguanaman.iguanatweakstconstruct.mobheads.items.WearableBucket;
+import iguanaman.iguanatweakstconstruct.mobheads.items.Wearable;
 import iguanaman.iguanatweakstconstruct.mobheads.proxy.MobHeadCommonProxy;
 import iguanaman.iguanatweakstconstruct.mobheads.handlers.RenderPlayerHandler;
 import iguanaman.iguanatweakstconstruct.mobheads.tileentities.IguanaSkullTileEntity;
-import iguanaman.iguanatweakstconstruct.old.blocks.IguanaTileEntitySkull;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import mantle.pulsar.pulse.Handler;
@@ -29,7 +27,7 @@ import net.minecraftforge.common.MinecraftForge;
 public class IguanaMobHeads {
     public static Item skullItem;
     public static Block skullBlock;
-    public static Item wearableBuckets; // secret thing
+    public static Item wearables; // secret thing
 
     @SidedProxy(clientSide = "iguanaman.iguanatweakstconstruct.mobheads.proxy.MobHeadClientProxy", serverSide = "iguanaman.iguanatweakstconstruct.mobheads.proxy.MobHeadCommonProxy")
     public static MobHeadCommonProxy proxy;
@@ -50,8 +48,8 @@ public class IguanaMobHeads {
         GameRegistry.registerTileEntity(IguanaSkullTileEntity.class, "skullTE");
 
         // psssssst!
-        wearableBuckets = new WearableBucket();
-        GameRegistry.registerItem(wearableBuckets, "wearableBucket");
+        wearables = new Wearable();
+        GameRegistry.registerItem(wearables, "wearableBucket");
     }
 
     @Handler

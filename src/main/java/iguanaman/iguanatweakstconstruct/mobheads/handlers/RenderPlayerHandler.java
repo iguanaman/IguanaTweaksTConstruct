@@ -21,7 +21,7 @@ public class RenderPlayerHandler {
             return;
 
         Item item = itemStack.getItem();
-        boolean isBucket = IguanaTweaksTConstruct.isItemsActive && item == IguanaMobHeads.wearableBuckets;
+        boolean isBucket = IguanaTweaksTConstruct.isItemsActive && item == IguanaMobHeads.wearables;
         if(item != IguanaMobHeads.skullItem && !isBucket)
             return;
 

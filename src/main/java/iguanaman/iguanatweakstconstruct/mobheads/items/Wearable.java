@@ -7,20 +7,23 @@ import iguanaman.iguanatweakstconstruct.reference.Reference;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
 
 import java.util.List;
 
-public class WearableBucket extends Item {
-    private static final String[] textureTypes = new String[] {"bucketHoley", "clayBucketCracked", "endermanJaw"};
+public class Wearable extends Item {
+    private static final String[] textureTypes = new String[] {"bucketHoley", "clayBucketCracked", "endermanJaw", "bathat"};
     private IIcon[] icons;
 
-    public WearableBucket() {
+    public Wearable() {
         super();
-        this.setContainerItem(IguanaMobHeads.wearableBuckets);
-        this.setUnlocalizedName(Reference.prefix("wearableBucket"));
+        this.setContainerItem(IguanaMobHeads.wearables);
+        this.setUnlocalizedName(Reference.prefix("wearable"));
 
         this.setMaxStackSize(1);
     }
@@ -28,6 +31,12 @@ public class WearableBucket extends Item {
     @Override
     public boolean isValidArmor(ItemStack stack, int armorType, Entity entity) {
         return armorType == 0; // 0 = helmet
+    }
+
+    @Override
+    public void addInformation(ItemStack item, EntityPlayer player, List tooltips, boolean advanced) {
+        // specul tooltips
+        tooltips.add(EnumChatFormatting.DARK_GRAY +  StatCollector.translateToLocal("tooltip." + textureTypes[item.getItemDamage()]));
     }
 
     @Override

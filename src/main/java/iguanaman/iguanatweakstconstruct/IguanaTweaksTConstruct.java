@@ -30,6 +30,7 @@ import mantle.pulsar.pulse.PulseMeta;
 import net.minecraft.item.Item;
 
 import java.util.List;
+import java.util.Random;
 
 // inofficial todo list:
 // todo: check out what mining-maxlvl i wont for emerald/diamond modifier.
@@ -56,6 +57,8 @@ public class IguanaTweaksTConstruct {
 	// Says where the client and server 'proxy' code is loaded.
 	@SidedProxy(clientSide= Reference.PROXY_CLIENT_CLASS, serverSide= Reference.PROXY_SERVER_CLASS)
 	public static CommonProxy proxy;
+
+    public static Random random = new Random();
 
     public static boolean isToolLevelingActive = false;
     public static boolean isHarvestTweaksActive = false;

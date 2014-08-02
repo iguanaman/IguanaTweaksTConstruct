@@ -1,6 +1,8 @@
 package iguanaman.iguanatweakstconstruct.claybuckets.items;
 
+import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
 import iguanaman.iguanatweakstconstruct.claybuckets.IguanaItems;
+import iguanaman.iguanatweakstconstruct.mobheads.IguanaMobHeads;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -43,6 +45,11 @@ public class ClayBucket extends ItemBucket
             if(isHot)
             {
                 itemStack.stackSize--;
+
+                // very very rarely, you'll get a broken bucket!
+                if(IguanaTweaksTConstruct.isMobHeadsActive && itemStack.stackSize == 0 && IguanaTweaksTConstruct.random.nextInt(1000) == 0)
+                    return new ItemStack(IguanaMobHeads.wearables, 1, 1);
+
                 return itemStack;
             }
 

@@ -5,6 +5,7 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
+import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
 import iguanaman.iguanatweakstconstruct.mobheads.blocks.IguanaSkullBlock;
 import iguanaman.iguanatweakstconstruct.mobheads.handlers.MobHeadHandler;
 import iguanaman.iguanatweakstconstruct.mobheads.items.IguanaSkull;
@@ -36,7 +37,7 @@ public class IguanaMobHeads {
     {
         proxy.initialize();
 
-        if(Loader.isModLoaded("ThermalFoundation"))
+        if(IguanaTweaksTConstruct.modTEDetected)
             integrateThermalExpansion();
 
         skullItem = new IguanaSkull();

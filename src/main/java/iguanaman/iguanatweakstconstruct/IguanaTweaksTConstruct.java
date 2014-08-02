@@ -1,6 +1,7 @@
 package iguanaman.iguanatweakstconstruct;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -70,6 +71,8 @@ public class IguanaTweaksTConstruct {
     private ForgeCFG pulseCFG = new ForgeCFG("TinkersModules", "Addon: Iguana Tweaks for Tinkers Construct");
     private PulseManager pulsar = new PulseManager(Reference.MOD_ID, pulseCFG);
 
+    public static boolean modTEDetected = false;
+
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
         Config config = new Config();
@@ -85,6 +88,7 @@ public class IguanaTweaksTConstruct {
         isItemsActive = pulseCFG.isModuleEnabled(new PulseMeta(Reference.PULSE_ITEMS, "", false, false));
         isPartReplacementActive = pulseCFG.isModuleEnabled(new PulseMeta(Reference.PULSE_REPLACING, "", false, false));
 
+        modTEDetected = Loader.isModLoaded("ThermalFoundation");
 
         // if we don't use our custom harvest levels, we have to adjust what we're using
         if(!isHarvestTweaksActive)

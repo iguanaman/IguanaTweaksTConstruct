@@ -3,10 +3,12 @@ package iguanaman.iguanatweakstconstruct.leveling;
 
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
 import iguanaman.iguanatweakstconstruct.leveling.handlers.LevelingEventHandler;
 import iguanaman.iguanatweakstconstruct.leveling.handlers.LevelingToolTipHandler;
 import iguanaman.iguanatweakstconstruct.leveling.modifiers.ModMiningLevelBoost;
 import iguanaman.iguanatweakstconstruct.leveling.modifiers.ModXpAwareRedstone;
+import iguanaman.iguanatweakstconstruct.mobheads.IguanaMobHeads;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
 import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import iguanaman.iguanatweakstconstruct.util.Log;
@@ -33,14 +35,6 @@ import java.util.ListIterator;
 
 @Pulse(id = Reference.PULSE_LEVELING, description = "The Iguana Tweaks Leveling System for Tinker's Tools")
 public class IguanaToolLeveling {
-
-    private static final int HEAD_Zombie = 2;
-    private static final int HEAD_Skeleton = 0;
-    private static final int HEAD_Creeper = 4;
-    private static final int HEAD_Wither = 1;
-
-
-
     @Handler
     public void init(FMLInitializationEvent event)
     {
@@ -81,28 +75,50 @@ public class IguanaToolLeveling {
         }
     }
 
+    // registers the available mobheads as a mining-boost modifier
     private void registerBoostModifiers()
     {
-        ModifyBuilder.registerModifier(new ModMiningLevelBoost(getMobHead(HEAD_Zombie), 20, HarvestLevels._2_copper));
-        ModifyBuilder.registerModifier(new ModMiningLevelBoost(getMobHead(HEAD_Skeleton), 21, HarvestLevels._3_iron));
-        ModifyBuilder.registerModifier(new ModMiningLevelBoost(getMobHead(HEAD_Creeper), 22, HarvestLevels._4_bronze));
-        // blaze
-        // enderman
-        ModifyBuilder.registerModifier(new ModMiningLevelBoost(getMobHead(HEAD_Wither), 25, HarvestLevels._7_ardite));
-        ModifyBuilder.registerModifier(new ModMiningLevelBoost(new ItemStack[]{new ItemStack(Items.nether_star)}, 26, HarvestLevels._8_cobalt));
+        // zombie head
+        ModifyBuilder.registerModifier(new ModMiningLevelBoost(getVanillaMobHead(2), 20, HarvestLevels._2_copper));
+        // skeleton skull
+        ModifyBuilder.registerModifier(new ModMiningLevelBoost(getVanillaMobHead(0), 21, HarvestLevels._3_iron));
+        // creeper head
+        ModifyBuilder.registerModifier(new ModMiningLevelBoost(getVanillaMobHead(4), 22, HarvestLevels._4_bronze));
+
+        if(IguanaTweaksTConstruct.isMobHeadsActive) {
+            // pigman head
+            ModifyBuilder.registerModifier(new ModMiningLevelBoost(getIguanaMobHead(1), 23, HarvestLevels._5_diamond));
+            // blaze head
+            ModifyBuilder.registerModifier(new ModMiningLevelBoost(getIguanaMobHead(2), 24, HarvestLevels._6_obsidian));
+            // blizz head
+            if(IguanaTweaksTConstruct.modTEDetected)
+                ModifyBuilder.registerModifier(new ModMiningLevelBoost(getIguanaMobHead(3), 25, HarvestLevels._6_obsidian));
+            // enderman head
+            ModifyBuilder.registerModifier(new ModMiningLevelBoost(getIguanaMobHead(0), 26, HarvestLevels._7_ardite));
+        }
+
+        // wither head
+        ModifyBuilder.registerModifier(new ModMiningLevelBoost(getVanillaMobHead(1), 27, HarvestLevels._8_cobalt));
+        // netherstar
+        ModifyBuilder.registerModifier(new ModMiningLevelBoost(new ItemStack[]{new ItemStack(Items.nether_star)}, 28, HarvestLevels._9_manyullym));
 
         // rendering code
         ToolCore[] tools = new ToolCore[] { TinkerTools.pickaxe, TinkerTools.hammer };
-        int[] modifierIds = new int[] { 20, 21, 22, 24, 25, 26 };
-        String[] renderNames = new String[] { "zombiehead", "skeletonskull", "creeperhead", "endermanhead", "witherskeletonskull", "netherstar" };
+        int[] modifierIds = new int[] { 20, 21, 22, 23, 24, 25, 26, 27, 28 };
+        String[] renderNames = new String[] { "zombiehead", "skeletonskull", "creeperhead", "zombiepigmanhead", "blazehead", "blizzhead", "endermanhead", "witherskeletonskull", "netherstar" };
 
         for (ToolCore tool : tools)
             for (int index = 0; index < modifierIds.length; ++index)
                 TConstructClientRegistry.addEffectRenderMapping(tool, modifierIds[index], Reference.RESOURCE, renderNames[index], true);
     }
 
-    private ItemStack[] getMobHead(int meta)
+    private ItemStack[] getVanillaMobHead(int meta)
     {
         return new ItemStack[]{new ItemStack(Items.skull, 1, meta)};
+    }
+
+    private ItemStack[] getIguanaMobHead(int meta)
+    {
+        return new ItemStack[]{new ItemStack(IguanaMobHeads.skullItem, 1, meta)};
     }
 }

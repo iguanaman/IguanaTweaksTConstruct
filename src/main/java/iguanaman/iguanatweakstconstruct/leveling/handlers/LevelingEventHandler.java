@@ -16,6 +16,7 @@ import net.minecraftforge.client.event.sound.SoundLoadEvent;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
+import tconstruct.items.tools.Battleaxe;
 import tconstruct.items.tools.Hammer;
 import tconstruct.items.tools.Pickaxe;
 import tconstruct.items.tools.Shortbow;
@@ -42,7 +43,7 @@ public class LevelingEventHandler {
                 {
                     ItemStack stack = player.getCurrentEquippedItem();
                     if (stack != null && stack.hasTagCompound())
-                        if (stack.getItem() instanceof Weapon || stack.getItem() instanceof Shortbow && event.source.damageType.equals("arrow")) {
+                        if (stack.getItem() instanceof Weapon || stack.getItem() instanceof Battleaxe || stack.getItem() instanceof Shortbow && event.source.damageType.equals("arrow")) {
                             long xp = Math.round(event.ammount);
                             if (event.entityLiving instanceof EntityAnimal) xp = Math.round(event.ammount / 4f);
 

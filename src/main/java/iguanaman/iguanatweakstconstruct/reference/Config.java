@@ -37,6 +37,7 @@ public class Config {
 	public static int levelingPickaxeBoostXpPercentage;
 
     // Harvest Leveling
+    public static boolean nerfBronze;
     public static int durabilityPercentage;
     public static int miningSpeedPercentage;
 
@@ -116,6 +117,9 @@ public class Config {
 
         /** HarvestLevel Module **/
         configfile.setCategoryComment(CATEGORY_HarvestLevels, "Harvest Level Tweak Module: Introduces a slower mining level progression.");
+
+        // bronze levels
+        nerfBronze = configfile.getBoolean("nerfBronze", CATEGORY_HarvestLevels, false, "Reduces the mining level of bronze by 1. This means bronze can not be used to harvest obsidian. ATTENTION: ONLY USE IF YOU HAVE A WAY OF GETTING STEEL (or something with equivalent mining level)");
 
         // Tool durability/speed changes
         durabilityPercentage  = configfile.getInt("durabilityPercentage", CATEGORY_HarvestLevels, 80, 1, 999, "Change durability of all tool materials (in percent)");

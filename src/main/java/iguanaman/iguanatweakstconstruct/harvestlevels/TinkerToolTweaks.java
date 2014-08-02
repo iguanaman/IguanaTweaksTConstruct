@@ -56,11 +56,14 @@ public abstract class TinkerToolTweaks {
             updateMaterial(_3_iron, TConstructRegistry.getMaterial("Thaumium"));
 
         // mining level 4: Bronze and better metals
-        updateMaterial(_4_bronze, TConstructRegistry.getMaterial("Bronze"));
-        updateMaterial(_4_bronze, TConstructRegistry.getMaterial("PigIron"));
+        int bronzeLevel = _4_bronze;
+        if(!Config.nerfBronze)
+            bronzeLevel++;
+        updateMaterial(bronzeLevel, TConstructRegistry.getMaterial("Bronze"));
 
         // mining level 5: diamond
         updateMaterial(_5_diamond, TConstructRegistry.getMaterial("Steel"));
+        updateMaterial(_5_diamond, TConstructRegistry.getMaterial("PigIron"));
 
         // mining level 6: Obsidian and alumite
         updateMaterial(_6_obsidian, TConstructRegistry.getMaterial("Obsidian"));

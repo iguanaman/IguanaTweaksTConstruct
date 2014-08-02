@@ -83,7 +83,7 @@ public class IguanaToolLeveling {
         // skeleton skull
         ModifyBuilder.registerModifier(new ModMiningLevelBoost(getVanillaMobHead(0), 21, HarvestLevels._3_iron));
         // creeper head
-        ModifyBuilder.registerModifier(new ModMiningLevelBoost(getVanillaMobHead(4), 22, HarvestLevels._4_bronze));
+        ModifyBuilder.registerModifier(new ModMiningLevelBoost(getVanillaMobHead(4), 22, HarvestLevels._5_diamond));
 
         if(IguanaTweaksTConstruct.isMobHeadsActive) {
             // pigman head

@@ -9,6 +9,7 @@ import tconstruct.library.modifier.ItemModifier;
 import tconstruct.modifiers.tools.ModBoolean;
 
 public class ModMiningLevelBoost extends ModBoolean {
+    // the maximum mining level obtainable with this head
     private int maxLvl = 0;
 
     public ModMiningLevelBoost(ItemStack[] recipe, int effect, int maxLvl) {
@@ -31,7 +32,7 @@ public class ModMiningLevelBoost extends ModBoolean {
 
         // got required harvest level?
         int hlvl = tags.getInteger("HarvestLevel");
-        if(hlvl < maxLvl && hlvl > 0)
+        if(hlvl < maxLvl && LevelingLogic.canBoostMiningLevel(tags))
             return true;
 
         return false;

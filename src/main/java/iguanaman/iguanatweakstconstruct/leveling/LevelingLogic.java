@@ -11,6 +11,7 @@ import net.minecraft.world.World;
 import tconstruct.items.tools.*;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.tools.HarvestTool;
+import tconstruct.library.tools.ToolCore;
 import tconstruct.library.tools.Weapon;
 
 /**
@@ -55,7 +56,7 @@ public abstract class LevelingLogic {
      * Add the leveling specific NBT.
      * @param tag The tag that should recieve the data. Usually InfiTool Tag.
      */
-    public static void addLevelingTags(NBTTagCompound tag)
+    public static void addLevelingTags(NBTTagCompound tag, ToolCore tool)
     {
         // we start with level 1
         tag.setInteger(TAG_LEVEL, 1);
@@ -65,7 +66,7 @@ public abstract class LevelingLogic {
         // mining level boost
         int hlvl = tag.getInteger("HarvestLevel");
         // only tools with >stone level can be boosted
-        if(Config.levelingPickaxeBoost && hlvl > 0) {
+        if(Config.levelingPickaxeBoost && hlvl > 0 && (tool instanceof Pickaxe || tool instanceof Hammer)) {
             tag.setLong(TAG_BOOST_EXP, 0);
             tag.setBoolean(TAG_IS_BOOSTED, false);
 

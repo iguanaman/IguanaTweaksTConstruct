@@ -75,92 +75,14 @@ public class LevelingEventHandler {
         int extra = toolTag.hasKey("Extra") ? toolTag.getInteger("Extra") : -1;
 
         // add tags for tool leveling
-        LevelingLogic.addLevelingTags(toolTag);
+        LevelingLogic.addLevelingTags(toolTag, event.tool);
 
-        // add the initial tooltips for leveling info!
-        //IguanaLevelingLogic.addLevelingToolTips(event.tool, toolTag);
-/*
-
-
-
-
-        // CREATE TOOLTIP LISTS
-        List<String> tips = new ArrayList<String>();
-        List<String> modifierTips = new ArrayList<String>();
-
-        // MINING LEVEL TOOLTIP
-        if (event.tool instanceof Pickaxe || event.tool instanceof Hammer)
-        {
-            String mLevel = IguanaTweaksTConstruct.getHarvestLevelName(toolTag.getInteger("HarvestLevel"));
-            tips.add("Mining Level: " + mLevel);
-            //modifierTips.add("");
-        }
-
-        // TOOL LEVELING DATA + TOOLTIP
-        if (IguanaConfig.toolLeveling)
-        {
-            tips.add(IguanaLevelingLogic.getLevelTooltip(1));
-            //modifierTips.add("");
-
-            toolTag.setInteger("ToolLevel", 1);
-
-            toolTag.setLong("ToolEXP", 0);
-            if (IguanaConfig.showTooltipXP)
-            {
-                tips.add(IguanaLevelingLogic.getXpString(new ItemStack(event.tool), toolTag));
-                //modifierTips.add("");
-            }
-
-            if (IguanaConfig.levelingPickaxeBoost && (event.tool instanceof Pickaxe || event.tool instanceof Hammer))
-            {
-                toolTag.setLong("HeadEXP", 0);
-
-                int hLevel = toolTag.hasKey("HarvestLevel") ? hLevel = toolTag.getInteger("HarvestLevel") : -1;
-                if (hLevel >= TConstructRegistry.getMaterial("Copper").harvestLevel() && hLevel < TConstructRegistry.getMaterial("Manyullyn").harvestLevel())
-                {
-                    if (IguanaConfig.showTooltipXP)
-                    {
-                        tips.add(IguanaLevelingLogic.getXpToolTip(new ItemStack(event.tool), toolTag, true));
-                        //modifierTips.add("");
-                    }
-
-                    tips.add("\u00A76Requires boost");
-                    //modifierTips.add("");
-                }
-            }
-        }
-
-        // STORE + REMOVE EXISTING TOOLTIPS
-        int tipNum = 0;
-        while (true)
-        {
-            String tip = "Tooltip" + ++tipNum;
-            if (toolTag.hasKey(tip))
-            {
-                tips.add(toolTag.getString(tip));
-                //modifierTips.add(toolTag.getString("ModifierTip" + tipNum));
-                toolTag.removeTag(tip);
-                //toolTag.removeTag("ModifierTip" + tipNum);
-            }
-            else break;
-        }
-
-        // WRITE TOOLTIPS
-        for (int i = 1; i <= tips.size(); ++i)
-            if (tips.get(i - 1) != null)
-            {
-                toolTag.setString("Tooltip" + i, tips.get(i - 1));
-                //if (modifierTips.get(i - 1) != null)
-                  //  toolTag.setString("ModifierTip" + i, modifierTips.get(i - 1));
-                //else
-                  //  toolTag.setString("ModifierTip" + i, "");
-            }
-*/
 
 
         if (Config.toolLeveling && Config.toolLevelingExtraModifiers)
             toolTag.setInteger("Modifiers", Math.max(toolTag.getInteger("Modifiers") - 3, 0));
 
+        /* what is this? o_O
         if (event.tool == TinkerTools.hammer || event.tool == TinkerTools.excavator || event.tool == TinkerTools.lumberaxe)
         {
             List<String> replaceTags = new ArrayList<String>(Arrays.asList(
@@ -169,7 +91,10 @@ public class LevelingEventHandler {
 
             for (String replaceTag : replaceTags)
                 if (toolTag.hasKey(replaceTag)) toolTag.setInteger(replaceTag, Math.round(toolTag.getInteger(replaceTag) / 2f));
+
+            event = event;
         }
+        */
     }
 
 

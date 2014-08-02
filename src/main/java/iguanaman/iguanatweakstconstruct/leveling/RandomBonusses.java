@@ -23,6 +23,26 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/*
+todo:
+  On  doing stuff, add data what was done. Apply data to weights. Basically on action add an NBT tag that knows how much.
+  - Redstone: mining a regular block
+  - Luck: mining a block that drops stuff. Maybe miningan ore. Hitting an enemy (simply assume every enemy drops stuff for simplicity)
+  - autosmelt: ...hitting furnaces maybe?
+  - silktouch: nope. we don't a higher silktouch chance.
+  - diamond: this is probably not useful enough to warrant an increased chance. leave it at base chance.
+  - emerald: same as diamond
+  - repair: repairing the tool maybe? meh. Should probably simply have a good base chance and maybe decrease it once we get one level of it
+  - attack: critting? or simply doing damage in general?
+  - blaze: hitting a blaze
+  - smite: hitting a zombie
+  - bane: hitting a spider
+  - beheading: hitting an enderman
+  - lifesteal: hitting a skeleton (witherskeleton only?)
+  - knockback: spring+hitting enemies
+
+    maybe.. add a critical strike modifier, only obtainable through levelup :>
+ */
 public class RandomBonusses {
     private static Map<String, ItemModifier> modCache = new HashMap<String, ItemModifier>();
 
@@ -92,6 +112,7 @@ public class RandomBonusses {
                 case DIAMOND:   modified = addDiamondModifier(player, tool); break;
                 case EMERALD:   modified = addEmeraldModifier(player, tool); break;
                 case REPAIR:    modified = addRepairModifier(player, tool); break;
+                case REINFORCED:modified = addReinforcedModifier(player, tool); break;
                 // combat modifiers
                 case ATTACK:    modified = addAttackModifier(player, tool); break;
                 case BLAZE:     modified = addBlazeModifier(player, tool); break;
@@ -159,6 +180,11 @@ public class RandomBonusses {
     public static boolean addRepairModifier(EntityPlayer player, ItemStack tool)
     {
         return addGenericModifier(player, tool, "Moss", "\u00a79It seems to have accumulated a patch of moss (+1 repair)");
+    }
+
+    public static boolean addReinforcedModifier(EntityPlayer player, ItemStack tool)
+    {
+        return addGenericModifier(player, tool, "Reinforced", "\u00a79Fixing up the wear and tear should make it last a little longer (+1 reinforced)");
     }
 
 
@@ -294,6 +320,7 @@ public class RandomBonusses {
             case DIAMOND:   return 30;
             case EMERALD:   return 35;
             case REPAIR:    return 50;
+            case REINFORCED:return 50;
             // combat modifiers
             case ATTACK:    return 15;
             case BLAZE:     return 5;
@@ -319,6 +346,7 @@ public class RandomBonusses {
             case DIAMOND:   return 15;
             case EMERALD:   return 30;
             case REPAIR:    return 55;
+            case REINFORCED:return 35;
             // combat modifiers
             case ATTACK:    return 110;
             case BLAZE:     return 45;
@@ -344,6 +372,7 @@ public class RandomBonusses {
             case DIAMOND:   return 15;
             case EMERALD:   return 30;
             case REPAIR:    return 50;
+            case REINFORCED:return 40;
             // combat modifiers
             case ATTACK:    return 100;
             case BLAZE:     return 55;
@@ -366,6 +395,7 @@ public class RandomBonusses {
         DIAMOND,
         EMERALD,
         REPAIR,
+        REINFORCED,
         // weapon modifiers
         ATTACK,
         BLAZE,

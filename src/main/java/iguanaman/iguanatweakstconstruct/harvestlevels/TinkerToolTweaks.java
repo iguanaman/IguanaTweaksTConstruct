@@ -88,15 +88,7 @@ public abstract class TinkerToolTweaks {
         if(id > -1) {
             TConstructRegistry.toolMaterials.remove(id);
             TConstructRegistry.toolMaterialStrings.remove(old.materialName);
-            // todo: uncomment once the bug that it always adds null is fixed
-            //TConstructRegistry.addtoolMaterial(id, newMaterial);
-            if(TConstructRegistry.toolMaterials.containsKey(id))
-                throw new IllegalArgumentException("[TCon API] Material ID " + id + " is already occupied");
-            TConstructRegistry.toolMaterials.put(id, newMaterial);
-            TConstructRegistry.toolMaterialStrings.put(newMaterial.name(), newMaterial);
-
-            if(Config.logToolMaterialChanges)
-                Log.debug(String.format("Modified tool material %d: %s (level: %d, durability: %d, speed: %d)", id, old.name(), harvestLevel, durability, speed));
+            TConstructRegistry.addtoolMaterial(id, newMaterial);
         }
         else
             Log.error("Couldn't find ToolMaterial ID for " + old.name());

@@ -80,8 +80,8 @@ public class HarvestLevelTweaks {
 
 				// TODO: Find a better way to implement pickaxe overrides
 				/*
-				if (IguanaIguanaConfig.pickaxeOverrides.containsKey(item.getUnlocalizedName()))
-					harvestLevel = IguanaIguanaConfig.pickaxeOverrides.get(item.itemID);*/
+				if (IguanaIguanaConfig.pickaxeOverrides.containsKey(prefix.getUnlocalizedName()))
+					harvestLevel = IguanaIguanaConfig.pickaxeOverrides.get(prefix.itemID);*/
 
 				switch (harvestLevel)
 				{
@@ -179,7 +179,7 @@ public class HarvestLevelTweaks {
 			for (String materialName : oreDictLevels[i]) {
 				for (ItemStack oreStack : OreDictionary.getOres("ore" + materialName)) SetHarvestLevel(oreStack, level);
 				for (ItemStack oreStack : OreDictionary.getOres("oreNether" + materialName)) SetHarvestLevel(oreStack, level);
-				for (ItemStack oreStack : OreDictionary.getOres("block" + materialName)) SetHarvestLevel(oreStack, level);
+				for (ItemStack oreStack : OreDictionary.getOres("prefix" + materialName)) SetHarvestLevel(oreStack, level);
 				for (ItemStack oreStack : OreDictionary.getOres("stone" + materialName)) SetHarvestLevel(oreStack, level);
 			}
 		}
@@ -230,7 +230,7 @@ public class HarvestLevelTweaks {
 					throw new RuntimeException("IguanaConfig setting harvestLevel" + i + "Ids contains an invalid line (" + idline + ").  Each id must be on a separate line and in this format: id or id:meta");
 				}
 
-				// TODO: find a way to implement block harvest override
+				// TODO: find a way to implement prefix harvest override
 				//SetHarvestLevel(new ItemStack(blockId, 1, meta), level);
 			}
 		}
@@ -242,7 +242,7 @@ public class HarvestLevelTweaks {
 		Block block = Block.getBlockFromItem(oreStack.getItem());
 		if (block == Blocks.air)
 		{
-			Log.warn("Warning: " + oreStack.getUnlocalizedName() + " is invalid block");
+			Log.warn("Warning: " + oreStack.getUnlocalizedName() + " is invalid prefix");
 			return;
 		}
 		

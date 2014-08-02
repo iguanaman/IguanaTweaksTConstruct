@@ -115,7 +115,7 @@ public class IguanaItems {
 		ToolBuilder.addCustomToolRecipe(new BowRecipe(TinkerTools.toolRod, TinkerTools.bowstring, TinkerTools.toolRod, TinkerTools.shortbow));
 
 		//SKULL ITEM
-		Log.info("Adding skullItem item");
+		Log.info("Adding skullItem prefix");
 		// TODO: find a way to replace vanilla skullItem
 		/*Item.itemsList[Item.skullItem.itemID] = null;
 		Item.skullItem = new IguanaItemSkull(141).setUnlocalizedName("skullItem").setTextureName("skullItem");
@@ -143,8 +143,8 @@ public class IguanaItems {
 
 			for (int j = 0; j < recipeItems.length; ++j)
 			{
-				Item item = (Item)recipeItems[j];
-				CraftingManager.getInstance().addRecipe(new ItemStack(item), new Object[] {recipePatterns[j], 'X', new ItemStack(TContent.materials, 1, 3)});
+				Item prefix = (Item)recipeItems[j];
+				CraftingManager.getInstance().addRecipe(new ItemStack(prefix), new Object[] {recipePatterns[j], 'X', new ItemStack(TContent.materials, 1, 3)});
 			}*/
 		}
 

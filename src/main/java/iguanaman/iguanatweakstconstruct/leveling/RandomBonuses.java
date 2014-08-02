@@ -26,8 +26,8 @@ import java.util.Set;
 /*
 todo:
   On  doing stuff, add data what was done. Apply data to weights. Basically on action add an NBT tag that knows how much.
-  - Redstone: mining a regular block
-  - Luck: mining a block that drops stuff. Maybe miningan ore. Hitting an enemy (simply assume every enemy drops stuff for simplicity)
+  - Redstone: mining a regular prefix
+  - Luck: mining a prefix that drops stuff. Maybe miningan ore. Hitting an enemy (simply assume every enemy drops stuff for simplicity)
   - autosmelt: ...hitting furnaces maybe?
   - silktouch: nope. we don't a higher silktouch chance.
   - diamond: this is probably not useful enough to warrant an increased chance. leave it at base chance.

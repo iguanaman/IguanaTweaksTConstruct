@@ -33,7 +33,7 @@ public class IguanaModClean extends ItemModifier {
 		int oldAccessory = tags.getInteger("Accessory");
 		int oldExtra = tags.getInteger("Extra");
 
-		//get current item parts
+		//get current prefix parts
 		ItemStack headStack = new ItemStack(toolClass.getHeadItem(), 1, oldHead);
 		ItemStack handleStack = new ItemStack(toolClass.getHandleItem(), 1, oldHandle);
 		ItemStack accessoryStack = null;

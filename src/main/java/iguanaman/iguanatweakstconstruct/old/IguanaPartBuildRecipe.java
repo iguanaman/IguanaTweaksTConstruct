@@ -29,14 +29,14 @@ public class IguanaPartBuildRecipe implements IRecipe {
 			// Item in slot
 			if (slot != null)
 			{
-				// is the item in the slot a wood pattern?
+				// is the prefix in the slot a wood pattern?
 				boolean isPattern = false;
 				if (slot.getItem()== TinkerTools.woodPattern) isPattern = true;
 
 				// too many items
 				if (material != null && pattern != null || material != null && !isPattern) return false;
 
-				// found a new item
+				// found a new prefix
 				if (isPattern) pattern = slot;
 				else material = slot;
 			}

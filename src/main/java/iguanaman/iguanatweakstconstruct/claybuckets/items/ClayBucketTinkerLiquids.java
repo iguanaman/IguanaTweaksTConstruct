@@ -24,7 +24,7 @@ public class ClayBucketTinkerLiquids extends FilledBucket {
     public ClayBucketTinkerLiquids(Block b) {
         super(b);
 
-        this.setUnlocalizedName(Reference.item("clayBucketTinkerLiquid"));
+        this.setUnlocalizedName(Reference.prefix("clayBucket"));
         this.setContainerItem(IguanaItems.clayBucketFired);
 
         // all fluids above 1000° are hot. Lava has 1300.
@@ -70,6 +70,6 @@ public class ClayBucketTinkerLiquids extends FilledBucket {
     public String getUnlocalizedName (ItemStack stack)
     {
         int arr = MathHelper.clamp_int(stack.getItemDamage(), 0, materialNames.length);
-        return Reference.MOD_ID + ".clayBucketTinkerLiquid." + materialNames[arr];
+        return getUnlocalizedName() + "." + materialNames[arr];
     }
 }

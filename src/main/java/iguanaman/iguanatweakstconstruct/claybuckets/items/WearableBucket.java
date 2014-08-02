@@ -14,13 +14,13 @@ import net.minecraft.util.IIcon;
 import java.util.List;
 
 public class WearableBucket extends Item {
-    private static final String[] textureTypes = new String[] {"bucket_helmet", "enderman_jaw"};
+    private static final String[] textureTypes = new String[] {"bucketHelmet", "endermanJaw"};
     private IIcon[] icons;
 
     public WearableBucket() {
         super();
         this.setContainerItem(IguanaItems.wearableBuckets);
-        this.setUnlocalizedName(Reference.item(".wearable_bucket"));
+        this.setUnlocalizedName(Reference.prefix("wearableBucket"));
 
         this.setMaxStackSize(1);
     }
@@ -38,7 +38,7 @@ public class WearableBucket extends Item {
         if (i < 0 || i >= textureTypes.length)
             i = 0;
 
-        return Reference.item(textureTypes[i]);
+        return getUnlocalizedName() + "." + textureTypes[i];
     }
 
     @Override

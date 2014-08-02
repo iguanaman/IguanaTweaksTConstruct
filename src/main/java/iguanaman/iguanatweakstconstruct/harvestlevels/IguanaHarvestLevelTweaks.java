@@ -29,7 +29,7 @@ import tconstruct.tools.ToolProxyCommon;
  * Check the oreDictlevels to get an idea of what can be harvested with each tier.
  */
 
-@Pulse(id = Reference.PULSE_HARVESTTWEAKS, description = "Modify tool and block mining levels to create a tiered-ish progression")
+@Pulse(id = Reference.PULSE_HARVESTTWEAKS, description = "Modify tool and prefix mining levels to create a tiered-ish progression")
 public class IguanaHarvestLevelTweaks {
     @SidedProxy(clientSide = "iguanaman.iguanatweakstconstruct.harvestlevels.proxy.HarvestClientProxy", serverSide = "iguanaman.iguanatweakstconstruct.harvestlevels.proxy.HarvestCommonProxy")
     public static HarvestCommonProxy proxy;

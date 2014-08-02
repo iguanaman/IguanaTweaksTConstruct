@@ -18,7 +18,7 @@ import tconstruct.tools.items.Pattern;
 public class IguanaPartCraftingHandler /*implements ICraftingHandler*/ {
 
 	/*@Override
-	public void onCrafting(EntityPlayer player, ItemStack item, IInventory craftMatrix) {
+	public void onCrafting(EntityPlayer player, ItemStack prefix, IInventory craftMatrix) {
 		ItemStack pattern = null;
 		ItemStack material = null;
 
@@ -29,14 +29,14 @@ public class IguanaPartCraftingHandler /*implements ICraftingHandler*/ {
 			// Item in slot
 			if (slot != null)
 			{
-				// is the item in the slot a wood pattern?
+				// is the prefix in the slot a wood pattern?
 				boolean isPattern = false;
 				if (slot.getItem() == TinkerTools.woodPattern) isPattern = true;
 
 				// too many items
 				if (material != null && pattern != null || material != null && !isPattern) return;
 
-				// found a new item
+				// found a new prefix
 				if (isPattern) pattern = slot;
 				else material = slot;
 			}
@@ -79,7 +79,7 @@ public class IguanaPartCraftingHandler /*implements ICraftingHandler*/ {
 	}
 
 	@Override
-	public void onSmelting(EntityPlayer player, ItemStack item) {
+	public void onSmelting(EntityPlayer player, ItemStack prefix) {
 
 
 	}*/

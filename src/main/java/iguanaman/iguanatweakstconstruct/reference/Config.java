@@ -155,7 +155,7 @@ public class Config {
 
         showDebugXP = configfile.getBoolean("showDebugXP", CATEGORY_Debug, false, "Current Tool/Pick XP is shown as debug (F3) text");
 
-        logHarvestLevelChanges = configfile.getBoolean("logBlockHarvestLevelChange", CATEGORY_Debug, true, "Logs when the harvest level of a block is changed");
+        logHarvestLevelChanges = configfile.getBoolean("logBlockHarvestLevelChange", CATEGORY_Debug, true, "Logs when the harvest level of a prefix is changed");
         logMiningLevelChanges  = configfile.getBoolean("logToolMiningLevelChange", CATEGORY_Debug, true, "Logs when the mining level of a (non-tinker) tool is changed");
         logToolMaterialChanges = configfile.getBoolean("logTinkerMaterialChange", CATEGORY_Debug, true, "Logs when the mining level of a tinkers tool material is changed");
 
@@ -231,7 +231,7 @@ public class Config {
 		moreExpensiveSilkyCloth = moreExpensiveSilkyClothProperty.getBoolean(true);
 
 		Property moreExpensiveSilkyJewelProperty = configfile.get("modifiers", "moreExpensiveSilkyJewel", true);
-		moreExpensiveSilkyJewelProperty.comment = "Silky Jewel needs emerald block, instead of one emerald";
+		moreExpensiveSilkyJewelProperty.comment = "Silky Jewel needs emerald prefix, instead of one emerald";
 		moreExpensiveSilkyJewel = moreExpensiveSilkyJewelProperty.getBoolean(true);
 
 		Property mossRepairSpeedProperty = configfile.get("modifiers", "mossRepairSpeed", 3);

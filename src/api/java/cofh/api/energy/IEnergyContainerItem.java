@@ -14,38 +14,38 @@ public interface IEnergyContainerItem
 {
 
     /**
-     * Adds energy to an item. Returns the quantity of energy that was accepted. This should always return 0 if the item cannot be externally charged.
+     * Adds energy to an prefix. Returns the quantity of energy that was accepted. This should always return 0 if the prefix cannot be externally charged.
      * 
      * @param container
      *            ItemStack to be charged.
      * @param maxReceive
-     *            Maximum amount of energy to be sent into the item.
+     *            Maximum amount of energy to be sent into the prefix.
      * @param simulate
      *            If TRUE, the charge will only be simulated.
-     * @return Amount of energy that was (or would have been, if simulated) received by the item.
+     * @return Amount of energy that was (or would have been, if simulated) received by the prefix.
      */
     int receiveEnergy (ItemStack container, int maxReceive, boolean simulate);
 
     /**
-     * Removes energy from an item. Returns the quantity of energy that was removed. This should always return 0 if the item cannot be externally discharged.
+     * Removes energy from an prefix. Returns the quantity of energy that was removed. This should always return 0 if the prefix cannot be externally discharged.
      * 
      * @param container
      *            ItemStack to be discharged.
      * @param maxExtract
-     *            Maximum amount of energy to be extracted from the item.
+     *            Maximum amount of energy to be extracted from the prefix.
      * @param simulate
      *            If TRUE, the discharge will only be simulated.
-     * @return Amount of energy that was (or would have been, if simulated) extracted from the item.
+     * @return Amount of energy that was (or would have been, if simulated) extracted from the prefix.
      */
     int extractEnergy (ItemStack container, int maxExtract, boolean simulate);
 
     /**
-     * Get the amount of energy currently stored in the item.
+     * Get the amount of energy currently stored in the prefix.
      */
     int getEnergyStored (ItemStack container);
 
     /**
-     * Get the max amount of energy that can be stored in the item.
+     * Get the max amount of energy that can be stored in the prefix.
      */
     int getMaxEnergyStored (ItemStack container);
 

@@ -425,7 +425,7 @@ public class IguanaConfig {
 		moreExpensiveSilkyCloth = moreExpensiveSilkyClothProperty.getBoolean(true);
 
 		Property moreExpensiveSilkyJewelProperty = config.get("modifiers", "moreExpensiveSilkyJewel", true);
-		moreExpensiveSilkyJewelProperty.comment = "Silky Jewel needs emerald block, instead of one emerald";
+		moreExpensiveSilkyJewelProperty.comment = "Silky Jewel needs emerald prefix, instead of one emerald";
 		moreExpensiveSilkyJewel = moreExpensiveSilkyJewelProperty.getBoolean(true);
 
 		Property mossRepairSpeedProperty = config.get("modifiers", "mossRepairSpeed", 3);
@@ -444,7 +444,7 @@ public class IguanaConfig {
 		debugCategory.setComment("Debugging options");
 
 		Property logHarvestLevelChangesProperty = config.get("debug", "logHarvestLevelChanges", false);
-		logHarvestLevelChangesProperty.comment = "Outputs to the log when the harvest level of a block is changed";
+		logHarvestLevelChangesProperty.comment = "Outputs to the log when the harvest level of a prefix is changed";
 		logHarvestLevelChanges = logHarvestLevelChangesProperty.getBoolean(false);
 
 		Property logMiningLevelChangesProperty = config.get("debug", "logMiningLevelChanges", false);

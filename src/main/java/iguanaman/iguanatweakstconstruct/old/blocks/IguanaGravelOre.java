@@ -14,7 +14,7 @@ public class IguanaGravelOre extends GravelOre {
 	}
 
 	/**
-	 * Ticks the block if it's been scheduled
+	 * Ticks the prefix if it's been scheduled
 	 */
 	@Override
 	public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)

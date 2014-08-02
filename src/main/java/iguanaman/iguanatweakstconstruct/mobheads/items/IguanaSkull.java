@@ -1,6 +1,5 @@
 package iguanaman.iguanatweakstconstruct.mobheads.items;
 
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import iguanaman.iguanatweakstconstruct.mobheads.IguanaMobHeads;
@@ -20,7 +19,6 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -61,11 +59,12 @@ public class IguanaSkull extends net.minecraft.item.ItemSkull {
 
 	public IguanaSkull() {
 		super();
+        this.setUnlocalizedName(Reference.prefix("skull"));
         this.setContainerItem(Items.skull);
 	}
 
 	/**
-	 * Returns the unlocalized name of this item. This version accepts an ItemStack so different stacks can have
+	 * Returns the unlocalized name of this prefix. This version accepts an ItemStack so different stacks can have
 	 * different names based on their damage or NBT.
 	 */
 	@Override
@@ -75,7 +74,7 @@ public class IguanaSkull extends net.minecraft.item.ItemSkull {
         if(!headEntries.containsKey(i))
             i = 0;
 
-    	return Reference.item(headEntries.get(i).name);
+    	return getUnlocalizedName() + "." + headEntries.get(i).name;
 	}
 
     /**
@@ -91,7 +90,7 @@ public class IguanaSkull extends net.minecraft.item.ItemSkull {
 	}
 
     /**
-     * Gets an icon index based on an item's damage value
+     * Gets an icon index based on an prefix's damage value
      */
 	@Override
 	@SideOnly(Side.CLIENT)

@@ -327,7 +327,7 @@ public abstract class LevelingLogic {
 	private static boolean tryModify(EntityPlayer player, ItemStack stack, int rnd, boolean isTool)
 	{
 		ItemModifier mod = null;
-		Item item = stack.getItem();
+		Item prefix = stack.getItem();
 
 		ItemStack[] nullItemStack = new ItemStack[] {};
 		if (rnd < 1)
@@ -336,7 +336,7 @@ public abstract class LevelingLogic {
 			if (!player.worldObj.isRemote)
 				player.addChatMessage(new ChatComponentText("\u00a79It seems to have accumulated a patch of moss (+1 repair)"));
 		}
-		else if (rnd < 2 && (!isTool && !(item instanceof Shortbow) || isTool && (item instanceof Pickaxe || item instanceof Hammer)))
+		else if (rnd < 2 && (!isTool && !(prefix instanceof Shortbow) || isTool && (prefix instanceof Pickaxe || prefix instanceof Hammer)))
 		{
 			mod = new IguanaModLapis(nullItemStack, 10, new int[]{100});
 			if (((IguanaModLapis)mod).canModify(stack, nullItemStack)) {
@@ -344,7 +344,7 @@ public abstract class LevelingLogic {
 					player.addChatMessage(new ChatComponentText("\u00a79Perhaps holding on to it will bring you luck? (+100 luck)"));
 			} else return false;
 		}
-		else if (rnd < 6 && (isTool || item instanceof Shortbow))
+		else if (rnd < 6 && (isTool || prefix instanceof Shortbow))
 		{
 			mod = new IguanaModRedstone(nullItemStack, 2, 50);
 			if (((IguanaModRedstone)mod).canModify(stack, nullItemStack, true)) {
@@ -352,7 +352,7 @@ public abstract class LevelingLogic {
 					player.addChatMessage(new ChatComponentText("\u00a79You spin it around with a flourish (+1 haste)"));
 			} else return false;
 		}
-		else if (rnd < 3 && !isTool && !(item instanceof Shortbow))
+		else if (rnd < 3 && !isTool && !(prefix instanceof Shortbow))
 		{
 			mod = new IguanaModAttack("Quartz", nullItemStack, 11, 30);
 			if (((IguanaModAttack)mod).canModify(stack, nullItemStack, true)) {
@@ -360,13 +360,13 @@ public abstract class LevelingLogic {
 					player.addChatMessage(new ChatComponentText("\u00a79You take the time to sharpen the dull edges of the blade (+1 attack)"));
 			} else return false;
 		}
-		else if (rnd < 4 && !isTool && !(item instanceof Shortbow))
+		else if (rnd < 4 && !isTool && !(prefix instanceof Shortbow))
 		{
 			mod = new ModInteger(nullItemStack, 13, "Beheading", 1, "\u00a7d", "Beheading");
 			if (!player.worldObj.isRemote)
 				player.addChatMessage(new ChatComponentText("\u00a79You could take someones head off with that! (+1 beheading)"));
 		}
-		else if (rnd < 5 && !isTool && !(item instanceof Shortbow))
+		else if (rnd < 5 && !isTool && !(prefix instanceof Shortbow))
 		{
 			mod = new IguanaModBlaze(nullItemStack, 7, new int[]{25});
 			if (((IguanaModBlaze)mod).canModify(stack, nullItemStack)) {
@@ -374,19 +374,19 @@ public abstract class LevelingLogic {
 					player.addChatMessage(new ChatComponentText("\u00a79It starts to feels more hot to the touch (+1 fire aspect)"));
 			} else return false;
 		}
-		else if (rnd < 6 && !isTool && !(item instanceof Shortbow))
+		else if (rnd < 6 && !isTool && !(prefix instanceof Shortbow))
 		{
 			mod = new ModInteger(nullItemStack, 8, "Necrotic", 1, "\u00a78", "Life Steal");
 			if (!player.worldObj.isRemote)
 				player.addChatMessage(new ChatComponentText("\u00a79It shudders with a strange energy (+1 life steal)"));
 		}
-		else if (rnd < 7 && !isTool && !(item instanceof Shortbow))
+		else if (rnd < 7 && !isTool && !(prefix instanceof Shortbow))
 		{
 			mod = new ModSmite("Smite", 14, nullItemStack, new int[]{ 36});
 			if (!player.worldObj.isRemote)
 				player.addChatMessage(new ChatComponentText("\u00a79It begins to radiate a slight glow (+1 smite)"));
 		}
-		else if (rnd < 8 && !isTool && !(item instanceof Shortbow))
+		else if (rnd < 8 && !isTool && !(prefix instanceof Shortbow))
 		{
 			mod = new ModAntiSpider("Anti-Spider",15, nullItemStack, new int[]{ 4});
 			if (!player.worldObj.isRemote)

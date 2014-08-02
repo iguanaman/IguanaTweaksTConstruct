@@ -45,6 +45,7 @@ repositories {
 
 // Load ForgeGradle
 apply plugin: 'forge'
+group = "boni"
 
 // Define properties file
 ext.configFile = file "build.properties"
@@ -107,6 +108,7 @@ if (System.getenv().ARTIFACT_VERSION != null && artifact_version_override == 'No
 if (artifact_version_override != 'NotUsed') {
     artifact_version = "${artifact_version_override}"
 }
+
 version = "${config.minecraft_version}-${artifact_version}"
 
 minecraft {

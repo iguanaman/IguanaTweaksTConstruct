@@ -1,24 +1,17 @@
 package iguanaman.iguanatweakstconstruct.leveling;
 
-import iguanaman.iguanatweakstconstruct.old.modifiers.*;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
 import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import tconstruct.items.tools.*;
 import tconstruct.library.TConstructRegistry;
-import tconstruct.library.modifier.ItemModifier;
 import tconstruct.library.tools.HarvestTool;
 import tconstruct.library.tools.Weapon;
-import tconstruct.modifiers.tools.ModAntiSpider;
-import tconstruct.modifiers.tools.ModInteger;
-import tconstruct.modifiers.tools.ModReinforced;
-import tconstruct.modifiers.tools.ModSmite;
 
 /**
  * Utility class that takes care of all the Tool XP related things.
@@ -298,7 +291,7 @@ public abstract class LevelingLogic {
         // Add random bonuses on leveling up?
 		if (Config.toolLevelingRandomBonuses)
 		{
-            RandomBonusses.tryModifying(player, stack);
+            RandomBonuses.tryModifying(player, stack);
 		}
 	}
 

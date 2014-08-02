@@ -43,7 +43,7 @@ todo:
 
     maybe.. add a critical strike modifier, only obtainable through levelup :>
  */
-public class RandomBonusses {
+public class RandomBonuses {
     private static Map<String, ItemModifier> modCache = new HashMap<String, ItemModifier>();
 
     public static Modifier tryModifying(EntityPlayer player, ItemStack tool)
@@ -309,6 +309,7 @@ public class RandomBonusses {
     /* Modifier weights */
     private static int getToolModifierWeight(Modifier mod)
     {
+        // useful bonuses
         switch(mod)
         {
             // mining mods
@@ -321,6 +322,14 @@ public class RandomBonusses {
             case EMERALD:   return 35;
             case REPAIR:    return 50;
             case REINFORCED:return 50;
+        }
+
+        // less useful bonuses
+        if(Config.randomBonusesAreUseful)
+            return 0;
+
+        switch(mod)
+        {
             // combat modifiers
             case ATTACK:    return 15;
             case BLAZE:     return 5;
@@ -337,16 +346,8 @@ public class RandomBonusses {
     {
         switch(mod)
         {
-            // mining mods
-            case REDSTONE:  return 0;
             case LAPIS:     return 75;
-            case AUTOSMELT: return 15;
-            case SILKTOUCH: return 5;
-            // general modifiers
-            case DIAMOND:   return 15;
-            case EMERALD:   return 30;
             case REPAIR:    return 55;
-            case REINFORCED:return 35;
             // combat modifiers
             case ATTACK:    return 110;
             case BLAZE:     return 45;
@@ -355,6 +356,21 @@ public class RandomBonusses {
             case BEHEADING: return 50;
             case LIFESTEAL: return 30;
             case KNOCKBACK: return 50;
+        }
+
+        if(Config.randomBonusesAreUseful)
+            return 0;
+
+        switch(mod)
+        {
+            // mining mods
+            case REDSTONE:  return 0;
+            case AUTOSMELT: return 15;
+            case SILKTOUCH: return 5;
+            // general modifiers
+            case DIAMOND:   return 15;
+            case EMERALD:   return 30;
+            case REINFORCED:return 35;
             default: return 0;
         }
     }
@@ -363,15 +379,29 @@ public class RandomBonusses {
     {
         switch(mod)
         {
-            // mining mods
             case REDSTONE:  return 100;
             case LAPIS:     return 75;
+            case REPAIR:    return 40;
+            // combat modifiers
+            case ATTACK:    return 100;
+            case BLAZE:     return 55;
+            case SMITE:     return 40;
+            case BANE:      return 40;
+            case BEHEADING: return 20;
+            case LIFESTEAL: return 40;
+            case KNOCKBACK: return 20;
+        }
+
+        if(Config.randomBonusesAreUseful)
+            return 0;
+
+        switch(mod)
+        {
             case AUTOSMELT: return 1;
             case SILKTOUCH: return 1;
             // general modifiers
             case DIAMOND:   return 15;
             case EMERALD:   return 30;
-            case REPAIR:    return 50;
             case REINFORCED:return 40;
             // combat modifiers
             case ATTACK:    return 100;

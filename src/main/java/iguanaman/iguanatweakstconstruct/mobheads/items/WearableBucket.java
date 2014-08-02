@@ -1,8 +1,8 @@
-package iguanaman.iguanatweakstconstruct.claybuckets.items;
+package iguanaman.iguanatweakstconstruct.mobheads.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import iguanaman.iguanatweakstconstruct.claybuckets.IguanaItems;
+import iguanaman.iguanatweakstconstruct.mobheads.IguanaMobHeads;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -14,12 +14,12 @@ import net.minecraft.util.IIcon;
 import java.util.List;
 
 public class WearableBucket extends Item {
-    private static final String[] textureTypes = new String[] {"bucketHelmet", "endermanJaw"};
+    private static final String[] textureTypes = new String[] {"bucketHoley", "clayBucketCracked", "endermanJaw"};
     private IIcon[] icons;
 
     public WearableBucket() {
         super();
-        this.setContainerItem(IguanaItems.wearableBuckets);
+        this.setContainerItem(IguanaMobHeads.wearableBuckets);
         this.setUnlocalizedName(Reference.prefix("wearableBucket"));
 
         this.setMaxStackSize(1);

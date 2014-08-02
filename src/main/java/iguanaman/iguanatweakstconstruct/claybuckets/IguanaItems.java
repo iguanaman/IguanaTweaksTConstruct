@@ -7,7 +7,7 @@ import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
 import iguanaman.iguanatweakstconstruct.claybuckets.items.ClayBucket;
 import iguanaman.iguanatweakstconstruct.claybuckets.items.ClayBucketMilk;
 import iguanaman.iguanatweakstconstruct.claybuckets.items.ClayBucketTinkerLiquids;
-import iguanaman.iguanatweakstconstruct.claybuckets.items.WearableBucket;
+import iguanaman.iguanatweakstconstruct.mobheads.items.WearableBucket;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import mantle.pulsar.pulse.Handler;
@@ -36,8 +36,6 @@ public class IguanaItems {
     public static Item clayBucketMilk;
     public static Item clayBucketsTinkers;
 
-    public static Item wearableBuckets;
-
     @Handler
     public void preInit(FMLPreInitializationEvent event)
     {
@@ -58,12 +56,6 @@ public class IguanaItems {
         GameRegistry.registerItem(clayBucketLava,  "clayBucketLava");
         GameRegistry.registerItem(clayBucketMilk,  "clayBucketMilk");
         GameRegistry.registerItem(clayBucketsTinkers, "clayBucketsTinkers");
-
-        // secrit bucketssss
-        if(IguanaTweaksTConstruct.isMobHeadsActive) {
-            wearableBuckets = new WearableBucket();
-            GameRegistry.registerItem(wearableBuckets, "wearableBucket");
-        }
 
         // register milkbucket to the ordictionary
         OreDictionary.registerOre("listAllmilk", clayBucketMilk); // i suppose this is for pams harvestcraft.

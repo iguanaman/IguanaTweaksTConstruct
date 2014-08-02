@@ -4,7 +4,6 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
-import iguanaman.iguanatweakstconstruct.claybuckets.IguanaItems;
 import iguanaman.iguanatweakstconstruct.mobheads.IguanaMobHeads;
 import iguanaman.iguanatweakstconstruct.mobheads.renderers.IguanaTileEntitySkullRenderer;
 import net.minecraft.item.Item;
@@ -22,7 +21,7 @@ public class RenderPlayerHandler {
             return;
 
         Item item = itemStack.getItem();
-        boolean isBucket = IguanaTweaksTConstruct.isItemsActive && item == IguanaItems.wearableBuckets;
+        boolean isBucket = IguanaTweaksTConstruct.isItemsActive && item == IguanaMobHeads.wearableBuckets;
         if(item != IguanaMobHeads.skullItem && !isBucket)
             return;
 

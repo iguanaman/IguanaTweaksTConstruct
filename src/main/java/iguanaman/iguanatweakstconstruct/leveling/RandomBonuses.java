@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentText;
 import tconstruct.TConstruct;
+import tconstruct.items.tools.Battleaxe;
 import tconstruct.items.tools.BowBase;
 import tconstruct.library.crafting.ModifyBuilder;
 import tconstruct.library.modifier.ItemModifier;
@@ -62,10 +63,10 @@ public class RandomBonuses {
         {
             if(Config.randomBonusesAreRandom)
                 chances[i] = 1;
+            else if(tool.getItem() instanceof Weapon || tool.getItem() instanceof Battleaxe)
+                chances[i] = getWeaponModifierWeight(mod);
             else if(tool.getItem() instanceof HarvestTool)
                 chances[i] = getToolModifierWeight(mod);
-            else if(tool.getItem() instanceof Weapon)
-                chances[i] = getWeaponModifierWeight(mod);
             else if(tool.getItem() instanceof BowBase)
                 chances[i] = getBowModifierWeight(mod);
 

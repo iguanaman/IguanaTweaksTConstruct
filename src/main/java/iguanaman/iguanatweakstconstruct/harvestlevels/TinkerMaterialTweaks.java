@@ -12,7 +12,7 @@ import static iguanaman.iguanatweakstconstruct.util.HarvestLevels.*;
  * Used to modify the harvest levels and speeds of the tinker tool parts.
  * Has to be used together with the HarvestLevel Tweaks or everything will be messed up. :)
  */
-public abstract class TinkerToolTweaks {
+public abstract class TinkerMaterialTweaks {
     private static float durabilityMod;
     private static float speedMod;
 

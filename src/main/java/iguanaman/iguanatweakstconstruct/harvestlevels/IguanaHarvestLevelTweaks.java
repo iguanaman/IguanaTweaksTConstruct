@@ -6,12 +6,9 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import iguanaman.iguanatweakstconstruct.harvestlevels.proxy.HarvestCommonProxy;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
-import iguanaman.iguanatweakstconstruct.util.Log;
 import mantle.pulsar.pulse.Handler;
 import mantle.pulsar.pulse.Pulse;
 import net.minecraftforge.common.MinecraftForge;
-import tconstruct.common.TProxyCommon;
-import tconstruct.tools.ToolProxyCommon;
 
 /**
  * The Harvest-Tweaks Pulse. If this were a separate mod instead of pulse-module, it'd be a @Mod
@@ -37,7 +34,7 @@ public class IguanaHarvestLevelTweaks {
     @Handler
     public void applyTinkerTweaks(FMLPreInitializationEvent event)
     {
-        TinkerToolTweaks.modifyToolMaterials();
+        TinkerMaterialTweaks.modifyToolMaterials();
 
     }
 

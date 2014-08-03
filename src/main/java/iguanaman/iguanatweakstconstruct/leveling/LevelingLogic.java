@@ -186,6 +186,11 @@ public abstract class LevelingLogic {
 		else
 		{
             base = 100f;
+            if(tags.hasKey("HarvestLevel") && LevelingLogic.getHarvestLevel(tags) < 1)
+                base -= 20;
+            if(tags.hasKey("HarvestLevel") && LevelingLogic.getHarvestLevel(tags) < 2)
+                base -= 15;
+
 			int miningSpeed = tags.getInteger("MiningSpeed");
 			int divider = 1;
 			if (tags.hasKey("MiningSpeed2"))

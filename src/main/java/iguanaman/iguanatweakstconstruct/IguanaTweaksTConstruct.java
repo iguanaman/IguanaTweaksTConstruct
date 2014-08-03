@@ -32,20 +32,6 @@ import net.minecraft.item.Item;
 import java.util.List;
 import java.util.Random;
 
-// inofficial todo list:
-// todo: check out what mining-maxlvl i wont for emerald/diamond modifier.
-// todo: check if it's possible to remove pickaxe harvestability from regular picks... or make them stone mininglevel
-// todo: find a solution to stone-head-tools not having xp even when head is replaced (maybe like old iguana, disallow stone tools?)
-// todo: add randomly generated weapons with random bonuses(!!!!) to dungeon loot :D:D:D
-
-// todo: Unknown blocks get incorrect mining level. (just check if they're higher than the places where i added additional harvest levels and add the proper ammount to match up with the old mining level)
-// todo: add hardcoded ExtraTic mining levels
-
-// todo: add batman-hat (enderman-head without jaw and eyes)
-// todo: add enderman-jaw helmet as a very rare enderman drop :D
-// todo: bucket hattt
-// todo: cracked clay bucket? randomly obtainable when transporting lava? :D
-
 @Mod(modid= Reference.MOD_ID, name= Reference.MOD_NAME, version="${version}",
 dependencies = "required-after:" + Reference.TCON_MOD_ID + ";after:*")
 public class IguanaTweaksTConstruct {

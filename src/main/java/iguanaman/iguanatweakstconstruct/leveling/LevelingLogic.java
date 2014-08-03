@@ -213,7 +213,7 @@ public abstract class LevelingLogic {
 		{
 			int harvestLevelCopper = HarvestLevels._2_copper;
 			int harvestLevel = TConstructRegistry.getMaterial(tags.getInteger("Head")).harvestLevel();
-			if (harvestLevel >= harvestLevelCopper) base *= Math.pow(Config.xpPerLevelMultiplier, harvestLevel - harvestLevelCopper);
+			if (harvestLevel >= harvestLevelCopper) base *= Math.pow(Config.xpPerBoostLevelMultiplier, harvestLevel - harvestLevelCopper);
 			base *= Config.levelingPickaxeBoostXpPercentage / 100f;
 		}
 		else

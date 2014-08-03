@@ -35,6 +35,7 @@ public class Config {
     public static boolean mobHeadRequiresModifier;
 	public static boolean levelingPickaxeBoost;
 	public static int levelingPickaxeBoostXpPercentage;
+    public static float xpPerBoostLevelMultiplier;
 
     // Harvest Leveling
     public static boolean nerfBronze;
@@ -88,7 +89,7 @@ public class Config {
         // modifying leveling behaviour
         xpRequiredToolsPercentage   = configfile.getInt("xpRequiredToolsPercentage", CATEGORY_Leveling, 100, 1, 999, "Change the XP required to level up tools in % (higher = more xp needed)");
         xpRequiredWeaponsPercentage = configfile.getInt("xpRequiredWeaponsPercentage", CATEGORY_Leveling, 100, 1, 999, "Change the XP required to level up weapons in % (higher = more xp needed)");
-        xpPerLevelMultiplier        = configfile.getFloat("xpPerLevelMultiplier", CATEGORY_Leveling, 1.15f, 0.01f, 9.99f, "Exponential multiplier for required xp per level");
+        xpPerLevelMultiplier        = configfile.getFloat("xpPerLevelMultiplier", CATEGORY_Leveling, 1.15f, 1.0f, 9.99f, "Exponential multiplier for required xp per level");
 
         // tooltip things
         showTooltipXP        = configfile.getBoolean("showTooltipXP", CATEGORY_Leveling, true, "Current XP is shown when hovering over a tool");
@@ -114,6 +115,7 @@ public class Config {
         mobHeadRequiresModifier = configfile.getBoolean("mobHeadBoostNeedsModifier", CATEGORY_PickLeveling, false, "Mob head boosting requires a free modifier");
 
         levelingPickaxeBoostXpPercentage = configfile.getInt("xpRequiredPickBoostPercentage", CATEGORY_PickLeveling, 100, 1, 999, "Change the percentage of XP required to boost a pick (i.e. 200 means 2x normal boost xp required)");
+        xpPerBoostLevelMultiplier        = configfile.getFloat("xpPerBoostLevelMultiplier", CATEGORY_Leveling, 1.12f, 1.0f, 9.99f, "Exponential multiplier for required boost xp per level");
 
         /** HarvestLevel Module **/
         configfile.setCategoryComment(CATEGORY_HarvestLevels, "Harvest Level Tweak Module: Introduces a slower mining level progression.");

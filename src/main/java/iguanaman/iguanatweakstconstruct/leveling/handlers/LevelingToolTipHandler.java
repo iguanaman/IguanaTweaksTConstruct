@@ -47,7 +47,7 @@ public class LevelingToolTipHandler {
 
         ToolCore tool = (ToolCore)event.itemStack.getItem();
         NBTTagCompound tags = stack.getTagCompound().getCompoundTag(tool.getBaseTagName()); // tinker tags
-        boolean hasMiningLevel = LevelingLogic.hasBoostXp(tags);
+        boolean hasMiningLevel = tool.getHarvestLevel(event.itemStack, "pickaxe") >= 0 || tool instanceof Pickaxe || tool instanceof Hammer;
 
         // add mining level if applicable
         if(hasMiningLevel)

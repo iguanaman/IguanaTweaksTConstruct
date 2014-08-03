@@ -69,11 +69,17 @@ public class RandomBonuses {
                 chances[i] = getToolModifierWeight(mod);
             else if(tool.getItem() instanceof BowBase)
                 chances[i] = getBowModifierWeight(mod);
+            else
+                chances[i] = 0;
 
             total += chances[i];
             i++;
         }
 
+
+        // check if we have modifiers (to prevent endless loops
+        if(total == 0)
+            return null;
 
         // try modifying
         // we can do this without getting an infinite loop, because redstone, lapis,... can be applied infinitely often
@@ -83,6 +89,7 @@ public class RandomBonuses {
             // get a random decision number
             int random = TConstruct.random.nextInt(total);
             int counter = 0;
+            choice = null;
 
             // determine which modifier to use. basically we increase by each weight and check if the random number landed there.
             i = 0;

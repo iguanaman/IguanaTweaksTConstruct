@@ -7,6 +7,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.tools.ToolCore;
+import tconstruct.library.util.IToolPart;
 import tconstruct.tools.items.ToolPart;
 
 public class PartToolTipHandler {
@@ -17,11 +18,11 @@ public class PartToolTipHandler {
             return;
 
         // we're only interested if it's a tool part
-        if(!(event.itemStack.getItem() instanceof ToolPart))
+        if(!(event.itemStack.getItem() instanceof IToolPart))
             return;
 
         ItemStack stack = event.itemStack;
-        ToolPart part = (ToolPart)stack.getItem();
+        IToolPart part = (IToolPart)stack.getItem();
 
         // stone part?
         if(Config.disableStoneTools && TConstructRegistry.getMaterial(part.getMaterialID(stack)) == TConstructRegistry.getMaterial("Stone"))

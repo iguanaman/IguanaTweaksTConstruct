@@ -6,9 +6,12 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
 import iguanaman.iguanatweakstconstruct.leveling.handlers.LevelingEventHandler;
 import iguanaman.iguanatweakstconstruct.leveling.handlers.LevelingToolTipHandler;
+import iguanaman.iguanatweakstconstruct.leveling.handlers.MobHeadTooltipHandler;
 import iguanaman.iguanatweakstconstruct.leveling.modifiers.ModMiningLevelBoost;
 import iguanaman.iguanatweakstconstruct.leveling.modifiers.ModXpAwareRedstone;
 import iguanaman.iguanatweakstconstruct.mobheads.IguanaMobHeads;
+import iguanaman.iguanatweakstconstruct.mobheads.handlers.MobHeadHandler;
+import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
 import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import iguanaman.iguanatweakstconstruct.util.Log;
@@ -27,6 +30,7 @@ import tconstruct.tools.TinkerTools;
 
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 
 /**
  * The Leveling Pulse. If Leveling were a separate mod instead of pulse-model, this'd be a @Mod
@@ -53,6 +57,8 @@ public class IguanaToolLeveling {
     {
         MinecraftForge.EVENT_BUS.register(new LevelingEventHandler());
         MinecraftForge.EVENT_BUS.register(new LevelingToolTipHandler());
+        if(Config.mobHeadPickaxeBoost)
+            MinecraftForge.EVENT_BUS.register(new MobHeadTooltipHandler());
     }
 
 

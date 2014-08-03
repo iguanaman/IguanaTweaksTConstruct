@@ -43,8 +43,6 @@ message.levelup.beheading.tag=Beheading
 message.levelup.lifesteal.tag=Life steal
 message.levelup.knockback.tag=Knockback
 
-
-
 tooltip.level.mininglevel=Mining Level
 tooltip.level.miningxp=Mining XP
 tooltip.level.boosted=Boosted
@@ -57,6 +55,8 @@ tooltip.level.skill.3=Accustomed
 tooltip.level.skill.4=Adept
 tooltip.level.skill.5=Expert
 tooltip.level.skill.6=Master
+
+tooltip.mobhead.level=Applicable up to: %s
 
 item.iguana.tcon.clayBucket.name=Clay Bucket
 item.iguana.tcon.clayBucketUnfired.name=Unfired Clay Bucket

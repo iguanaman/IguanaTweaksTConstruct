@@ -325,8 +325,8 @@ public class RandomBonuses {
         switch(mod)
         {
             // mining mods
-            case REDSTONE:  return 100;
-            case LAPIS:     return 100;
+            case REDSTONE:  return 130;
+            case LAPIS:     return 99;
             case AUTOSMELT: return 20;
             case SILKTOUCH: return 15;
             // general modifiers

@@ -100,6 +100,11 @@ public class ModPartReplacement extends ItemModifier {
         for(int i = partIndex; i > 0; i--)
             partType = detectAdditionalPartType(recipe, replacementPartItem, partType);
 
+        // if it's a head, we don't allow downgrading to a head with no xp, if we have xp
+        if(partType == HEAD)
+            if(TConstructRegistry.getMaterial(newMatId).harvestLevel == 0 &&  LevelingLogic.hasBoostXp(tags))
+                return false;
+
         // do we have enough modifiers left if we exchange this part?
         if(hasExtraModifier(oldMatId)) // paper or thaumium. sadly hardcoded.
             modifiers--;

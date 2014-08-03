@@ -66,16 +66,23 @@ public abstract class LevelingLogic {
         tag.setLong(TAG_EXP, 0);
 
         // mining level boost
-        int hlvl = tag.getInteger("HarvestLevel");
-        // only tools with >stone level can be boosted
-        if(Config.levelingPickaxeBoost && hlvl > 0 && (tool instanceof Pickaxe || tool instanceof Hammer)) {
-            tag.setLong(TAG_BOOST_EXP, 0);
-            tag.setBoolean(TAG_IS_BOOSTED, false);
+        addBoostTags(tag, tool);
+    }
 
-            // reduce harvestlevel by 1 if pickaxe boosting is required
-            if(Config.pickaxeBoostRequired) {
-                    tag.setInteger("HarvestLevel", hlvl - 1);
-            }
+    public static void addBoostTags(NBTTagCompound tag, ToolCore tool)
+    {
+        int hlvl = tag.getInteger("HarvestLevel");
+        if(!Config.levelingPickaxeBoost)
+            return;
+        if(hlvl == 0 || !(tool instanceof Pickaxe || tool instanceof Hammer))
+            return;
+
+        tag.setLong(TAG_BOOST_EXP, 0);
+        tag.setBoolean(TAG_IS_BOOSTED, false);
+
+        // reduce harvestlevel by 1 if pickaxe boosting is required
+        if(Config.pickaxeBoostRequired) {
+            tag.setInteger("HarvestLevel", hlvl - 1);
         }
     }
 

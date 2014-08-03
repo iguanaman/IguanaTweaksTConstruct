@@ -1,5 +1,6 @@
 package iguanaman.iguanatweakstconstruct.replacing;
 
+import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -42,14 +43,14 @@ public class ModPartReplacement extends ItemModifier {
             return false;
 
         // get the recipe of the tool
-        ToolRecipe recipe = ToolBuilder.instance.recipeList.get(tool.getToolName());
+        ToolRecipe recipe = findRecipe(tool);
         if(recipe == null)
             return false;
 
         // check if all parts are actually parts and compatible with the allowed parts
         Item replacementPartItem = null;
         int partIndex = -1;
-        PartTypes partType = HEAD;
+        PartTypes partType = null;
         for(int i = 0; i < parts.length; i++)
         {
             if(parts[i] == null)
@@ -81,7 +82,7 @@ public class ModPartReplacement extends ItemModifier {
         }
 
         // no usable part present? :(
-        if(replacementPartItem == null && replacementPartItem != Items.bone && replacementPartItem != Items.stick)
+        if(replacementPartItem == null)
             return false;
         if(partIndex == -1)
             return false;
@@ -102,7 +103,7 @@ public class ModPartReplacement extends ItemModifier {
 
         // if it's a head, we don't allow downgrading to a head with no xp, if we have xp
         if(partType == HEAD)
-            if(TConstructRegistry.getMaterial(newMatId).harvestLevel == 0 &&  LevelingLogic.hasBoostXp(tags))
+            if(TConstructRegistry.getMaterial(newMatId).harvestLevel == 0 && LevelingLogic.hasBoostXp(tags))
                 return false;
 
         // do we have enough modifiers left if we exchange this part?
@@ -124,7 +125,7 @@ public class ModPartReplacement extends ItemModifier {
     public void modify(ItemStack[] parts, ItemStack itemStack) {
         // do all the stuff that we did in canModify again to obtain the necessary information :(
         ToolCore tool = (ToolCore) itemStack.getItem();
-        ToolRecipe recipe = ToolBuilder.instance.recipeList.get(tool.getToolName());
+        ToolRecipe recipe = findRecipe(tool);
         NBTTagCompound tags = itemStack.getTagCompound().getCompoundTag("InfiTool");
 
         // get prefix
@@ -138,7 +139,7 @@ public class ModPartReplacement extends ItemModifier {
         }
 
         // detect which part to replace
-        PartTypes partType = detectAdditionalPartType(recipe, replacementPartItem, HEAD);
+        PartTypes partType = detectAdditionalPartType(recipe, replacementPartItem, null);
         for(int i = partIndex; i > 0; i--)
             partType = detectAdditionalPartType(recipe, replacementPartItem, partType);
 
@@ -147,6 +148,23 @@ public class ModPartReplacement extends ItemModifier {
     }
 
 
+    private ToolRecipe findRecipe(ToolCore tool)
+    {
+        ToolRecipe recipe;
+        // easy way
+        recipe = ToolBuilder.instance.recipeList.get(tool.getToolName());
+        if(recipe == null) {
+            // do a more elaborate check
+            for(ToolRecipe r : ToolBuilder.instance.combos)
+                if(r.getType().getClass().equals(tool.getClass()))
+                {
+                    recipe = r;
+                    break;
+                }
+        }
+
+        return recipe;
+    }
 
     @Override
     public void addMatchingEffect(ItemStack input) {

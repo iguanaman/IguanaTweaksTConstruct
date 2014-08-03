@@ -12,6 +12,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.oredict.OreDictionary;
 import scala.actors.threadpool.Arrays;
+import tconstruct.items.tools.Hammer;
+import tconstruct.items.tools.Pickaxe;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.crafting.ModifyBuilder;
 import tconstruct.library.crafting.ToolBuilder;
@@ -200,6 +202,10 @@ public abstract class ReplacementLogic {
             if(LevelingLogic.isBoosted(tags))
                 tags.setInteger("HarvestLevel", tags.getInteger("HarvestLevel") + 1);
         }
+        // add boost xp if its missing. Check is done in the function
+        else {
+            LevelingLogic.addBoostTags(tags, tool);
+        }
 
         // Update the tool name if we replaced the head and it was a automagic name
         if(type == HEAD) {
@@ -266,7 +272,7 @@ public abstract class ReplacementLogic {
 
         // find the redstone modifier
         for(ItemModifier mod : ModifyBuilder.instance.itemModifiers)
-            if(mod.key.equals("Redstone"))
+            if(mod instanceof ModRedstone)
             {
                 ModRedstone modRedstone = (ModRedstone)mod;
                 if(modRedstone instanceof ModXpAwareRedstone)
@@ -402,13 +408,13 @@ public abstract class ReplacementLogic {
     /**
      * Returns the type-part of the tool.
      */
-    public static ToolPart getPart(ToolCore tool, PartTypes type)
+    public static Item getPart(ToolCore tool, PartTypes type)
     {
         switch (type) {
-            case HEAD: return (ToolPart)tool.getHeadItem();
-            case HANDLE: return (ToolPart)tool.getHandleItem();
-            case ACCESSORY: return (ToolPart)tool.getAccessoryItem();
-            case EXTRA: return (ToolPart)tool.getExtraItem();
+            case HEAD: return tool.getHeadItem();
+            case HANDLE: return tool.getHandleItem();
+            case ACCESSORY: return tool.getAccessoryItem();
+            case EXTRA: return tool.getExtraItem();
         }
 
         return null;
@@ -441,6 +447,11 @@ public abstract class ReplacementLogic {
     public static PartTypes detectAdditionalPartType(ToolRecipe recipe, Item part, PartTypes currentType)
     {
         PartTypes tmpType = currentType;
+        if(tmpType == null)
+        {
+            if(recipe.validHead(part)) return HEAD;
+            tmpType = HEAD;
+        }
         if(tmpType == HEAD)
         {
             if(recipe.validHandle(part)) return HANDLE;

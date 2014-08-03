@@ -4,6 +4,8 @@ import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.StatCollector;
 
 // utility class for constructing tooltip
 public abstract class LevelingTooltips {
@@ -30,8 +32,8 @@ public abstract class LevelingTooltips {
     */
     private static String getXpToolTip(ItemStack tool, NBTTagCompound tags, boolean boostXp)
     {
-        String prefix = boostXp ? "Mining XP: " : "Skill XP: ";
-        return prefix + getXpString(tool, tags, Config.detailedXpTooltip, boostXp);
+        String prefix = StatCollector.translateToLocal(boostXp ? "tooltip.level.miningxp" : "tooltip.level.skillxp");
+        return prefix + ": " + getXpString(tool, tags, Config.detailedXpTooltip, boostXp);
     }
 
     /**
@@ -57,25 +59,46 @@ public abstract class LevelingTooltips {
 
     public static String getLevelTooltip(int level)
     {
+        String str;
+        if(!StatCollector.canTranslate("tooltip.level.skill." + level))
+            str = "Unknown";
+        else
+            str = StatCollector.translateToLocal("tooltip.level.skill." + level);
+
+        return String.format("%s: %s%s", StatCollector.translateToLocal("tooltip.level.skilllevel"), getLevelColor(level), str);
+    }
+
+    public static String getLevelColor(int level)
+    {
         switch (level)
         {
-        case 1: return "Skill Level: \u00a74Clumsy";
-        case 2: return "Skill Level: \u00a76Comfortable";
-        case 3: return "Skill Level: \u00a7eAccustomed";
-        case 4: return "Skill Level: \u00a72Adept";
-        case 5: return "Skill Level: \u00a73Expert";
-        case 6: return "Skill Level: \u00a7dMaster";
-        default: return "";
+            case 1: return "\u00a74";
+            case 2: return "\u00a76";
+            case 3: return "\u00a7e";
+            case 4: return "\u00a72";
+            case 5: return "\u00a73";
+            case 6: return "\u00a7d";
+            default: return "";
         }
     }
 
     public static String getMiningLevelTooltip(int hLevel)
     {
-        return "Mining Level: " + HarvestLevels.getHarvestLevelName(hLevel);
+        return String.format("%s: %s", StatCollector.translateToLocal("tooltip.level.mininglevel"), HarvestLevels.getHarvestLevelName(hLevel));
     }
 
     public static String getBoostedTooltip()
     {
-        return "Mining XP: \u00a76Boosted";
+        return String.format("%s: \u00a76%s", StatCollector.translateToLocal("tooltip.level.miningxp"), StatCollector.translateToLocal("tooltip.level.boosted"));
+    }
+
+    public static String getInfoString(String base, EnumChatFormatting baseColor, String info, EnumChatFormatting infoColor)
+    {
+        return getInfoString(base, baseColor, info, infoColor.toString());
+    }
+
+    public static String getInfoString(String base, EnumChatFormatting baseColor, String info, String infoColor)
+    {
+        return String.format("%s%s %s(%s%s%s)", baseColor, base, baseColor, infoColor, info, baseColor);
     }
 }

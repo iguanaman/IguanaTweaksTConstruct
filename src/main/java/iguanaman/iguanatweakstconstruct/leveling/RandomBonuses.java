@@ -268,7 +268,7 @@ public class RandomBonuses {
 
         // message!
         if (!player.worldObj.isRemote) {
-            player.addChatMessage(new ChatComponentText(EnumChatFormatting.BLUE + StatCollector.translateToLocalFormatted(message, modColor + "+" + displayedTimes)));
+            player.addChatMessage(new ChatComponentText(LevelingTooltips.getInfoString(StatCollector.translateToLocal(message), EnumChatFormatting.DARK_AQUA, String.format("+%d %s", displayedTimes, StatCollector.translateToLocal(message + ".tag")), modColor)));
         }
 
         // apply modifier

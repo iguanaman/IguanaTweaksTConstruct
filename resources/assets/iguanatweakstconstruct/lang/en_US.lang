@@ -1,19 +1,62 @@
-message.levelup.redstone=You spin it around with a flourish (%s Haste)
-message.levelup.lapis=Perhaps holding on to it will bring you luck? (%s Luck)
-message.levelup.autosmelt=Fwoosh. A flame bursts from the tip (%s Autosmelt)
-message.levelup.silktouch=Is that... butter? (%s Silktouch)
-message.levelup.diamond=It somehow feels harder (%s Diamond)
-message.levelup.emerald=You feel like this tool could last forever (%s Emerald)
-message.levelup.repair=It seems to have accumulated a patch of moss (%s Repair)
-message.levelup.reinforced=Fixing up the wear and tear should make it last a little longer (%s Reinforced)
-message.levelup.attack=You take the time to sharpen the dull edges of the blade (%s Attack)
-message.levelup.blaze=It starts to feels more hot to the touch (%s Fiery)
-message.levelup.smite=It begins to radiate a slight glow (%s Smite)
-message.levelup.antispider=A strange odor emanates from the weapon (%s Bane of Arthropods)
-message.levelup.beheading=You could take someones head off with that! (%s Beheading)
-message.levelup.lifesteal=It shudders with a strange energy (%s Life steal)
-message.levelup.knockback=Feeling more confident, you can more easily keep your assailants at bay (%s Knockback)
+message.levelup.2=You begin to feel comfortable handling the %s
+message.levelup.3=You are now accustomed to the weight of the %s
+message.levelup.4=You have become adept at handling the %s
+message.levelup.5=You are now an expert at using the %s !
+message.levelup.6=You have mastered the %s!
 
+message.levelup.newmodifier.1=You notice room for improvement
+message.levelup.newmodifier.2=More Bling for your Thing
+message.levelup.modifier=Modifier
+message.levelup.miningboost=Suddenly, a flash of light shines from the tip of your %s
+message.levelup.mininglevel=Mining Level
+
+message.levelup.redstone=You spin it around with a flourish
+
+message.levelup.lapis=Perhaps holding on to it will bring you luck?
+message.levelup.autosmelt=Fwoosh. A flame bursts from the tip
+message.levelup.silktouch=Is that... butter?
+message.levelup.diamond=It somehow feels harder
+message.levelup.emerald=You feel like this tool could last forever
+message.levelup.repair=It seems to have accumulated a patch of moss
+message.levelup.reinforced=Fixing up the wear and tear should make it last a little longer
+message.levelup.attack=You take the time to sharpen the dull edges of the blade
+message.levelup.blaze=It starts to feels more hot to the touch
+message.levelup.smite=It begins to radiate a slight glow
+message.levelup.antispider=A strange odor emanates from the weapon
+message.levelup.beheading=You could take someones head off with that!
+message.levelup.lifesteal=It shudders with a strange energy
+message.levelup.knockback=Feeling more confident, you can more easily keep your assailants at bay
+
+message.levelup.redstone.tag=Haste
+message.levelup.lapis.tag=Luck
+message.levelup.autosmelt.tag=Autosmelt
+message.levelup.silktouch.tag=Silktouch
+message.levelup.diamond.tag=Diamond
+message.levelup.emerald.tag=Emerald
+message.levelup.repair.tag=Repair
+message.levelup.reinforced.tag=Reinforced
+message.levelup.attack.tag=Attack
+message.levelup.blaze.tag=Fiery
+message.levelup.smite.tag=Smite
+message.levelup.antispider.tag=Bane of Arthropods
+message.levelup.beheading.tag=Beheading
+message.levelup.lifesteal.tag=Life steal
+message.levelup.knockback.tag=Knockback
+
+
+
+tooltip.level.mininglevel=Mining Level
+tooltip.level.miningxp=Mining XP
+tooltip.level.boosted=Boosted
+tooltip.level.skilllevel=Skill Level
+
+tooltip.level.skillxp=Skill XP
+tooltip.level.skill.1=Clumsy
+tooltip.level.skill.2=Comfortable
+tooltip.level.skill.3=Accustomed
+tooltip.level.skill.4=Adept
+tooltip.level.skill.5=Expert
+tooltip.level.skill.6=Master
 
 item.iguana.tcon.clayBucket.name=Clay Bucket
 item.iguana.tcon.clayBucketUnfired.name=Unfired Clay Bucket

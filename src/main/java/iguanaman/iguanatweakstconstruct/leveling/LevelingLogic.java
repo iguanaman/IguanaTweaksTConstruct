@@ -7,6 +7,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import tconstruct.items.tools.*;
 import tconstruct.library.TConstructRegistry;
@@ -244,19 +246,9 @@ public abstract class LevelingLogic {
         // tell the player how awesome he is
         if (!world.isRemote)
         {
-            String message = "";
-            switch (level)
+            if(StatCollector.canTranslate("message.levelup." + level))
             {
-                case 2: message = "\u00a73You begin to feel comfortable handling the " + stack.getDisplayName(); break;
-                case 3: message = "\u00a73You are now accustomed to the weight of the " + stack.getDisplayName(); break;
-                case 4: message = "\u00a73You have become adept at handling the " + stack.getDisplayName(); break;
-                case 5: message = "\u00a73You are now an expert at using the " + stack.getDisplayName() + "\u00a73!"; break;
-                case 6: message = "\u00a73You have mastered the " + stack.getDisplayName() + "\u00a73!"; break;
-            }
-
-            if (!message.equalsIgnoreCase(""))
-            {
-                player.addChatMessage(new ChatComponentText(message));
+                player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + StatCollector.translateToLocalFormatted("message.levelup." + level, stack.getDisplayName())));
             }
         }
 
@@ -279,11 +271,10 @@ public abstract class LevelingLogic {
 
                 // fancy message on clientside
                 if(!world.isRemote) {
-                    // todo: solve "modifier(s)" more beautiful because localization
                     if(world.rand.nextInt(10) < modifiersToAdd)
-                        player.addChatMessage(new ChatComponentText("\u00a79More Bling for your Thing (+" + modifiersToAdd + " modifier" + (modifiersToAdd>1 ? "s" : "") + ")."));
+                        player.addChatMessage(new ChatComponentText(LevelingTooltips.getInfoString(StatCollector.translateToLocal("message.levelup.newmodifier.2"), EnumChatFormatting.DARK_AQUA, String.format("+%d %s", modifiersToAdd, StatCollector.translateToLocal("message.levelup.modifier")), EnumChatFormatting.GOLD)));
                     else
-                        player.addChatMessage(new ChatComponentText("\u00a79You notice room for improvement (+" + modifiersToAdd + " modifier" + (modifiersToAdd>1 ? "s" : "") + ")."));
+                        player.addChatMessage(new ChatComponentText(LevelingTooltips.getInfoString(StatCollector.translateToLocal("message.levelup.newmodifier.1"), EnumChatFormatting.DARK_AQUA, String.format("+%d %s", modifiersToAdd, StatCollector.translateToLocal("message.levelup.modifier")), EnumChatFormatting.GOLD)));
                 }
             }
         }
@@ -311,10 +302,7 @@ public abstract class LevelingLogic {
         // fancy message
 		if (player != null) {
             if(!player.worldObj.isRemote) {
-                if (!leveled)
-                    player.addChatMessage(new ChatComponentText("\u00a73Suddenly, a flash of light shines from the tip of your " + stack.getDisplayName() + "\u00a73 (+1 mining level)"));
-                else
-                    player.addChatMessage(new ChatComponentText("\u00a79Suddenly, a flash of light shines from the tip of the pickaxe (+1 mining level)"));
+                player.addChatMessage(new ChatComponentText(LevelingTooltips.getInfoString(StatCollector.translateToLocalFormatted("message.levelup.miningboost", stack.getDisplayName()), EnumChatFormatting.DARK_AQUA, String.format("+%d %s", 1, StatCollector.translateToLocal("message.levelup.mininglevel")), EnumChatFormatting.GOLD)));
             }
         }
 

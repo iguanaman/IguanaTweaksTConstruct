@@ -45,7 +45,7 @@ public abstract class TinkerMaterialTweaks {
 
         // mining level 1: Flint and bone
         updateMaterial(_1_flint, TConstructRegistry.getMaterial("Flint"), 151, 400, 2, 0.5f);  // Head-Material
-        updateMaterial(_1_flint, TConstructRegistry.getMaterial("Bone"),  201, 375, 2, 1.08f); // Accessory/Handle Material
+        updateMaterial(_1_flint, TConstructRegistry.getMaterial("Bone"),  201, 300, 2, 1.08f); // Accessory/Handle Material
 
         // mining level 2: Copper
         updateMaterial(_2_copper, TConstructRegistry.getMaterial("Copper"), 180, 500, 2, 1.1f); // All around material

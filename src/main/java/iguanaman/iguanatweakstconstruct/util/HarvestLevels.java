@@ -1,5 +1,7 @@
 package iguanaman.iguanatweakstconstruct.util;
 
+import net.minecraft.util.StatCollector;
+
 import static net.minecraft.util.EnumChatFormatting.*;
 
 // strength of the tool-material. stone == strength of a stone pick etc.
@@ -41,35 +43,33 @@ public abstract class HarvestLevels {
     {
         if(vanilla) return getVanillaHarvestLevelName(num);
 
-        //if (Config.pickaxeBoostRequired && num > 1) --num;
         switch (num)
         {
-        case 0: return GRAY + "Stone";
-        case 1: return GOLD + "Copper";
-        case 2: return DARK_RED + "Iron";
-        case 3: return WHITE + "Tin";
-        case 4: return RED + "Redstone";
-        case 5: return LIGHT_PURPLE + "Obsidian";
-        case 6: return RED + "Ardite";
-        case 7: return BLUE + "Cobalt";
-        case 8: return DARK_PURPLE + "Manyullyn";
-        case 9: return DARK_PURPLE + "Manyullyn" + LIGHT_PURPLE + "+";
-        default: return String.format("%s%s%s%s%s%s", OBFUSCATED ,OBFUSCATED, OBFUSCATED, OBFUSCATED, OBFUSCATED, OBFUSCATED);
+            case 0: return GRAY + StatCollector.translateToLocal("mininglevel.stone");
+            case 1: return GOLD + StatCollector.translateToLocal("mininglevel.copper");
+            case 2: return DARK_RED + StatCollector.translateToLocal("mininglevel.iron");
+            case 3: return WHITE + StatCollector.translateToLocal("mininglevel.tin");
+            case 4: return RED + StatCollector.translateToLocal("mininglevel.redstone");
+            case 5: return LIGHT_PURPLE + StatCollector.translateToLocal("mininglevel.obsidian");
+            case 6: return RED + StatCollector.translateToLocal("mininglevel.ardite");
+            case 7: return BLUE + StatCollector.translateToLocal("mininglevel.cobalt");
+            case 8: return DARK_PURPLE + StatCollector.translateToLocal("mininglevel.manyullyn");
+            case 9: return DARK_PURPLE + StatCollector.translateToLocal("mininglevel.manyullyn") + LIGHT_PURPLE + "+";
+            default: return String.format("%s%s%s%s%s%s", OBFUSCATED ,OBFUSCATED, OBFUSCATED, OBFUSCATED, OBFUSCATED, OBFUSCATED);
         }
     }
 
     public static String getVanillaHarvestLevelName (int num)
     {
-        //if (Config.pickaxeBoostRequired && num > 1) --num;
         switch (num)
         {
-            case 0: return GRAY + "Stone";
-            case 1: return DARK_RED + "Iron";
-            case 2: return RED + "Redstone";
-            case 3: return LIGHT_PURPLE + "Obsidian";
-            case 4: return BLUE + "Cobalt";
-            case 5: return DARK_PURPLE + "Manyullyn";
-            case 6: return DARK_PURPLE + "Manyullyn" + LIGHT_PURPLE + "+";
+            case 0: return GRAY + StatCollector.translateToLocal("mininglevel.stone");
+            case 1: return DARK_RED + StatCollector.translateToLocal("mininglevel.iron");
+            case 2: return RED + StatCollector.translateToLocal("mininglevel.redstone");
+            case 3: return LIGHT_PURPLE + StatCollector.translateToLocal("mininglevel.obsidian");
+            case 4: return BLUE + StatCollector.translateToLocal("mininglevel.cobalt");
+            case 5: return DARK_PURPLE + StatCollector.translateToLocal("mininglevel.manyullyn");
+            case 6: return DARK_PURPLE + StatCollector.translateToLocal("mininglevel.manyullyn") + LIGHT_PURPLE + "+";
             default: return String.format("%s%s%s%s%s%s", OBFUSCATED ,OBFUSCATED, OBFUSCATED, OBFUSCATED, OBFUSCATED, OBFUSCATED);
         }
     }

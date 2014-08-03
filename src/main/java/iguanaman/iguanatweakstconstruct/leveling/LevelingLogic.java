@@ -185,6 +185,7 @@ public abstract class LevelingLogic {
 		}
 		else
 		{
+            base = 100f;
 			int miningSpeed = tags.getInteger("MiningSpeed");
 			int divider = 1;
 			if (tags.hasKey("MiningSpeed2"))
@@ -203,7 +204,6 @@ public abstract class LevelingLogic {
 				divider += 1;
 			}
 
-			base = 100f;
 			base += (float)miningSpeed / (float)divider / 2f;
 
 			if (tool.getItem() instanceof Hatchet) base /= 2f;
@@ -219,14 +219,18 @@ public abstract class LevelingLogic {
 		if (miningBoost)
 		{
 			int harvestLevelCopper = HarvestLevels._2_copper;
-			int harvestLevel = TConstructRegistry.getMaterial(tags.getInteger("Head")).harvestLevel();
+			int harvestLevel = getHarvestLevel(tags);
 			if (harvestLevel >= harvestLevelCopper) base *= Math.pow(Config.xpPerBoostLevelMultiplier, harvestLevel - harvestLevelCopper);
+            if (harvestLevel == 0) base /= Config.xpPerBoostLevelMultiplier * Config.xpPerBoostLevelMultiplier;
+
 			base *= Config.levelingPickaxeBoostXpPercentage / 100f;
 		}
 		else
 		{
 			int level = tags.getInteger("ToolLevel");
 			if (level >= 1) base *= Math.pow(Config.xpPerLevelMultiplier, level - 1);
+            if(tags.hasKey("HarvestLevel") && LevelingLogic.getHarvestLevel(tags) == 0)
+                base /= Config.xpPerLevelMultiplier * Config.xpPerLevelMultiplier;
 		}
 
 		return Math.round(base);

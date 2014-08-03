@@ -8,6 +8,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.StatCollector;
 import tconstruct.TConstruct;
 import tconstruct.items.tools.Battleaxe;
 import tconstruct.items.tools.BowBase;
@@ -146,24 +148,24 @@ public class RandomBonuses {
     {
         ItemStack[] redstoneStack = new ItemStack[]{new ItemStack(Items.redstone, 1)};
 
-        return addGenericModifier(player, tool, "Redstone", redstoneStack, 50, "\u00a79You spin it around with a flourish (+1 haste)");
+        return addGenericModifier(player, tool, "Redstone", redstoneStack, 50, 1, "message.levelup.redstone", "\u00a74");
     }
 
     public static boolean addLapisModifier(EntityPlayer player, ItemStack tool)
     {
         ItemStack[] lapisStack = new ItemStack[]{new ItemStack(Items.dye, 1, 4)};
 
-        return addGenericModifier(player, tool, "Lapis", lapisStack, 100, "\u00a79Perhaps holding on to it will bring you luck? (+100 luck)");
+        return addGenericModifier(player, tool, "Lapis", lapisStack, 100, 100, "message.levelup.lapis", "\u00a79");
     }
 
     public static boolean addAutoSmeltModifier(EntityPlayer player, ItemStack tool)
     {
-        return addGenericModifier(player, tool, "Lava", "\u00a79You should report this missing string .");
+        return addGenericModifier(player, tool, "Lava", "message.levelup.autosmelt", "\u00a74");
     }
 
     public static boolean addSilktouchModifier(EntityPlayer player, ItemStack tool)
     {
-        return addGenericModifier(player, tool, "Silk Touch", "\u00a79You should report this missing string .");
+        return addGenericModifier(player, tool, "Silk Touch", "message.levelup.silktouch", "\u00a7e");
     }
 
 
@@ -171,28 +173,28 @@ public class RandomBonuses {
 
     public static boolean addDiamondModifier(EntityPlayer player, ItemStack tool)
     {
-        return addGenericModifier(player, tool, "Diamond", "\u00a79You should report this missing string .");
+        return addGenericModifier(player, tool, "Diamond", "message.levelup.diamond", "\u00a7b");
     }
 
     public static boolean addEmeraldModifier(EntityPlayer player, ItemStack tool)
     {
-        return addGenericModifier(player, tool, "Emerald", "\u00a79You should report this missing string .");
+        return addGenericModifier(player, tool, "Emerald", "message.levelup.emerald", "\u00a72");
     }
 
     // debateable if i'll ever use this
     public static boolean addFluxModifier(EntityPlayer player, ItemStack tool)
     {
-        return addGenericModifier(player, tool, "Flux", "\u00a79You should report this missing string .");
+        return addGenericModifier(player, tool, "Flux", "message.levelup.flux", "\u00a7e");
     }
 
     public static boolean addRepairModifier(EntityPlayer player, ItemStack tool)
     {
-        return addGenericModifier(player, tool, "Moss", "\u00a79It seems to have accumulated a patch of moss (+1 repair)");
+        return addGenericModifier(player, tool, "Moss", "message.levelup.repair", "\u00a72");
     }
 
     public static boolean addReinforcedModifier(EntityPlayer player, ItemStack tool)
     {
-        return addGenericModifier(player, tool, "Reinforced", "\u00a79Fixing up the wear and tear should make it last a little longer (+1 reinforced)");
+        return addGenericModifier(player, tool, "Reinforced", "message.levelup.reinforced", "\u00a75");
     }
 
 
@@ -201,55 +203,55 @@ public class RandomBonuses {
     {
         ItemStack[] quarzStack = new ItemStack[]{new ItemStack(Items.quartz, 1)};
 
-        return addGenericModifier(player, tool, "ModAttack", quarzStack, 24, "\u00a79You take the time to sharpen the dull edges of the blade (+1 attack)");
+        return addGenericModifier(player, tool, "ModAttack", quarzStack, 24, 1, "message.levelup.attack", "\u00a7f");
     }
 
     public static boolean addBlazeModifier(EntityPlayer player, ItemStack tool)
     {
         ItemStack[] blazePowderStack = new ItemStack[]{new ItemStack(Items.blaze_powder, 1)};
 
-        return addGenericModifier(player, tool, "Blaze", blazePowderStack, 25, "\u00a79It starts to feels more hot to the touch (+1 fire aspect)");
+        return addGenericModifier(player, tool, "Blaze", blazePowderStack, 25, 1, "message.levelup.blaze", "\u00a76");
     }
 
     public static boolean addSmiteModifier(EntityPlayer player, ItemStack tool)
     {
         ItemStack[] consecratedEartStack = new ItemStack[]{new ItemStack(TinkerTools.craftedSoil, 1, 4)};
 
-        return addGenericModifier(player, tool, "ModSmite", consecratedEartStack, 36, "\u00a79It begins to radiate a slight glow (+1 smite)");
+        return addGenericModifier(player, tool, "ModSmite", consecratedEartStack, 36, 1,  "message.levelup.smite", "\u00a7e");
     }
 
     public static boolean addAntiSpiderModifier(EntityPlayer player, ItemStack tool)
     {
         ItemStack[] fermentedEyeStack = new ItemStack[]{new ItemStack(Items.fermented_spider_eye, 1)};
 
-        return addGenericModifier(player, tool, "ModAntiSpider", fermentedEyeStack, 4, "\u00a79A strange odor emanates from the weapon (+1 bane of arthropods)");
+        return addGenericModifier(player, tool, "ModAntiSpider", fermentedEyeStack, 4, 1, "message.levelup.antispider", "\u00a72");
     }
 
     public static boolean addBeheadingModifier(EntityPlayer player, ItemStack tool)
     {
-        return addGenericModifier(player, tool, "Beheading", "\u00a79You could take someones head off with that! (+1 beheading)");
+        return addGenericModifier(player, tool, "Beheading", "message.levelup.beheading", "\u00a7d");
     }
 
     public static boolean addLifeStealModifier(EntityPlayer player, ItemStack tool)
     {
-        return addGenericModifier(player, tool, "Necrotic", "\u00a79It shudders with a strange energy (+1 life steal)");
+        return addGenericModifier(player, tool, "Necrotic", "message.levelup.lifesteal", "\u00a78");
     }
 
     public static boolean addKnockbackModifier(EntityPlayer player, ItemStack tool)
     {
-        return addGenericModifier(player, tool, "Piston", "\u00a79Feeling more confident, you can more easily keep your assailants at bay (+1 knockback)");
+        return addGenericModifier(player, tool, "Piston", "message.levelup.knockback", "\u00a77");
     }
 
 
     /* Backbone ;o */
 
     // simple call
-    private static boolean addGenericModifier(EntityPlayer player, ItemStack tool, String key, String message)
+    private static boolean addGenericModifier(EntityPlayer player, ItemStack tool, String key, String message, String modColor)
     {
-        return addGenericModifier(player, tool, key, null, 1, message);
+        return addGenericModifier(player, tool, key, null, 1, 1, message, modColor);
     }
     // I really didn't want to write the same 15 lines all over again to add a modifier >_<
-    private static boolean addGenericModifier(EntityPlayer player, ItemStack tool, String key, ItemStack[] stacksToAdd, int times, String message)
+    private static boolean addGenericModifier(EntityPlayer player, ItemStack tool, String key, ItemStack[] stacksToAdd, int times, int displayedTimes, String message, String modColor)
     {
         ItemModifier modifier = getModifier(key);
         // something happened. ohshit.
@@ -264,14 +266,16 @@ public class RandomBonuses {
         if(!modifier.matches(stacksToAdd, tool))
             return false;
 
+        // message!
+        if (!player.worldObj.isRemote) {
+            player.addChatMessage(new ChatComponentText(EnumChatFormatting.BLUE + StatCollector.translateToLocalFormatted(message, modColor + "+" + displayedTimes)));
+        }
+
         // apply modifier
         modifier.addMatchingEffect(tool); // order matters, effect has to be applied before modifying
         while(times-- > 0)
             modifier.modify(stacksToAdd, tool);
 
-        // message!
-        if (!player.worldObj.isRemote)
-            player.addChatMessage(new ChatComponentText(message));
 
         return true;
     }

@@ -1,6 +1,7 @@
 package iguanaman.iguanatweakstconstruct.leveling.commands;
 
 import iguanaman.iguanatweakstconstruct.leveling.RandomBonuses;
+import iguanaman.iguanatweakstconstruct.reference.Config;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -35,12 +36,20 @@ public class debug extends CommandBase {
         EntityPlayerMP entityplayermp = astring.length >= 1 ? getPlayer(icommandsender, astring[0]) : getCommandSenderAsPlayer(icommandsender);
         ItemStack equipped = entityplayermp.getCurrentEquippedItem();
         if (equipped != null && equipped.getItem() instanceof ToolCore) {
+            //Config.randomBonusesAreUseful = true;
+            //Config.randomBonusesAreRandom = false;
             HashMap<RandomBonuses.Modifier, Integer> foo = new HashMap<RandomBonuses.Modifier, Integer>();
             for(int i = 0; i < 1000; i++) {
                 {
+                    // pick
+                    //ItemStack head = new ItemStack(TinkerTools.pickaxeHead, 0, 2);
+                    //ItemStack handle = new ItemStack(TinkerTools.toolRod, 0, 3);
+                    //ItemStack accessory = new ItemStack(TinkerTools.binding, 0, 4);
+                    // sword
                     //ItemStack head = new ItemStack(TinkerTools.swordBlade, 0, 2);
                     //ItemStack handle = new ItemStack(TinkerTools.toolRod, 0, 3);
                     //ItemStack accessory = new ItemStack(TinkerTools.wideGuard, 0, 4);
+                    // bow
                     ItemStack head = new ItemStack(TinkerTools.toolRod, 0, 2);
                     ItemStack handle = new ItemStack(TinkerTools.bowstring, 0, 0);
                     ItemStack accessory = new ItemStack(TinkerTools.toolRod, 0, 4);

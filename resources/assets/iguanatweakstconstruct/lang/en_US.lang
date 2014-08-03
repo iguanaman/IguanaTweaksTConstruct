@@ -1,3 +1,20 @@
+message.levelup.redstone=You spin it around with a flourish (%s Haste)
+message.levelup.lapis=Perhaps holding on to it will bring you luck? (%s Luck)
+message.levelup.autosmelt=Fwoosh. A flame bursts from the tip (%s Autosmelt)
+message.levelup.silktouch=Is that... butter? (%s Silktouch)
+message.levelup.diamond=It somehow feels harder (%s Diamond)
+message.levelup.emerald=You feel like this tool could last forever (%s Emerald)
+message.levelup.repair=It seems to have accumulated a patch of moss (%s Repair)
+message.levelup.reinforced=Fixing up the wear and tear should make it last a little longer (%s Reinforced)
+message.levelup.attack=You take the time to sharpen the dull edges of the blade (%s Attack)
+message.levelup.blaze=It starts to feels more hot to the touch (%s Fiery)
+message.levelup.smite=It begins to radiate a slight glow (%s Smite)
+message.levelup.antispider=A strange odor emanates from the weapon (%s Bane of Arthropods)
+message.levelup.beheading=You could take someones head off with that! (%s Beheading)
+message.levelup.lifesteal=It shudders with a strange energy (%s Life steal)
+message.levelup.knockback=Feeling more confident, you can more easily keep your assailants at bay (%s Knockback)
+
+
 item.iguana.tcon.clayBucket.name=Clay Bucket
 item.iguana.tcon.clayBucketUnfired.name=Unfired Clay Bucket
 item.iguana.tcon.clayBucketFired.name=Fired Clay Bucket

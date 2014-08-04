@@ -50,5 +50,6 @@ public class IguanaHarvestLevelTweaks {
     {
         HarvestLevelTweaks.modifyHarvestLevels();
         MinecraftForge.EVENT_BUS.register(new VanillaToolTipHandler());
+        MinecraftForge.EVENT_BUS.register(new DebugTooltipHandler());
     }
 }

@@ -63,8 +63,12 @@ public abstract class HarvestLevelTweaks {
             for (String materialName : oreDictLevels[i]) {
                 // regular ore variants
                 for (ItemStack oreStack : OreDictionary.getOres("ore" + materialName)) modifyBlock(oreStack, i);
+                // dense ore variants
+                for (ItemStack oreStack : OreDictionary.getOres("denseore" + materialName)) modifyBlock(oreStack, i);
                 // nether ore variants
                 for (ItemStack oreStack : OreDictionary.getOres("oreNether" + materialName)) modifyBlock(oreStack, i);
+                // dense nether ore variants
+                for (ItemStack oreStack : OreDictionary.getOres("denseoreNether" + materialName)) modifyBlock(oreStack, i);
                 // full blocks (metal-blocks)
                 for (ItemStack oreStack : OreDictionary.getOres("prefix" + materialName)) modifyBlock(oreStack, i);
                 // stone-ores? dunno which mod adds that. leave it in for compatibility

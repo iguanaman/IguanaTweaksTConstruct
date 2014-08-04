@@ -27,12 +27,16 @@ public class ClayBucket extends ItemBucket
     public ClayBucket(Block contents)
     {
         super(contents);
-        this.setContainerItem(iguanaman.iguanatweakstconstruct.claybuckets.IguanaItems.clayBucketFired);
 
         if(contents == Blocks.flowing_lava)
+        {
             isHot = true;
-        else
+            this.setContainerItem(null);
+        }
+        else {
             isHot = false;
+            this.setContainerItem(IguanaItems.clayBucketFired);
+        }
     }
 
 

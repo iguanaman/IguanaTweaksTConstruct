@@ -87,7 +87,7 @@ public class LevelingToolTipHandler {
             inserter.add(LevelingTooltips.getXpToolTip(stack, tags));
 
         // since we added at least one line we'll add an empty spacing line at the end
-        inserter.add("");
+        //inserter.add("");
 
         // add info that you can hold shift for more details
         if(!advanced && Config.showTooltipXP && !Loader.isModLoaded("TiCTooltips")) // don't display if TicToolTips is installed

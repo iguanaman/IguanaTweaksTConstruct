@@ -5,6 +5,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
 import iguanaman.iguanatweakstconstruct.tweaks.handler.FlintHandler;
+import iguanaman.iguanatweakstconstruct.tweaks.handler.VanillaToolNerfHandler;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import iguanaman.iguanatweakstconstruct.util.RecipeRemover;
 import mantle.pulsar.pulse.Handler;
@@ -28,6 +29,10 @@ public class IguanaTweaks {
     {
         // flint recipes n stuff
         FlintTweaks();
+
+        // because diamond pickaxe is hax
+        if(Config.nerfVanillaTools)
+            MinecraftForge.EVENT_BUS.register(new VanillaToolNerfHandler());
 
         // stonetorches
         if(Config.removeStoneTorchRecipe)

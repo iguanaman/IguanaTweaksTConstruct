@@ -2,10 +2,10 @@ package iguanaman.iguanatweakstconstruct.harvestlevels;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import iguanaman.iguanatweakstconstruct.leveling.LevelingTooltips;
-import net.minecraft.item.ItemPickaxe;
+import iguanaman.iguanatweakstconstruct.reference.Config;
+import iguanaman.iguanatweakstconstruct.tweaks.handler.VanillaToolNerfHandler;
 import net.minecraft.item.ItemTool;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import tconstruct.library.tools.ToolCore;
 
 public class VanillaToolTipHandler {
 
@@ -15,6 +15,9 @@ public class VanillaToolTipHandler {
             return;
 
         if(!(event.itemStack.getItem() instanceof ItemTool))
+            return;
+
+        if(Config.nerfVanillaTools && VanillaToolNerfHandler.isUselessTool(event.itemStack.getItem()))
             return;
 
         // we're only interested in stuff that's basically a pickaxe

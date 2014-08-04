@@ -67,6 +67,8 @@ tooltip.level.skill.5=Expert
 tooltip.level.skill.6=Master
 
 tooltip.mobhead.level=Applicable up to: %s
+tooltip.uselessTool=This tool cannot mine anything!
+tooltip.uselessTool2=It can only be used for crafting
 
 item.iguana.tcon.clayBucket.name=Clay Bucket
 item.iguana.tcon.clayBucketUnfired.name=Unfired Clay Bucket

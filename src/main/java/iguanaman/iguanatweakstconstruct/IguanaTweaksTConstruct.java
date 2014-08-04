@@ -84,12 +84,14 @@ public class IguanaTweaksTConstruct {
         if(!isHarvestTweaksActive)
             HarvestLevels.adjustToVanillaLevels();
 
+        // order matters here
         pulsar.registerPulse(new IguanaHarvestLevelTweaks());
         pulsar.registerPulse(new IguanaToolLeveling());
-        pulsar.registerPulse(new IguanaToolPartReplacing());
         pulsar.registerPulse(new IguanaMobHeads());
         pulsar.registerPulse(new IguanaItems());
         pulsar.registerPulse(new IguanaTweaks());
+        // replacing has to be after tweaks and restrictions, because its tooltips have to be handled last
+        pulsar.registerPulse(new IguanaToolPartReplacing());
         pulsar.registerPulse(new IguanaDebug());
         pulsar.preInit(event);
 	}

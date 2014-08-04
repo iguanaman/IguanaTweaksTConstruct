@@ -1,5 +1,6 @@
 package iguanaman.iguanatweakstconstruct.replacing;
 
+import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import net.minecraft.item.ItemStack;
@@ -21,19 +22,14 @@ public class PartToolTipHandler {
         if(!(event.itemStack.getItem() instanceof IToolPart))
             return;
 
+        // we abuse the fact that the result is not used by anything else.
+        // Some other tooltip handler already added a different tooltip, so this part is not replaceable
+        if(event.getResult() == Event.Result.DENY)
+            return;
+
         ItemStack stack = event.itemStack;
         IToolPart part = (IToolPart)stack.getItem();
 
-        // stone part?
-        if(Config.disableStoneTools && TConstructRegistry.getMaterial(part.getMaterialID(stack)) == TConstructRegistry.getMaterial("Stone"))
-        {
-            event.toolTip.add(1, "");
-            event.toolTip.add(2, "\u00a74Can only be used to make casts,");
-            event.toolTip.add(3, "\u00a74cannot be used to make a tool");
-            return;
-        }
-
-        // regular parts
         String ability = TConstructRegistry.getMaterial(part.getMaterialID(stack)).ability();
         // paper or thaumium?
         if(ability.equals(StatCollector.translateToLocal("materialtraits.writable")) ||

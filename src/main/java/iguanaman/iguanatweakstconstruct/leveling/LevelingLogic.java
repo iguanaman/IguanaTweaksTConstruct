@@ -191,25 +191,31 @@ public abstract class LevelingLogic {
             if(tags.hasKey("HarvestLevel") && LevelingLogic.getHarvestLevel(tags) < 2)
                 base -= 15;
 
+            // main-head mining speed
+            int baseMiningSpeed = TConstructRegistry.getMaterial(tags.getInteger("Head")).toolSpeed();
 			int miningSpeed = tags.getInteger("MiningSpeed");
-			int divider = 1;
+            // and mining speeds of additional heads.
+			float divider = 2.4f;
 			if (tags.hasKey("MiningSpeed2"))
 			{
+                baseMiningSpeed += TConstructRegistry.getMaterial(tags.getInteger("Accessory")).toolSpeed();
 				miningSpeed += tags.getInteger("MiningSpeed2");
 				divider += 1;
 			}
 			if (tags.hasKey("MiningSpeedHandle"))
 			{
+                baseMiningSpeed += TConstructRegistry.getMaterial(tags.getInteger("Handle")).toolSpeed();
 				miningSpeed += tags.getInteger("MiningSpeedHandle");
 				divider += 1;
 			}
 			if (tags.hasKey("MiningSpeedExtra"))
 			{
+                baseMiningSpeed += TConstructRegistry.getMaterial(tags.getInteger("Extra")).toolSpeed();
 				miningSpeed += tags.getInteger("MiningSpeedExtra");
 				divider += 1;
 			}
 
-			base += (float)miningSpeed / (float)divider / 2f;
+            base += ((float)baseMiningSpeed + (float)(miningSpeed-baseMiningSpeed)/5f)/divider;
 
 			if (tool.getItem() instanceof Hatchet) base /= 2f;
 			else if (tool.getItem() instanceof Shovel) base *= 2f;

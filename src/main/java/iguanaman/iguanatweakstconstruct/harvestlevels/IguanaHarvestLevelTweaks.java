@@ -4,19 +4,16 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import iguanaman.iguanatweakstconstruct.debug.DebugTooltipHandler;
 import iguanaman.iguanatweakstconstruct.harvestlevels.proxy.HarvestCommonProxy;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import mantle.pulsar.pulse.Handler;
 import mantle.pulsar.pulse.Pulse;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.MinecraftForge;
 import tconstruct.library.crafting.ModifyBuilder;
 import tconstruct.library.modifier.ItemModifier;
 import tconstruct.modifiers.tools.ModDurability;
-import tconstruct.modifiers.tools.ModToolRepair;
 
 import java.lang.reflect.Field;
 
@@ -78,6 +75,5 @@ public class IguanaHarvestLevelTweaks {
     {
         HarvestLevelTweaks.modifyHarvestLevels();
         MinecraftForge.EVENT_BUS.register(new VanillaToolTipHandler());
-        MinecraftForge.EVENT_BUS.register(new DebugTooltipHandler());
     }
 }

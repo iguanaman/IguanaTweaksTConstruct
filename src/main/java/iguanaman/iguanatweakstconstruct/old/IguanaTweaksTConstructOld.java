@@ -1,16 +1,13 @@
 package iguanaman.iguanatweakstconstruct.old;
 
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import iguanaman.iguanatweakstconstruct.debug.DebugCommand;
 import iguanaman.iguanatweakstconstruct.leveling.IguanaToolLeveling;
 import iguanaman.iguanatweakstconstruct.leveling.commands.IguanaCommandLevelUpTool;
 import iguanaman.iguanatweakstconstruct.leveling.commands.IguanaCommandToolXP;
-import iguanaman.iguanatweakstconstruct.leveling.commands.debug;
 import iguanaman.iguanatweakstconstruct.proxy.CommonProxy;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
@@ -101,7 +98,7 @@ public class IguanaTweaksTConstructOld {
             event.registerServerCommand(new IguanaCommandLevelUpTool());
             Log.debug("Adding command: toolxp");
             event.registerServerCommand(new IguanaCommandToolXP());
-            event.registerServerCommand(new debug());
+            event.registerServerCommand(new DebugCommand());
 		}
 	}
 

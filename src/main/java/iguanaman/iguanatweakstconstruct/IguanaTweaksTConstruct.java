@@ -11,11 +11,12 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import iguanaman.iguanatweakstconstruct.claybuckets.IguanaItems;
+import iguanaman.iguanatweakstconstruct.debug.DebugCommand;
+import iguanaman.iguanatweakstconstruct.debug.IguanaDebug;
 import iguanaman.iguanatweakstconstruct.harvestlevels.IguanaHarvestLevelTweaks;
 import iguanaman.iguanatweakstconstruct.leveling.IguanaToolLeveling;
 import iguanaman.iguanatweakstconstruct.leveling.commands.IguanaCommandLevelUpTool;
 import iguanaman.iguanatweakstconstruct.leveling.commands.IguanaCommandToolXP;
-import iguanaman.iguanatweakstconstruct.leveling.commands.debug;
 import iguanaman.iguanatweakstconstruct.mobheads.IguanaMobHeads;
 import iguanaman.iguanatweakstconstruct.proxy.CommonProxy;
 import iguanaman.iguanatweakstconstruct.reference.Config;
@@ -89,6 +90,7 @@ public class IguanaTweaksTConstruct {
         pulsar.registerPulse(new IguanaMobHeads());
         pulsar.registerPulse(new IguanaItems());
         pulsar.registerPulse(new IguanaTweaks());
+        pulsar.registerPulse(new IguanaDebug());
         pulsar.preInit(event);
 	}
 
@@ -113,8 +115,9 @@ public class IguanaTweaksTConstruct {
             event.registerServerCommand(new IguanaCommandLevelUpTool());
             Log.debug("Adding command: toolxp");
             event.registerServerCommand(new IguanaCommandToolXP());
-            event.registerServerCommand(new debug());
 		}
+        if(pulseCFG.isModuleEnabled(new PulseMeta("Debug", "", false, false)))
+            event.registerServerCommand(new DebugCommand());
 	}
 
 

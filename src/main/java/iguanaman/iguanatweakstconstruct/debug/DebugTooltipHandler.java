@@ -1,4 +1,4 @@
-package iguanaman.iguanatweakstconstruct.harvestlevels;
+package iguanaman.iguanatweakstconstruct.debug;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
@@ -26,8 +26,8 @@ public class DebugTooltipHandler {
 
         int hlvl = block.getHarvestLevel(meta);
         if(hlvl >= 0)
-            event.toolTip.add(EnumChatFormatting.DARK_RED + "DEBUG:" + EnumChatFormatting.GOLD + " Harvest Level required: " + HarvestLevels.getHarvestLevelName(hlvl));
+            event.toolTip.add(EnumChatFormatting.GOLD + "Harvest Level required: " + HarvestLevels.getHarvestLevelName(hlvl));
         else
-            event.toolTip.add(EnumChatFormatting.DARK_RED + "DEBUG:" + EnumChatFormatting.GOLD + "Harvest Level required: Unknown");
+            event.toolTip.add(EnumChatFormatting.GOLD + "Harvest Level required: Unknown");
     }
 }

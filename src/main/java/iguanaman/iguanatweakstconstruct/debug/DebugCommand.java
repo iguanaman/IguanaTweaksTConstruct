@@ -1,4 +1,4 @@
-package iguanaman.iguanatweakstconstruct.leveling.commands;
+package iguanaman.iguanatweakstconstruct.debug;
 
 import iguanaman.iguanatweakstconstruct.leveling.RandomBonuses;
 import iguanaman.iguanatweakstconstruct.reference.Config;
@@ -14,7 +14,7 @@ import tconstruct.tools.TinkerTools;
 import java.util.HashMap;
 import java.util.Map;
 
-public class debug extends CommandBase {
+public class DebugCommand extends CommandBase {
 
     @Override
     public String getCommandName() {

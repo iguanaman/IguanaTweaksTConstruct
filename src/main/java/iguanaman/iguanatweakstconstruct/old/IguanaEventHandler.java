@@ -47,7 +47,7 @@ public class IguanaEventHandler {
 	@SubscribeEvent
 	public void onItemExpireEvent(ItemExpireEvent event)
 	{
-		if (Config.toolsNeverDespawn && event.entity != null && event.entity instanceof EntityItem)
+		if (IguanaConfig.toolsNeverDespawn && event.entity != null && event.entity instanceof EntityItem)
 		{
 			ItemStack stack = ((EntityItem)event.entity).getEntityItem();
 			if (stack.getItem() != null && stack.getItem() instanceof ToolCore)

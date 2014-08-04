@@ -58,7 +58,8 @@ public class Config {
     public static int recipeGravelPerFlint;
     public static boolean disableStoneTools;
     public static boolean removeStoneTorchRecipe;
-    public static boolean toolsNeverDespawn;
+    public static boolean castsBurnMaterial;
+    //public static boolean toolsNeverDespawn;
 
     // debug
     public static boolean showDebugXP;
@@ -152,12 +153,12 @@ public class Config {
         recipeGravelPerFlint = configfile.getInt("gravelPerFlint", CATEGORY_Tweaks, 4, 1, 9, "How many gravel are required to craft one Flint");
 
         // ticon tweaks
-        // todo: implement?
         disableStoneTools = configfile.getBoolean("disablestoneTools", CATEGORY_Tweaks, true, "Stone Tools can only be used to create casts, but no tools");
+        castsBurnMaterial = configfile.getBoolean("castingBurnsMaterial", CATEGORY_Tweaks, true, "Creating a metal cast burns up the material that was used to create it.");
 
         // stuff
         removeStoneTorchRecipe = configfile.getBoolean("removeStoneTorchRecipe", CATEGORY_Tweaks, false, "Removes the recipe for Tinker's Construct's stone torch");
-        toolsNeverDespawn      = configfile.getBoolean("toolsNeverDespawn", CATEGORY_Tweaks, true, "Causes Tinker's tools to never despawn");
+        //toolsNeverDespawn      = configfile.getBoolean("toolsNeverDespawn", CATEGORY_Tweaks, true, "Causes Tinker's tools to never despawn");
 
 
         /**  Debug **/

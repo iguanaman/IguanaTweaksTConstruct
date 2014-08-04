@@ -11,6 +11,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemSkull;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntitySkull;
@@ -22,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class IguanaSkull extends net.minecraft.item.ItemSkull {
+public class IguanaSkull extends ItemSkull {
     public static final int META_ENDERMAN  = 0;
     public static final int META_PIGZOMBIE = 1;
     public static final int META_BLAZE     = 2;

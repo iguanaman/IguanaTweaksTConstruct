@@ -5,10 +5,14 @@ import iguanaman.iguanatweakstconstruct.mobheads.tileentities.IguanaSkullTileEnt
 import iguanaman.iguanatweakstconstruct.reference.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSkull;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
+import java.util.ListIterator;
 import java.util.Random;
 
 public class IguanaSkullBlock extends BlockSkull {
@@ -39,5 +43,15 @@ public class IguanaSkullBlock extends BlockSkull {
     @Override
     public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_) {
         return IguanaMobHeads.skullItem;
+    }
+
+    @Override
+    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int noidea, int fortune) {
+        ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+        if(world.getTileEntity(x,y,z) == null)
+            return ret;
+
+        ret.add(new ItemStack(IguanaMobHeads.skullItem, 1, this.getDamageValue(world, x,y,z)));
+        return ret;
     }
 }

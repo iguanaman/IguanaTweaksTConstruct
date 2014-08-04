@@ -1,7 +1,6 @@
-package iguanaman.iguanatweakstconstruct.tweaks.handler;
+package iguanaman.iguanatweakstconstruct.tweaks.handlers;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import iguanaman.iguanatweakstconstruct.reference.Config;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;

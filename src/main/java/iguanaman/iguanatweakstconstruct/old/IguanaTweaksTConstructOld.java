@@ -81,7 +81,7 @@ public class IguanaTweaksTConstructOld {
 		// TODO: need to re-implement harvest level tweaks
 		//HarvestLevelTweaks.init();
 
-		Log.info("Starting event handler");
+		Log.info("Starting event handlers");
 		//MinecraftForge.EVENT_BUS.register(new IguanaEventHandler());
 
         pulsar.postInit(event);

@@ -1,4 +1,4 @@
-package iguanaman.iguanatweakstconstruct.tweaks.handler;
+package iguanaman.iguanatweakstconstruct.tweaks.handlers;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.item.Item;
@@ -31,7 +31,7 @@ public class VanillaToolNerfHandler {
             return;
 
         if(isUselessTool(event.itemStack.getItem())) {
-            event.toolTip.add(EnumChatFormatting.DARK_RED + StatCollector.translateToLocal("tooltip.uselessTool"));
+            event.toolTip.add(EnumChatFormatting.DARK_RED + StatCollector.translateToLocal("tooltip.uselessTool1"));
             event.toolTip.add(EnumChatFormatting.DARK_RED + StatCollector.translateToLocal("tooltip.uselessTool2"));
         }
     }

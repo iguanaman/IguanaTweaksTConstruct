@@ -3,7 +3,7 @@ package iguanaman.iguanatweakstconstruct.harvestlevels;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import iguanaman.iguanatweakstconstruct.leveling.LevelingTooltips;
 import iguanaman.iguanatweakstconstruct.reference.Config;
-import iguanaman.iguanatweakstconstruct.tweaks.handler.VanillaToolNerfHandler;
+import iguanaman.iguanatweakstconstruct.tweaks.handlers.VanillaToolNerfHandler;
 import net.minecraft.item.ItemTool;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 

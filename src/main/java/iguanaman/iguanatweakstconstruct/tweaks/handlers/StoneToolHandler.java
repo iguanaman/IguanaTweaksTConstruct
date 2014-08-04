@@ -1,9 +1,10 @@
-package iguanaman.iguanatweakstconstruct.tweaks.handler;
+package iguanaman.iguanatweakstconstruct.tweaks.handlers;
 
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.event.ToolCraftEvent;
@@ -31,8 +32,8 @@ public class StoneToolHandler {
         if(TConstructRegistry.getMaterial(part.getMaterialID(stack)) == stoneMaterial)
         {
             event.toolTip.add(1, "");
-            event.toolTip.add(2, "\u00a74Can only be used to make casts,");
-            event.toolTip.add(3, "\u00a74cannot be used to make a tool");
+            event.toolTip.add(2, EnumChatFormatting.DARK_RED + StatCollector.translateToLocal("tooltip.part.castonly1"));
+            event.toolTip.add(3, EnumChatFormatting.DARK_RED + StatCollector.translateToLocal("tooltip.part.castonly2"));
             // we abuse the fact that the result is not used by anything to signal our other handlers to not add another tooltip
             event.setResult(Event.Result.DENY);
         }

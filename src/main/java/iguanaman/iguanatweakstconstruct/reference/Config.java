@@ -151,7 +151,7 @@ public class Config {
         // gravel/flint tweaks
         removeFlintDrop = configfile.getBoolean("removeFlintDrop", CATEGORY_Tweaks, true, "Removes the random chance of getting flint from gravel");
         addFlintRecipe = configfile.getBoolean("addFlintRecipe", CATEGORY_Tweaks, true, "Adds a shapeless recipe to get flint from gravel");
-        recipeGravelPerFlint = configfile.getInt("gravelPerFlint", CATEGORY_Tweaks, 4, 1, 9, "How many gravel are required to craft one Flint");
+        recipeGravelPerFlint = configfile.getInt("gravelPerFlint", CATEGORY_Tweaks, 3, 1, 9, "How many gravel are required to craft one Flint");
 
         // ticon tweaks
         disableStoneTools = configfile.getBoolean("disablestoneTools", CATEGORY_Tweaks, true, "Stone Tools can only be used to create casts, but no tools");

@@ -36,6 +36,9 @@ public class IguanaTweaks {
         // flint recipes n stuff
         flintTweaks();
 
+        if(Config.easyToolRepair)
+            GameRegistry.addRecipe(new RepairCraftingRecipe());
+
         if(Config.castsBurnMaterial)
             castCreatingConsumesPart();
 

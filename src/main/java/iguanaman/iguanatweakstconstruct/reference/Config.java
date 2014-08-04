@@ -59,6 +59,7 @@ public class Config {
     public static boolean disableStoneTools;
     public static boolean removeStoneTorchRecipe;
     public static boolean castsBurnMaterial;
+    public static boolean easyToolRepair;
     //public static boolean toolsNeverDespawn;
 
     // debug
@@ -154,7 +155,8 @@ public class Config {
 
         // ticon tweaks
         disableStoneTools = configfile.getBoolean("disablestoneTools", CATEGORY_Tweaks, true, "Stone Tools can only be used to create casts, but no tools");
-        castsBurnMaterial = configfile.getBoolean("castingBurnsMaterial", CATEGORY_Tweaks, true, "Creating a metal cast burns up the material that was used to create it.");
+        castsBurnMaterial = configfile.getBoolean("castingBurnsMaterial", CATEGORY_Tweaks, true, "Creating a metal cast burns up the material that was used to create it");
+        easyToolRepair    = configfile.getBoolean("easyToolRepair", CATEGORY_Tweaks, false, "Allows to repair your tool in a crafting grid, without tool station");
 
         // stuff
         removeStoneTorchRecipe = configfile.getBoolean("removeStoneTorchRecipe", CATEGORY_Tweaks, false, "Removes the recipe for Tinker's Construct's stone torch");

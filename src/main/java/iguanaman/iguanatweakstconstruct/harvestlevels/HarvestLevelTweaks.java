@@ -141,13 +141,13 @@ public abstract class HarvestLevelTweaks {
             // 1: Flint
             {"Copper", "Coal", "Tetrahedrite", "Aluminum", "Aluminium", "NaturalAluminum", "AluminumBrass", "Shard", "Bauxite", "Zinc"},
             // 2: Copper
-            {"Iron", "Pyrite", "Lead", "Silver", "Lapis"},
+            {"Iron", "Pyrite", "Silver", "Lapis"},
             // 3: Iron
-            {"Tin", "Cassiterite", "Gold", "Redstone", "Steel", "Galena", "Nickel", "Invar", "Electrum", "Sphalerite"},
+            {"Tin", "Cassiterite", "Gold", "Lead", "Redstone", "Steel", "Galena", "Nickel", "Invar", "Electrum", "Sphalerite"},
             // 4: Bronze
             {"Diamond", "Emerald", "Ruby", "Sapphire", "Cinnabar", "GreenSapphire", "BlackGranite", "RedGranite"},
-            // 5: Diamond
-            {"Obsidian", "Tungstate", "Sodalite", "Quartz", "CertusQuartz"},
+            // 5: Redstone/Diamond
+            {"Obsidian", "Tungstate", "Sodalite", "Quartz", "CertusQuartz", "SkyStone"},
             // 6: Obsidian/Alumite
             {"Ardite", "Uranium", "Olivine", "Sheldonite", "Osmium", "Platinum"},
             // 7: Ardite

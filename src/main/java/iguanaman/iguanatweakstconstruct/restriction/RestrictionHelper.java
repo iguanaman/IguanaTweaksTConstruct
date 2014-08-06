@@ -21,6 +21,7 @@ import java.util.*;
 // todo: refactor this properly with a Map or something when i need to restrict more than vanilla
 public abstract class RestrictionHelper {
     public static Map<String, ItemMeta> configNameToPattern; // holds the names that can be used in the config and maps them to item-meta combinations to retrieve the materials
+    // this list contains all ALLOWED pattern - material combinations
     public static Map<ItemMeta, List<ToolMaterial>> patternMaterialLookup; // item+metadata -> List of applicable materials
     public static Map<ItemMeta, List<CustomMaterial>> patternCustomMaterialLookup; // item+metadata -> List of applicable custom materials
 
@@ -86,6 +87,47 @@ public abstract class RestrictionHelper {
                 iter.remove();
             }
         }
+    }
+
+    // removes all recipes that use a certain tool from the list
+    public static void clearRecipes(ToolMaterial material)
+    {
+        for(List<ToolMaterial> mats : patternMaterialLookup.values()) {
+            ListIterator<ToolMaterial> iter = mats.listIterator();
+            while(iter.hasNext())
+            {
+                ToolMaterial mat = iter.next();
+                if(mat == material)
+                {
+                    iter.remove();
+                }
+            }
+        }
+    }
+
+    public static void addAllowed(ItemMeta key, ToolMaterial material)
+    {
+        // fetch the material list
+        List<ToolMaterial> materials = patternMaterialLookup.get(key);
+        if(materials == null)
+        {
+            Log.debug(String.format("Couldn't find lookup entry for %s:%d", key.item.getUnlocalizedName(), key.meta));
+            return;
+        }
+
+        // find the entry so we don't have a double entry
+        ListIterator<ToolMaterial> iter = materials.listIterator();
+        while(iter.hasNext())
+        {
+            ToolMaterial mat = iter.next();
+            if(mat == material)
+            {
+                return;
+            }
+        }
+
+        // item is not in list. add it
+        materials.add(material);
     }
 
     public static void initPatternParts()
@@ -226,7 +268,7 @@ public abstract class RestrictionHelper {
             "arrowhead"     // 25
     };
 
-    public static final String[] defaultRestrictions = new String[] {
+    public static final String[] defaultRestrictions = new String[]{
             // Wood:
             "Wood:pickaxe",
             "Wood:axe",
@@ -338,7 +380,6 @@ public abstract class RestrictionHelper {
             "Slime:mediumguard",
             "Slime:crossbar",
             "Slime:frypan",
-            "Slime:sign",
             "Slime:knifeblade",
             "Slime:chisel",
             "Slime:largerod",
@@ -350,6 +391,64 @@ public abstract class RestrictionHelper {
             "Slime:largeblade",
             "Slime:hammerhead",
             "Slime:fullguard",
-            "Slime:arrowhead"
+            "Slime:arrowhead",
+
+            // BlueSlime:
+            "BlueSlime:pickaxe",
+            "BlueSlime:shovel",
+            "BlueSlime:axe",
+            "BlueSlime:swordblade",
+            "BlueSlime:largeguard",
+            "BlueSlime:mediumguard",
+            "BlueSlime:crossbar",
+            "BlueSlime:frypan",
+            "BlueSlime:sign",
+            "BlueSlime:knifeblade",
+            "BlueSlime:chisel",
+            "BlueSlime:largerod",
+            "BlueSlime:toughbinding",
+            "BlueSlime:largeplate",
+            "BlueSlime:broadaxe",
+            "BlueSlime:scythe",
+            "BlueSlime:excavator",
+            "BlueSlime:largeblade",
+            "BlueSlime:hammerhead",
+            "BlueSlime:fullguard",
+            "BlueSlime:arrowhead"
+    };
+
+    public static final String[] defaultAllowed = new String[] {
+            // Wood:
+            "Wood:rod",
+            "Wood:binding",
+            "Wood:sign",
+
+            // Flint:
+            "Flint:pickaxe",
+            "Flint:knifeblade",
+            "Flint:arrowhead",
+
+            // Bone
+            "Bone:rod",
+            "Bone:shovel",
+            "Bone:axe",
+            "Bone:knifeblade",
+            "Bone:arrowhead",
+
+            // Cactus
+            "Cactus:binding",
+
+            // Paper:
+            "Paper:rod",
+            "Paper:binding",
+
+            // Slime:
+            "Slime:rod",
+            "Slime:sign",
+            "Slime:binding",
+
+            // BlueSlime
+            "BlueSlime:rod",
+            "BlueSlime:binding",
     };
 }

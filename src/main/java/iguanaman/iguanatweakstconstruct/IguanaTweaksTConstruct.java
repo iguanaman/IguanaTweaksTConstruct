@@ -29,7 +29,9 @@ import mantle.pulsar.config.ForgeCFG;
 import mantle.pulsar.control.PulseManager;
 import mantle.pulsar.pulse.PulseMeta;
 import net.minecraft.item.Item;
+import org.apache.commons.io.FilenameUtils;
 
+import java.io.File;
 import java.util.List;
 import java.util.Random;
 
@@ -62,11 +64,16 @@ public class IguanaTweaksTConstruct {
     private PulseManager pulsar = new PulseManager(Reference.MOD_ID, pulseCFG);
 
     public static boolean modTEDetected = false;
+    public static File configPath;
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
+        File suggestion = event.getSuggestedConfigurationFile();
+        configPath = new File(suggestion.getParentFile(), FilenameUtils.removeExtension(suggestion.getName()));
+        configPath.mkdirs();
+
         Config config = new Config();
-        config.init(event.getSuggestedConfigurationFile());
+        config.init(new File(configPath, "main.cfg"));
         // register config as eventhandler to get config changed updates
         FMLCommonHandler.instance().bus().register(config);
 

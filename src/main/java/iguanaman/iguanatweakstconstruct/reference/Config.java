@@ -3,14 +3,21 @@ package iguanaman.iguanatweakstconstruct.reference;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import iguanaman.iguanatweakstconstruct.util.Log;
+import net.minecraft.item.Item;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
+import tconstruct.library.TConstructRegistry;
+import tconstruct.library.tools.ToolMaterial;
+import tconstruct.library.util.IPattern;
+import tconstruct.smeltery.items.MetalPattern;
+import tconstruct.tools.TinkerTools;
+import tconstruct.tools.items.Pattern;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.lang.reflect.Field;
+import java.util.*;
 
 public class Config {
     private Configuration configfile;
@@ -60,7 +67,7 @@ public class Config {
     public static boolean removeStoneTorchRecipe;
     public static boolean castsBurnMaterial;
     public static boolean easyToolRepair;
-    //public static boolean toolsNeverDespawn;
+    public static Map<String, Set<ToolMaterial>> restrictedParts = new HashMap<String, Set<ToolMaterial>>();
 
     // debug
     public static boolean showDebugXP;
@@ -160,7 +167,9 @@ public class Config {
 
         // stuff
         removeStoneTorchRecipe = configfile.getBoolean("removeStoneTorchRecipe", CATEGORY_Tweaks, false, "Removes the recipe for Tinker's Construct's stone torch");
-        //toolsNeverDespawn      = configfile.getBoolean("toolsNeverDespawn", CATEGORY_Tweaks, true, "Causes Tinker's tools to never despawn");
+
+        /** Restricted tool parts **/
+        loadRestrictedParts();
 
 
         /**  Debug **/
@@ -299,6 +308,115 @@ public class Config {
 
 		configfile.save();
 	}
+
+    private void loadRestrictedParts()
+    {
+        configfile.setCategoryComment("Restrictions", "Tweak Module: Allows to blacklist certain things from being created.");
+        StringBuilder comment = new StringBuilder();
+        comment.append("Prevents the creation of listed Material-Tool combinations.\n");
+        comment.append("The format is <materialname>:<partname>\n");
+        // material names
+        comment.append("materialnames are: ");
+        ToolMaterial[] mats = TConstructRegistry.toolMaterials.values().toArray(new ToolMaterial[TConstructRegistry.toolMaterials.size()]);
+        for(int i = 0; i < mats.length; i++) {
+            comment.append(mats[i].materialName);
+            if(i < mats.length-1)
+                comment.append(", ");
+        }
+        comment.append('\n');
+        // part names
+        comment.append("partnames are: ");
+        // wooden patterns
+        String[] patternNames = getPatternNames();
+        for(int i = 0; i < patternNames.length; i++) {
+            // don't add duplicates, since we have both wooden and metal patterns in here
+            if(restrictedParts.containsKey(patternNames[i]))
+                continue;
+            comment.append(patternNames[i]);
+            if(i < patternNames.length-1)
+                comment.append(", ");
+
+            // prepare map
+            restrictedParts.put(patternNames[i], new HashSet<ToolMaterial>());
+        }
+        comment.append('\n');
+
+        // load the actual config after creating this long information comment ._.
+        String[] input = configfile.getStringList("toolParts", "Restrictions", null, comment.toString());
+
+        // work through the entries
+        for(String str : input)
+        {
+            String[] restriction = str.split(":");
+            String part = null;
+            ToolMaterial material = null;
+
+            if(restriction.length != 2)
+            {
+                Log.error(String.format("Found invalid restriction entry: %s", str));
+                continue;
+            }
+
+            // check if valid material
+            boolean valid = false;
+            for(ToolMaterial mat : mats)
+                if(mat.materialName.equals(restriction[0])) {
+                    valid = true;
+                    material = mat;
+                }
+
+            if(!valid)
+            {
+                Log.error(String.format("Found invalid material %s in restriction entry: %s", restriction[0], str));
+                continue;
+            }
+
+            // check if valid part
+            valid = false;
+            for(String pattern : patternNames)
+                if(pattern.equals(restriction[1])) {
+                    valid = true;
+                    part = pattern;
+                }
+
+            if(!valid)
+            {
+                Log.error(String.format("Found invalid part %s in restriction entry: %s", restriction[1], str));
+                continue;
+            }
+
+            // add restriction :)
+            restrictedParts.get(part).add(material);
+        }
+    }
+
+    private String[] getPatternNames()
+    {
+        TConstructRegistry.patternPartMapping.keySet();
+        try {
+            Field names = Pattern.class.getDeclaredField("patternName");
+            names.setAccessible(true);
+            String[] p1 = (String[])names.get(null);
+            names = MetalPattern.class.getDeclaredField("patternName");
+            names.setAccessible(true);
+            String[] p2 = (String[])names.get(null);
+
+            String[] result = new String[p1.length + p2.length];
+            int i = 0;
+            for(String s : p1)
+                result[i++] = s;
+            for(String s : p2)
+                result[i++] = s;
+
+            return result;
+        } catch (NoSuchFieldException e) {
+            Log.error("Couldn't find Pattern names");
+        } catch (IllegalAccessException e) {
+            Log.error("Couldn't retrieve Pattern names");
+        }
+
+        return new String[0];
+    }
 
     @SubscribeEvent
     public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event)

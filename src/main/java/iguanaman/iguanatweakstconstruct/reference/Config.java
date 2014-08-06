@@ -310,9 +310,11 @@ public class Config {
 		configfile.save();
 	}
 
+    // todo: move this to an extra config and load it in postInit so everything is registered
     public void loadRestrictedParts()
     {
         configfile.setCategoryComment("Restrictions", "Tweak Module: Allows to blacklist certain things from being created.");
+        // construct the comment containing all the info needed :I
         StringBuilder comment = new StringBuilder();
         comment.append("Prevents the creation of listed Material-Tool combinations.\n");
         comment.append("The format is <materialname>:<partname>\n");
@@ -338,7 +340,7 @@ public class Config {
         comment.append("all\n");
 
         // load the actual config after creating this long information comment ._.
-        String[] input = configfile.getStringList("toolParts", "Restrictions", new String[0], comment.toString());
+        String[] input = configfile.getStringList("toolParts", "Restrictions", RestrictionHelper.defaultRestrictions, comment.toString());
 
         // work through the entries
         for(String str : input)

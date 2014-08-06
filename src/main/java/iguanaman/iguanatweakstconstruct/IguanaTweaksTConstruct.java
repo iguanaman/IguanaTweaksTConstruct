@@ -22,6 +22,7 @@ import iguanaman.iguanatweakstconstruct.proxy.CommonProxy;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
 import iguanaman.iguanatweakstconstruct.replacing.IguanaToolPartReplacing;
+import iguanaman.iguanatweakstconstruct.restriction.IguanaPartRestriction;
 import iguanaman.iguanatweakstconstruct.tweaks.IguanaTweaks;
 import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import iguanaman.iguanatweakstconstruct.util.Log;
@@ -97,6 +98,7 @@ public class IguanaTweaksTConstruct {
         pulsar.registerPulse(new IguanaMobHeads());
         pulsar.registerPulse(new IguanaItems());
         pulsar.registerPulse(new IguanaTweaks());
+        pulsar.registerPulse(new IguanaPartRestriction());
         // replacing has to be after tweaks and restrictions, because its tooltips have to be handled last
         pulsar.registerPulse(new IguanaToolPartReplacing());
         pulsar.registerPulse(new IguanaDebug());

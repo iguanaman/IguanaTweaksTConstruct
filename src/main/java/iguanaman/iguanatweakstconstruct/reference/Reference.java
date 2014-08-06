@@ -22,7 +22,6 @@ public class Reference {
     public static final String PROXY_CLIENT_CLASS = "iguanaman.iguanatweakstconstruct.proxy.ClientProxy";
     public static final String PROXY_SERVER_CLASS = "iguanaman.iguanatweakstconstruct.proxy.ServerProxy";
 
-
     public static String resource(String res)
     {
         return String.format("%s:%s", RESOURCE, res);

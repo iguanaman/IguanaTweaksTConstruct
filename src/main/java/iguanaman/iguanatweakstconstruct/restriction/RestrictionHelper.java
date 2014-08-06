@@ -1,4 +1,4 @@
-package iguanaman.iguanatweakstconstruct.util;
+package iguanaman.iguanatweakstconstruct.restriction;
 
 import net.minecraft.item.ItemStack;
 import tconstruct.tools.TinkerTools;

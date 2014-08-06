@@ -4,6 +4,7 @@ import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import iguanaman.iguanatweakstconstruct.util.Log;
+import iguanaman.iguanatweakstconstruct.util.RestrictionHelper;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
@@ -67,7 +68,7 @@ public class Config {
     public static boolean removeStoneTorchRecipe;
     public static boolean castsBurnMaterial;
     public static boolean easyToolRepair;
-    public static Map<String, Set<ToolMaterial>> restrictedParts = new HashMap<String, Set<ToolMaterial>>();
+    public static Map<String, Set<Integer>> restrictedParts = new HashMap<String, Set<Integer>>();
 
     // debug
     public static boolean showDebugXP;
@@ -309,7 +310,7 @@ public class Config {
 		configfile.save();
 	}
 
-    private void loadRestrictedParts()
+    public void loadRestrictedParts()
     {
         configfile.setCategoryComment("Restrictions", "Tweak Module: Allows to blacklist certain things from being created.");
         StringBuilder comment = new StringBuilder();
@@ -326,29 +327,25 @@ public class Config {
         comment.append('\n');
         // part names
         comment.append("partnames are: ");
-        // wooden patterns
-        String[] patternNames = getPatternNames();
-        for(int i = 0; i < patternNames.length; i++) {
-            // don't add duplicates, since we have both wooden and metal patterns in here
-            if(restrictedParts.containsKey(patternNames[i]))
-                continue;
-            comment.append(patternNames[i]);
-            if(i < patternNames.length-1)
-                comment.append(", ");
+        // patterns
+        for(String name : RestrictionHelper.patternNames) {
+            comment.append(name);
+            comment.append(", ");
 
             // prepare map
-            restrictedParts.put(patternNames[i], new HashSet<ToolMaterial>());
+            restrictedParts.put(name, new HashSet<Integer>());
         }
-        comment.append('\n');
+        comment.append("all\n");
 
         // load the actual config after creating this long information comment ._.
-        String[] input = configfile.getStringList("toolParts", "Restrictions", null, comment.toString());
+        String[] input = configfile.getStringList("toolParts", "Restrictions", new String[0], comment.toString());
 
         // work through the entries
         for(String str : input)
         {
+            if(str.isEmpty())
+                continue;
             String[] restriction = str.split(":");
-            String part = null;
             ToolMaterial material = null;
 
             if(restriction.length != 2)
@@ -371,12 +368,30 @@ public class Config {
                 continue;
             }
 
+            // find material id
+            Integer matID = -1;
+            for(Map.Entry<Integer, ToolMaterial> entry : TConstructRegistry.toolMaterials.entrySet())
+                if(entry.getValue() == material)
+                    matID = entry.getKey();
+
+            if(matID == -1)
+            {
+                Log.error(String.format("Couldn't find Material ID for %s", material.materialName));
+            }
+
+            // check if we have to add all
+            if("all".equals(restriction[1]))
+            {
+                for(String name : RestrictionHelper.patternNames)
+                    restrictedParts.get(name).add(matID);
+                continue;
+            }
+
             // check if valid part
             valid = false;
-            for(String pattern : patternNames)
-                if(pattern.equals(restriction[1])) {
+            for(String name : RestrictionHelper.patternNames)
+                if(name.equals(restriction[1])) {
                     valid = true;
-                    part = pattern;
                 }
 
             if(!valid)
@@ -386,36 +401,8 @@ public class Config {
             }
 
             // add restriction :)
-            restrictedParts.get(part).add(material);
+            restrictedParts.get(restriction[1]).add(matID);
         }
-    }
-
-    private String[] getPatternNames()
-    {
-        TConstructRegistry.patternPartMapping.keySet();
-        try {
-            Field names = Pattern.class.getDeclaredField("patternName");
-            names.setAccessible(true);
-            String[] p1 = (String[])names.get(null);
-            names = MetalPattern.class.getDeclaredField("patternName");
-            names.setAccessible(true);
-            String[] p2 = (String[])names.get(null);
-
-            String[] result = new String[p1.length + p2.length];
-            int i = 0;
-            for(String s : p1)
-                result[i++] = s;
-            for(String s : p2)
-                result[i++] = s;
-
-            return result;
-        } catch (NoSuchFieldException e) {
-            Log.error("Couldn't find Pattern names");
-        } catch (IllegalAccessException e) {
-            Log.error("Couldn't retrieve Pattern names");
-        }
-
-        return new String[0];
     }
 
     @SubscribeEvent

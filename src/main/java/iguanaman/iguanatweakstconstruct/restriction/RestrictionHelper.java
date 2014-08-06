@@ -244,8 +244,6 @@ public abstract class RestrictionHelper {
             "Wood:largeblade",
             "Wood:hammerhead",
             "Wood:fullguard",
-            "Wood:bowstring",
-            "Wood:fletching",
 
             // Flint:
             "Flint:rod",
@@ -265,8 +263,6 @@ public abstract class RestrictionHelper {
             "Flint:largeblade",
             "Flint:hammerhead",
             "Flint:fullguard",
-            "Flint:bowstring",
-            "Flint:fletching",
 
             // Bone
             "Bone:pickaxe",
@@ -286,8 +282,6 @@ public abstract class RestrictionHelper {
             "Bone:largeblade",
             "Bone:hammerhead",
             "Bone:fullguard",
-            "Bone:bowstring",
-            "Bone:fletching",
 
             // Cactus
             "Cactus:pickaxe",
@@ -310,8 +304,6 @@ public abstract class RestrictionHelper {
             "Cactus:largeblade",
             "Cactus:hammerhead",
             "Cactus:fullguard",
-            "Cactus:bowstring",
-            "Cactus:fletching",
             "Cactus:arrowhead",
 
             // Paper:
@@ -335,7 +327,6 @@ public abstract class RestrictionHelper {
             "Paper:largeblade",
             "Paper:hammerhead",
             "Paper:fullguard",
-            "Paper:bowstring",
             "Paper:arrowhead",
 
             // Slime:
@@ -359,8 +350,6 @@ public abstract class RestrictionHelper {
             "Slime:largeblade",
             "Slime:hammerhead",
             "Slime:fullguard",
-            "Slime:bowstring",
-            "Slime:fletching",
             "Slime:arrowhead"
     };
 }

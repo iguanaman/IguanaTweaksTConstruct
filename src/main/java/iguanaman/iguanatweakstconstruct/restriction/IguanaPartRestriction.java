@@ -15,6 +15,9 @@ public class IguanaPartRestriction {
     @Handler
     public void postInit(FMLPostInitializationEvent event)
     {
+        // init the helper
+        RestrictionHelper.initPatternParts();
+
         RestrictionConfig config = new RestrictionConfig();
         config.init(new File(IguanaTweaksTConstruct.configPath, "restrictions.cfg"));
 

@@ -1,19 +1,198 @@
 package iguanaman.iguanatweakstconstruct.restriction;
 
+import cpw.mods.fml.common.registry.GameRegistry;
+import iguanaman.iguanatweakstconstruct.util.Log;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import tconstruct.library.TConstructRegistry;
+import tconstruct.library.crafting.PatternBuilder;
+import tconstruct.library.crafting.ToolBuilder;
+import tconstruct.library.tools.BowstringMaterial;
+import tconstruct.library.tools.CustomMaterial;
+import tconstruct.library.tools.FletchingMaterial;
+import tconstruct.library.tools.ToolMaterial;
+import tconstruct.library.util.IPattern;
 import tconstruct.tools.TinkerTools;
+import tconstruct.tools.items.Pattern;
+
+import java.util.*;
 
 // todo: refactor this properly with a Map or something when i need to restrict more than vanilla
 public abstract class RestrictionHelper {
-    public static String getPatternName(ItemStack pattern)
-    {
-        if(pattern.getItem() == TinkerTools.woodPattern) {
-            if (pattern.getItemDamage() > patternNames.length)
-                return "";
+    public static Map<String, ItemMeta> configNameToPattern; // holds the names that can be used in the config and maps them to item-meta combinations to retrieve the materials
+    public static Map<ItemMeta, List<Integer>> patternMaterialLookup; // item+metadata -> List of applicable materials
+    public static Map<ItemMeta, List<CustomMaterial>> patternCustomMaterialLookup; // item+metadata -> List of applicable custom materials
 
-            return patternNames[pattern.getItemDamage()];
+    static {
+        configNameToPattern = new HashMap<String, ItemMeta>();
+        patternMaterialLookup = new HashMap<ItemMeta, List<Integer>>();
+        patternCustomMaterialLookup = new HashMap<ItemMeta, List<CustomMaterial>>();
+    }
+
+
+    public static boolean isRestricted(ItemStack pattern, Integer matID)
+    {
+        boolean restricted = true;
+        List<Integer> matIDs = patternMaterialLookup.get(new ItemMeta(pattern));
+        if(matIDs != null)
+        {
+            for(Integer mat : matIDs)
+                if(mat.equals(matID)) {
+                    restricted = false;
+                    break;
+                }
         }
-        return null;
+
+        return restricted;
+    }
+
+    public static int getPatternIndexFromName(String name)
+    {
+        for(int i = 0; i < patternNames.length; i++)
+            if(patternNames[i].equals(name))
+                return i;
+
+        return -1;
+    }
+
+    public static List<Integer> getPatternMaterials(ItemStack pattern)
+    {
+        return patternMaterialLookup.get(new ItemMeta(pattern));
+    }
+
+    public static List<CustomMaterial> getPatternCustomMaterials(ItemStack pattern)
+    {
+        return patternCustomMaterialLookup.get(new ItemMeta(pattern));
+    }
+
+    public static void addRestriction(ItemMeta key, Integer materialID)
+    {
+        // fetch the material list
+        List<Integer> materials = patternMaterialLookup.get(key);
+        if(materials == null)
+        {
+            Log.debug(String.format("Couldn't find lookup entry for %s:%d", key.item.getUnlocalizedName(), key.meta));
+            return;
+        }
+
+        // find the entry and remove it
+        ListIterator<Integer> iter = materials.listIterator();
+        while(iter.hasNext())
+        {
+            Integer id = iter.next();
+            if(id.equals(materialID)) // equals because Integer, not int
+            {
+                iter.remove();
+            }
+        }
+    }
+
+    public static void initPatternParts()
+    {
+        Log.info("Loading tool pattern combinations");
+        // cycle through ALL combinations
+        for(Map.Entry<List, ItemStack> entry : TConstructRegistry.patternPartMapping.entrySet())
+        {
+            Item pattern = (Item)entry.getKey().get(0); // the pattern
+            Integer meta = (Integer)entry.getKey().get(1); // metadata of the pattern
+            Integer matID = (Integer)entry.getKey().get(2); // Material-ID of the material needed to craft
+
+            String name;
+            if(pattern == TinkerTools.woodPattern && meta <= patternNames.length)
+                name = patternNames[meta];
+            else
+                name = (new ItemStack(pattern, 1, meta)).getUnlocalizedName();
+
+            ItemMeta im = configNameToPattern.get(name);
+            // not registered in the mapping yet?
+            if(im == null) {
+                im = new ItemMeta(pattern, meta);
+                configNameToPattern.put(name, im);
+            }
+
+            // add material
+            if(!patternMaterialLookup.containsKey(im))
+                patternMaterialLookup.put(im, new LinkedList<Integer>());
+
+            patternMaterialLookup.get(im).add(matID);
+        }
+
+        // bowstring and fletchling are treated differently
+        for(Integer matID : TConstructRegistry.toolMaterials.keySet())
+        {
+            // bowstring
+            CustomMaterial mat = TConstructRegistry.getCustomMaterial(matID, BowstringMaterial.class);
+            if(mat != null)
+            {
+                ItemMeta im = configNameToPattern.get("bowstring");
+                // not registered in the mapping yet?
+                if(im == null) {
+                    im = new ItemMeta(TinkerTools.woodPattern, 23);
+                    configNameToPattern.put("bowstring", im);
+                }
+
+                // add material
+                if(!patternCustomMaterialLookup.containsKey(im))
+                    patternCustomMaterialLookup.put(im, new LinkedList<CustomMaterial>());
+
+                patternCustomMaterialLookup.get(im).add(mat);
+            }
+
+            // fletchling
+            mat = TConstructRegistry.getCustomMaterial(matID, FletchingMaterial.class);
+            if(mat != null)
+            {
+                ItemMeta im = configNameToPattern.get("fletching");
+                // not registered in the mapping yet?
+                if(im == null) {
+                    im = new ItemMeta(TinkerTools.woodPattern, 24);
+                    configNameToPattern.put("fletching", im);
+                }
+
+                // add material
+                if(!patternCustomMaterialLookup.containsKey(im))
+                    patternCustomMaterialLookup.put(im, new LinkedList<CustomMaterial>());
+
+                patternCustomMaterialLookup.get(im).add(mat);
+            }
+        }
+    }
+
+    // item + metadata combination
+    public static class ItemMeta {
+        public Item item;
+        public Integer meta;
+
+        public ItemMeta(Item item, Integer meta) {
+            this.item = item;
+            this.meta = meta;
+        }
+
+        public ItemMeta(ItemStack stack)
+        {
+            this.item = stack.getItem();
+            this.meta = stack.getItemDamage();
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            ItemMeta itemMeta = (ItemMeta) o;
+
+            if (item != null ? !item.equals(itemMeta.item) : itemMeta.item != null) return false;
+            if (meta != null ? !meta.equals(itemMeta.meta) : itemMeta.meta != null) return false;
+
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = item != null ? item.hashCode() : 0;
+            result = 31 * result + (meta != null ? meta.hashCode() : 0);
+            return result;
+        }
     }
 
     // the tool parts

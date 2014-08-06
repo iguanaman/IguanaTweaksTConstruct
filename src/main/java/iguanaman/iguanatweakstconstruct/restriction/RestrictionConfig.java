@@ -13,7 +13,7 @@ import java.util.Set;
 
 public class RestrictionConfig {
     private Configuration configfile;
-    public static Map<String, Set<Integer>> restrictedParts = new HashMap<String, Set<Integer>>();
+//    public static Map<String, Set<Integer>> restrictedParts = new HashMap<String, Set<Integer>>();
 
     public void init(File file) {
         configfile = new Configuration(file);
@@ -26,6 +26,7 @@ public class RestrictionConfig {
     // todo: move this to an extra config and load it in postInit so everything is registered
     public void loadRestrictedParts()
     {
+        Log.info("Applying Tool Part restrictions");
         configfile.setCategoryComment("Restrictions", "Tweak Module: Allows to blacklist certain things from being created.");
         // construct the comment containing all the info needed :I
         StringBuilder comment = new StringBuilder();
@@ -43,12 +44,9 @@ public class RestrictionConfig {
         // part names
         comment.append("partnames are: ");
         // patterns
-        for(String name : RestrictionHelper.patternNames) {
+        for(String name : RestrictionHelper.configNameToPattern.keySet()) {
             comment.append(name);
             comment.append(", ");
-
-            // prepare map
-            restrictedParts.put(name, new HashSet<Integer>());
         }
         comment.append("all\n");
 
@@ -97,17 +95,14 @@ public class RestrictionConfig {
             // check if we have to add all
             if("all".equals(restriction[1]))
             {
-                for(String name : RestrictionHelper.patternNames)
-                    restrictedParts.get(name).add(matID);
+                for(RestrictionHelper.ItemMeta key : RestrictionHelper.configNameToPattern.values())
+                    RestrictionHelper.addRestriction(key, matID);
+
                 continue;
             }
 
             // check if valid part
-            valid = false;
-            for(String name : RestrictionHelper.patternNames)
-                if(name.equals(restriction[1])) {
-                    valid = true;
-                }
+            valid = RestrictionHelper.configNameToPattern.keySet().contains(restriction[1]);
 
             if(!valid)
             {
@@ -116,7 +111,7 @@ public class RestrictionConfig {
             }
 
             // add restriction :)
-            restrictedParts.get(restriction[1]).add(matID);
+            RestrictionHelper.addRestriction(RestrictionHelper.configNameToPattern.get(restriction[1]), matID);
         }
     }
 }

@@ -4,6 +4,7 @@ import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.restriction.RestrictionHelper;
+import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -31,9 +32,9 @@ public class PartRestrictionHandler {
         if(set == null)
             return;
 
-        int matID = set.materialID;
+        ToolMaterial mat = TConstructRegistry.getMaterial(set.materialID);
 
-        if(RestrictionHelper.isRestricted(event.pattern, matID))
+        if(RestrictionHelper.isRestricted(event.pattern, mat))
             event.setResult(Event.Result.DENY);
     }
 
@@ -48,19 +49,18 @@ public class PartRestrictionHandler {
 
         boolean foundMat = false;
         // regular materials
-        List<Integer> materialIDs = RestrictionHelper.getPatternMaterials(event.itemStack);
-        if(materialIDs != null) {
-            for (Integer id : materialIDs) {
-                ToolMaterial mat = TConstructRegistry.getMaterial(id);
+        List<ToolMaterial> materials = RestrictionHelper.getPatternMaterials(event.itemStack);
+        if(materials != null) {
+            for (ToolMaterial mat : materials) {
                 event.toolTip.add(mat.style() + mat.name());
             }
             foundMat = true;
         }
 
         // custom materials
-        List<CustomMaterial> materials = RestrictionHelper.getPatternCustomMaterials(event.itemStack);
-        if(materials != null) {
-            for (CustomMaterial mat : materials) {
+        List<CustomMaterial> customMaterials = RestrictionHelper.getPatternCustomMaterials(event.itemStack);
+        if(customMaterials != null) {
+            for (CustomMaterial mat : customMaterials) {
                 event.toolTip.add(mat.input.getDisplayName());
             }
             foundMat = true;

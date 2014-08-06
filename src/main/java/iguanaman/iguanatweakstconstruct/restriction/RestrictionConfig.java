@@ -81,22 +81,11 @@ public class RestrictionConfig {
                 continue;
             }
 
-            // find material id
-            Integer matID = -1;
-            for(Map.Entry<Integer, ToolMaterial> entry : TConstructRegistry.toolMaterials.entrySet())
-                if(entry.getValue() == material)
-                    matID = entry.getKey();
-
-            if(matID == -1)
-            {
-                Log.error(String.format("Couldn't find Material ID for %s", material.materialName));
-            }
-
             // check if we have to add all
             if("all".equals(restriction[1]))
             {
                 for(RestrictionHelper.ItemMeta key : RestrictionHelper.configNameToPattern.values())
-                    RestrictionHelper.addRestriction(key, matID);
+                    RestrictionHelper.addRestriction(key, material);
 
                 continue;
             }
@@ -111,7 +100,7 @@ public class RestrictionConfig {
             }
 
             // add restriction :)
-            RestrictionHelper.addRestriction(RestrictionHelper.configNameToPattern.get(restriction[1]), matID);
+            RestrictionHelper.addRestriction(RestrictionHelper.configNameToPattern.get(restriction[1]), material);
         }
     }
 }

@@ -2,6 +2,7 @@ package iguanaman.iguanatweakstconstruct.restriction;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import iguanaman.iguanatweakstconstruct.util.Log;
+import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import tconstruct.library.TConstructRegistry;
@@ -20,24 +21,24 @@ import java.util.*;
 // todo: refactor this properly with a Map or something when i need to restrict more than vanilla
 public abstract class RestrictionHelper {
     public static Map<String, ItemMeta> configNameToPattern; // holds the names that can be used in the config and maps them to item-meta combinations to retrieve the materials
-    public static Map<ItemMeta, List<Integer>> patternMaterialLookup; // item+metadata -> List of applicable materials
+    public static Map<ItemMeta, List<ToolMaterial>> patternMaterialLookup; // item+metadata -> List of applicable materials
     public static Map<ItemMeta, List<CustomMaterial>> patternCustomMaterialLookup; // item+metadata -> List of applicable custom materials
 
     static {
         configNameToPattern = new HashMap<String, ItemMeta>();
-        patternMaterialLookup = new HashMap<ItemMeta, List<Integer>>();
+        patternMaterialLookup = new HashMap<ItemMeta, List<ToolMaterial>>();
         patternCustomMaterialLookup = new HashMap<ItemMeta, List<CustomMaterial>>();
     }
 
 
-    public static boolean isRestricted(ItemStack pattern, Integer matID)
+    public static boolean isRestricted(ItemStack pattern, ToolMaterial material)
     {
         boolean restricted = true;
-        List<Integer> matIDs = patternMaterialLookup.get(new ItemMeta(pattern));
+        List<ToolMaterial> matIDs = patternMaterialLookup.get(new ItemMeta(pattern));
         if(matIDs != null)
         {
-            for(Integer mat : matIDs)
-                if(mat.equals(matID)) {
+            for(ToolMaterial mat : matIDs)
+                if(mat == material) {
                     restricted = false;
                     break;
                 }
@@ -55,7 +56,7 @@ public abstract class RestrictionHelper {
         return -1;
     }
 
-    public static List<Integer> getPatternMaterials(ItemStack pattern)
+    public static List<ToolMaterial> getPatternMaterials(ItemStack pattern)
     {
         return patternMaterialLookup.get(new ItemMeta(pattern));
     }
@@ -65,10 +66,10 @@ public abstract class RestrictionHelper {
         return patternCustomMaterialLookup.get(new ItemMeta(pattern));
     }
 
-    public static void addRestriction(ItemMeta key, Integer materialID)
+    public static void addRestriction(ItemMeta key, ToolMaterial material)
     {
         // fetch the material list
-        List<Integer> materials = patternMaterialLookup.get(key);
+        List<ToolMaterial> materials = patternMaterialLookup.get(key);
         if(materials == null)
         {
             Log.debug(String.format("Couldn't find lookup entry for %s:%d", key.item.getUnlocalizedName(), key.meta));
@@ -76,11 +77,11 @@ public abstract class RestrictionHelper {
         }
 
         // find the entry and remove it
-        ListIterator<Integer> iter = materials.listIterator();
+        ListIterator<ToolMaterial> iter = materials.listIterator();
         while(iter.hasNext())
         {
-            Integer id = iter.next();
-            if(id.equals(materialID)) // equals because Integer, not int
+            ToolMaterial mat = iter.next();
+            if(mat == material)
             {
                 iter.remove();
             }
@@ -112,9 +113,9 @@ public abstract class RestrictionHelper {
 
             // add material
             if(!patternMaterialLookup.containsKey(im))
-                patternMaterialLookup.put(im, new LinkedList<Integer>());
+                patternMaterialLookup.put(im, new LinkedList<ToolMaterial>());
 
-            patternMaterialLookup.get(im).add(matID);
+            patternMaterialLookup.get(im).add(TConstructRegistry.getMaterial(matID));
         }
 
         // bowstring and fletchling are treated differently

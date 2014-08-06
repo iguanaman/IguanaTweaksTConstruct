@@ -24,6 +24,7 @@ public class RestrictionConfig {
         loadRestrictedParts();
         loadAllowedParts();
 
+        RestrictionHelper.sortEntries();
         configfile.save();
     }
 

@@ -201,6 +201,33 @@ public abstract class RestrictionHelper {
         }
     }
 
+    // the whole purpose of this is so that each tooltip has the same order >_<
+    public static void sortEntries()
+    {
+        Comparator<ToolMaterial> comparator = new Comparator<ToolMaterial>() {
+            @Override
+            public int compare(ToolMaterial m1, ToolMaterial m2) {
+                Integer id1 = null;
+                Integer id2 = null;
+                for(Map.Entry<Integer, ToolMaterial> entry : TConstructRegistry.toolMaterials.entrySet())
+                {
+                    if(entry.getValue() == m1)
+                        id1 = entry.getKey();
+                    if(entry.getValue() == m2)
+                        id2 = entry.getKey();
+                }
+
+                if(id1 == null || id2 == null)
+                    return 0;
+
+                return id1-id2;
+            }
+        };
+
+        for(List<ToolMaterial> mats : patternMaterialLookup.values())
+            Collections.sort(mats, comparator);
+    }
+
     // item + metadata combination
     public static class ItemMeta {
         public Item item;

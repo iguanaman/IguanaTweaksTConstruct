@@ -1,5 +1,6 @@
 package iguanaman.iguanatweakstconstruct.harvestlevels;
 
+import cpw.mods.fml.common.Loader;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import tconstruct.library.TConstructRegistry;
@@ -39,7 +40,8 @@ public abstract class TinkerMaterialTweaks {
 
         // modify the base materials added by tinkers construct
         modifyTcon();
-        modifyExtraTiC();
+        if(Loader.isModLoaded("ExtraTiC"))
+            modifyExtraTiC();
 
         Log.info("Finished modifying TConstruct materials");
     }
@@ -132,15 +134,15 @@ public abstract class TinkerMaterialTweaks {
     {
         updateMaterial(_0_stone,     "Prometheum",   100, 300, 1, 0.7f); // Basically Stone.
         updateMaterial(_1_flint,     "Deep Iron",    250, 450, 2, 0.8f); // Reinforced 1, better Flint
-        updateMaterial(_2_copper,    "Black Steel",  300, 550, 2, 0.9f); // infuscolium (hlvl2) + deep iron, Reinforced 2, Better Copper
+        updateMaterial(_2_copper,    "Black Steel",  300, 550, 2, 0.9f); // Infuscolium (hlvl2) + deep iron, Reinforced 2, Better Copper
         updateMaterial(_3_iron,      "Oureclase",    330, 700, 3, 1.0f); // better iron
         updateMaterial(bronzeLevel,  "Astral Silver", 35, 700, 2, 0.35f);
         updateMaterial(_5_diamond,   "Carmot",        50, 800, 2, 0.4f);
         updateMaterial(_5_diamond,   "Mithril",      700, 720, 3, 1.1f);
         updateMaterial(_5_diamond,   "Quicksilver",  600, 880, 4, 1.2f); // Mithril + Silver, enhanced mithril at the cost of durability
-        updateMaterial(_6_obsidian,  "Haderoth",     810, 800, 4, 1.3f); // Rubracium (hlvl7) + Mithril
+        updateMaterial(_6_obsidian,  "Haderoth",     810, 800, 4, 1.3f); // Rubracium (hlvl6) + Mithril
         updateMaterial(_7_ardite,    "Orichalcum",  1010, 900, 4, 1.5f);
-        updateMaterial(_7_ardite,    "Celengil",     600,1400, 3, 0.7f); // Orichalcum + Platin
+        updateMaterial(_7_ardite,    "Celenegil",     600,1400, 3, 0.7f); // Orichalcum + Platin
         updateMaterial(_8_cobalt,    "Adamantine",  1550,1000, 5, 2.3f); // Reinforced 2
         updateMaterial(_9_manyullym, "Atlarus",     1750,1200, 5, 2.5f);
         updateMaterial(_9_manyullym, "Tartarite",   2000,1500, 6, 3.33f); // Adamantine + Atlarus

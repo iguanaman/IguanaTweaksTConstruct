@@ -14,6 +14,8 @@ import net.minecraftforge.common.MinecraftForge;
 import tconstruct.library.crafting.ModifyBuilder;
 import tconstruct.library.modifier.ItemModifier;
 import tconstruct.modifiers.tools.ModDurability;
+import tconstruct.tools.TinkerTools;
+import tconstruct.util.config.PHConstruct;
 
 import java.lang.reflect.Field;
 
@@ -39,13 +41,15 @@ public class IguanaHarvestLevelTweaks {
     public static HarvestCommonProxy proxy;
 
     @Handler
-    public void applyTinkerTweaks(FMLPreInitializationEvent event)
+    public void preInit(FMLPreInitializationEvent event)
     {
+        // remove tinkers messages
+        TinkerTools.supressMissingToolLogs = true;
         TinkerMaterialTweaks.modifyToolMaterials();
     }
 
     @Handler
-    public void registerHandlers(FMLInitializationEvent event)
+    public void init(FMLInitializationEvent event)
     {
         // the only thing this does is replacing GUIs with our own GUIs to display the correct harvest levels
         proxy.initialize();
@@ -71,7 +75,7 @@ public class IguanaHarvestLevelTweaks {
     }
 
     @Handler
-    public void applyTweaks(FMLPostInitializationEvent event)
+    public void postInit(FMLPostInitializationEvent event)
     {
         HarvestLevelTweaks.modifyHarvestLevels();
         MinecraftForge.EVENT_BUS.register(new VanillaToolTipHandler());

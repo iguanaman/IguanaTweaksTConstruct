@@ -1,0 +1,64 @@
+// Base ores
+updateMaterial(_4_bronze, "Hepatizon",      300, 800, 3, 1.2f); // Bronze + Gold, higher handle modifier?
+updateMaterial(_4_bronze, "Damascus Steel", 500, 600, 4, 1.3f); // Bronze + Iron
+updateMaterial(_4_bronze, "Angmallen",      300, 800, 3, 1.0f); // Iron + Gold
+
+// Fantasy ores
+updateMaterial(_0_stone, "Prometheum", 200, 400, 2, 1.0f);
+updateMaterial(_1_flint, "Deep Iron", 250, 600, 3, 1.3f);
+updateMaterial(_2_copper, "Black Steel", 500, 800, 3, 1.3f); // infuscolium (hlvl2) + deep iron
+updateMaterial(_3_iron, "Oureclase", 750, 800, 3, 1.3f);
+updateMaterial(_4_bronze, "Astral Silver", 35, 1200, 2, 0.35f);
+updateMaterial(_5_diamond, "Carmot", 50, 1200, 2, 0.35f);
+updateMaterial(_5_diamond, "Mithril", 1000, 900, 4, 1.5f);
+updateMaterial(_5_diamond, "Quicksilver", 1100, 1400, 4, 1.8f); // Mithril + Silver
+updateMaterial(_6_obsidian, "Haderoth", 1250, 1200, 4, 2.3f); // Rubracium (hlvl7) + Mithril
+updateMaterial(_7_ardite, "Orichalcum", 1350, 900, 4, 2.5f);
+updateMaterial(_8_cobalt, "Celengil", 1600, 1400, 4, 2.5f); // Orichalcum + Platin
+updateMaterial(_8_cobalt, "Adamantine", 1550, 100, 5, 2.75f);
+updateMaterial(_8_cobalt, "Atlarus", 1750, 1000, 5, 2.5f);
+updateMaterial(_9_manyullym, "Tartarite", 3000, 1400, 6, 3.0f); // Adamantine + Atlarus
+
+// nether ores
+updateMaterial(_4_bronze, "Ignatius", 200, 400, 3, 1.0f);
+updateMaterial(_4_bronze, "Shadow Iron", 300, 400, 3, 1.3f);
+updateMaterial(_4_bronze, "Shadow Steel", 400, 600, 4, 1.3f); // Shadom Iron + Lemurite
+updateMaterial(_5_diamond, "Midasium", 100, 1000, 4, 1.0f);
+updateMaterial(_5_diamond, "Vyroxeres", 300, 700, 4, 1.3f);
+updateMaterial(_6_obsidian, "Ceruclase", 500, 700, 4, 1.4f);
+updateMaterial(_6_obsidian, "Inolashite", 900, 800, 4, 1.7f); // Alduorite + Ceruclase
+updateMaterial(_6_obsidian, "Kalendrite", 1000, 800, 4, 1.75f);
+updateMaterial(_6_obsidian, "Amordrine", 1300, 1400, 4, 1.8f); // Kalendrite + Platinum
+updateMaterial(_7_ardite, "Vulcanite", 1500, 1000, 4, 2.0f);
+updateMaterial(_8_cobalt, "Sanguinite", 1750, 1200, 5, 2.3f);
+
+// end ores
+updateMaterial(_5_diamond, "Eximite", 1000, 800, 4, 1.3f);
+updateMaterial(_6_obsidian, "Desichalkos", 1800, 1000, 5, 2.75f); // Eximite + Meutoite
+
+// precious
+updateMaterial(_2_copper, "Brass", 15, 1200, 2, 0.2f); // Copper + Zinc
+updateMaterial(_3_iron, "Silver", 25, 1600, 2, 0.2f);
+updateMaterial(_4_bronze, "Electrum", 100, 2000, 2, 0.75f); // Silver + Gold
+updateMaterial(_6_obsidian, "Platinum", 100, 2400, 2, 0.75f);
+
+// Natura
+updateMaterial(_1_flint,  "Ghostwood", 131, 400, 1, 1.3f);
+updateMaterial(_2_copper, "Darkwood",  131, 400, 1, 1.7f);
+updateMaterial(_3_iron,   "Fusewood",  250, 600, 2, 1.4f);
+updateMaterial(_4_bronze, "Bloodwood", 350, 700, 3, 1.5f);
+
+// Extratic stuff
+updateMaterial(_1_flint, "Nether Quartz", 101, 300, 1, 0.7f);
+updateMaterial(_7_ardite, "Fairy", 250, 750, 2, 1.2f); // ardite + obsidian + blood
+updateMaterial(_8_cobalt, "Pokefennium", 500, 850, 2, 1.5f); // cobalt + iron + blood
+
+// Applied Energistics 2
+updateMaterial(_3_iron, "Certus Quartz", 250, 600, 2, 1.4f);
+
+// Biomes o' Plenty
+updateMaterial(_5_diamond, "Amethyst", 1548, 1500, 5, 1.2f);
+
+// Mekanism
+updateMaterial(_3_iron, "Refined Glowstone", 300, 1400, 5, 1.75f);
+updateMaterial(_6_obsidian, "Osmium", 500, 1000, 4, 1.3f);

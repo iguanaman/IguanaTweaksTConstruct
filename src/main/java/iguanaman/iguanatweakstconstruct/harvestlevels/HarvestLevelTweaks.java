@@ -58,25 +58,25 @@ public abstract class HarvestLevelTweaks {
 
     private static void modifyOredictBlocks()
     {
-        for (int i = 0; i < oreDictLevels.length; ++i)
-        {
-            for (String materialName : oreDictLevels[i]) {
-                // regular ore variants
-                for (ItemStack oreStack : OreDictionary.getOres("ore" + materialName)) modifyBlock(oreStack, i);
-                // dense ore variants
-                for (ItemStack oreStack : OreDictionary.getOres("denseore" + materialName)) modifyBlock(oreStack, i);
-                // nether ore variants
-                for (ItemStack oreStack : OreDictionary.getOres("oreNether" + materialName)) modifyBlock(oreStack, i);
-                // dense nether ore variants
-                for (ItemStack oreStack : OreDictionary.getOres("denseoreNether" + materialName)) modifyBlock(oreStack, i);
-                // full blocks (metal-blocks)
-                for (ItemStack oreStack : OreDictionary.getOres("prefix" + materialName)) modifyBlock(oreStack, i);
-                // stone-ores? dunno which mod adds that. leave it in for compatibility
-                for (ItemStack oreStack : OreDictionary.getOres("stone" + materialName)) modifyBlock(oreStack, i);
-                // bricks from metallurgy
-                for (ItemStack oreStack : OreDictionary.getOres("brick" + materialName)) modifyBlock(oreStack, i);
-            }
-        }
+        String[][][] lists = new String[][][] {oreDictLevels, oreDictLevelsMetallurgyFantasy, oreDictLevelsMetallurgyNether, oreDictLevelsMetallurgyEnd};
+        for(String[][] odll : lists)
+            for (int i = 0; i < odll.length; ++i)
+                for (String materialName : odll[i]) {
+                    // regular ore variants
+                    for (ItemStack oreStack : OreDictionary.getOres("ore" + materialName)) modifyBlock(oreStack, i);
+                    // dense ore variants
+                    for (ItemStack oreStack : OreDictionary.getOres("denseore" + materialName)) modifyBlock(oreStack, i);
+                    // nether ore variants
+                    for (ItemStack oreStack : OreDictionary.getOres("oreNether" + materialName)) modifyBlock(oreStack, i);
+                    // dense nether ore variants
+                    for (ItemStack oreStack : OreDictionary.getOres("denseoreNether" + materialName)) modifyBlock(oreStack, i);
+                    // full blocks (metal-blocks)
+                    for (ItemStack oreStack : OreDictionary.getOres("prefix" + materialName)) modifyBlock(oreStack, i);
+                    // stone-ores? dunno which mod adds that. leave it in for compatibility
+                    for (ItemStack oreStack : OreDictionary.getOres("stone" + materialName)) modifyBlock(oreStack, i);
+                    // bricks from metallurgy
+                    for (ItemStack oreStack : OreDictionary.getOres("brick" + materialName)) modifyBlock(oreStack, i);
+                }
 
         // metal-blocks
         if(Config.logHarvestLevelChanges)
@@ -145,7 +145,7 @@ public abstract class HarvestLevelTweaks {
             // 3: Iron
             {"Tin", "Cassiterite", "Gold", "Lead", "Redstone", "Steel", "Galena", "Nickel", "Invar", "Electrum", "Sphalerite"},
             // 4: Bronze
-            {"Diamond", "Emerald", "Ruby", "Sapphire", "Cinnabar", "GreenSapphire", "BlackGranite", "RedGranite"},
+            {"Diamond", "Emerald", "Ruby", "Sapphire", "Cinnabar", "GreenSapphire", "BlackGranite", "RedGranite", "Manganese"},
             // 5: Redstone/Diamond
             {"Obsidian", "Tungstate", "Sodalite", "Quartz", "CertusQuartz", "SkyStone"},
             // 6: Obsidian/Alumite
@@ -155,5 +155,74 @@ public abstract class HarvestLevelTweaks {
             // 8: Cobalt
             {"Manyullyn"}
             // 9: Manyullyn (empty)
+    };
+
+    public static String[][] oreDictLevelsMetallurgyFantasy = {
+            // 0: Stone
+            {"Prometheum"},
+            // 1: Flint
+            {"DeepIron"},
+            // 2: Copper
+            {"Infuscolium"},
+            // 3: Iron
+            {"Oureclase"},
+            // 4: Bronze
+            {"AstralSilver"},
+            // 5: Redstone/Diamond
+            {"Carmot", "Mithril"},
+            // 6: Obsidian/Alumite
+            {"Rubracium"},
+            // 7: Ardite
+            {"Orichalcum"},
+            // 8: Cobalt
+            {"Adamantine"},
+            // 9: Manyullyn
+            {"Atlarus"}
+    };
+
+    public static String[][] oreDictLevelsMetallurgyNether = {
+            // 0: Stone
+            {},
+            // 1: Flint
+            {},
+            // 2: Copper
+            {},
+            // 3: Iron
+            {"Lemurite"},
+            // 4: Bronze
+            {"Ignatius", "ShadowIron"},
+            // 5: Redstone/Diamond
+            {"Midasium", "Vyroxeres"},
+            // 6: Obsidian/Alumite
+            {"Ceruclase"},
+            // 7: Ardite
+            {"Kalendrite"},
+            // 8: Cobalt
+            {"Vulcanite"},
+            // 9: Manyullyn
+            {"Sanguinite"}
+    };
+
+    public static String[][] oreDictLevelsMetallurgyEnd = {
+            // 0: Stone
+            {},
+            // 1: Flint
+            {},
+            // 2: Copper
+            {},
+            // 3: Iron
+            {},
+            // 4: Bronze
+            {},
+            // 5: Redstone/Diamond
+            {"Eximite"},
+            // 6: Obsidian/Alumite
+            {"Meutoite"},
+            // 7: Ardite
+            {},
+            // 8: Cobalt
+            {},
+            // 9: Manyullyn
+            {},
     };
 }

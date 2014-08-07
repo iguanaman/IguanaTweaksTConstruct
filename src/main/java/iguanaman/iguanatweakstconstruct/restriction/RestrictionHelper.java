@@ -308,7 +308,7 @@ public abstract class RestrictionHelper {
             // Flint:
             "Flint:pickaxe",
             "Flint:shovel",
-            "Flist:axe",
+            "Flint:axe",
             "Flint:knifeblade",
             "Flint:arrowhead",
 

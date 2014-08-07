@@ -12,6 +12,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import iguanaman.iguanatweakstconstruct.claybuckets.IguanaItems;
 import iguanaman.iguanatweakstconstruct.debug.DebugCommand;
+import iguanaman.iguanatweakstconstruct.debug.DumpOredict;
 import iguanaman.iguanatweakstconstruct.debug.IguanaDebug;
 import iguanaman.iguanatweakstconstruct.harvestlevels.IguanaHarvestLevelTweaks;
 import iguanaman.iguanatweakstconstruct.leveling.IguanaToolLeveling;
@@ -120,6 +121,8 @@ public class IguanaTweaksTConstruct {
 	public void serverStarting(FMLServerStartingEvent event)
 	{
         // TODO: change this to a proper isModuleLoaded or something in Pulsar 0.4+ (when released/implemented)
+        Log.debug("Adding command: dumpOredict");
+        event.registerServerCommand(new DumpOredict());
 		if (isToolLevelingActive)
 		{
             Log.debug("Adding command: leveluptool");

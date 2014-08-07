@@ -296,152 +296,7 @@ public abstract class RestrictionHelper {
     };
 
     public static final String[] defaultRestrictions = new String[]{
-            // Wood:
-            "Wood:pickaxe",
-            "Wood:axe",
-            "Wood:swordblade",
-            "Wood:largeguard",
-            "Wood:mediumguard",
-            "Wood:frypan",
-            "Wood:chisel",
-            "Wood:largerod",
-            "Wood:toughbinding",
-            "Wood:largeplate",
-            "Wood:broadaxe",
-            "Wood:scythe",
-            "Wood:excavator",
-            "Wood:largeblade",
-            "Wood:hammerhead",
-            "Wood:fullguard",
-
-            // Flint:
-            "Flint:rod",
-            "Flint:swordblade",
-            "Flint:largeguard",
-            "Flint:mediumguard",
-            "Flint:crossbar",
-            "Flint:binding",
-            "Flint:frypan",
-            "Flint:sign",
-            "Flint:largerod",
-            "Flint:toughbinding",
-            "Flint:largeplate",
-            "Flint:broadaxe",
-            "Flint:scythe",
-            "Flint:excavator",
-            "Flint:largeblade",
-            "Flint:hammerhead",
-            "Flint:fullguard",
-
-            // Bone
-            "Bone:pickaxe",
-            "Bone:swordblade",
-            "Bone:largeguard",
-            "Bone:mediumguard",
-            "Bone:binding",
-            "Bone:frypan",
-            "Bone:sign",
-            "Bone:chisel",
-            "Bone:largerod",
-            "Bone:toughbinding",
-            "Bone:largeplate",
-            "Bone:broadaxe",
-            "Bone:scythe",
-            "Bone:excavator",
-            "Bone:largeblade",
-            "Bone:hammerhead",
-            "Bone:fullguard",
-
-            // Cactus
-            "Cactus:pickaxe",
-            "Cactus:shovel",
-            "Cactus:axe",
-            "Cactus:swordblade",
-            "Cactus:largeguard",
-            "Cactus:mediumguard",
-            "Cactus:crossbar",
-            "Cactus:frypan",
-            "Cactus:sign",
-            "Cactus:knifeblade",
-            "Cactus:chisel",
-            "Cactus:largerod",
-            "Cactus:toughbinding",
-            "Cactus:largeplate",
-            "Cactus:broadaxe",
-            "Cactus:scythe",
-            "Cactus:excavator",
-            "Cactus:largeblade",
-            "Cactus:hammerhead",
-            "Cactus:fullguard",
-            "Cactus:arrowhead",
-
-            // Paper:
-            "Paper:pickaxe",
-            "Paper:shovel",
-            "Paper:axe",
-            "Paper:swordblade",
-            "Paper:largeguard",
-            "Paper:mediumguard",
-            "Paper:crossbar",
-            "Paper:frypan",
-            "Paper:sign",
-            "Paper:knifeblade",
-            "Paper:chisel",
-            "Paper:largerod",
-            "Paper:toughbinding",
-            "Paper:largeplate",
-            "Paper:broadaxe",
-            "Paper:scythe",
-            "Paper:excavator",
-            "Paper:largeblade",
-            "Paper:hammerhead",
-            "Paper:fullguard",
-            "Paper:arrowhead",
-
-            // Slime:
-            "Slime:pickaxe",
-            "Slime:shovel",
-            "Slime:axe",
-            "Slime:swordblade",
-            "Slime:largeguard",
-            "Slime:mediumguard",
-            "Slime:crossbar",
-            "Slime:frypan",
-            "Slime:knifeblade",
-            "Slime:chisel",
-            "Slime:largerod",
-            "Slime:toughbinding",
-            "Slime:largeplate",
-            "Slime:broadaxe",
-            "Slime:scythe",
-            "Slime:excavator",
-            "Slime:largeblade",
-            "Slime:hammerhead",
-            "Slime:fullguard",
-            "Slime:arrowhead",
-
-            // BlueSlime:
-            "BlueSlime:pickaxe",
-            "BlueSlime:shovel",
-            "BlueSlime:axe",
-            "BlueSlime:swordblade",
-            "BlueSlime:largeguard",
-            "BlueSlime:mediumguard",
-            "BlueSlime:crossbar",
-            "BlueSlime:frypan",
-            "BlueSlime:sign",
-            "BlueSlime:knifeblade",
-            "BlueSlime:chisel",
-            "BlueSlime:largerod",
-            "BlueSlime:toughbinding",
-            "BlueSlime:largeplate",
-            "BlueSlime:broadaxe",
-            "BlueSlime:scythe",
-            "BlueSlime:excavator",
-            "BlueSlime:largeblade",
-            "BlueSlime:hammerhead",
-            "BlueSlime:fullguard",
-            "BlueSlime:arrowhead"
+            // removed because it confused people.
     };
 
     public static final String[] defaultAllowed = new String[] {
@@ -452,6 +307,8 @@ public abstract class RestrictionHelper {
 
             // Flint:
             "Flint:pickaxe",
+            "Flint:shovel",
+            "Flist:axe",
             "Flint:knifeblade",
             "Flint:arrowhead",
 
@@ -463,7 +320,9 @@ public abstract class RestrictionHelper {
             "Bone:arrowhead",
 
             // Cactus
+            "Cactus:rod",
             "Cactus:binding",
+            "Cactus:knifeblade",
 
             // Paper:
             "Paper:rod",
@@ -476,6 +335,6 @@ public abstract class RestrictionHelper {
 
             // BlueSlime
             "BlueSlime:rod",
-            "BlueSlime:binding",
+            "BlueSlime:binding"
     };
 }

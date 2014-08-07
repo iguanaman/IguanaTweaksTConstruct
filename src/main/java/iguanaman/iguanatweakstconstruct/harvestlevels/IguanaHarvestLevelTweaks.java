@@ -41,12 +41,6 @@ public class IguanaHarvestLevelTweaks {
     public static HarvestCommonProxy proxy;
 
     @Handler
-    public void preInit(FMLPreInitializationEvent event)
-    {
-        TinkerMaterialTweaks.modifyToolMaterials();
-    }
-
-    @Handler
     public void init(FMLInitializationEvent event)
     {
         // the only thing this does is replacing GUIs with our own GUIs to display the correct harvest levels
@@ -75,6 +69,7 @@ public class IguanaHarvestLevelTweaks {
     @Handler
     public void postInit(FMLPostInitializationEvent event)
     {
+        TinkerMaterialTweaks.modifyToolMaterials();
         HarvestLevelTweaks.modifyHarvestLevels();
         MinecraftForge.EVENT_BUS.register(new VanillaToolTipHandler());
     }

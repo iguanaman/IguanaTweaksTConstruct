@@ -326,14 +326,14 @@ public class RandomBonuses {
         {
             // mining mods
             case REDSTONE:  return 130;
-            case LAPIS:     return 99;
+            case LAPIS:     return 77;
             case AUTOSMELT: return 20;
             case SILKTOUCH: return 15;
             // general modifiers
             case DIAMOND:   return 30;
             case EMERALD:   return 35;
             case REPAIR:    return 50;
-            case REINFORCED:return 50;
+            case REINFORCED:return 88;
         }
 
         // less useful bonuses

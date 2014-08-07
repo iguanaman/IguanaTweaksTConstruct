@@ -59,6 +59,7 @@ public class Config {
     public static boolean removeStoneTorchRecipe;
     public static boolean castsBurnMaterial;
     public static boolean easyToolRepair;
+    public static boolean allowPartReuse;
 
     // debug
     public static boolean showDebugXP;
@@ -155,6 +156,7 @@ public class Config {
         disableStoneTools = configfile.getBoolean("disablestoneTools", CATEGORY_Tweaks, true, "Stone Tools can only be used to create casts, but no tools");
         castsBurnMaterial = configfile.getBoolean("castingBurnsMaterial", CATEGORY_Tweaks, true, "Creating a metal cast burns up the material that was used to create it");
         easyToolRepair    = configfile.getBoolean("easyToolRepair", CATEGORY_Tweaks, true, "Allows to repair your tool in a crafting grid, without tool station");
+        allowPartReuse    = configfile.getBoolean("allowPartReuse", CATEGORY_Tweaks, true, "Allows toolparts to be used as material in the Part Builder. Like, turn a Pick head into a Shovel head.!");
 
         // stuff
         removeStoneTorchRecipe = configfile.getBoolean("removeStoneTorchRecipe", CATEGORY_Tweaks, false, "Removes the recipe for Tinker's Construct's stone torch");
@@ -253,45 +255,6 @@ public class Config {
 		redstoneEffectProperty.comment = "Amount each piece of redstone increases mining speed (tinkers default is 8)";
 		redstoneEffect = Math.max(redstoneEffectProperty.getInt(4), 1);
 		redstoneEffectProperty.set(redstoneEffect);
-
-
-
-		//restrictions
-		ConfigCategory restrictionsCategory = configfile.getCategory("restrictions");
-		restrictionsCategory.setComment("See config section of mod thread for list of pattern ids");
-
-		Property allowStoneToolsProperty = configfile.get("restrictions", "allowStoneTools", false);
-		allowStoneToolsProperty.comment = "Allow certain stone tools to be built (if equivalent flint tool can also be made, the stone version is allowed)";
-		allowStoneTools = allowStoneToolsProperty.getBoolean(false);
-
-		Property restrictedWoodPartsProperty = configfile.get("restrictions", "restrictedWoodParts", new int[] {2,4,5,6,7,10,13,14,15,16,17,18,19,20,21,22,23,24});
-		restrictedWoodPartsProperty.comment = "Pattern ids to restrict for wood parts";
-		for (int i : restrictedWoodPartsProperty.getIntList()) restrictedWoodParts.add(i);
-
-		Property restrictedStonePartsProperty = configfile.get("restrictions", "restrictedStoneParts", new int[] {});
-		restrictedStonePartsProperty.comment = "Pattern ids to restrict for stone parts";
-		for (int i : restrictedStonePartsProperty.getIntList()) restrictedStoneParts.add(i);
-
-		Property restrictedFlintPartsProperty = configfile.get("restrictions", "restrictedFlintParts", new int[] {1,5,6,7,8,9,10,11,14,15,16,17,18,19,20,21,22,23,24});
-		restrictedFlintPartsProperty.comment = "Pattern ids to restrict for flint parts";
-		for (int i : restrictedFlintPartsProperty.getIntList()) restrictedFlintParts.add(i);
-
-		Property restrictedBonePartsProperty = configfile.get("restrictions", "restrictedBoneParts", new int[] {2,5,6,7,9,10,11,13,14,15,16,17,18,19,20,21,22,23,24});
-		restrictedBonePartsProperty.comment = "Pattern ids to restrict for bone parts";
-		for (int i : restrictedBonePartsProperty.getIntList()) restrictedBoneParts.add(i);
-
-		Property restrictedPaperPartsProperty = configfile.get("restrictions", "restrictedPaperParts", new int[] {2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18,19,20,21,22,23,25});
-		restrictedPaperPartsProperty.comment = "Pattern ids to restrict for paper parts";
-		for (int i : restrictedPaperPartsProperty.getIntList()) restrictedPaperParts.add(i);
-
-		Property restrictedSlimePartsProperty = configfile.get("restrictions", "restrictedSlimeParts", new int[] {2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25});
-		restrictedSlimePartsProperty.comment = "Pattern ids to restrict for slime parts";
-		for (int i : restrictedSlimePartsProperty.getIntList()) restrictedSlimeParts.add(i);
-
-		Property restrictedCactusPartsProperty = configfile.get("restrictions", "restrictedCactusParts", new int[] {2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25});
-		restrictedCactusPartsProperty.comment = "Pattern ids to restrict for cactus parts";
-		for (int i : restrictedCactusPartsProperty.getIntList()) restrictedCactusParts.add(i);
-
 */
 
 		configfile.save();

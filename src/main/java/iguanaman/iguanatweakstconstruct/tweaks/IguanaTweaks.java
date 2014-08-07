@@ -17,12 +17,14 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.crafting.CastingRecipe;
 import tconstruct.library.crafting.PatternBuilder;
 import tconstruct.library.crafting.ToolBuilder;
 import tconstruct.library.util.IPattern;
 import tconstruct.smeltery.TinkerSmeltery;
+import tconstruct.tools.TinkerTools;
 import tconstruct.world.TinkerWorld;
 
 import java.lang.reflect.Field;
@@ -64,6 +66,22 @@ public class IguanaTweaks {
         {
             Log.info("Removing stone torch recipe");
             RecipeRemover.removeAnyRecipeFor(Item.getItemFromBlock(TinkerWorld.stoneTorch));
+        }
+
+        // silky jewel nerfs
+        if(Config.moreExpensiveSilkyCloth)
+        {
+            Log.info("Making Silky Cloth more expensive");
+            RecipeRemover.removeAnyRecipe(new ItemStack(TinkerTools.materials, 1, 25));
+            String[] patSurround = { "###", "#m#", "###" };
+            GameRegistry.addRecipe(new ItemStack(TinkerTools.materials, 1, 25), patSurround, 'm', new ItemStack(TinkerTools.materials, 1, 14), '#', new ItemStack(Items.string));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TinkerTools.materials, 1, 25), patSurround, 'm', "ingotGold", '#', new ItemStack(Items.string)));
+        }
+        if(Config.moreExpensiveSilkyJewel)
+        {
+            Log.info("Making Silky Jewel more expensive");
+            RecipeRemover.removeAnyRecipe(new ItemStack(TinkerTools.materials, 1, 26));
+            GameRegistry.addRecipe(new ItemStack(TinkerTools.materials, 1, 26), " c ", "cec", " c ", 'c', new ItemStack(TinkerTools.materials, 1, 25), 'e', new ItemStack(Item.getItemFromBlock(Blocks.emerald_block)));
         }
     }
 

@@ -56,10 +56,12 @@ public class Config {
     public static boolean addFlintRecipe;
     public static int recipeGravelPerFlint;
     public static boolean disableStoneTools;
-    public static boolean removeStoneTorchRecipe;
     public static boolean castsBurnMaterial;
     public static boolean easyToolRepair;
     public static boolean allowPartReuse;
+    public static boolean removeStoneTorchRecipe;
+    public static boolean moreExpensiveSilkyCloth;
+    public static boolean moreExpensiveSilkyJewel;
 
     // debug
     public static boolean showDebugXP;
@@ -160,6 +162,8 @@ public class Config {
 
         // stuff
         removeStoneTorchRecipe = configfile.getBoolean("removeStoneTorchRecipe", CATEGORY_Tweaks, false, "Removes the recipe for Tinker's Construct's stone torch");
+        moreExpensiveSilkyCloth = configfile.getBoolean("moreExpensiveSilkyCloth", CATEGORY_Tweaks, true, "Silky Cloth needs gold ingots, instead of nuggets");
+        moreExpensiveSilkyJewel = configfile.getBoolean("moreExpensiveSilkyJewel", CATEGORY_Tweaks, false, "Silky Jewel needs an emerald block, instead of one emerald");
 
 
         /**  Debug **/

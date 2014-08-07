@@ -43,8 +43,6 @@ public class IguanaHarvestLevelTweaks {
     @Handler
     public void preInit(FMLPreInitializationEvent event)
     {
-        // remove tinkers messages
-        TinkerTools.supressMissingToolLogs = true;
         TinkerMaterialTweaks.modifyToolMaterials();
     }
 

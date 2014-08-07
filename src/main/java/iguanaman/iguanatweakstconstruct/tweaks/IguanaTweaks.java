@@ -2,6 +2,7 @@ package iguanaman.iguanatweakstconstruct.tweaks;
 
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
+import iguanaman.iguanatweakstconstruct.leveling.modifiers.ModXpAwareRedstone;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
 import iguanaman.iguanatweakstconstruct.tweaks.handlers.FlintHandler;
@@ -20,15 +21,20 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.crafting.CastingRecipe;
+import tconstruct.library.crafting.ModifyBuilder;
 import tconstruct.library.crafting.PatternBuilder;
 import tconstruct.library.crafting.ToolBuilder;
+import tconstruct.library.modifier.ItemModifier;
 import tconstruct.library.util.IPattern;
+import tconstruct.modifiers.tools.ModFlux;
+import tconstruct.modifiers.tools.ModRedstone;
 import tconstruct.smeltery.TinkerSmeltery;
 import tconstruct.tools.TinkerTools;
 import tconstruct.world.TinkerWorld;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 /**
@@ -41,6 +47,9 @@ public class IguanaTweaks {
     @Handler
     public void postInit(FMLPostInitializationEvent event)
     {
+        // remove tinkers messages
+        TinkerTools.supressMissingToolLogs = true;
+
         // flint recipes n stuff
         flintTweaks();
 
@@ -83,6 +92,9 @@ public class IguanaTweaks {
             RecipeRemover.removeAnyRecipe(new ItemStack(TinkerTools.materials, 1, 26));
             GameRegistry.addRecipe(new ItemStack(TinkerTools.materials, 1, 26), " c ", "cec", " c ", 'c', new ItemStack(TinkerTools.materials, 1, 25), 'e', new ItemStack(Item.getItemFromBlock(Blocks.emerald_block)));
         }
+
+        if(Config.moreModifiersForFlux)
+            exchangeFluxModifier();
     }
 
     private void flintTweaks()
@@ -139,6 +151,21 @@ public class IguanaTweaks {
                 continue;
 
             PatternBuilder.instance.registerMaterial(toolPart, cost, TConstructRegistry.getMaterial(matID).materialName);
+        }
+    }
+
+    private void exchangeFluxModifier()
+    {
+
+        List<ItemModifier> mods = ModifyBuilder.instance.itemModifiers;
+        for(ListIterator<ItemModifier> iter = mods.listIterator(); iter.hasNext();)
+        {
+            ItemModifier mod = iter.next();
+            // flux mod
+            if(mod instanceof ModFlux) {
+                iter.set(new ModFluxExpensive(((ModFlux) mod).batteries));
+                Log.trace("Replaced Flux Modifier to make it more expensive");
+            }
         }
     }
 }

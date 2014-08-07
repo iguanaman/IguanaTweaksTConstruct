@@ -62,6 +62,7 @@ public class Config {
     public static boolean removeStoneTorchRecipe;
     public static boolean moreExpensiveSilkyCloth;
     public static boolean moreExpensiveSilkyJewel;
+    public static boolean moreModifiersForFlux;
 
     // debug
     public static boolean showDebugXP;
@@ -161,9 +162,10 @@ public class Config {
         allowPartReuse    = configfile.getBoolean("allowPartReuse", CATEGORY_Tweaks, true, "Allows toolparts to be used as material in the Part Builder. Like, turn a Pick head into a Shovel head.!");
 
         // stuff
-        removeStoneTorchRecipe = configfile.getBoolean("removeStoneTorchRecipe", CATEGORY_Tweaks, false, "Removes the recipe for Tinker's Construct's stone torch");
+        removeStoneTorchRecipe  = configfile.getBoolean("removeStoneTorchRecipe", CATEGORY_Tweaks, false, "Removes the recipe for Tinker's Construct's stone torch");
         moreExpensiveSilkyCloth = configfile.getBoolean("moreExpensiveSilkyCloth", CATEGORY_Tweaks, true, "Silky Cloth needs gold ingots, instead of nuggets");
         moreExpensiveSilkyJewel = configfile.getBoolean("moreExpensiveSilkyJewel", CATEGORY_Tweaks, false, "Silky Jewel needs an emerald block, instead of one emerald");
+        moreModifiersForFlux    = configfile.getBoolean("moreModifiersForFlux", CATEGORY_Tweaks, true, "Flux modifier requires 2 Modifiers. Because that stuff is broken.");
 
 
         /**  Debug **/

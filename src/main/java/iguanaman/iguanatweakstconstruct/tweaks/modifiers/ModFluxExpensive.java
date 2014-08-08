@@ -1,4 +1,4 @@
-package iguanaman.iguanatweakstconstruct.tweaks;
+package iguanaman.iguanatweakstconstruct.tweaks.modifiers;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

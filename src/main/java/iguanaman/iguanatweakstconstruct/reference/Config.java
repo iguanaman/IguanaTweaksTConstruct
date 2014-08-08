@@ -63,6 +63,8 @@ public class Config {
     public static boolean moreExpensiveSilkyCloth;
     public static boolean moreExpensiveSilkyJewel;
     public static boolean moreModifiersForFlux;
+    public static int maxToolRepairs;
+    //public static float repairAmountMultiplier;
 
     // debug
     public static boolean showDebugXP;
@@ -167,8 +169,12 @@ public class Config {
         moreExpensiveSilkyJewel = configfile.getBoolean("moreExpensiveSilkyJewel", CATEGORY_Tweaks, false, "Silky Jewel needs an emerald block, instead of one emerald");
         moreModifiersForFlux    = configfile.getBoolean("moreModifiersForFlux", CATEGORY_Tweaks, true, "Flux modifier requires 2 Modifiers. Because that stuff is broken.");
 
+        // repair
+        maxToolRepairs = configfile.getInt("repairsLimit", CATEGORY_Tweaks, -1, -1, 999, "Limits the amount how often a tool can be repaired. -1 means unlimited repairs, like normally.");
+        //repairAmountMultiplier = configfile.getFloat("repairAmountMultiplier", CATEGORY_Tweaks, 1.0f, 0.01f, 9.99f, "A factor that is multiplied onto the amount a tool is repaired. (0.5 = half durability restored per repair, 2.0 = twice as much durability restored per repair)");
 
-        /**  Debug **/
+
+        /** Debug **/
         configfile.setCategoryComment(CATEGORY_Debug, "Stuff to give you/me more information");
 
         showDebugXP = configfile.getBoolean("showDebugXP", CATEGORY_Debug, false, "Current Tool/Pick XP is shown as debug (F3) text");

@@ -2,13 +2,13 @@ package iguanaman.iguanatweakstconstruct.tweaks;
 
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
-import iguanaman.iguanatweakstconstruct.leveling.modifiers.ModXpAwareRedstone;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
 import iguanaman.iguanatweakstconstruct.tweaks.handlers.FlintHandler;
-import iguanaman.iguanatweakstconstruct.restriction.PartRestrictionHandler;
 import iguanaman.iguanatweakstconstruct.tweaks.handlers.StoneToolHandler;
 import iguanaman.iguanatweakstconstruct.tweaks.handlers.VanillaToolNerfHandler;
+import iguanaman.iguanatweakstconstruct.tweaks.modifiers.ModFluxExpensive;
+import iguanaman.iguanatweakstconstruct.tweaks.modifiers.ModLimitedToolRepair;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import iguanaman.iguanatweakstconstruct.util.RecipeRemover;
 import mantle.pulsar.pulse.Handler;
@@ -23,11 +23,10 @@ import tconstruct.library.TConstructRegistry;
 import tconstruct.library.crafting.CastingRecipe;
 import tconstruct.library.crafting.ModifyBuilder;
 import tconstruct.library.crafting.PatternBuilder;
-import tconstruct.library.crafting.ToolBuilder;
 import tconstruct.library.modifier.ItemModifier;
 import tconstruct.library.util.IPattern;
 import tconstruct.modifiers.tools.ModFlux;
-import tconstruct.modifiers.tools.ModRedstone;
+import tconstruct.modifiers.tools.ModToolRepair;
 import tconstruct.smeltery.TinkerSmeltery;
 import tconstruct.tools.TinkerTools;
 import tconstruct.world.TinkerWorld;
@@ -49,9 +48,6 @@ public class IguanaTweaks {
     {
         // flint recipes n stuff
         flintTweaks();
-
-        if(Config.easyToolRepair)
-            GameRegistry.addRecipe(new RepairCraftingRecipe());
 
         if(Config.castsBurnMaterial)
             castCreatingConsumesPart();
@@ -92,6 +88,13 @@ public class IguanaTweaks {
 
         if(Config.moreModifiersForFlux)
             exchangeFluxModifier();
+
+        if(Config.maxToolRepairs > -1)
+            limitToolRepair();
+
+        // has to be added after exchanging the repair modifier, to obtain the correct cache
+        if(Config.easyToolRepair)
+            GameRegistry.addRecipe(new RepairCraftingRecipe());
     }
 
     private void flintTweaks()
@@ -162,6 +165,21 @@ public class IguanaTweaks {
             if(mod instanceof ModFlux) {
                 iter.set(new ModFluxExpensive(((ModFlux) mod).batteries));
                 Log.trace("Replaced Flux Modifier to make it more expensive");
+            }
+        }
+    }
+
+    private void limitToolRepair()
+    {
+
+        List<ItemModifier> mods = ModifyBuilder.instance.itemModifiers;
+        for(ListIterator<ItemModifier> iter = mods.listIterator(); iter.hasNext();)
+        {
+            ItemModifier mod = iter.next();
+            // flux mod
+            if(mod instanceof ModToolRepair) {
+                iter.set(new ModLimitedToolRepair());
+                Log.trace("Replaced Tool Repair Modifier to limit the maximum amount of repairs");
             }
         }
     }

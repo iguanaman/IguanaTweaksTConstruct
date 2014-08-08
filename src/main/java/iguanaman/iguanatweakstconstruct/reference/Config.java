@@ -2,9 +2,11 @@ package iguanaman.iguanatweakstconstruct.reference;
 
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import iguanaman.iguanatweakstconstruct.leveling.RandomBonuses;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import iguanaman.iguanatweakstconstruct.restriction.RestrictionHelper;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.tools.ToolMaterial;
 
@@ -27,6 +29,9 @@ public class Config {
 	public static boolean toolLevelingRandomBonuses;
     public static boolean randomBonusesAreUseful;
     public static boolean randomBonusesAreRandom;
+
+    // random bonuses deactivation
+    public static Set<RandomBonuses.Modifier> deactivatedModifiers = new HashSet<RandomBonuses.Modifier>();
 
 	// pick boost
 	public static boolean pickaxeBoostRequired;
@@ -83,6 +88,7 @@ public class Config {
     public void sync()
     {
         final String CATEGORY_Leveling = "ToolLeveling";
+        final String CATEGORY_Bonuses = "RandomBonuses";
         final String CATEGORY_PickLeveling = "PickLeveling";
         final String CATEGORY_HarvestLevels = "HarvestLevelTweaks";
         final String CATEGORY_PartReplacement = "PartReplacement";
@@ -111,6 +117,16 @@ public class Config {
         randomBonusesAreUseful     = configfile.getBoolean("UsefulBonuses", CATEGORY_Leveling, true, "Disables less-useful modifiers on levelups. Like a sword with silktouch, or a pickaxe with beheading.");
         randomBonusesAreRandom     = configfile.getBoolean("CompletelyRandomBonuses", CATEGORY_Leveling, false, "Each modifier is equally likely on levelup. Disables useful bonuses.");
 
+        /** Random Bonuses **/
+        configfile.setCategoryComment(CATEGORY_Bonuses, "Leveling Module: Allows to completely deactivate specific modifiers on levelup.");
+
+        for(RandomBonuses.Modifier mod : RandomBonuses.Modifier.values()) {
+            // we use this way of obtaining the values because it doesn't create the empty lines and comments
+            // otherwise this blows up the config. a lot.
+            Property allowed = configfile.get(CATEGORY_Bonuses, String.format("allow%s", mod.toString()), true);
+            if(!allowed.getBoolean())
+                deactivatedModifiers.add(mod);
+        }
 
         /** Pickaxe Boosting **/
         configfile.setCategoryComment(CATEGORY_PickLeveling, "Leveling Module: Allows pickaxes to gain a mining level with enough XP. Should be used with the HarvestLevel Module.");

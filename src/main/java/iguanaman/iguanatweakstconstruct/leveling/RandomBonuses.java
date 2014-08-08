@@ -63,7 +63,9 @@ public class RandomBonuses {
         int i = 0;
         for(Modifier mod : mods)
         {
-            if(Config.randomBonusesAreRandom)
+            if(Config.deactivatedModifiers.contains(mod))
+                chances[i] = 0;
+            else if(Config.randomBonusesAreRandom)
                 chances[i] = 1;
             else if(tool.getItem() instanceof Weapon || tool.getItem() instanceof Battleaxe)
                 chances[i] = getWeaponModifierWeight(mod);
@@ -445,6 +447,28 @@ public class RandomBonuses {
         BANE,
         BEHEADING,
         LIFESTEAL,
-        KNOCKBACK
+        KNOCKBACK;
+
+        @Override
+        public String toString() {
+            switch(this) {
+                case REDSTONE: return "Redstone";
+                case LAPIS: return "LuckLooting";
+                case AUTOSMELT: return "Autosmelt";
+                case SILKTOUCH: return "SilkTouch";
+                case DIAMOND: return "Diamond";
+                case EMERALD: return "Emerald";
+                case REPAIR: return "Repair";
+                case REINFORCED: return "Reinforced";
+                case ATTACK: return "Attack";
+                case BLAZE: return "Fiery";
+                case SMITE: return "Smite";
+                case BANE: return "BaneOfArthropods";
+                case BEHEADING: return "Beheading";
+                case LIFESTEAL: return "LifeSteal";
+                case KNOCKBACK: return "Knockback";
+                default: return super.toString();
+            }
+        }
     }
 }

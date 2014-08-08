@@ -9,6 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import org.lwjgl.input.Keyboard;
 import tconstruct.items.tools.Hammer;
@@ -87,11 +88,16 @@ public class LevelingToolTipHandler {
             inserter.add(LevelingTooltips.getXpToolTip(stack, tags));
 
         // since we added at least one line we'll add an empty spacing line at the end
-        //inserter.add("");
+        inserter.add("");
 
         // add info that you can hold shift for more details
         if(!advanced && Config.showTooltipXP && !Loader.isModLoaded("TiCTooltips")) // don't display if TicToolTips is installed
-            event.toolTip.add(EnumChatFormatting.GRAY.toString() + EnumChatFormatting.ITALIC.toString() + "Hold SHIFT for XP");
+            inserter.add(StatCollector.translateToLocalFormatted("tooltip.level.advanced", EnumChatFormatting.YELLOW.toString() + EnumChatFormatting.ITALIC + "Shift" + EnumChatFormatting.RESET + EnumChatFormatting.GRAY));
+
+        // remove the trailing empty line we used as insert reference n stuff
+        String empty = inserter.next();
+        if(empty.isEmpty())
+            inserter.remove();
     }
 
     private ListIterator<String> findInsertSpot(List<String> tooltip)

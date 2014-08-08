@@ -57,6 +57,7 @@ tooltip.level.mininglevel=Mining Level
 tooltip.level.miningxp=Mining XP
 tooltip.level.boosted=Boosted
 tooltip.level.skilllevel=Skill Level
+tooltip.level.advanced=Hold %s for XP
 
 tooltip.level.skillxp=Skill XP
 tooltip.level.skill.1=Clumsy

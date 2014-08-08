@@ -22,22 +22,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 /*
-todo:
-  On  doing stuff, add data what was done. Apply data to weights. Basically on action add an NBT tag that knows how much.
-  - Redstone: mining a regular block
-  - Luck: mining a block that drops stuff. Maybe miningan ore. Hitting an enemy (simply assume every enemy drops stuff for simplicity)
+  On doing stuff, add data what was done. Apply data to weights. Basically on action add an NBT tag that knows how much.
+!  - Redstone: mining a regular block
+!  - Luck: mining a block that drops stuff. Maybe mining an ore. Hitting an enemy (simply assume every enemy drops stuff for simplicity)
   - autosmelt: ...hitting furnaces maybe? No, digging blocks that are submerged in lava! :D
   - silktouch: nope. we don't a higher silktouch chance.
   - diamond: this is probably not useful enough to warrant an increased chance. leave it at base chance.
   - emerald: same as diamond
   - repair: repairing the tool maybe? meh. Should probably simply have a good base chance and maybe decrease it once we get one level of it
-  - attack: critting? or simply doing damage in general?
-  - blaze: hitting a blaze
-  - smite: hitting a zombie
-  - bane: hitting a spider
-  - beheading: hitting an enderman
-  - lifesteal: hitting a skeleton (witherskeleton only?)
-  - knockback: spring+hitting enemies
+!  - attack: critting? or simply doing damage in general?
+!  - blaze: hitting a blaze
+!  - smite: hitting a zombie
+!  - bane: hitting a spider
+!  - beheading: hitting an enderman
+!  - lifesteal: hitting a wither skelly or pigman
+!  - knockback: spring+hitting enemies
 
     maybe.. add a critical strike modifier, only obtainable through levelup :>
  */
@@ -70,6 +69,17 @@ public class RandomBonuses {
                 chances[i] = getBowModifierWeight(mod);
             else
                 chances[i] = 0;
+
+            // calculate extra bonus chance
+            if(chances[i] > 0 && tags.hasKey(String.format("Extra%s", mod.toString()))) {
+                float bonus = tags.getInteger(String.format("Extra%s", mod.toString()));
+                // relativize bonus to xp. It matters how much you've done X during the levelup after all, not in total. We don't want +100% chance :P
+                // basically if we didn't do this, the higher the xp required, the higher the chance.
+                bonus /= (float)LevelingLogic.getRequiredXp(tool, tags);
+                // maximal bonus obtainable should be ~20
+                bonus *= 20;
+                chances[i] += bonus;
+            }
 
             total += chances[i];
             i++;
@@ -131,6 +141,21 @@ public class RandomBonuses {
                 default: modified = false;
             }
         }
+
+        if(Config.logBonusExtraChance && tags.hasKey(String.format("Extra%s", choice.toString()))) {
+            // same as above
+            float bonus = tags.getInteger(String.format("Extra%s", choice.toString()));
+            bonus /= (float)LevelingLogic.getRequiredXp(tool, tags);
+            bonus *= 20;
+
+            // now relativize the weight bonus to the total.
+            Log.debug(String.format("Bonus weight for getting %s was %f", choice.toString(), bonus));
+            Log.debug(String.format("Bonus chance for getting %s was %f %%", choice.toString(), 100f*bonus/(float)total));
+        }
+
+
+        // remove the extra chance for the received modifier
+        resetModifierExtraWeight(choice, tags);
 
         // restore modifiers
         tags.setInteger("Modifiers", modifiers);
@@ -315,6 +340,34 @@ public class RandomBonuses {
     }
 
 
+    /**
+     * Used to add an extra chance for getting a specific modifier.
+     * @param modifier The modifier which gains extra chance
+     * @param amount How much weight shall be added
+     * @param tags The InfiTool tagcompound of the tool
+     */
+    public static void addModifierExtraWeight(Modifier modifier, int amount, NBTTagCompound tags)
+    {
+        String key = "Extra" + modifier.toString();
+        int old = 0;
+        if(tags.hasKey(key))
+            old = tags.getInteger(key);
+
+        tags.setInteger(key, old + amount);
+    }
+
+    /**
+     * Resets the extra chance for a modifier.
+     * @param modifier The modifier which loses its extra chance
+     * @param tags The InfiTool tagcompound of the tool
+     */
+    public static void resetModifierExtraWeight(Modifier modifier, NBTTagCompound tags)
+    {
+        String key = "Extra" + modifier.toString();
+        if(tags.hasKey(key))
+            tags.removeTag(key);
+    }
+
     /* Modifier weights */
     private static int getToolModifierWeight(Modifier mod)
     {
@@ -444,6 +497,8 @@ public class RandomBonuses {
         LIFESTEAL,
         KNOCKBACK;
 
+        // !!! DO NOT CHANGE THESE !!!
+        // They're used for NBTTags and Configs. Changing them would break compatibility
         @Override
         public String toString() {
             switch(this) {

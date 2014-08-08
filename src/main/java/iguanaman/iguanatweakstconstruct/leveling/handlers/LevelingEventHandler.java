@@ -5,8 +5,10 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
 import iguanaman.iguanatweakstconstruct.leveling.LevelingTooltips;
+import iguanaman.iguanatweakstconstruct.leveling.RandomBonuses;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.monster.*;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -29,23 +31,66 @@ public class LevelingEventHandler {
     @SubscribeEvent
     public void onHurt (LivingHurtEvent event)
     {
-        if (event.source.damageType.equals("player") || event.source.damageType.equals("arrow"))
-            if (event.source.getEntity() instanceof EntityPlayer)
-            {
-                EntityPlayer player = (EntityPlayer) event.source.getEntity();
-                // fake player?
-                if(!(player instanceof FakePlayer))
-                {
-                    ItemStack stack = player.getCurrentEquippedItem();
-                    if (stack != null && stack.hasTagCompound())
-                        if (stack.getItem() instanceof Weapon || stack.getItem() instanceof Battleaxe || stack.getItem() instanceof Shortbow && event.source.damageType.equals("arrow")) {
-                            long xp = Math.round(event.ammount);
-                            if (event.entityLiving instanceof EntityAnimal) xp = Math.round(event.ammount / 4f);
+        // only player caused damage
+        if (!(event.source.damageType.equals("player") || event.source.damageType.equals("arrow")))
+            return;
 
-                            if (xp > 0) LevelingLogic.addXP(stack, player, xp);
-                        }
+        // only players
+        if (!(event.source.getEntity() instanceof EntityPlayer))
+            return;
+        EntityPlayer player = (EntityPlayer) event.source.getEntity();
+        // but no fake players
+        if(player instanceof FakePlayer)
+            return;
+
+        ItemStack stack = player.getCurrentEquippedItem();
+        if (stack == null || !stack.hasTagCompound())
+            return;
+
+        // is a weapon?
+        if (stack.getItem() instanceof Weapon || stack.getItem() instanceof Battleaxe || stack.getItem() instanceof Shortbow && event.source.damageType.equals("arrow")) {
+            long xp = Math.round(event.ammount);
+            if (event.entityLiving instanceof EntityAnimal) xp = Math.round(event.ammount / 4f);
+
+            if (xp > 0)
+            {
+                LevelingLogic.addXP(stack, player, xp);
+
+                NBTTagCompound tags = stack.getTagCompound().getCompoundTag("InfiTool");
+
+                // bonus chance for luck if hitting passive mob
+                if(event.entityLiving instanceof EntityAnimal)
+                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.LAPIS, 5, tags);
+                // otherwise damage chance
+                else
+                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.ATTACK, 1, tags);
+
+                // spiders also increase bane chance
+                if(event.entityLiving instanceof EntitySpider)
+                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.BANE, 1, tags);
+                // blazes give fiery chance (yes, blizz gives fiery :P)
+                else if(event.entityLiving instanceof EntityBlaze)
+                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.BLAZE, 1, tags);
+                // zombie pigman gives lifesteal
+                else if(event.entityLiving instanceof EntityPigZombie)
+                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.LIFESTEAL, 1, tags);
+                // zombie gives smite
+                else if(event.entityLiving instanceof EntityZombie)
+                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.SMITE, 1, tags);
+                // wither skeleton gives lifesteal
+                else if(event.entityLiving instanceof EntitySkeleton) {
+                    if (((EntitySkeleton) event.entityLiving).getSkeletonType() != 0)
+                        RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.LIFESTEAL, 2, tags);
                 }
+                // enderman gives beheading
+                else if(event.entityLiving instanceof EntityEnderman)
+                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.BEHEADING, 3, tags);
+
+                // knocking back enemies with spriting gives knockback chance
+                if(player.isSprinting())
+                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.KNOCKBACK, 2, tags);
             }
+        }
     }
 
     @SubscribeEvent

@@ -255,12 +255,17 @@ public abstract class LevelingLogic {
 		NBTTagCompound tags = stack.getTagCompound().getCompoundTag("InfiTool");
 		World world = player.worldObj;
 
+        // Add random bonuses on leveling up?
+        // this is done first so the extra-chance can be incorporated correctly
+        if (Config.toolLevelingRandomBonuses)
+        {
+            RandomBonuses.tryModifying(player, stack);
+        }
+
         // *ding* levelup!
 		int level = getLevel(tags);
         level++;
 		tags.setInteger(TAG_LEVEL, level);
-
-		boolean isTool = stack.getItem() instanceof HarvestTool;
 
         // reset tool xp to 0, since we're at a new level now
         tags.setLong(TAG_EXP, 0L);
@@ -300,13 +305,6 @@ public abstract class LevelingLogic {
                 }
             }
         }
-
-
-        // Add random bonuses on leveling up?
-		if (Config.toolLevelingRandomBonuses)
-		{
-            RandomBonuses.tryModifying(player, stack);
-		}
 	}
 
 	public static void levelUpMiningLevel(ItemStack stack, EntityPlayer player, boolean leveled)

@@ -73,6 +73,7 @@ public class Config {
 	public static boolean logHarvestLevelChanges;
 	public static boolean logMiningLevelChanges;
     public static boolean logToolMaterialChanges;
+    public static boolean logBonusExtraChance;
 
 
     public void init(File file) {
@@ -195,6 +196,7 @@ public class Config {
         logHarvestLevelChanges = configfile.getBoolean("logBlockHarvestLevelChange", CATEGORY_Debug, true, "Logs when the harvest level of a block is changed");
         logMiningLevelChanges  = configfile.getBoolean("logToolMiningLevelChange", CATEGORY_Debug, true, "Logs when the mining level of a (non-tinker) tool is changed");
         logToolMaterialChanges = configfile.getBoolean("logTinkerMaterialChange", CATEGORY_Debug, true, "Logs when the mining level of a tinkers tool material is changed");
+        logBonusExtraChance    = configfile.getBoolean("logBonusExtraChance", CATEGORY_Debug, true, "Logs how much the extra-chance from doing stuff you had when getting a random bonus on levelup.");
 
 
         /** not implemented anymore **/

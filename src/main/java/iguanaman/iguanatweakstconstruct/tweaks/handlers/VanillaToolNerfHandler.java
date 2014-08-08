@@ -13,6 +13,7 @@ public class VanillaToolNerfHandler {
     @SubscribeEvent
     public void breakSpeed(PlayerEvent.BreakSpeed event)
     {
+        event.newSpeed *= 10;
         if(event.entityPlayer == null)
             return;
 

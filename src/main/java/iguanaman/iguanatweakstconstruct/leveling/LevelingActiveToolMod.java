@@ -52,10 +52,9 @@ public class LevelingActiveToolMod extends ActiveToolMod {
         strong = strength >= 1.0f;
         effective = harvestTool.isEffective(block.getMaterial());
 
-        boolean blockWithDrops = block.quantityDropped(IguanaTweaksTConstruct.random) > 1;
-        boolean blockIsOre = false;
         // look for an oredict entry that suggests that the block is an ore
         // todo: might actually be worth it caching this stuff
+        boolean blockIsOre = false;
         ItemStack blockStack = new ItemStack(Item.getItemFromBlock(block), 1, meta);
         for(int id : OreDictionary.getOreIDs(blockStack))
             if(OreDictionary.getOreName(id).startsWith("ore"))
@@ -68,13 +67,33 @@ public class LevelingActiveToolMod extends ActiveToolMod {
         if(harvestable && effective && strong) {
             int xp = 1;
             // bonus xp for mining ores!
-            if(blockWithDrops || blockIsOre)
+            if(blockIsOre)
                 xp++;
             LevelingLogic.addXP(stack, (EntityPlayer) entity, xp);
+
+            // bonus-chances for lapis when mining blocks with drops!
+            if(block.quantityDropped(IguanaTweaksTConstruct.random) > 1)
+                RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.LAPIS, 1, tags);
+            // or redstone!
+            else
+                RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.REDSTONE, 1, tags);
+
+            // block was next to lava or hot liquid in general?
+            boolean itsHotInHere = false;
+            itsHotInHere |= entity.worldObj.getBlock(x+1, y, z).getMaterial() == Material.lava;
+            itsHotInHere |= entity.worldObj.getBlock(x-1, y, z).getMaterial() == Material.lava;
+            itsHotInHere |= entity.worldObj.getBlock(x, y+1, z).getMaterial() == Material.lava;
+            itsHotInHere |= entity.worldObj.getBlock(x, y-1, z).getMaterial() == Material.lava;
+            itsHotInHere |= entity.worldObj.getBlock(x, y, z+1).getMaterial() == Material.lava;
+            itsHotInHere |= entity.worldObj.getBlock(x, y, z-1).getMaterial() == Material.lava;
+            // it only took 7 lines to make this pun
+            if(itsHotInHere)
+                RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.AUTOSMELT, 1, tags);
         }
 
         return false;
     }
+
 
     @Override
     public boolean afterBlockBreak() {

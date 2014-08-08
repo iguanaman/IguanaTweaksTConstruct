@@ -47,9 +47,6 @@ public class IguanaTweaks {
     @Handler
     public void postInit(FMLPostInitializationEvent event)
     {
-        // remove tinkers messages
-        TinkerTools.supressMissingToolLogs = true;
-
         // flint recipes n stuff
         flintTweaks();
 

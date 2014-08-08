@@ -83,21 +83,27 @@ public class RestrictionConfig {
             {
                 for(RestrictionHelper.ItemMeta key : RestrictionHelper.configNameToPattern.values())
                     RestrictionHelper.addRestriction(key, material);
+                for(RestrictionHelper.ItemMeta key : RestrictionHelper.configNameToCast.values())
+                    RestrictionHelper.addRestriction(key, material);
 
                 continue;
             }
 
             // check if valid part
-            boolean valid = RestrictionHelper.configNameToPattern.keySet().contains(restriction[1]);
+            boolean validPattern = RestrictionHelper.configNameToPattern.keySet().contains(restriction[1]);
+            boolean validCast = RestrictionHelper.configNameToCast.keySet().contains(restriction[1]);
 
-            if(!valid)
+            if(!validPattern && !validCast)
             {
                 Log.error(String.format("Found invalid part %s in restriction entry: %s", restriction[1], str));
                 continue;
             }
 
             // add restriction :)
-            RestrictionHelper.addRestriction(RestrictionHelper.configNameToPattern.get(restriction[1]), material);
+            if(validPattern)
+                RestrictionHelper.addRestriction(RestrictionHelper.configNameToPattern.get(restriction[1]), material);
+            if(validCast)
+                RestrictionHelper.addRestriction(RestrictionHelper.configNameToCast.get(restriction[1]), material);
         }
     }
 
@@ -138,11 +144,12 @@ public class RestrictionConfig {
             }
 
             // check if valid part
-            boolean valid = RestrictionHelper.configNameToPattern.keySet().contains(restriction[1]);
+            boolean validPattern = RestrictionHelper.configNameToPattern.keySet().contains(restriction[1]);
+            boolean validCast = RestrictionHelper.configNameToCast.keySet().contains(restriction[1]);
 
-            if(!valid)
+            if(!validPattern && !validCast)
             {
-                Log.error(String.format("Found invalid part %s in restriction entry: %s", restriction[1], str));
+                Log.error(String.format("Found invalid part %s in allow-entry: %s", restriction[1], str));
                 continue;
             }
 
@@ -152,8 +159,16 @@ public class RestrictionConfig {
                 RestrictionHelper.clearRecipes(material);
                 memory.add(material);
             }
+
+            boolean success = false;
             // then allow it
-            RestrictionHelper.addAllowed(RestrictionHelper.configNameToPattern.get(restriction[1]), material);
+            if(validPattern)
+                success |= RestrictionHelper.addAllowed(RestrictionHelper.configNameToPattern.get(restriction[1]), material);
+            if(validCast)
+                success |= RestrictionHelper.addAllowed(RestrictionHelper.configNameToCast.get(restriction[1]), material);
+
+            if(!success)
+                Log.error(String.format("You're trying to allow an invalid recipe: %s", str));
         }
     }
 }

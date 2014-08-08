@@ -22,7 +22,7 @@ public class IguanaPartRestriction {
     public void postInit(FMLPostInitializationEvent event)
     {
         // init the helper
-        RestrictionHelper.initPatternParts();
+        RestrictionHelper.init();
 
         RestrictionConfig config = new RestrictionConfig();
         config.init(new File(IguanaTweaksTConstruct.configPath, "restrictions.cfg"));

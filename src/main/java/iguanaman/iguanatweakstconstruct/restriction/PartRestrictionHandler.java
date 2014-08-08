@@ -9,14 +9,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import tconstruct.library.TConstructRegistry;
+import tconstruct.library.crafting.CastingRecipe;
 import tconstruct.library.crafting.PatternBuilder;
 import tconstruct.library.event.PartBuilderEvent;
+import tconstruct.library.event.SmelteryCastEvent;
 import tconstruct.library.tools.BowstringMaterial;
 import tconstruct.library.tools.CustomMaterial;
 import tconstruct.library.tools.FletchingMaterial;
 import tconstruct.library.tools.ToolMaterial;
 import tconstruct.library.util.IPattern;
 import tconstruct.library.util.IToolPart;
+import tconstruct.tools.items.ToolPart;
 
 import java.util.List;
 import java.util.Set;
@@ -35,6 +38,24 @@ public class PartRestrictionHandler {
         ToolMaterial mat = TConstructRegistry.getMaterial(set.materialID);
 
         if(RestrictionHelper.isRestricted(event.pattern, mat))
+            event.setResult(Event.Result.DENY);
+    }
+
+    @SubscribeEvent
+    public void onPartCasting(SmelteryCastEvent.CastingTable event)
+    {
+        // null checks
+        if(event.recipe == null || event.recipe.output == null)
+            return;
+        CastingRecipe recipe = event.recipe;
+        ItemStack output = recipe.output;
+
+        if(output.getItem() == null || !(output.getItem() instanceof IToolPart))
+            return;
+
+        IToolPart part = (IToolPart)output.getItem();
+        ToolMaterial mat = TConstructRegistry.getMaterial(part.getMaterialID(output));
+        if(RestrictionHelper.isRestricted(event.recipe.cast, mat))
             event.setResult(Event.Result.DENY);
     }
 

@@ -6,6 +6,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import tconstruct.library.TConstructRegistry;
+import tconstruct.library.crafting.CastingRecipe;
 import tconstruct.library.crafting.PatternBuilder;
 import tconstruct.library.crafting.ToolBuilder;
 import tconstruct.library.tools.BowstringMaterial;
@@ -13,6 +14,9 @@ import tconstruct.library.tools.CustomMaterial;
 import tconstruct.library.tools.FletchingMaterial;
 import tconstruct.library.tools.ToolMaterial;
 import tconstruct.library.util.IPattern;
+import tconstruct.library.util.IToolPart;
+import tconstruct.smeltery.TinkerSmeltery;
+import tconstruct.smeltery.items.MetalPattern;
 import tconstruct.tools.TinkerTools;
 import tconstruct.tools.items.Pattern;
 
@@ -21,12 +25,14 @@ import java.util.*;
 // todo: refactor this properly with a Map or something when i need to restrict more than vanilla
 public abstract class RestrictionHelper {
     public static Map<String, ItemMeta> configNameToPattern; // holds the names that can be used in the config and maps them to item-meta combinations to retrieve the materials
+    public static Map<String, ItemMeta> configNameToCast; // same as above but for metal casts
     // this list contains all ALLOWED pattern - material combinations
     public static Map<ItemMeta, List<ToolMaterial>> patternMaterialLookup; // item+metadata -> List of applicable materials
     public static Map<ItemMeta, List<CustomMaterial>> patternCustomMaterialLookup; // item+metadata -> List of applicable custom materials
 
     static {
         configNameToPattern = new HashMap<String, ItemMeta>();
+        configNameToCast = new HashMap<String, ItemMeta>();
         patternMaterialLookup = new HashMap<ItemMeta, List<ToolMaterial>>();
         patternCustomMaterialLookup = new HashMap<ItemMeta, List<CustomMaterial>>();
     }
@@ -105,14 +111,55 @@ public abstract class RestrictionHelper {
         }
     }
 
-    public static void addAllowed(ItemMeta key, ToolMaterial material)
+    // Don't judge me. This function is an absolute terror because I realized that it'd allow invalid combinations if I
+    // don't check everything again too late. Should probbaly simply create a set of originally allowed parts, and than
+    // build the overlapping set.
+    public static boolean addAllowed(ItemMeta key, ToolMaterial material)
     {
-        // fetch the material list
+        // check if material was allowed for casting
+        if(key.item instanceof MetalPattern) {
+            boolean allowed = false;
+            for (CastingRecipe recipe : TConstructRegistry.getTableCasting().getCastingRecipes()) {
+                // only recipes with cast
+                if (recipe.cast == null || recipe.output == null)
+                    continue;
+                // we're only interested in toolparts, not making the casts themselves etc. or buckets.
+                if (!(recipe.output.getItem() instanceof IToolPart))
+                    continue;
+
+                int matID = ((IToolPart)recipe.output.getItem()).getMaterialID(recipe.output);
+
+                if (key.item == recipe.cast.getItem() && key.meta == recipe.cast.getItemDamage() && TConstructRegistry.getMaterial(matID) == material) {
+                    allowed = true;
+                    break;
+                }
+            }
+            // nope. we don't want wood as valid casting material!
+            if(!allowed)
+                return false;
+        }
+        // wooden pattern?
+        else if(key.item instanceof Pattern)
+        {
+            boolean allowed = false;
+            for(List entry : TConstructRegistry.patternPartMapping.keySet()) {
+                Item pattern = (Item) entry.get(0); // the pattern
+                int meta = (Integer) entry.get(1); // metadata of the pattern
+                int matID = (Integer)entry.get(2); // Material-ID of the material needed to craft
+
+                if (key.item == pattern && key.meta == meta && TConstructRegistry.getMaterial(matID) == material) {
+                    allowed = true;
+                    break;
+                }
+            }
+            if(!allowed)
+                return false;
+        }
         List<ToolMaterial> materials = patternMaterialLookup.get(key);
         if(materials == null)
         {
             Log.debug(String.format("Couldn't find lookup entry for %s:%d", key.item.getUnlocalizedName(), key.meta));
-            return;
+            return false;
         }
 
         // find the entry so we don't have a double entry
@@ -122,15 +169,24 @@ public abstract class RestrictionHelper {
             ToolMaterial mat = iter.next();
             if(mat == material)
             {
-                return;
+                // duplicate
+                return true;
             }
         }
 
         // item is not in list. add it
         materials.add(material);
+
+        return true;
     }
 
-    public static void initPatternParts()
+    public static void init()
+    {
+        initPatternParts();
+        initCastParts();
+    }
+
+    private static void initPatternParts()
     {
         Log.info("Loading tool pattern combinations");
         // cycle through ALL combinations
@@ -201,6 +257,44 @@ public abstract class RestrictionHelper {
         }
     }
 
+    private static void initCastParts()
+    {
+        Log.info("Loading tool casting combinations");
+        // cycle through ALL combinations
+        for(CastingRecipe recipe : TConstructRegistry.getTableCasting().getCastingRecipes())
+        {
+            // only recipes with cast
+            if(recipe.cast == null || recipe.output == null)
+                continue;
+            // we're only interested in toolparts, not making the casts themselves etc. or buckets.
+            if(!(recipe.output.getItem() instanceof IToolPart))
+                continue;
+
+            Item pattern = recipe.cast.getItem();
+            int meta = recipe.cast.getItemDamage();
+            int matID = ((IToolPart)recipe.output.getItem()).getMaterialID(recipe.output);
+
+            String name;
+            if(pattern == TinkerSmeltery.metalPattern && meta <= patternNames.length)
+                name = patternNames[meta];
+            else
+                name = (new ItemStack(pattern, 1, meta)).getUnlocalizedName();
+
+            ItemMeta im = configNameToCast.get(name);
+            // not registered in the mapping yet?
+            if(im == null) {
+                im = new ItemMeta(pattern, meta);
+                configNameToCast.put(name, im);
+            }
+
+            // add material
+            if(!patternMaterialLookup.containsKey(im))
+                patternMaterialLookup.put(im, new LinkedList<ToolMaterial>());
+
+            patternMaterialLookup.get(im).add(TConstructRegistry.getMaterial(matID));
+        }
+    }
+
     // the whole purpose of this is so that each tooltip has the same order >_<
     public static void sortEntries()
     {
@@ -251,7 +345,7 @@ public abstract class RestrictionHelper {
 
             ItemMeta itemMeta = (ItemMeta) o;
 
-            if (item != null ? !item.equals(itemMeta.item) : itemMeta.item != null) return false;
+            if (item != null ? !(item == itemMeta.item) : itemMeta.item != null) return false;
             if (meta != null ? !meta.equals(itemMeta.meta) : itemMeta.meta != null) return false;
 
             return true;

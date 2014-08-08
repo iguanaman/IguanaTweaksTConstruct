@@ -4,9 +4,11 @@ import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.restriction.RestrictionHelper;
+import iguanaman.iguanatweakstconstruct.util.TooltipHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.crafting.CastingRecipe;
@@ -68,6 +70,13 @@ public class PartRestrictionHandler {
         if (!(event.itemStack.getItem() instanceof IPattern))
             return;
 
+        // only display on shift
+        if(!TooltipHelper.shiftHeld())
+        {
+            event.toolTip.add(StatCollector.translateToLocalFormatted("tooltip.pattern.advanced", EnumChatFormatting.YELLOW.toString() + EnumChatFormatting.ITALIC + "Shift" + EnumChatFormatting.RESET + EnumChatFormatting.GRAY));
+            return;
+        }
+
         boolean foundMat = false;
         // regular materials
         List<ToolMaterial> materials = RestrictionHelper.getPatternMaterials(event.itemStack);
@@ -88,6 +97,6 @@ public class PartRestrictionHandler {
         }
 
         if(!foundMat)
-            event.toolTip.add(EnumChatFormatting.DARK_RED + "No known Materials");
+            event.toolTip.add(EnumChatFormatting.DARK_RED + StatCollector.translateToLocal("tooltip.pattern.noMaterials"));
     }
 }

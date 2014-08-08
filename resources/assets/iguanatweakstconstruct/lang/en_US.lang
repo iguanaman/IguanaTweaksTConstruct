@@ -77,6 +77,9 @@ tooltip.part.needsmodifier2=unless a modifier is available
 tooltip.part.castonly1=Can only be used to make casts,
 tooltip.part.castonly2=cannot be used to make a tool
 
+tooltip.pattern.advanced=Hold %s for Materials
+tooltip.pattern.noMaterials=No known Materials
+
 item.iguana.tcon.clayBucket.name=Clay Bucket
 item.iguana.tcon.clayBucketUnfired.name=Unfired Clay Bucket
 item.iguana.tcon.clayBucketFired.name=Fired Clay Bucket

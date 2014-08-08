@@ -5,6 +5,8 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
 import iguanaman.iguanatweakstconstruct.leveling.LevelingTooltips;
 import iguanaman.iguanatweakstconstruct.reference.Config;
+import iguanaman.iguanatweakstconstruct.util.TooltipHelper;
+import mcp.mobius.waila.overlay.Tooltip;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -33,14 +35,14 @@ public class LevelingToolTipHandler {
             return;
 
         // don't display tooltip when CTRL is held (also tic tooltips compatibility)
-        if(ctrlHeld())
+        if(TooltipHelper.ctrlHeld())
             return;
 
         ItemStack stack = event.itemStack;
         // find spot to insert our tooltip data
         ListIterator<String> inserter = findInsertSpot(event.toolTip);
         // does the user hold shift?
-        boolean advanced = shiftHeld();
+        boolean advanced = TooltipHelper.shiftHeld();
         // only allow advanced (xp) tooltip if config option is set
         advanced &= Config.showTooltipXP;
 
@@ -123,22 +125,5 @@ public class LevelingToolTipHandler {
         // we're either directly before the "+ damage" or at the end now
 
         return iterator;
-    }
-
-    // all hail ticTooltips for that information ;)
-    private boolean shiftHeld()
-    {
-        return Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
-    }
-
-    private boolean ctrlHeld()
-    {
-
-        // prioritize CONTROL, but allow OPTION as well on Mac (note: GuiScreen's isCtrlKeyDown only checks for the OPTION key on Mac)
-        boolean isCtrlKeyDown = Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) || Keyboard.isKeyDown(Keyboard.KEY_RCONTROL);
-        if (!isCtrlKeyDown && Minecraft.isRunningOnMac)
-            isCtrlKeyDown = Keyboard.isKeyDown(Keyboard.KEY_LMETA) || Keyboard.isKeyDown(Keyboard.KEY_RMETA);
-
-        return isCtrlKeyDown;
     }
 }

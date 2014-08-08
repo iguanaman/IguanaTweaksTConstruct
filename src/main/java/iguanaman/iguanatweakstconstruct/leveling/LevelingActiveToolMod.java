@@ -1,13 +1,16 @@
 package iguanaman.iguanatweakstconstruct.leveling;
 
+import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.oredict.OreDictionary;
 import tconstruct.library.ActiveToolMod;
 import tconstruct.library.tools.HarvestTool;
 import tconstruct.library.tools.ToolCore;
@@ -49,10 +52,26 @@ public class LevelingActiveToolMod extends ActiveToolMod {
         strong = strength >= 1.0f;
         effective = harvestTool.isEffective(block.getMaterial());
 
+        boolean blockWithDrops = block.quantityDropped(IguanaTweaksTConstruct.random) > 1;
+        boolean blockIsOre = false;
+        // look for an oredict entry that suggests that the block is an ore
+        // todo: might actually be worth it caching this stuff
+        ItemStack blockStack = new ItemStack(Item.getItemFromBlock(block), 1, meta);
+        for(int id : OreDictionary.getOreIDs(blockStack))
+            if(OreDictionary.getOreName(id).startsWith("ore"))
+            {
+                blockIsOre = true;
+                break;
+            }
+
         // only give xp if the use makes sense
-        if(harvestable && effective && strong)
-            // TODO: maybe give xp depending on WHAT block was mined? (xp determined by hardness, if it was an ore, etc.)
-            LevelingLogic.addXP(stack, (EntityPlayer) entity, 1);
+        if(harvestable && effective && strong) {
+            int xp = 1;
+            // bonus xp for mining ores!
+            if(blockWithDrops || blockIsOre)
+                xp++;
+            LevelingLogic.addXP(stack, (EntityPlayer) entity, xp);
+        }
 
         return false;
     }

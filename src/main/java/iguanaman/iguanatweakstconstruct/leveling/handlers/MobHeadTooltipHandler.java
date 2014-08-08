@@ -8,7 +8,6 @@ import net.minecraft.item.ItemSkull;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import tconstruct.library.tools.ToolCore;
 
 /**
  * Displays the tooltips on mob heads for the mob-head modifier.

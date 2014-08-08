@@ -1,12 +1,9 @@
 package iguanaman.iguanatweakstconstruct.old;
 
-import iguanaman.iguanatweakstconstruct.reference.*;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
+import iguanaman.iguanatweakstconstruct.old.items.*;
 import iguanaman.iguanatweakstconstruct.util.Log;
-import iguanaman.iguanatweakstconstruct.old.items.ClayBucket;
-import iguanaman.iguanatweakstconstruct.old.items.ClayBucketFilled;
-import iguanaman.iguanatweakstconstruct.old.items.ClayBucketMilk;
-import iguanaman.iguanatweakstconstruct.old.items.IguanaPattern;
-import iguanaman.iguanatweakstconstruct.old.items.IguanaToolPart;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -21,8 +18,6 @@ import tconstruct.library.crafting.ToolBuilder;
 import tconstruct.library.util.IPattern;
 import tconstruct.tools.BowRecipe;
 import tconstruct.tools.TinkerTools;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class IguanaItems {
 

@@ -1,7 +1,6 @@
 package iguanaman.iguanatweakstconstruct.debug;
 
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import iguanaman.iguanatweakstconstruct.reference.Reference;
 import mantle.pulsar.pulse.Handler;
 import mantle.pulsar.pulse.Pulse;
 import net.minecraftforge.common.MinecraftForge;

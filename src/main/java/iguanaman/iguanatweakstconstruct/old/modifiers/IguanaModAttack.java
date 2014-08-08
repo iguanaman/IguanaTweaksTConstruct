@@ -1,13 +1,13 @@
 package iguanaman.iguanatweakstconstruct.old.modifiers;
 
-import java.util.Arrays;
-import java.util.List;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import tconstruct.library.modifier.IModifyable;
 import tconstruct.library.modifier.ItemModifier;
 import tconstruct.library.tools.ToolCore;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class IguanaModAttack extends ItemModifier {
 

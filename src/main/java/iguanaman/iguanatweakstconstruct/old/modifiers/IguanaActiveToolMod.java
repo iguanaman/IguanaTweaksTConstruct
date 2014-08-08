@@ -1,8 +1,5 @@
 package iguanaman.iguanatweakstconstruct.old.modifiers;
 
-import java.util.Arrays;
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
@@ -11,6 +8,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import tconstruct.library.ActiveToolMod;
 import tconstruct.library.tools.ToolCore;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class IguanaActiveToolMod extends ActiveToolMod {
 

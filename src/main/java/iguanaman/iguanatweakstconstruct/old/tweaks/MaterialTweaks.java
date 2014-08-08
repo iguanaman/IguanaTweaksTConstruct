@@ -1,10 +1,10 @@
 package iguanaman.iguanatweakstconstruct.old.tweaks;
 
+import cpw.mods.fml.common.Loader;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.tools.TinkerTools;
-import cpw.mods.fml.common.Loader;
 
 public class MaterialTweaks {
 

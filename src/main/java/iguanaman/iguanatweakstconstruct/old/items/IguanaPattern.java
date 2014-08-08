@@ -1,15 +1,13 @@
 package iguanaman.iguanatweakstconstruct.old.items;
 
-import java.util.List;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-
 import org.lwjgl.input.Keyboard;
-
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.crafting.PatternBuilder;
 import tconstruct.tools.items.Pattern;
+
+import java.util.List;
 
 public class IguanaPattern extends Pattern {
 

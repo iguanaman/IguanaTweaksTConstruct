@@ -1,8 +1,5 @@
 package iguanaman.iguanatweakstconstruct.old;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
 //import tconstruct.common.TContent;
 //import cpw.mods.fml.common.ICraftingHandler;
 

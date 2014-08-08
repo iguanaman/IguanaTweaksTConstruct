@@ -2,15 +2,12 @@ package iguanaman.iguanatweakstconstruct.replacing;
 
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import iguanaman.iguanatweakstconstruct.reference.Config;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import tconstruct.library.TConstructRegistry;
-import tconstruct.library.tools.ToolCore;
 import tconstruct.library.util.IToolPart;
-import tconstruct.tools.items.ToolPart;
 
 public class PartToolTipHandler {
 

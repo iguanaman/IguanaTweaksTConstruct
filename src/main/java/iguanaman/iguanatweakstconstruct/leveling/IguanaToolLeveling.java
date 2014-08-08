@@ -10,7 +10,6 @@ import iguanaman.iguanatweakstconstruct.leveling.handlers.MobHeadTooltipHandler;
 import iguanaman.iguanatweakstconstruct.leveling.modifiers.ModMiningLevelBoost;
 import iguanaman.iguanatweakstconstruct.leveling.modifiers.ModXpAwareRedstone;
 import iguanaman.iguanatweakstconstruct.mobheads.IguanaMobHeads;
-import iguanaman.iguanatweakstconstruct.mobheads.handlers.MobHeadHandler;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
 import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
@@ -30,7 +29,6 @@ import tconstruct.tools.TinkerTools;
 
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Map;
 
 /**
  * The Leveling Pulse. If Leveling were a separate mod instead of pulse-model, this'd be a @Mod

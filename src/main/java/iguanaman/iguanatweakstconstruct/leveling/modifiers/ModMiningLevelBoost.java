@@ -5,7 +5,6 @@ import iguanaman.iguanatweakstconstruct.reference.Config;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
-import tconstruct.library.modifier.ItemModifier;
 import tconstruct.modifiers.tools.ModBoolean;
 
 public class ModMiningLevelBoost extends ModBoolean {

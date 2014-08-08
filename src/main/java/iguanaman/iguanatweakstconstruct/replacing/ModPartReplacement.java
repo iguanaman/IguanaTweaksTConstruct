@@ -1,7 +1,6 @@
 package iguanaman.iguanatweakstconstruct.replacing;
 
 import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
-import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -11,14 +10,10 @@ import tconstruct.library.crafting.ToolBuilder;
 import tconstruct.library.crafting.ToolRecipe;
 import tconstruct.library.modifier.ItemModifier;
 import tconstruct.library.tools.ToolCore;
-import tconstruct.library.tools.ToolMaterial;
 import tconstruct.library.util.IToolPart;
-import tconstruct.tools.items.ToolPart;
+
 import static iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic.*;
 import static iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic.PartTypes.*;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class ModPartReplacement extends ItemModifier {
     public ModPartReplacement() {

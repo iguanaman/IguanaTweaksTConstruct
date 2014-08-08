@@ -1,15 +1,11 @@
 package iguanaman.iguanatweakstconstruct.old.tweaks;
 
-import iguanaman.iguanatweakstconstruct.old.IguanaConfig;
-import iguanaman.iguanatweakstconstruct.util.Log;
+import cpw.mods.fml.common.registry.GameRegistry;
 import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
+import iguanaman.iguanatweakstconstruct.old.IguanaConfig;
 import iguanaman.iguanatweakstconstruct.old.IguanaPartBuildRecipe;
 import iguanaman.iguanatweakstconstruct.old.IguanaToolBuildRecipe;
-
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-
+import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -21,7 +17,10 @@ import tconstruct.smeltery.TinkerSmeltery;
 import tconstruct.tools.TinkerTools;
 import tconstruct.tools.items.Pattern;
 import tconstruct.world.TinkerWorld;
-import cpw.mods.fml.common.registry.GameRegistry;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VariousTweaks {
 

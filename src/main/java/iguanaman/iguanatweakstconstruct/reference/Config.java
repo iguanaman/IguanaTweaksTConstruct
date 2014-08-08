@@ -3,15 +3,12 @@ package iguanaman.iguanatweakstconstruct.reference;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import iguanaman.iguanatweakstconstruct.leveling.RandomBonuses;
-import iguanaman.iguanatweakstconstruct.util.Log;
-import iguanaman.iguanatweakstconstruct.restriction.RestrictionHelper;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
-import tconstruct.library.TConstructRegistry;
-import tconstruct.library.tools.ToolMaterial;
 
 import java.io.File;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Config {
     private Configuration configfile;

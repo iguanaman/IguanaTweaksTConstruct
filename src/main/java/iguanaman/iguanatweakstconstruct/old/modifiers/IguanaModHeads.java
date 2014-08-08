@@ -1,14 +1,14 @@
 package iguanaman.iguanatweakstconstruct.old.modifiers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import tconstruct.items.tools.Hammer;
 import tconstruct.items.tools.Pickaxe;
 import tconstruct.library.modifier.ItemModifier;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class IguanaModHeads extends ItemModifier {
 

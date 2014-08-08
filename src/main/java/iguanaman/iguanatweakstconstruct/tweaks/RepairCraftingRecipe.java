@@ -9,7 +9,6 @@ import net.minecraftforge.oredict.RecipeSorter;
 import tconstruct.library.crafting.ModifyBuilder;
 import tconstruct.library.modifier.ItemModifier;
 import tconstruct.library.tools.ToolCore;
-import tconstruct.modifiers.tools.ModRepair;
 import tconstruct.modifiers.tools.ModToolRepair;
 
 public class RepairCraftingRecipe implements IRecipe {

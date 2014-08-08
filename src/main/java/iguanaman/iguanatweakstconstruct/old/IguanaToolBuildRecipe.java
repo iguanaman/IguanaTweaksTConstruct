@@ -1,7 +1,5 @@
 package iguanaman.iguanatweakstconstruct.old;
 
-import java.util.ArrayList;
-
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
@@ -10,6 +8,8 @@ import net.minecraft.world.World;
 import tconstruct.library.crafting.ModifyBuilder;
 import tconstruct.library.crafting.ToolBuilder;
 import tconstruct.library.tools.ToolCore;
+
+import java.util.ArrayList;
 
 public class IguanaToolBuildRecipe implements IRecipe {
 

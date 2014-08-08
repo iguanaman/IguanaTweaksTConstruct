@@ -1,17 +1,9 @@
 package iguanaman.iguanatweakstconstruct.old.tweaks;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import iguanaman.iguanatweakstconstruct.old.IguanaConfig;
+import iguanaman.iguanatweakstconstruct.old.modifiers.*;
 import iguanaman.iguanatweakstconstruct.util.Log;
-import iguanaman.iguanatweakstconstruct.old.modifiers.IguanaModAttack;
-import iguanaman.iguanatweakstconstruct.old.modifiers.IguanaModClean;
-import iguanaman.iguanatweakstconstruct.old.modifiers.IguanaModHeads;
-import iguanaman.iguanatweakstconstruct.old.modifiers.IguanaModLapis;
-import iguanaman.iguanatweakstconstruct.old.modifiers.IguanaModRedstone;
-import iguanaman.iguanatweakstconstruct.old.modifiers.IguanaModRepair;
-import iguanaman.iguanatweakstconstruct.old.modifiers.IguanaModUpgrade;
-
-import java.util.Iterator;
-
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -23,7 +15,8 @@ import tconstruct.library.tools.ToolCore;
 import tconstruct.modifiers.tools.ModDurability;
 import tconstruct.modifiers.tools.ModInteger;
 import tconstruct.tools.TinkerTools;
-import cpw.mods.fml.common.registry.GameRegistry;
+
+import java.util.Iterator;
 
 public class ModifierTweaks
 {

@@ -1,12 +1,5 @@
 package iguanaman.iguanatweakstconstruct.old.tweaks;
 
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import iguanaman.iguanatweakstconstruct.old.IguanaConfig;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.block.Block;
@@ -17,6 +10,9 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.oredict.OreDictionary;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.world.TinkerWorld;
+
+import java.lang.reflect.Field;
+import java.util.*;
 
 public class HarvestLevelTweaks {
 

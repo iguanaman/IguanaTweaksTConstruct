@@ -1,11 +1,6 @@
 package iguanaman.iguanatweakstconstruct.old.modifiers;
 
 import iguanaman.iguanatweakstconstruct.reference.Config;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import tconstruct.items.tools.Hammer;
@@ -14,6 +9,10 @@ import tconstruct.library.TConstructRegistry;
 import tconstruct.library.modifier.IModifyable;
 import tconstruct.library.modifier.ItemModifier;
 import tconstruct.library.tools.ToolCore;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class IguanaModRedstone extends ItemModifier {
 

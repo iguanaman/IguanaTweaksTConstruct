@@ -2,18 +2,15 @@ package iguanaman.iguanatweakstconstruct.claybuckets;
 
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import mantle.world.WorldHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
 import tconstruct.smeltery.TinkerSmeltery;
-import tconstruct.smeltery.blocks.LiquidMetalFinite;
 
 public class ClayBucketHandler {
     // milking cows

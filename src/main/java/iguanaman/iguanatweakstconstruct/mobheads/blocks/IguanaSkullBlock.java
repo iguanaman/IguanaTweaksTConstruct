@@ -5,14 +5,12 @@ import iguanaman.iguanatweakstconstruct.mobheads.tileentities.IguanaSkullTileEnt
 import iguanaman.iguanatweakstconstruct.reference.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSkull;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
-import java.util.ListIterator;
 import java.util.Random;
 
 public class IguanaSkullBlock extends BlockSkull {

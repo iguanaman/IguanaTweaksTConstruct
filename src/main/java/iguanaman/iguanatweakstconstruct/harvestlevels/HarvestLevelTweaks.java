@@ -2,7 +2,6 @@ package iguanaman.iguanatweakstconstruct.harvestlevels;
 
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
-
 import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;

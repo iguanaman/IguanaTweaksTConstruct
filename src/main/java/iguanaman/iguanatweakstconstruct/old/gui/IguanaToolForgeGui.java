@@ -1,11 +1,12 @@
 package iguanaman.iguanatweakstconstruct.old.gui;
 
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.world.World;
-//import tconstruct.client.gui.GuiButtonTool;
-import tconstruct.tools.logic.ToolForgeLogic;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.world.World;
+import tconstruct.tools.logic.ToolForgeLogic;
+
+//import tconstruct.client.gui.GuiButtonTool;
 
 @SideOnly(Side.CLIENT)
 public class IguanaToolForgeGui extends IguanaToolStationGui

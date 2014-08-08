@@ -1,17 +1,6 @@
 package iguanaman.iguanatweakstconstruct.old;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
 //import tconstruct.common.TContent;
-import tconstruct.library.TConstructRegistry;
-import tconstruct.library.crafting.PatternBuilder;
-import tconstruct.library.crafting.PatternBuilder.ItemKey;
-import tconstruct.library.tools.BowstringMaterial;
-import tconstruct.library.tools.CustomMaterial;
-import tconstruct.library.tools.FletchingMaterial;
-import tconstruct.tools.TinkerTools;
-import tconstruct.tools.items.Pattern;
 //import cpw.mods.fml.common.ICraftingHandler;
 
 //TODO: Find the crating Handler replacement

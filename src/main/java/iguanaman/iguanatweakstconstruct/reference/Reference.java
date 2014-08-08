@@ -1,9 +1,5 @@
 package iguanaman.iguanatweakstconstruct.reference;
 
-import static net.minecraft.util.EnumChatFormatting.*;
-
-import static iguanaman.iguanatweakstconstruct.util.HarvestLevels.*;
-
 public class Reference {
     public static final String MOD_ID = "IguanaTweaksTConstruct";
     public static final String MOD_NAME = "Iguana Tweaks for Tinker's Construct";

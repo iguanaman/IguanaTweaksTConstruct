@@ -1,15 +1,13 @@
 package iguanaman.iguanatweakstconstruct.old.items;
 
 import iguanaman.iguanatweakstconstruct.old.IguanaConfig;
-import iguanaman.iguanatweakstconstruct.reference.Config;
-
-import java.util.List;
-
 import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.tools.items.ToolPart;
+
+import java.util.List;
 
 public class IguanaToolPart extends ToolPart {
 

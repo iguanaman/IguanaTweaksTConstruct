@@ -1,14 +1,14 @@
 package iguanaman.iguanatweakstconstruct.old;
 
-import iguanaman.iguanatweakstconstruct.util.Log;
+import cpw.mods.fml.common.registry.GameRegistry;
 import iguanaman.iguanatweakstconstruct.old.blocks.IguanaToolForgeBlock;
 import iguanaman.iguanatweakstconstruct.old.blocks.IguanaToolStationBlock;
+import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import tconstruct.common.itemblocks.MetadataItemBlock;
 import tconstruct.tools.TinkerTools;
 import tconstruct.tools.itemblocks.ToolStationItemBlock;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class IguanaBlocks {
 

@@ -25,7 +25,7 @@ public class IguanaSkullBlock extends BlockSkull {
 	}
 
 	/**
-	 * Returns a new instance of a prefix's tile entity class. Called on placing the prefix.
+	 * Returns a new instance of a block's tile entity class. Called on placing the block.
 	 */
 	@Override
 	public TileEntity createNewTileEntity(World world, int metadata)

@@ -70,7 +70,7 @@ public abstract class HarvestLevelTweaks {
                     // dense nether ore variants
                     for (ItemStack oreStack : OreDictionary.getOres("denseoreNether" + materialName)) modifyBlock(oreStack, i);
                     // full blocks (metal-blocks)
-                    for (ItemStack oreStack : OreDictionary.getOres("prefix" + materialName)) modifyBlock(oreStack, i);
+                    for (ItemStack oreStack : OreDictionary.getOres("block" + materialName)) modifyBlock(oreStack, i);
                     // stone-ores? dunno which mod adds that. leave it in for compatibility
                     for (ItemStack oreStack : OreDictionary.getOres("stone" + materialName)) modifyBlock(oreStack, i);
                     // bricks from metallurgy

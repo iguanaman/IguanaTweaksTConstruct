@@ -123,7 +123,7 @@ public class ModPartReplacement extends ItemModifier {
         ToolRecipe recipe = findRecipe(tool);
         NBTTagCompound tags = itemStack.getTagCompound().getCompoundTag("InfiTool");
 
-        // get prefix
+        // get item
         Item replacementPartItem = null;
         int partIndex = -1;
         for(int i = 0; i < parts.length; i++) {

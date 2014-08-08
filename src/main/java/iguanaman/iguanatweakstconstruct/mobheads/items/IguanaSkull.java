@@ -65,7 +65,7 @@ public class IguanaSkull extends ItemSkull {
 	}
 
 	/**
-	 * Returns the unlocalized name of this prefix. This version accepts an ItemStack so different stacks can have
+	 * Returns the unlocalized name of this item. This version accepts an ItemStack so different stacks can have
 	 * different names based on their damage or NBT.
 	 */
 	@Override
@@ -91,7 +91,7 @@ public class IguanaSkull extends ItemSkull {
 	}
 
     /**
-     * Gets an icon index based on an prefix's damage value
+     * Gets an icon index based on an items's damage value
      */
 	@Override
 	@SideOnly(Side.CLIENT)

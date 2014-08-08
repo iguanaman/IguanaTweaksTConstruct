@@ -28,7 +28,7 @@ public class LevelingActiveToolMod extends ActiveToolMod {
         if (!(entity instanceof EntityPlayer)) return false;
         // nope, you don't use an autonomous activator!
         if(entity instanceof FakePlayer) return false;
-        // why are you breaking this prefix with that tool! It's not a harvest tool derp!
+        // why are you breaking this block with that tool! It's not a harvest tool derp!
         if(!(tool instanceof HarvestTool)) return false;
 
         Block block = entity.worldObj.getBlock(x, y, z);
@@ -49,11 +49,9 @@ public class LevelingActiveToolMod extends ActiveToolMod {
         strong = strength >= 1.0f;
         effective = harvestTool.isEffective(block.getMaterial());
 
-        //Log.trace("Tool is [harvestable: '" + harvestable + "', effective: '" + effective + "', strong: '" + strong + "']");
-
         // only give xp if the use makes sense
         if(harvestable && effective && strong)
-            // TODO: maybe give xp depending on WHAT prefix was mined? (xp determined by hardness, if it was an ore, etc.)
+            // TODO: maybe give xp depending on WHAT block was mined? (xp determined by hardness, if it was an ore, etc.)
             LevelingLogic.addXP(stack, (EntityPlayer) entity, 1);
 
         return false;
@@ -61,7 +59,7 @@ public class LevelingActiveToolMod extends ActiveToolMod {
 
     @Override
     public boolean afterBlockBreak() {
-        Log.debug("afterBlockBreak is implemented. Somebody tell me that so I can update xp giving.");
+        Log.info("afterBlockBreak is implemented. Somebody tell me that so I can update xp giving.");
         return super.afterBlockBreak();
     }
 }

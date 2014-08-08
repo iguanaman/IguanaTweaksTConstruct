@@ -192,7 +192,7 @@ public class Config {
 
         showDebugXP = configfile.getBoolean("showDebugXP", CATEGORY_Debug, false, "Current Tool/Pick XP is shown as debug (F3) text");
 
-        logHarvestLevelChanges = configfile.getBoolean("logBlockHarvestLevelChange", CATEGORY_Debug, true, "Logs when the harvest level of a prefix is changed");
+        logHarvestLevelChanges = configfile.getBoolean("logBlockHarvestLevelChange", CATEGORY_Debug, true, "Logs when the harvest level of a block is changed");
         logMiningLevelChanges  = configfile.getBoolean("logToolMiningLevelChange", CATEGORY_Debug, true, "Logs when the mining level of a (non-tinker) tool is changed");
         logToolMaterialChanges = configfile.getBoolean("logTinkerMaterialChange", CATEGORY_Debug, true, "Logs when the mining level of a tinkers tool material is changed");
 

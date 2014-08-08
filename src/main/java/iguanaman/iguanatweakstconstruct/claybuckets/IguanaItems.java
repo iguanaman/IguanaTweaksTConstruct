@@ -38,7 +38,7 @@ public class IguanaItems {
     public void preInit(FMLPreInitializationEvent event)
     {
         Log.info("Adding Items");
-        // unfired clay bucket is a regular prefix
+        // unfired clay bucket is a regular item
         clayBucketUnfired = new Item().setUnlocalizedName(Reference.prefix("clayBucketUnfired")).setTextureName(Reference.resource("clayBucketUnfired")).setMaxStackSize(16).setCreativeTab(CreativeTabs.tabMisc);
         GameRegistry.registerItem(clayBucketUnfired, "clayBucketUnfired");
 

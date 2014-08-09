@@ -193,7 +193,7 @@ public abstract class HarvestLevelTweaks {
             // 5: Redstone/Diamond
             {"Midasium", "Vyroxeres"},
             // 6: Obsidian/Alumite
-            {"Ceruclase"},
+            {"Ceruclase", "Alduorite"},
             // 7: Ardite
             {"Kalendrite"},
             // 8: Cobalt

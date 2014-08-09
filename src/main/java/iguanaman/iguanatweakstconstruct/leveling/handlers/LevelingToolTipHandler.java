@@ -1,6 +1,7 @@
 package iguanaman.iguanatweakstconstruct.leveling.handlers;
 
 import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
 import iguanaman.iguanatweakstconstruct.leveling.LevelingTooltips;
@@ -22,7 +23,7 @@ public class LevelingToolTipHandler {
     // the prefix used for "+ X attack damage". Thanks Tic Tooltips ;)
     private static String plusPrefix = "\u00A79+";
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGH) // insert before tic-tooltips
     public void onItemToolTip(ItemTooltipEvent event) {
         if(event.entityPlayer == null)
             return;
@@ -111,10 +112,11 @@ public class LevelingToolTipHandler {
                 iterator.previous();
                 break;
             }
+            /*
             else if(Loader.isModLoaded("TiCTooltips") && str.contains("Shift")) {
                 iterator.previous();
                 break;
-            }
+            }*/
         }
 
         //  iterator.previous();

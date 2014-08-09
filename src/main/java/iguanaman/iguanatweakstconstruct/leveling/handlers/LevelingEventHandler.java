@@ -60,35 +60,35 @@ public class LevelingEventHandler {
 
                 // bonus chance for luck if hitting passive mob
                 if(event.entityLiving instanceof EntityAnimal)
-                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.LAPIS, 5, tags);
+                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.LAPIS, (int)xp+5, tags);
                 // otherwise damage chance
                 else
-                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.ATTACK, 1, tags);
+                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.ATTACK, (int)xp, tags);
 
                 // spiders also increase bane chance
                 if(event.entityLiving instanceof EntitySpider)
-                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.BANE, 1, tags);
+                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.BANE, (int)xp, tags);
                 // blazes give fiery chance (yes, blizz gives fiery :P)
                 else if(event.entityLiving instanceof EntityBlaze)
-                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.BLAZE, 1, tags);
+                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.BLAZE, (int)xp, tags);
                 // zombie pigman gives lifesteal
                 else if(event.entityLiving instanceof EntityPigZombie)
-                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.LIFESTEAL, 1, tags);
+                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.LIFESTEAL, (int)xp, tags);
                 // zombie gives smite
                 else if(event.entityLiving instanceof EntityZombie)
-                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.SMITE, 1, tags);
+                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.SMITE, (int)xp, tags);
                 // wither skeleton gives lifesteal
                 else if(event.entityLiving instanceof EntitySkeleton) {
                     if (((EntitySkeleton) event.entityLiving).getSkeletonType() != 0)
-                        RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.LIFESTEAL, 2, tags);
+                        RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.LIFESTEAL, (int)xp+2, tags);
                 }
                 // enderman gives beheading
                 else if(event.entityLiving instanceof EntityEnderman)
-                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.BEHEADING, 3, tags);
+                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.BEHEADING, (int)xp+3, tags);
 
                 // knocking back enemies with spriting gives knockback chance
                 if(player.isSprinting())
-                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.KNOCKBACK, 2, tags);
+                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.KNOCKBACK, (int)xp+2, tags);
             }
         }
     }

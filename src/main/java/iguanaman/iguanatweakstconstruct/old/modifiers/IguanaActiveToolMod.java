@@ -28,7 +28,7 @@ public class IguanaActiveToolMod extends ActiveToolMod {
 		Block block = entity.worldObj.getBlock(x, y, z);
 		int meta = entity.worldObj.getBlockMetadata(x, y, z);
 
-		if (block == null || materialBlacklist.contains(block.blockMaterial)) return false;
+		if (block == null || materialBlacklist.contains(block.getMaterial())) return false;
 
 		NBTTagCompound tags = stack.getTagCompound().getCompoundTag("InfiTool");
 

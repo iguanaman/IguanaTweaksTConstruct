@@ -27,6 +27,7 @@ import iguanaman.iguanatweakstconstruct.restriction.IguanaPartRestriction;
 import iguanaman.iguanatweakstconstruct.tweaks.IguanaTweaks;
 import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import iguanaman.iguanatweakstconstruct.util.Log;
+import iguanaman.iguanatweakstconstruct.worldgen.IguanaWorldGen;
 import mantle.pulsar.config.ForgeCFG;
 import mantle.pulsar.control.PulseManager;
 import mantle.pulsar.pulse.PulseMeta;
@@ -102,6 +103,7 @@ public class IguanaTweaksTConstruct {
         pulsar.registerPulse(new IguanaPartRestriction());
         // replacing has to be after tweaks and restrictions, because its tooltips have to be handled last
         pulsar.registerPulse(new IguanaToolPartReplacing());
+        pulsar.registerPulse(new IguanaWorldGen());
         pulsar.registerPulse(new IguanaDebug());
         pulsar.preInit(event);
 	}

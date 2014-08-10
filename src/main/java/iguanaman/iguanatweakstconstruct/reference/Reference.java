@@ -14,6 +14,7 @@ public class Reference {
     public static final String PULSE_TWEAKS = "IguanaTweaks";
     public static final String PULSE_ITEMS = "IguanaItems";
     public static final String PULSE_RESTRICTIONS = "IguanaRestrictions";
+    public static final String PULSE_WORLDGEN = "IguanaWorldGen";
 
     public static final String PROXY_CLIENT_CLASS = "iguanaman.iguanatweakstconstruct.proxy.ClientProxy";
     public static final String PROXY_SERVER_CLASS = "iguanaman.iguanatweakstconstruct.proxy.ServerProxy";

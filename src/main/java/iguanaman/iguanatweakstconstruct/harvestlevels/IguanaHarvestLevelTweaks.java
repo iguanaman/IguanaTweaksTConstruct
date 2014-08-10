@@ -18,15 +18,7 @@ import java.lang.reflect.Field;
 /**
  * The Harvest-Tweaks Pulse. If this were a separate mod instead of pulse-module, it'd be a @Mod
  * This pulse modifies the harvest level of all tools and blocks.
- *
- * A short overview:
- * 0. Wood/Stone
- * 1. Flint/Copper
- * 2. Iron
- * 3. Obsidian
- * 4. Ardite
- * 5. Cobalt
- * 6. Manyullym
+ * Check util.HarvestLevels for more info.
  *
  * Check the oreDictlevels to get an idea of what can be harvested with each tier.
  */

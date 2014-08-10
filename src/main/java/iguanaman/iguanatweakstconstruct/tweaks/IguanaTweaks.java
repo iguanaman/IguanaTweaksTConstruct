@@ -17,12 +17,15 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.WeightedRandomChestContent;
+import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.crafting.CastingRecipe;
 import tconstruct.library.crafting.ModifyBuilder;
 import tconstruct.library.crafting.PatternBuilder;
+import tconstruct.library.crafting.ToolBuilder;
 import tconstruct.library.modifier.ItemModifier;
 import tconstruct.library.util.IPattern;
 import tconstruct.modifiers.tools.ModFlux;
@@ -56,12 +59,39 @@ public class IguanaTweaks {
             reusableToolParts();
 
         // no stone tools for you
-        if(Config.disableStoneTools)
+        if(Config.disableStoneTools) {
             MinecraftForge.EVENT_BUS.register(new StoneToolHandler());
+            ChestGenHooks.removeItem(ChestGenHooks.BONUS_CHEST, new ItemStack(Items.stone_axe));
+            ChestGenHooks.removeItem(ChestGenHooks.BONUS_CHEST, new ItemStack(Items.stone_pickaxe));
+        }
 
         // because diamond pickaxe is hax
-        if(Config.nerfVanillaTools)
+        if(Config.nerfVanillaTools) {
             MinecraftForge.EVENT_BUS.register(new VanillaToolNerfHandler());
+
+            // replace vanilla tools with tinker tools in bonus chests
+            ChestGenHooks.removeItem(ChestGenHooks.BONUS_CHEST, new ItemStack(Items.wooden_pickaxe));
+            ChestGenHooks.removeItem(ChestGenHooks.BONUS_CHEST, new ItemStack(Items.wooden_axe));
+            ItemStack starterPick = ToolBuilder.instance.buildTool(new ItemStack(TinkerTools.pickaxeHead, 1, 0), new ItemStack(TinkerTools.toolRod, 1, 0), new ItemStack(TinkerTools.binding, 1, 0), "Starter Pickaxe");
+            ItemStack starterAxe = ToolBuilder.instance.buildTool(new ItemStack(TinkerTools.hatchetHead, 1, 0), new ItemStack(TinkerTools.toolRod, 1, 0), null, "Starter Hatchet");
+            if(starterPick != null)
+                ChestGenHooks.addItem(ChestGenHooks.BONUS_CHEST, new WeightedRandomChestContent(starterPick, 1, 1, 5));
+            if(starterAxe != null)
+                ChestGenHooks.addItem(ChestGenHooks.BONUS_CHEST, new WeightedRandomChestContent(starterAxe, 1, 1, 5));
+
+            // same with stone tools if not disabled
+            if(!Config.disableStoneTools)
+            {
+                ChestGenHooks.removeItem(ChestGenHooks.BONUS_CHEST, new ItemStack(Items.stone_axe));
+                ChestGenHooks.removeItem(ChestGenHooks.BONUS_CHEST, new ItemStack(Items.stone_pickaxe));
+                ItemStack stonePick = ToolBuilder.instance.buildTool(new ItemStack(TinkerTools.pickaxeHead, 1, 1), new ItemStack(TinkerTools.toolRod, 1, 0), new ItemStack(TinkerTools.binding, 1, 0), "");
+                ItemStack stoneAxe = ToolBuilder.instance.buildTool(new ItemStack(TinkerTools.hatchetHead, 1, 1), new ItemStack(TinkerTools.toolRod, 1, 0), null, "");
+                if(stonePick != null)
+                    ChestGenHooks.addItem(ChestGenHooks.BONUS_CHEST, new WeightedRandomChestContent(stonePick, 1, 1, 5));
+                if(stoneAxe != null)
+                    ChestGenHooks.addItem(ChestGenHooks.BONUS_CHEST, new WeightedRandomChestContent(stoneAxe, 1, 1, 5));
+            }
+        }
 
         // stonetorches
         if(Config.removeStoneTorchRecipe)

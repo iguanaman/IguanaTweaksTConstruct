@@ -94,6 +94,7 @@ public class RandomBonuses {
         // we can do this without getting an infinite loop, because redstone, lapis,... can be applied infinitely often
         boolean modified = false;
         Modifier choice = null;
+        int tries = 0;
         while(!modified) {
             // get a random decision number
             int random = TConstruct.random.nextInt(total);
@@ -118,28 +119,36 @@ public class RandomBonuses {
                 return null;
 
             // try to apply chosen modifier. WTB function pointers..
-            switch (choice)
+            modified = applyModifier(choice, player, tool);
+
+            // your configs suck. can't apply any modifier?
+            if(tries++ > 100)
             {
-                // mining mods
-                case REDSTONE:  modified = addRedstoneModifier(player, tool); break;
-                case LAPIS:     modified = addLapisModifier(player, tool); break;
-                case AUTOSMELT: modified = addAutoSmeltModifier(player, tool); break;
-                case SILKTOUCH: modified = addSilktouchModifier(player, tool); break;
-                // general modifiers
-                case DIAMOND:   modified = addDiamondModifier(player, tool); break;
-                case EMERALD:   modified = addEmeraldModifier(player, tool); break;
-                case REPAIR:    modified = addRepairModifier(player, tool); break;
-                case REINFORCED:modified = addReinforcedModifier(player, tool); break;
-                // combat modifiers
-                case ATTACK:    modified = addAttackModifier(player, tool); break;
-                case BLAZE:     modified = addBlazeModifier(player, tool); break;
-                case SMITE:     modified = addSmiteModifier(player, tool); break;
-                case BANE:      modified = addAntiSpiderModifier(player, tool); break;
-                case BEHEADING: modified = addBeheadingModifier(player, tool); break;
-                case LIFESTEAL: modified = addLifeStealModifier(player, tool); break;
-                case KNOCKBACK: modified = addKnockbackModifier(player, tool); break;
-                default: modified = false;
+                choice = null;
+                // make sure we really can't apply ANY modifier
+                for(Modifier mod : Modifier.values())
+                    if(applyModifier(mod, player, tool))
+                    {
+                        choice = mod;
+                        modified = true;
+                        break;
+                    }
+
+                // we really can't apply ANY modifier. whelp.
+                if(!modified)
+                    break;
             }
+        }
+
+        // restore modifiers
+        modifiers = Math.max(0, modifiers); // ensure it never goes to -1. Should never happen, but.. safety never hurts
+        tags.setInteger("Modifiers", modifiers);
+
+        // if we couldn't find any, log an error
+        if(!modified)
+        {
+            Log.warn(String.format("Couldn't find any applicable modifier to reward for %s's %s", player.getDisplayName(), tool.getDisplayName()));
+            return null;
         }
 
         if(Config.logBonusExtraChance && tags.hasKey(String.format("Extra%s", choice.toString()))) {
@@ -157,12 +166,35 @@ public class RandomBonuses {
         // remove the extra chance for the received modifier
         resetModifierExtraWeight(choice, tags);
 
-        // restore modifiers
-        tags.setInteger("Modifiers", modifiers);
-
         return choice;
     }
 
+    private static boolean applyModifier(Modifier modifier, EntityPlayer player, ItemStack tool)
+    {
+        switch (modifier)
+        {
+            // mining mods
+            case REDSTONE:  return addRedstoneModifier(player, tool);
+            case LAPIS:     return addLapisModifier(player, tool);
+            case AUTOSMELT: return addAutoSmeltModifier(player, tool);
+            case SILKTOUCH: return addSilktouchModifier(player, tool);
+            // general modifier
+            case DIAMOND:   return addDiamondModifier(player, tool);
+            case EMERALD:   return addEmeraldModifier(player, tool);
+            case REPAIR:    return addRepairModifier(player, tool);
+            case REINFORCED:return addReinforcedModifier(player, tool);
+            // combat modifier
+            case ATTACK:    return addAttackModifier(player, tool);
+            case BLAZE:     return addBlazeModifier(player, tool);
+            case SMITE:     return addSmiteModifier(player, tool);
+            case BANE:      return addAntiSpiderModifier(player, tool);
+            case BEHEADING: return addBeheadingModifier(player, tool);
+            case LIFESTEAL: return addLifeStealModifier(player, tool);
+            case KNOCKBACK: return addKnockbackModifier(player, tool);
+        }
+
+        return false;
+    }
 
     /* Mining Enchantments */
 
@@ -285,11 +317,11 @@ public class RandomBonuses {
             stacksToAdd = stackFromModifier(modifier);
 
         // can we apply the modifier?
-        if(!modifier.matches(stacksToAdd, tool))
+        if(!modifier.matches(stacksToAdd, tool)) // this should call canModify
             return false;
 
         // message!
-        if (!player.worldObj.isRemote) {
+        if (player != null && !player.worldObj.isRemote) {
             player.addChatMessage(new ChatComponentText(LevelingTooltips.getInfoString(StatCollector.translateToLocal(message), EnumChatFormatting.DARK_AQUA, String.format("+%d %s", displayedTimes, StatCollector.translateToLocal(message + ".tag")), modColor)));
         }
 

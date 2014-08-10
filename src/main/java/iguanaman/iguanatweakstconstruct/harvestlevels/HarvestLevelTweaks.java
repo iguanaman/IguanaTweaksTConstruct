@@ -10,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.oredict.OreDictionary;
+import tconstruct.world.blocks.GravelOre;
 
 /**
  * Used to modify the harvest levels of all known/findable tools and blocks. Vanilla and modded.
@@ -92,7 +93,11 @@ public abstract class HarvestLevelTweaks {
             Log.debug(String.format("Changed Harvest Level of %s from %d to %d", stack.getUnlocalizedName(), block.getHarvestLevel(stack.getItemDamage()), harvestLevel));
         }
 
-        block.setHarvestLevel("pickaxe", harvestLevel, stack.getItemDamage());
+        // gravelore gets shovel level instead of pickaxe.
+        if(block instanceof GravelOre)
+            block.setHarvestLevel("shovel", harvestLevel, stack.getItemDamage());
+        else
+            block.setHarvestLevel("pickaxe", harvestLevel, stack.getItemDamage());
     }
 
     private static void modifyTools()
@@ -102,31 +107,37 @@ public abstract class HarvestLevelTweaks {
         for(Object o : Item.itemRegistry)
         {
             Item item = (Item) o;
-            if(!item.getToolClasses(tmp).contains("pickaxe"))
-                continue;
+            // cycle through all toolclasses. usually this'll either be pickaxe, shovel or axe. But mods could add items with multiple.
+            for(String toolClass : item.getToolClasses(tmp)) {
+                // adapt harvest levels
+                int old = item.getHarvestLevel(tmp, toolClass);
+                // wood/gold tool unchanged
+                if (old <= 0)
+                    continue;
 
-            // adapt harvest levels
-            int old = item.getHarvestLevel(tmp, "pickaxe");
-            // wood/gold tool unchanged
-            if(old <= 0)
-                continue;
+                int hlvl = 0;
+                switch (old) {
+                    // stone tool: nerfed to wood level
+                    case 1:
+                        hlvl = HarvestLevels._0_stone;
+                        break;
+                    // iron tool
+                    case 2:
+                        hlvl = HarvestLevels._3_iron;
+                        break;
+                    // diamond tool
+                    case 3:
+                        hlvl = HarvestLevels._5_diamond;
+                        break;
+                    // default... we just increase it?
+                    default:
+                        hlvl = old + 1;
+                }
 
-            int hlvl = 0;
-            switch(old)
-            {
-                // stone tool: nerfed to wood level
-                case 1: hlvl = HarvestLevels._0_stone; break;
-                // iron tool
-                case 2: hlvl = HarvestLevels._3_iron; break;
-                // diamond tool
-                case 3: hlvl = HarvestLevels._5_diamond;  break;
-                // default... we just increase it?
-                default: hlvl = old+1;
+                item.setHarvestLevel(toolClass, hlvl);
+                if (Config.logMiningLevelChanges)
+                    Log.debug(String.format("Changed Harvest Level for %s of %s from %d to %d", toolClass, item.getUnlocalizedName(), old, hlvl));
             }
-
-            item.setHarvestLevel("pickaxe", hlvl);
-            if(Config.logMiningLevelChanges)
-                Log.debug(String.format("Changed Harvest Level of %s from %d to %d", item.getUnlocalizedName(), old, hlvl));
         }
 
         if(Config.logMiningLevelChanges)
@@ -193,7 +204,7 @@ public abstract class HarvestLevelTweaks {
             // 5: Redstone/Diamond
             {"Midasium", "Vyroxeres"},
             // 6: Obsidian/Alumite
-            {"Ceruclase"},
+            {"Ceruclase", "Alduorite"},
             // 7: Ardite
             {"Kalendrite"},
             // 8: Cobalt

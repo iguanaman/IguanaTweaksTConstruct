@@ -2,7 +2,7 @@ package iguanaman.iguanatweakstconstruct.reference;
 
 public class Reference {
     public static final String MOD_ID = "IguanaTweaksTConstruct";
-    public static final String MOD_NAME = "Iguana Tweaks for Tinker's Construct";
+    public static final String MOD_NAME = "Iguana Tinker Tweaks";
     public static final String TCON_MOD_ID = "TConstruct";
 
     public static final String RESOURCE = MOD_ID.toLowerCase();

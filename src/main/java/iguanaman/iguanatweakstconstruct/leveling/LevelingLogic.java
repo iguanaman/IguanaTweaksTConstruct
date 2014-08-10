@@ -255,20 +255,9 @@ public abstract class LevelingLogic {
 		NBTTagCompound tags = stack.getTagCompound().getCompoundTag("InfiTool");
 		World world = player.worldObj;
 
-        // Add random bonuses on leveling up?
-        // this is done first so the extra-chance can be incorporated correctly
-        if (Config.toolLevelingRandomBonuses)
-        {
-            RandomBonuses.tryModifying(player, stack);
-        }
-
         // *ding* levelup!
-		int level = getLevel(tags);
+        int level = getLevel(tags);
         level++;
-		tags.setInteger(TAG_LEVEL, level);
-
-        // reset tool xp to 0, since we're at a new level now
-        tags.setLong(TAG_EXP, 0L);
 
         // tell the player how awesome he is
         if (!world.isRemote)
@@ -278,6 +267,19 @@ public abstract class LevelingLogic {
                 player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + StatCollector.translateToLocalFormatted("message.levelup." + level, stack.getDisplayName())));
             }
         }
+
+        // Add random bonuses on leveling up?
+        // this is done first so the extra-chance can be incorporated correctly
+        if (Config.toolLevelingRandomBonuses)
+        {
+            RandomBonuses.tryModifying(player, stack);
+        }
+
+        // and NOW save the change
+		tags.setInteger(TAG_LEVEL, level);
+
+        // reset tool xp to 0, since we're at a new level now
+        tags.setLong(TAG_EXP, 0L);
 
         int currentModifiers = tags.getInteger("Modifiers");
 

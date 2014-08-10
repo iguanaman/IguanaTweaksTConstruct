@@ -18,6 +18,9 @@ import mantle.pulsar.pulse.Handler;
 import mantle.pulsar.pulse.Pulse;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.WeightedRandomChestContent;
+import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.MinecraftForge;
 
 /**
@@ -59,6 +62,10 @@ public class IguanaMobHeads {
         MinecraftForge.EVENT_BUS.register(new MobHeadHandler());
 
         proxy.postInit();
+
+        // :>
+        ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(new ItemStack(wearables, 1, 0), 0, 1, 1));
+        ChestGenHooks.addItem(ChestGenHooks.STRONGHOLD_LIBRARY, new WeightedRandomChestContent(new ItemStack(wearables, 1, 3), 0, 1, 1));
     }
 
     private void integrateThermalExpansion()

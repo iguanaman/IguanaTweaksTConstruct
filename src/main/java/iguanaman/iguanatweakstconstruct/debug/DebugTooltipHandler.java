@@ -19,13 +19,12 @@ public class DebugTooltipHandler {
         if(block == null || block== Blocks.air)
             return;
         int meta = event.itemStack.getItemDamage();
-        if(!"pickaxe".equals(block.getHarvestTool(meta)))
-            return;
+        String toolclass = block.getHarvestTool(meta);
 
         int hlvl = block.getHarvestLevel(meta);
         if(hlvl >= 0)
-            event.toolTip.add(EnumChatFormatting.GOLD + "Harvest Level required: " + HarvestLevels.getHarvestLevelName(hlvl));
+            event.toolTip.add(EnumChatFormatting.GOLD + String.format("Mineable with: %s %s", HarvestLevels.getHarvestLevelName(hlvl), toolclass));
         else
-            event.toolTip.add(EnumChatFormatting.GOLD + "Harvest Level required: Unknown");
+            event.toolTip.add(EnumChatFormatting.GOLD + "Mineable with: Unknown");
     }
 }

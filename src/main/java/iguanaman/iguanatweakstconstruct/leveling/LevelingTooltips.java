@@ -61,23 +61,56 @@ public abstract class LevelingTooltips {
     {
         String str;
         if(!StatCollector.canTranslate("tooltip.level.skill." + level))
-            str = "Unknown";
+            str = "???";
         else
             str = StatCollector.translateToLocal("tooltip.level.skill." + level);
 
-        return String.format("%s: %s%s", StatCollector.translateToLocal("tooltip.level.skilllevel"), getLevelColor(level), str);
+        return String.format("%s: %s", StatCollector.translateToLocal("tooltip.level.skilllevel"), getLevelString(level));
+    }
+
+    public static String getLevelString(int level)
+    {
+        return getLevelColor(level) + getRawLevelString(level) + EnumChatFormatting.RESET;
+    }
+
+    private static String getRawLevelString(int level)
+    {
+        if(level <= 0) return "";
+
+        // try a basic translated string
+        if(StatCollector.canTranslate("tooltip.level.skill." + level))
+            return StatCollector.translateToLocal("tooltip.level.skill." + level);
+
+        // ok. try to find a modulo
+        int i = 1;
+        while(StatCollector.canTranslate("tooltip.level.skill." + i))
+            i++;
+
+        // get the modulo'd string
+        String str = StatCollector.translateToLocal("tooltip.level.skill." + (level%i));
+        // and add +s!
+        for(int j = level/i; j > 0; j--)
+            str += '+';
+
+        return str;
     }
 
     public static String getLevelColor(int level)
     {
-        switch (level)
+        switch (level%12)
         {
-            case 1: return "\u00a74";
-            case 2: return "\u00a76";
-            case 3: return "\u00a7e";
-            case 4: return "\u00a72";
-            case 5: return "\u00a73";
-            case 6: return "\u00a7d";
+            case 0: return EnumChatFormatting.GRAY.toString();
+            case 1: return EnumChatFormatting.DARK_RED.toString();
+            case 2: return EnumChatFormatting.GOLD.toString();
+            case 3: return EnumChatFormatting.YELLOW.toString();
+            case 4: return EnumChatFormatting.DARK_GREEN.toString();
+            case 5: return EnumChatFormatting.DARK_AQUA.toString();
+            case 6: return EnumChatFormatting.LIGHT_PURPLE.toString();
+            case 7: return EnumChatFormatting.WHITE.toString();
+            case 8: return EnumChatFormatting.RED.toString();
+            case 9: return EnumChatFormatting.DARK_PURPLE.toString();
+            case 10:return EnumChatFormatting.AQUA.toString();
+            case 11:return EnumChatFormatting.GREEN.toString();
             default: return "";
         }
     }

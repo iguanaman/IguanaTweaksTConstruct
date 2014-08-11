@@ -13,6 +13,7 @@ public class Config {
     private Configuration configfile;
 
 	// leveling
+    public static int maxToolLevel;
     public static int xpRequiredToolsPercentage;
     public static int xpRequiredWeaponsPercentage;
     public static float xpPerLevelMultiplier;
@@ -115,6 +116,7 @@ public class Config {
         showMinimalTooltipXP = configfile.getBoolean("showMinimalTooltipXP", CATEGORY_Leveling, false, "Current XP% is shown after the level");
 
         // levelup behaviour
+        maxToolLevel               = configfile.getInt("maxToolLevel", CATEGORY_Leveling, 6, 1, 99, "");
         toolLeveling               = configfile.getBoolean("toolLeveling", CATEGORY_Leveling, true, "Can your skill with tools 'level up' as you use them?");
         toolLevelingExtraModifiers = configfile.getBoolean("ExtraModifiers", CATEGORY_Leveling, true, "Removes modifiers on new tools and gives them through leveling (requires 'toolLeveling=true')");
 		toolLevelingRandomBonuses  = configfile.getBoolean("RandomBonuses", CATEGORY_Leveling, true, "Gives a random bonus every level, if false and levelling is on modifiers are given at levels 2 and 4 (requires 'toolLeveling=true')");
@@ -230,91 +232,6 @@ public class Config {
         logToolMaterialChanges = configfile.getBoolean("logTinkerMaterialChange", CATEGORY_Debug, true, "Logs when the mining level of a tinkers tool material is changed");
         logBonusExtraChance    = configfile.getBoolean("logBonusExtraChance", CATEGORY_Debug, true, "Logs how much the extra-chance from doing stuff you had when getting a random bonus on levelup.");
 
-
-        /** not implemented anymore **/
-/*
-
-		// repairs
-		ConfigCategory repairsCategory = configfile.getCategory("repairs");
-		repairsCategory.setComment("Changes to tool repairing");
-
-		Property repairCostScalingProperty = configfile.get("repairs", "repairCostScaling", false);
-		repairCostScalingProperty.comment = "Repairs are less effective the more a tool is repaired";
-		repairCostScaling = repairCostScalingProperty.getBoolean(false);
-
-		Property repairLimitActiveProperty = configfile.get("repairs", "repairLimitActive", false);
-		repairLimitActiveProperty.comment = "Number of times TC tools can be repaired is limited";
-		repairLimitActive = repairLimitActiveProperty.getBoolean(false);
-
-		Property repairLimitProperty = configfile.get("repairs", "repairLimit", 25);
-		repairLimitProperty.comment = "Number of times TC tools can be repaired (only if 'repairLimitActive' is true) (set to 0 to disable repairs)";
-		repairLimit = Math.max(repairLimitProperty.getInt(25), 0);
-		repairLimitProperty.set(repairLimit);
-
-		Property repairScalingModifierProperty = configfile.get("repairs", "repairScalingModifier", 5);
-		repairScalingModifierProperty.comment = "Repair cost doubles after this many repairs (only if 'repairCostScaling' is true)";
-		repairScalingModifier = Math.max(repairScalingModifierProperty.getInt(5), 1);
-		repairScalingModifierProperty.set(repairScalingModifier);
-
-		Property repairCostPercentageProperty = configfile.get("repairs", "repairCostPercentage", 100);
-		repairCostPercentageProperty.comment = "Increase or decrease repair costs (higher = more expensive)";
-		repairCostPercentage = Math.max(repairCostPercentageProperty.getInt(100), 1);
-		repairCostPercentageProperty.set(repairCostPercentage);
-
-
-
-
-		// crafting
-		ConfigCategory craftingCategory = configfile.getCategory("crafting");
-		craftingCategory.setComment("Allow Tinkers crafting to be done in a normal crafting window");
-
-		Property easyBlankPatternRecipeProperty = configfile.get("crafting", "easyBlankPatternRecipe", true);
-		easyBlankPatternRecipeProperty.comment = "Allows blank patterns to be crafted with 4 sticks in a square";
-		easyBlankPatternRecipe = easyBlankPatternRecipeProperty.getBoolean(true);
-
-		Property easyPartCraftingProperty = configfile.get("crafting", "easyPartCrafting", true);
-		easyPartCraftingProperty.comment = "Allows you to make tool parts in a normal crafting window";
-		easyPartCrafting = easyPartCraftingProperty.getBoolean(true);
-
-		Property easyPatternCraftingProperty = configfile.get("crafting", "easyPatternCrafting", true);
-		easyPatternCraftingProperty.comment = "Allows you to rotate the the tier 1 patterns in a normal crafting window";
-		easyPatternCrafting = easyPatternCraftingProperty.getBoolean(true);
-
-		Property easyToolCreationProperty = configfile.get("crafting", "easyToolCreation", true);
-		easyToolCreationProperty.comment = "Allows you create tinkers tools in a normal crafting window";
-		easyToolCreation = easyToolCreationProperty.getBoolean(true);
-
-		Property easyToolModificationProperty = configfile.get("crafting", "easyToolModification", true);
-		easyToolModificationProperty.comment = "Allows you add modifications to tools in a normal crafting window";
-		easyToolModification = easyToolModificationProperty.getBoolean(true);
-
-
-		// modifiers
-		ConfigCategory modifiersCategory = configfile.getCategory("modifiers");
-		modifiersCategory.setComment("Options relating to tool modifiers");
-
-		Property addCleanModifierProperty = configfile.get("modifiers", "addCleanModifier", true);
-		addCleanModifierProperty.comment = "Silky Cloth can be used to remove all modifiers from a tool (currently safe but not working)";
-		addCleanModifier = addCleanModifierProperty.getBoolean(true);
-
-		Property moreExpensiveSilkyClothProperty = configfile.get("modifiers", "moreExpensiveSilkyCloth", true);
-		moreExpensiveSilkyClothProperty.comment = "Silky Cloth needs gold ingots, instead of nuggets";
-		moreExpensiveSilkyCloth = moreExpensiveSilkyClothProperty.getBoolean(true);
-
-		Property moreExpensiveSilkyJewelProperty = configfile.get("modifiers", "moreExpensiveSilkyJewel", true);
-		moreExpensiveSilkyJewelProperty.comment = "Silky Jewel needs emerald prefix, instead of one emerald";
-		moreExpensiveSilkyJewel = moreExpensiveSilkyJewelProperty.getBoolean(true);
-
-		Property mossRepairSpeedProperty = configfile.get("modifiers", "mossRepairSpeed", 3);
-		mossRepairSpeedProperty.comment = "Rate tools with moss repair (TC default 3)";
-		mossRepairSpeed = Math.max(mossRepairSpeedProperty.getInt(3), 0);
-		mossRepairSpeedProperty.set(mossRepairSpeed);
-
-		Property redstoneEffectProperty = configfile.get("modifiers", "redstoneEffect", 4);
-		redstoneEffectProperty.comment = "Amount each piece of redstone increases mining speed (tinkers default is 8)";
-		redstoneEffect = Math.max(redstoneEffectProperty.getInt(4), 1);
-		redstoneEffectProperty.set(redstoneEffect);
-*/
 
 		configfile.save();
 	}

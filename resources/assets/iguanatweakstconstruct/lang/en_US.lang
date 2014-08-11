@@ -13,6 +13,12 @@ message.levelup.3=You are now accustomed to the weight of the %s
 message.levelup.4=You have become adept at handling the %s
 message.levelup.5=You are now an expert at using the %s !
 message.levelup.6=You have mastered the %s!
+message.levelup.7=You have grandmastered the %s!
+message.levelup.8=You feel like you could fulfill mighty deeds with your %s!
+message.levelup.9=You and your %s are living legends!
+message.levelup.10=No god could stand in the way of you and your %s!
+message.levelup.11=Your %s is pure awesome.
+message.levelup.generic=Your %s has reached level %s
 
 message.levelup.newmodifier.1=You notice room for improvement
 message.levelup.newmodifier.2=More Bling for your Thing
@@ -60,12 +66,21 @@ tooltip.level.skilllevel=Skill Level
 tooltip.level.advanced=Hold %s for XP
 
 tooltip.level.skillxp=Skill XP
+tooltip.level.skill.0=Like new
 tooltip.level.skill.1=Clumsy
 tooltip.level.skill.2=Comfortable
 tooltip.level.skill.3=Accustomed
 tooltip.level.skill.4=Adept
 tooltip.level.skill.5=Expert
 tooltip.level.skill.6=Master
+tooltip.level.skill.7=Grandmaster
+tooltip.level.skill.8=Heroic
+tooltip.level.skill.9=Legendary
+tooltip.level.skill.10=Godlike
+tooltip.level.skill.11=Awesome
+tooltip.level.skill.42=boni
+tooltip.level.skill.66=Jadedcat
+tooltip.level.skill.99=Hacker
 
 tooltip.mobhead.level=Applicable up to: %s
 tooltip.uselessTool1=This tool cannot mine anything!

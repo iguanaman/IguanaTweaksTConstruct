@@ -40,7 +40,8 @@ public class IguanaToolLeveling {
     @Handler
     public void init(FMLInitializationEvent event)
     {
-        TConstructRegistry.registerActiveToolMod(new LevelingActiveToolMod());
+        // has to be before the original toolmod, otherwise we can't reward xp because of some modifications it does
+        TConstructRegistry.activeModifiers.add(0, new LevelingActiveToolMod());
 
         // substitute modifiers that need an xp-aware implementation
         takeOverModifiers();

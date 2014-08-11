@@ -57,6 +57,7 @@ public class IguanaTweaks {
 
         // no stone tools for you
         if(Config.disableStoneTools) {
+            Log.info("Disabling tinkers stone tools");
             MinecraftForge.EVENT_BUS.register(new StoneToolHandler());
             ChestGenHooks.removeItem(ChestGenHooks.BONUS_CHEST, new ItemStack(Items.stone_axe));
             ChestGenHooks.removeItem(ChestGenHooks.BONUS_CHEST, new ItemStack(Items.stone_pickaxe));
@@ -67,6 +68,7 @@ public class IguanaTweaks {
             // init whitelist
             findToolsFromConfig();
 
+            Log.info("Sticks and stones may break my bones, but your pickaxes and axes will break no blocks.");
             MinecraftForge.EVENT_BUS.register(new VanillaToolNerfHandler());
 
             // replace vanilla tools with tinker tools in bonus chests
@@ -94,14 +96,20 @@ public class IguanaTweaks {
         }
 
         // no hoes for you
-        if(Config.nerfVanillaHoes)
+        if(Config.nerfVanillaHoes) {
+            Log.info("Vanilla hoe? More like vanilla go!");
             MinecraftForge.EVENT_BUS.register(new VanillaHoeNerfHandler());
+        }
 
-        if(Config.nerfVanillaSwords)
+        if(Config.nerfVanillaSwords) {
+            Log.info("Replacing swords with pasta");
             MinecraftForge.EVENT_BUS.register(new VanillaSwordNerfHandler());
+        }
 
-        if(Config.nerfVanillaBows)
+        if(Config.nerfVanillaBows) {
+            Log.info("Sabotaging bows");
             MinecraftForge.EVENT_BUS.register(new VanillaBowNerfHandler());
+        }
 
         // stonetorches
         if(Config.removeStoneTorchRecipe)

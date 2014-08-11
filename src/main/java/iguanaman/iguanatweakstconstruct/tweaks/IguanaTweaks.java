@@ -36,9 +36,7 @@ import tconstruct.tools.TinkerTools;
 import tconstruct.world.TinkerWorld;
 
 import java.lang.reflect.Field;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Various Tweaks for Tinkers Construct and Vanilla Minecraft. See Config.
@@ -46,6 +44,7 @@ import java.util.Map;
 
 @Pulse(id = Reference.PULSE_TWEAKS, description = "Various Tweaks for vanilla Minecraft and Tinker's Construct. See Config.")
 public class IguanaTweaks {
+    public static Set<Item> toolWhitelist = new HashSet<Item>();
 
     @Handler
     public void postInit(FMLPostInitializationEvent event)
@@ -68,6 +67,9 @@ public class IguanaTweaks {
 
         // because diamond pickaxe is hax
         if(Config.nerfVanillaTools) {
+            // init whitelist
+            findToolsFromConfig();
+
             MinecraftForge.EVENT_BUS.register(new VanillaToolNerfHandler());
 
             // replace vanilla tools with tinker tools in bonus chests
@@ -216,6 +218,19 @@ public class IguanaTweaks {
                 iter.set(new ModLimitedToolRepair());
                 Log.trace("Replaced Tool Repair Modifier to limit the maximum amount of repairs");
             }
+        }
+    }
+
+    private static void findToolsFromConfig()
+    {
+        Log.info("Setting up whitelist for allowed tools");
+        // cycle through config entries
+        for(String identifier : Config.allowedTools) {
+            // look them up in the registry (we're in postInit. everything should be registered)
+            Object o = Item.itemRegistry.getObject(identifier);
+            // if we found it, add it.
+            if(o != null)
+                toolWhitelist.add((Item)o);
         }
     }
 }

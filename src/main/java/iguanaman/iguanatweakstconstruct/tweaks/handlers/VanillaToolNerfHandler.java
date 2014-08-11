@@ -1,6 +1,7 @@
 package iguanaman.iguanatweakstconstruct.tweaks.handlers;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import iguanaman.iguanatweakstconstruct.tweaks.IguanaTweaks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
@@ -9,6 +10,8 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
+
+import java.util.Set;
 
 public class VanillaToolNerfHandler {
     @SubscribeEvent
@@ -39,6 +42,9 @@ public class VanillaToolNerfHandler {
     public static boolean isUselessTool(Item item)
     {
         if(item == null)
+            return false;
+
+        if(IguanaTweaks.toolWhitelist.contains(item))
             return false;
 
         if(item instanceof ItemTool)

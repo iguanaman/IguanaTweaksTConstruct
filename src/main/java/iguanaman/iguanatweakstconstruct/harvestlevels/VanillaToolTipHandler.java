@@ -3,6 +3,7 @@ package iguanaman.iguanatweakstconstruct.harvestlevels;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import iguanaman.iguanatweakstconstruct.leveling.LevelingTooltips;
 import iguanaman.iguanatweakstconstruct.reference.Config;
+import iguanaman.iguanatweakstconstruct.tweaks.handlers.VanillaHoeNerfHandler;
 import iguanaman.iguanatweakstconstruct.tweaks.handlers.VanillaToolNerfHandler;
 import net.minecraft.item.ItemTool;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -17,7 +18,8 @@ public class VanillaToolTipHandler {
         if(!(event.itemStack.getItem() instanceof ItemTool))
             return;
 
-        if(Config.nerfVanillaTools && VanillaToolNerfHandler.isUselessTool(event.itemStack.getItem()))
+        if((Config.nerfVanillaTools && VanillaToolNerfHandler.isUselessTool(event.itemStack.getItem()))
+         || (Config.nerfVanillaHoes && VanillaHoeNerfHandler.isUselessHoe(event.itemStack.getItem())))
             return;
 
         // we're only interested in stuff that's basically a pickaxe

@@ -7,8 +7,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
 import java.io.File;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class Config {
     private Configuration configfile;
@@ -70,7 +69,7 @@ public class Config {
     //public static float repairAmountMultiplier;
 
     // allowed tools that should not be nerfed
-    public static Set<String> allowedTools = new HashSet<String>();
+    public static List<String> allowedTools = new LinkedList<String>();
 
     // debug
     public static boolean showDebugXP;
@@ -96,6 +95,7 @@ public class Config {
         final String CATEGORY_PartReplacement = "PartReplacement";
         final String CATEGORY_Heads = "MobHeads";
         final String CATEGORY_Tweaks = "Tweaks";
+        final String CATEGORY_AllowedTools = "AllowedTools";
         final String CATEGORY_Debug = "Debug";
 
 		/** Leveling **/
@@ -191,6 +191,22 @@ public class Config {
         // repair
         maxToolRepairs = configfile.getInt("repairsLimit", CATEGORY_Tweaks, -1, -1, 999, "Limits the amount how often a tool can be repaired. -1 means unlimited repairs, like normally.");
         //repairAmountMultiplier = configfile.getFloat("repairAmountMultiplier", CATEGORY_Tweaks, 1.0f, 0.01f, 9.99f, "A factor that is multiplied onto the amount a tool is repaired. (0.5 = half durability restored per repair, 2.0 = twice as much durability restored per repair)");
+
+        /** Allowed tools for nerfed vanilla tools **/
+        configfile.setCategoryComment(CATEGORY_AllowedTools, "Tweak Module: This category allows you to specify which tools ARE STILL USABLE if the option to disable non-TConstsruct tools is enabled.");
+        {
+            String[] picks =   configfile.getStringList("pickaxes", CATEGORY_AllowedTools, new String[0], "Pickaxes that shall remain useful");
+            String[] axes =    configfile.getStringList("axes", CATEGORY_AllowedTools, new String[0], "Axes that shall remain useful");
+            String[] shovels = configfile.getStringList("shovels", CATEGORY_AllowedTools, new String[0], "Shovels that shall remain useful");
+            String[] hoes =    configfile.getStringList("hoes", CATEGORY_AllowedTools, new String[0], "Hoes that shall remain useful");
+            String[] other =   configfile.getStringList("unspecified", CATEGORY_AllowedTools, new String[0], "Other tools. I'll be honest, the category doesn't matter, they're just for readability :P");
+
+            allowedTools.addAll(Arrays.asList(picks));
+            allowedTools.addAll(Arrays.asList(axes));
+            allowedTools.addAll(Arrays.asList(shovels));
+            allowedTools.addAll(Arrays.asList(hoes));
+            allowedTools.addAll(Arrays.asList(other));
+        }
 
 
         /** Debug **/

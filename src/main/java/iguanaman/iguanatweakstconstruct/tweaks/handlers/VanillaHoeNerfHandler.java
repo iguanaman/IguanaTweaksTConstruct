@@ -2,6 +2,7 @@ package iguanaman.iguanatweakstconstruct.tweaks.handlers;
 
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import iguanaman.iguanatweakstconstruct.tweaks.IguanaTweaks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemHoe;
 import net.minecraft.util.EnumChatFormatting;
@@ -35,6 +36,9 @@ public class VanillaHoeNerfHandler {
     public static boolean isUselessHoe(Item item)
     {
         if(item == null)
+            return false;
+
+        if(IguanaTweaks.toolWhitelist.contains(item))
             return false;
 
         if(item instanceof ItemHoe)

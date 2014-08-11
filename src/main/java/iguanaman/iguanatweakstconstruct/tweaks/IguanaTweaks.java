@@ -13,8 +13,7 @@ import mantle.pulsar.pulse.Handler;
 import mantle.pulsar.pulse.Pulse;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.MinecraftForge;
@@ -242,6 +241,19 @@ public class IguanaTweaks {
             // if we found it, add it.
             if(o != null)
                 toolWhitelist.add((Item)o);
+        }
+
+        // mod-wide enabling
+        for(Object identifier : Item.itemRegistry.getKeys())
+        {
+            String mod = identifier.toString().split(":")[0]; // should always be non-null... I think
+            if(Config.allowedModTools.contains(mod))
+            {
+                // get the item
+                Object item = Item.itemRegistry.getObject(identifier);
+                if(item instanceof ItemTool || item instanceof ItemHoe || item instanceof ItemSword || item instanceof ItemBow)
+                    toolWhitelist.add((Item)item);
+            }
         }
     }
 }

@@ -72,6 +72,7 @@ public class Config {
 
     // allowed tools that should not be nerfed
     public static List<String> allowedTools = new LinkedList<String>();
+    public static Set<String> allowedModTools = new HashSet<String>();
 
     // debug
     public static boolean showDebugXP;
@@ -197,15 +198,17 @@ public class Config {
         //repairAmountMultiplier = configfile.getFloat("repairAmountMultiplier", CATEGORY_Tweaks, 1.0f, 0.01f, 9.99f, "A factor that is multiplied onto the amount a tool is repaired. (0.5 = half durability restored per repair, 2.0 = twice as much durability restored per repair)");
 
         /** Allowed tools for nerfed vanilla tools **/
-        configfile.setCategoryComment(CATEGORY_AllowedTools, "Tweak Module: This category allows you to specify which tools ARE STILL USABLE if the option to disable non-TConstsruct tools is enabled.\nYou can use * as a wildcard if you want to enable all items of a mod. For example minecraft:* would enable all vanilla tools.");
+        configfile.setCategoryComment(CATEGORY_AllowedTools, "Tweak Module: This category allows you to specify which tools ARE STILL USABLE if the option to disable non-TConstsruct tools is enabled.");
         {
-            String[] axes =    configfile.getStringList("axes", CATEGORY_AllowedTools, new String[0], "Axes that shall remain useful");
-            String[] picks =   configfile.getStringList("pickaxes", CATEGORY_AllowedTools, new String[0], "Pickaxes that shall remain useful");
-            String[] shovels = configfile.getStringList("shovels", CATEGORY_AllowedTools, new String[0], "Shovels that shall remain useful");
-            String[] swords =  configfile.getStringList("swords", CATEGORY_AllowedTools, new String[0], "Swords that shall remain useful");
-            String[] bows   =  configfile.getStringList("bows", CATEGORY_AllowedTools, new String[0], "bows that shall remain useful");
-            String[] hoes =    configfile.getStringList("hoes", CATEGORY_AllowedTools, new String[0], "Hoes that shall remain useful");
-            String[] other =   configfile.getStringList("unspecified", CATEGORY_AllowedTools, new String[0], "Other tools. I'll be honest, the category doesn't matter, they're just for readability :P");
+            String[] axes =    configfile.getStringList("axes", CATEGORY_AllowedTools, defaultAllowedAxes, "Axes that shall remain useful");
+            String[] picks =   configfile.getStringList("pickaxes", CATEGORY_AllowedTools, defaultAllowedPicks, "Pickaxes that shall remain useful");
+            String[] shovels = configfile.getStringList("shovels", CATEGORY_AllowedTools, defaultAllowedShovel, "Shovels that shall remain useful");
+            String[] swords =  configfile.getStringList("swords", CATEGORY_AllowedTools, defaultAllowedSwords, "Swords that shall remain useful");
+            String[] bows   =  configfile.getStringList("bows", CATEGORY_AllowedTools, defaultAllowedBows, "bows that shall remain useful");
+            String[] hoes =    configfile.getStringList("hoes", CATEGORY_AllowedTools, defaultAllowedHoes, "Hoes that shall remain useful");
+            String[] other =   configfile.getStringList("unspecified", CATEGORY_AllowedTools, defaultAllowedOther, "Other tools. I'll be honest, the category doesn't matter, they're just for readability :P");
+
+            allowedModTools.addAll(Arrays.asList(configfile.getStringList("mods", CATEGORY_AllowedTools, defaultAllowMod, "Here you can enter a mod-id to whitelist ALL itesm of this mod.")));
 
             allowedTools.addAll(Arrays.asList(picks));
             allowedTools.addAll(Arrays.asList(axes));
@@ -323,4 +326,13 @@ public class Config {
             sync();
     }
 
+
+    private static String[] defaultAllowedPicks = new String[]{"Botania:terraPick", "Botania:glassPick", "Steamcraft:steamDrill"};
+    private static String[] defaultAllowedAxes = new String[]{"Steamcraft:steamAxe"};
+    private static String[] defaultAllowedShovel = new String[]{"Steamcraft:steamShovel"};
+    private static String[] defaultAllowedHoes = new String[]{};
+    private static String[] defaultAllowedSwords = new String[]{"Botania:terraSword", "Botania:enderDagger"};
+    private static String[] defaultAllowedBows = new String[]{};
+    private static String[] defaultAllowedOther = new String[]{"ThermalExpansion:tool.battleWrenchInvar", "ThermalExpansion:tool.sickleInvar"};
+    private static String[] defaultAllowMod = new String[]{"RedstoneArsenal", "ExtraUtilities", "witchery", "AWWayofTime"};
 }

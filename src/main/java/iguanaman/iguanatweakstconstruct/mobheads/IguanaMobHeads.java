@@ -44,7 +44,7 @@ public class IguanaMobHeads {
             integrateThermalExpansion();
 
         skullItem = new IguanaSkull();
-        GameRegistry.registerItem(skullItem, "skull");
+        GameRegistry.registerItem(skullItem, "skullItem");
 
         skullBlock = new IguanaSkullBlock();
         GameRegistry.registerBlock(skullBlock, "skullBlock");

@@ -19,9 +19,9 @@ public class IguanaSkullBlock extends BlockSkull {
 		super();
 
         this.setHardness(1.0F);
-        this.setStepSound(Block.soundTypeSand);
+        this.setStepSound(Block.soundTypePiston);
         this.setBlockName(Reference.prefix("skull"));
-        this.setBlockTextureName("skullItem");
+        this.setBlockTextureName("skull");
 	}
 
 	/**

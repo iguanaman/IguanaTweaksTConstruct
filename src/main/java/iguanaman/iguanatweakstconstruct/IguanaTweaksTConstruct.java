@@ -64,8 +64,8 @@ public class IguanaTweaksTConstruct {
 
     // TODO: decide wether or not the same cfg as tcon should be used
     // use the PulseManager. This allows us to separate the different parts into independend modules and have stuff together. yay.
-    private ForgeCFG pulseCFG = new ForgeCFG("TinkersModules", "Addon: Iguana Tweaks for Tinkers Construct");
-    private PulseManager pulsar = new PulseManager(Reference.MOD_ID, pulseCFG);
+    private ForgeCFG pulseCFG;
+    private PulseManager pulsar;
 
     public static boolean modTEDetected = false;
     public static File configPath;
@@ -75,6 +75,10 @@ public class IguanaTweaksTConstruct {
         File suggestion = event.getSuggestedConfigurationFile();
         configPath = new File(suggestion.getParentFile(), FilenameUtils.removeExtension(suggestion.getName()));
         configPath.mkdirs();
+
+        // init pulse manager
+        pulseCFG = new ForgeCFG(configPath.getName() + "/Modules", "Tinker's Construct Addon: Iguana Tweaks for Tinkers Construct");
+        pulsar = new PulseManager(Reference.MOD_ID, pulseCFG);
 
         Config config = new Config();
         config.init(new File(configPath, "main.cfg"));

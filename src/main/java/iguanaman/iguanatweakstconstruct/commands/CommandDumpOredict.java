@@ -1,4 +1,4 @@
-package iguanaman.iguanatweakstconstruct.debug;
+package iguanaman.iguanatweakstconstruct.commands;
 
 import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.command.CommandBase;
@@ -10,7 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
-public class DumpOredict extends CommandBase {
+public class CommandDumpOredict extends CommandBase {
 
     @Override
     public String getCommandName() {
@@ -29,7 +29,7 @@ public class DumpOredict extends CommandBase {
 
     @Override
     public void processCommand(ICommandSender icommandsender, String[] astring) {
-        File file = new File("dumpOreDict.txt");
+        File file = new File("dump_OreDict.txt");
         try {
             PrintWriter pw = new PrintWriter(file);
             for(String ore : OreDictionary.getOreNames())
@@ -47,13 +47,7 @@ public class DumpOredict extends CommandBase {
 
     @Override
     public String getCommandUsage(ICommandSender icommandsender) {
-        return null;
-    }
-
-    @Override
-    public int compareTo (Object arg0)
-    {
-        return 0;
+        return "/dumpOredict";
     }
 
 }

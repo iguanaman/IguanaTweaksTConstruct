@@ -69,6 +69,9 @@ public class Config {
     public static int maxToolRepairs;
     //public static float repairAmountMultiplier;
 
+    // allowed tools that should not be nerfed
+    public static Set<String> allowedTools = new HashSet<String>();
+
     // debug
     public static boolean showDebugXP;
 	public static boolean logHarvestLevelChanges;
@@ -174,7 +177,7 @@ public class Config {
         recipeGravelPerFlint = configfile.getInt("gravelPerFlint", CATEGORY_Tweaks, 3, 1, 9, "How many gravel are required to craft one Flint");
 
         // ticon tweaks
-        disableStoneTools = configfile.getBoolean("disablestoneTools", CATEGORY_Tweaks, true, "Stone Tools can only be used to create casts, but no tools");
+        disableStoneTools = configfile.getBoolean("disableStoneTools", CATEGORY_Tweaks, true, "Stone Tools can only be used to create casts, but no tools");
         castsBurnMaterial = configfile.getBoolean("castingBurnsMaterial", CATEGORY_Tweaks, true, "Creating a metal cast burns up the material that was used to create it");
         easyToolRepair    = configfile.getBoolean("easyToolRepair", CATEGORY_Tweaks, true, "Allows to repair your tool in a crafting grid, without tool station");
         allowPartReuse    = configfile.getBoolean("allowPartReuse", CATEGORY_Tweaks, true, "Allows toolparts to be used as material in the Part Builder. Like, turn a Pick head into a Shovel head.!");

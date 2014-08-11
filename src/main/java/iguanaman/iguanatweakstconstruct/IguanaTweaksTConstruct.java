@@ -11,8 +11,8 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import iguanaman.iguanatweakstconstruct.claybuckets.IguanaItems;
+import iguanaman.iguanatweakstconstruct.commands.CommandDumpOredict;
 import iguanaman.iguanatweakstconstruct.debug.DebugCommand;
-import iguanaman.iguanatweakstconstruct.debug.DumpOredict;
 import iguanaman.iguanatweakstconstruct.debug.IguanaDebug;
 import iguanaman.iguanatweakstconstruct.harvestlevels.IguanaHarvestLevelTweaks;
 import iguanaman.iguanatweakstconstruct.leveling.IguanaToolLeveling;
@@ -24,6 +24,7 @@ import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
 import iguanaman.iguanatweakstconstruct.replacing.IguanaToolPartReplacing;
 import iguanaman.iguanatweakstconstruct.restriction.IguanaPartRestriction;
+import iguanaman.iguanatweakstconstruct.commands.CommandDumpTools;
 import iguanaman.iguanatweakstconstruct.tweaks.IguanaTweaks;
 import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import iguanaman.iguanatweakstconstruct.util.Log;
@@ -123,8 +124,6 @@ public class IguanaTweaksTConstruct {
 	public void serverStarting(FMLServerStartingEvent event)
 	{
         // TODO: change this to a proper isModuleLoaded or something in Pulsar 0.4+ (when released/implemented)
-        Log.debug("Adding command: dumpOredict");
-        event.registerServerCommand(new DumpOredict());
 		if (isToolLevelingActive)
 		{
             Log.debug("Adding command: leveluptool");
@@ -132,6 +131,12 @@ public class IguanaTweaksTConstruct {
             Log.debug("Adding command: toolxp");
             event.registerServerCommand(new IguanaCommandToolXP());
 		}
+
+        Log.debug("Adding command: dumpTools");
+        event.registerServerCommand(new CommandDumpTools());
+        Log.debug("Adding command: dumpOredict");
+        event.registerServerCommand(new CommandDumpOredict());
+
         if(pulseCFG.isModuleEnabled(new PulseMeta("Debug", "", false, false)))
             event.registerServerCommand(new DebugCommand());
 	}

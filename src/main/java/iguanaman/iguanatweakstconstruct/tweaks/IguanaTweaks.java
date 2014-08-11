@@ -4,10 +4,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
-import iguanaman.iguanatweakstconstruct.tweaks.handlers.FlintHandler;
-import iguanaman.iguanatweakstconstruct.tweaks.handlers.StoneToolHandler;
-import iguanaman.iguanatweakstconstruct.tweaks.handlers.VanillaHoeNerfHandler;
-import iguanaman.iguanatweakstconstruct.tweaks.handlers.VanillaToolNerfHandler;
+import iguanaman.iguanatweakstconstruct.tweaks.handlers.*;
 import iguanaman.iguanatweakstconstruct.tweaks.modifiers.ModFluxExpensive;
 import iguanaman.iguanatweakstconstruct.tweaks.modifiers.ModLimitedToolRepair;
 import iguanaman.iguanatweakstconstruct.util.Log;
@@ -99,6 +96,12 @@ public class IguanaTweaks {
         // no hoes for you
         if(Config.nerfVanillaHoes)
             MinecraftForge.EVENT_BUS.register(new VanillaHoeNerfHandler());
+
+        if(Config.nerfVanillaSwords)
+            MinecraftForge.EVENT_BUS.register(new VanillaSwordNerfHandler());
+
+        if(Config.nerfVanillaBows)
+            MinecraftForge.EVENT_BUS.register(new VanillaBowNerfHandler());
 
         // stonetorches
         if(Config.removeStoneTorchRecipe)

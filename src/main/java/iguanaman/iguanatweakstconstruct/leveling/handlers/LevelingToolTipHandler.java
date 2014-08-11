@@ -21,7 +21,7 @@ import java.util.ListIterator;
 
 public class LevelingToolTipHandler {
     // the prefix used for "+ X attack damage". Thanks Tic Tooltips ;)
-    private static String plusPrefix = "\u00A79+";
+    public static String plusPrefix = "\u00A79+";
 
     @SubscribeEvent(priority = EventPriority.HIGH) // insert before tic-tooltips
     public void onItemToolTip(ItemTooltipEvent event) {

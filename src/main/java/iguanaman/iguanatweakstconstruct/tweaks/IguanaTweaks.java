@@ -6,6 +6,7 @@ import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
 import iguanaman.iguanatweakstconstruct.tweaks.handlers.FlintHandler;
 import iguanaman.iguanatweakstconstruct.tweaks.handlers.StoneToolHandler;
+import iguanaman.iguanatweakstconstruct.tweaks.handlers.VanillaHoeNerfHandler;
 import iguanaman.iguanatweakstconstruct.tweaks.handlers.VanillaToolNerfHandler;
 import iguanaman.iguanatweakstconstruct.tweaks.modifiers.ModFluxExpensive;
 import iguanaman.iguanatweakstconstruct.tweaks.modifiers.ModLimitedToolRepair;
@@ -92,6 +93,10 @@ public class IguanaTweaks {
                     ChestGenHooks.addItem(ChestGenHooks.BONUS_CHEST, new WeightedRandomChestContent(stoneAxe, 1, 1, 5));
             }
         }
+
+        // no hoes for you
+        if(Config.nerfVanillaHoes)
+            MinecraftForge.EVENT_BUS.register(new VanillaHoeNerfHandler());
 
         // stonetorches
         if(Config.removeStoneTorchRecipe)

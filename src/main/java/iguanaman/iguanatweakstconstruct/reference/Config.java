@@ -54,6 +54,7 @@ public class Config {
 
     // tweaks
     public static boolean nerfVanillaTools;
+    public static boolean nerfVanillaHoes;
     public static boolean removeFlintDrop;
     public static boolean addFlintRecipe;
     public static int recipeGravelPerFlint;
@@ -165,6 +166,7 @@ public class Config {
         configfile.setCategoryComment(CATEGORY_Tweaks, "Tweak Module: Tweaks to vanilla Minecraft and Tinker's Construct");
 
         nerfVanillaTools = configfile.getBoolean("ohNoYouAreNOTgoingToUseThatTool", CATEGORY_Tweaks, true, "Makes all non-TConstruct tools mine nothing");
+        nerfVanillaHoes  = configfile.getBoolean("disableHoes", CATEGORY_Tweaks, false, "Makes all non-TConstruct hoes to not be able to hoe ground. Use the Mattock.");
 
         // gravel/flint tweaks
         removeFlintDrop = configfile.getBoolean("removeFlintDrop", CATEGORY_Tweaks, true, "Removes the random chance of getting flint from gravel");

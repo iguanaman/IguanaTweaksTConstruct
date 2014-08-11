@@ -70,6 +70,7 @@ tooltip.level.skill.6=Master
 tooltip.mobhead.level=Applicable up to: %s
 tooltip.uselessTool1=This tool cannot mine anything!
 tooltip.uselessTool2=It can only be used for crafting
+tooltip.uselessHoe1=This hoe cannot hoe anything!
 
 tooltip.part.replaceable=Parts can be replaced
 tooltip.part.needsmodifier1=Cannot be replaced once added,

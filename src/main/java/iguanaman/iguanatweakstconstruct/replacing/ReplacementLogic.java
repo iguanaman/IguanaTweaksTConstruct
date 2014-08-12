@@ -224,6 +224,7 @@ public abstract class ReplacementLogic {
         // nothing to do fi they're the same :)
         if(oldMaterialId == newMaterialId)
             return;
+
         ToolMaterial oldMat = TConstructRegistry.getMaterial(oldMaterialId);
         ToolMaterial newMat = TConstructRegistry.getMaterial(newMaterialId);
 
@@ -259,6 +260,8 @@ public abstract class ReplacementLogic {
         if(!tags.hasKey("Redstone"))
             return;
 
+        int modifiers = tags.getInteger("Modifiers"); // backup modifiers
+
         // find the redstone modifier
         for(ItemModifier mod : ModifyBuilder.instance.itemModifiers)
             if(mod instanceof ModRedstone)
@@ -282,6 +285,9 @@ public abstract class ReplacementLogic {
                 while(rLvl-- > 0)
                     modRedstone.modify(new ItemStack[]{new ItemStack(Items.redstone)}, itemStack); // tags belong to oldTool
             }
+
+        // restore modifiers
+        tags.setInteger("Modifiers", modifiers);
     }
 
     // same as reapplyRedstone but for Attack modifier
@@ -291,7 +297,9 @@ public abstract class ReplacementLogic {
         if(!tags.hasKey("ModAttack"))
             return;
 
-        // find the redstone modifier
+        int modifiers = tags.getInteger("Modifiers"); // backup modifiers
+
+        // find the correct(!!, not glove attack) modifier
         for(ItemModifier mod : ModifyBuilder.instance.itemModifiers)
             if(mod.key.equals("ModAttack"))
             {
@@ -312,6 +320,9 @@ public abstract class ReplacementLogic {
                 while(qLvl-- > 0)
                     modAttack.modify(new ItemStack[]{new ItemStack(Items.quartz)}, itemStack); // tags belong to oldTool
             }
+
+        // restore modifiers
+        tags.setInteger("Modifiers", modifiers);
     }
 
     // removes the mobhead modifier and rendering

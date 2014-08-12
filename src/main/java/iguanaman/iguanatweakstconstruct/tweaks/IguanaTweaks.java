@@ -233,25 +233,28 @@ public class IguanaTweaks {
 
     private static void findToolsFromConfig()
     {
-        Log.info("Setting up whitelist for allowed tools");
-        // cycle through config entries
-        for(String identifier : Config.allowedTools) {
-            // look them up in the registry (we're in postInit. everything should be registered)
-            Object o = Item.itemRegistry.getObject(identifier);
-            // if we found it, add it.
-            if(o != null)
-                toolWhitelist.add((Item)o);
-        }
+        Log.info("Setting up whitelist/blacklist for allowed tools");
 
-        // mod-wide enabling
+        // cycle through all items
         for(Object identifier : Item.itemRegistry.getKeys())
         {
+            Object item = Item.itemRegistry.getObject(identifier);
+            // do we care about this item?
+            if(!(item instanceof ItemTool || item instanceof ItemHoe || item instanceof ItemSword || item instanceof ItemBow))
+                continue;
+
             String mod = identifier.toString().split(":")[0]; // should always be non-null... I think
-            if(Config.allowedModTools.contains(mod))
+
+            // whitelist
+            if(Config.excludedToolsIsWhitelist)
             {
-                // get the item
-                Object item = Item.itemRegistry.getObject(identifier);
-                if(item instanceof ItemTool || item instanceof ItemHoe || item instanceof ItemSword || item instanceof ItemBow)
+                // on the whitelist?
+                if(Config.excludedModTools.contains(mod) || Config.excludedTools.contains(identifier))
+                    toolWhitelist.add((Item)item);
+            }
+            // blacklist
+            else {
+                if(!Config.excludedModTools.contains(mod) && !Config.excludedTools.contains(identifier))
                     toolWhitelist.add((Item)item);
             }
         }

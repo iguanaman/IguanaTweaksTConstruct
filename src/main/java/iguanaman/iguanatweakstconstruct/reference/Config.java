@@ -72,8 +72,9 @@ public class Config {
     //public static float repairAmountMultiplier;
 
     // allowed tools that should not be nerfed
-    public static List<String> allowedTools = new LinkedList<String>();
-    public static Set<String> allowedModTools = new HashSet<String>();
+    public static boolean excludedToolsIsWhitelist;
+    public static Set<String> excludedTools = new HashSet<String>();
+    public static Set<String> excludedModTools = new HashSet<String>();
 
     // debug
     public static boolean showDebugXP;
@@ -200,25 +201,26 @@ public class Config {
         //repairAmountMultiplier = configfile.getFloat("repairAmountMultiplier", CATEGORY_Tweaks, 1.0f, 0.01f, 9.99f, "A factor that is multiplied onto the amount a tool is repaired. (0.5 = half durability restored per repair, 2.0 = twice as much durability restored per repair)");
 
         /** Allowed tools for nerfed vanilla tools **/
-        configfile.setCategoryComment(CATEGORY_AllowedTools, "Tweak Module: This category allows you to specify which tools ARE STILL USABLE if the option to disable non-TConstsruct tools is enabled.");
+        configfile.setCategoryComment(CATEGORY_AllowedTools, "Tweak Module: This category allows you to specify which tools ARE NOT USABLE or alternatively ARE STILL USABLE if the option to disable non-TConstsruct tools is enabled.\nTo make this easier a /dumpTools command is provided, that dumps the names of all applicable items in your world. Copy'n'Paste away!");
         {
-            String[] axes =    configfile.getStringList("axes", CATEGORY_AllowedTools, defaultAllowedAxes, "Axes that shall remain useful");
-            String[] picks =   configfile.getStringList("pickaxes", CATEGORY_AllowedTools, defaultAllowedPicks, "Pickaxes that shall remain useful");
-            String[] shovels = configfile.getStringList("shovels", CATEGORY_AllowedTools, defaultAllowedShovel, "Shovels that shall remain useful");
-            String[] swords =  configfile.getStringList("swords", CATEGORY_AllowedTools, defaultAllowedSwords, "Swords that shall remain useful");
-            String[] bows   =  configfile.getStringList("bows", CATEGORY_AllowedTools, defaultAllowedBows, "bows that shall remain useful");
-            String[] hoes =    configfile.getStringList("hoes", CATEGORY_AllowedTools, defaultAllowedHoes, "Hoes that shall remain useful");
-            String[] other =   configfile.getStringList("unspecified", CATEGORY_AllowedTools, defaultAllowedOther, "Other tools. I'll be honest, the category doesn't matter, they're just for readability :P");
+            String type = configfile.getString("exclusionType", CATEGORY_AllowedTools, "blacklist", "Change the type of the exclusion.\n'blacklist' means the listed tools are made usable.\n'whitelist' means ALL tools except the listed ones are unusable.", new String[] {"whitelist","blacklist"});
+            excludedToolsIsWhitelist = "whitelist".equals(type);
 
-            allowedModTools.addAll(Arrays.asList(configfile.getStringList("mods", CATEGORY_AllowedTools, defaultAllowMod, "Here you can enter a mod-id to whitelist ALL itesm of this mod.")));
+            String[] tools =   configfile.getStringList("tools", CATEGORY_AllowedTools, defaultExcludedTools, "Tools that are excluded if the option to nerf non-tinkers tools is enabled.");
+            String[] swords =  configfile.getStringList("swords", CATEGORY_AllowedTools, defaultExcludedSwords, "Swords that are excluded if the option to nerf non-tinkers swords is enabled.");
+            String[] bows   =  configfile.getStringList("bows", CATEGORY_AllowedTools, defaultExcludedBows, "Bows that are excluded if the option to nerf non-tinkers bows is enabled.");
+            String[] hoes =    configfile.getStringList("hoes", CATEGORY_AllowedTools, defaultExcludedHoes, "Hoes that are excluded if the option to nerf non-tinkers hoes is enabled.");
 
-            allowedTools.addAll(Arrays.asList(picks));
-            allowedTools.addAll(Arrays.asList(axes));
-            allowedTools.addAll(Arrays.asList(shovels));
-            allowedTools.addAll(Arrays.asList(swords));
-            allowedTools.addAll(Arrays.asList(bows));
-            allowedTools.addAll(Arrays.asList(hoes));
-            allowedTools.addAll(Arrays.asList(other));
+            excludedModTools.addAll(Arrays.asList(configfile.getStringList("mods", CATEGORY_AllowedTools, defaultAllowMod, "Here you can exclude entire mods by adding their mod-id (the first part of the string).")));
+
+            if(nerfVanillaTools)
+                excludedTools.addAll(Arrays.asList(tools));
+            if(nerfVanillaSwords)
+                excludedTools.addAll(Arrays.asList(swords));
+            if(nerfVanillaBows)
+                excludedTools.addAll(Arrays.asList(bows));
+            if(nerfVanillaHoes)
+                excludedTools.addAll(Arrays.asList(hoes));
         }
 
 
@@ -244,12 +246,43 @@ public class Config {
     }
 
 
-    private static String[] defaultAllowedPicks = new String[]{"Botania:terraPick", "Botania:glassPick", "Steamcraft:steamDrill"};
-    private static String[] defaultAllowedAxes = new String[]{"Steamcraft:steamAxe"};
-    private static String[] defaultAllowedShovel = new String[]{"Steamcraft:steamShovel"};
-    private static String[] defaultAllowedHoes = new String[]{};
-    private static String[] defaultAllowedSwords = new String[]{"Botania:terraSword", "Botania:enderDagger"};
-    private static String[] defaultAllowedBows = new String[]{};
-    private static String[] defaultAllowedOther = new String[]{"ThermalExpansion:tool.battleWrenchInvar", "ThermalExpansion:tool.sickleInvar"};
-    private static String[] defaultAllowMod = new String[]{"RedstoneArsenal", "ExtraUtilities", "witchery", "AWWayofTime"};
+    private static String[] defaultExcludedTools = new String[]{
+            // botania
+            "Botania:manasteelAxe",
+            "Botania:manasteelPick",
+            "Botania:manasteelShovel",
+            // Flaxbeards Steam Power
+            "Steamcraft:axeGildedGold",
+            "Steamcraft:pickGildedGold",
+            "Steamcraft:shovelGildedGold",
+            "Steamcraft:axeBrass",
+            "Steamcraft:pickBrass",
+            "Steamcraft:shovelBrass",
+            // TE
+            "ThermalExpansion:tool.axeInvar",
+            "ThermalExpansion:tool.pickaxeInvar",
+            "ThermalExpansion:tool.shovelInvar"
+    };
+    private static String[] defaultExcludedHoes = new String[]{
+            "Steamcraft:hoeGildedGold",
+            "Steamcraft:hoeBrass",
+            "ThermalExpansion:tool.hoeInvar"
+    };
+    private static String[] defaultExcludedSwords = new String[]{
+            "Botania:manasteelSword",
+            "Steamcraft:swordGildedGold",
+            "Steamcraft:swordBrass",
+            "ThermalExpansion:tool.swordInvar"
+    };
+    private static String[] defaultExcludedBows = new String[]{
+            "ThermalExpansion:tool.bowInvar"
+    };
+    private static String[] defaultAllowMod = new String[]{
+            "minecraft",
+            "Metallurgy",
+            "Natura",
+            "BiomesOPlenty",
+            "ProjRed|Exploration",
+            "appliedenergistics2"
+    };
 }

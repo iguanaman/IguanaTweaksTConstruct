@@ -62,7 +62,7 @@ public class LevelingToolTipHandler {
             int hLevel = tags.getInteger("HarvestLevel");
             String mLvl = LevelingTooltips.getMiningLevelTooltip(hLevel);
             // display minimal tooltip?
-            if(Config.showMinimalTooltipXP && !advanced)
+            if(Config.showMinimalTooltipXP && !advanced && Config.levelingPickaxeBoost)
             {
                 if(LevelingLogic.hasBoostXp(tags) && LevelingLogic.canBoostMiningLevel(tags))
                     mLvl += " (" + LevelingTooltips.getBoostXpString(stack, tags, false) + ")";
@@ -71,7 +71,7 @@ public class LevelingToolTipHandler {
             inserter.add(mLvl);
 
             // display extended tooltip?
-            if(Config.showTooltipXP && advanced && LevelingLogic.hasBoostXp(tags))
+            if(Config.showTooltipXP && advanced && LevelingLogic.hasBoostXp(tags) && Config.levelingPickaxeBoost)
             {
                 // xp if not boosted
                 if(LevelingLogic.canBoostMiningLevel(tags))
@@ -84,7 +84,7 @@ public class LevelingToolTipHandler {
 
         // add skill level
         int level = LevelingLogic.getLevel(tags);
-        if(level > 0) {
+        if(level > 0 && Config.toolLeveling) {
             String lvl = LevelingTooltips.getLevelTooltip(level);
             if (!advanced && Config.showMinimalTooltipXP && !LevelingLogic.isMaxLevel(tags))
                 lvl += " (" + LevelingTooltips.getXpString(stack, tags, false) + ")";
@@ -99,7 +99,7 @@ public class LevelingToolTipHandler {
         inserter.add("");
 
         // add info that you can hold shift for more details
-        if(!advanced && Config.showTooltipXP && !Loader.isModLoaded("TiCTooltips")) // don't display if TicToolTips is installed
+        if(!advanced && Config.showTooltipXP && !Loader.isModLoaded("TiCTooltips") && Config.toolLeveling) // don't display if TicToolTips is installed
             inserter.add(StatCollector.translateToLocalFormatted("tooltip.level.advanced", EnumChatFormatting.YELLOW.toString() + EnumChatFormatting.ITALIC + "Shift" + EnumChatFormatting.RESET + EnumChatFormatting.GRAY));
 
         // remove the trailing empty line we used as insert reference n stuff

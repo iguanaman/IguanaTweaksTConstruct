@@ -101,7 +101,7 @@ public abstract class LevelingLogic {
 		boolean pickLeveled = false;
 
         // Update Tool XP
-		if (toolXP >= 0 && hasXp(tags) && level > 0 && !isMaxLevel(tags))
+		if (toolXP >= 0 && hasXp(tags) && level > 0 && !isMaxLevel(tags) && Config.toolLeveling)
 		{
             // set new xp value
 			tags.setLong(TAG_EXP, toolXP);

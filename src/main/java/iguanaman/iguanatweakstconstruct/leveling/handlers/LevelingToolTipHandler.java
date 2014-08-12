@@ -3,6 +3,7 @@ package iguanaman.iguanatweakstconstruct.leveling.handlers;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import iguanaman.iguanatweakstconstruct.OldToolConversionHandler;
 import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
 import iguanaman.iguanatweakstconstruct.leveling.LevelingTooltips;
 import iguanaman.iguanatweakstconstruct.reference.Config;
@@ -37,13 +38,18 @@ public class LevelingToolTipHandler {
             return;
 
         ItemStack stack = event.itemStack;
+        // first off, let's check if we have to display a warning.
+        if(OldToolConversionHandler.toolNeedsUpdating(stack)) {
+            event.toolTip.add(1, EnumChatFormatting.DARK_RED + StatCollector.translateToLocal("tooltip.oldToolWarning1"));
+            event.toolTip.add(2, EnumChatFormatting.DARK_RED + StatCollector.translateToLocal("tooltip.oldToolWarning2"));
+        }
+
         // find spot to insert our tooltip data
         ListIterator<String> inserter = findInsertSpot(event.toolTip);
         // does the user hold shift?
         boolean advanced = TooltipHelper.shiftHeld();
         // only allow advanced (xp) tooltip if config option is set
         advanced &= Config.showTooltipXP;
-
 
 
         ToolCore tool = (ToolCore)event.itemStack.getItem();
@@ -78,14 +84,16 @@ public class LevelingToolTipHandler {
 
         // add skill level
         int level = LevelingLogic.getLevel(tags);
-        String lvl = LevelingTooltips.getLevelTooltip(level);
-        if(!advanced && Config.showMinimalTooltipXP && !LevelingLogic.isMaxLevel(tags))
-            lvl += " (" + LevelingTooltips.getXpString(stack, tags, false) + ")";
-        inserter.add(lvl);
+        if(level > 0) {
+            String lvl = LevelingTooltips.getLevelTooltip(level);
+            if (!advanced && Config.showMinimalTooltipXP && !LevelingLogic.isMaxLevel(tags))
+                lvl += " (" + LevelingTooltips.getXpString(stack, tags, false) + ")";
+            inserter.add(lvl);
 
-        // skill level progress
-        if(advanced && Config.showTooltipXP && !LevelingLogic.isMaxLevel(tags))
-            inserter.add(LevelingTooltips.getXpToolTip(stack, tags));
+            // skill level progress
+            if(advanced && Config.showTooltipXP && !LevelingLogic.isMaxLevel(tags))
+                inserter.add(LevelingTooltips.getXpToolTip(stack, tags));
+        }
 
         // since we added at least one line we'll add an empty spacing line at the end
         inserter.add("");

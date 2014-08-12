@@ -82,6 +82,9 @@ tooltip.level.skill.42=boni
 tooltip.level.skill.66=Jadedcat
 tooltip.level.skill.99=Hacker
 
+tooltip.oldToolWarning1=THIS TOOL HAS INCORRECT DATA
+tooltip.oldToolWarning2=Place this tool in a crafting window to update it
+
 tooltip.mobhead.level=Applicable up to: %s
 tooltip.uselessTool1=This tool cannot mine anything!
 tooltip.uselessTool2=It can only be used for crafting

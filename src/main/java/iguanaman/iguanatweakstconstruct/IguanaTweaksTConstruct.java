@@ -10,6 +10,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.registry.GameRegistry;
 import iguanaman.iguanatweakstconstruct.claybuckets.IguanaItems;
 import iguanaman.iguanatweakstconstruct.commands.CommandDumpOredict;
 import iguanaman.iguanatweakstconstruct.debug.DebugCommand;
@@ -29,12 +30,10 @@ import iguanaman.iguanatweakstconstruct.tweaks.IguanaTweaks;
 import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import iguanaman.iguanatweakstconstruct.worldgen.IguanaWorldGen;
-import mantle.pulsar.config.ForgeCFG;
 import mantle.pulsar.config.IConfiguration;
 import mantle.pulsar.control.PulseManager;
 import mantle.pulsar.pulse.PulseMeta;
 import net.minecraft.item.Item;
-import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.util.List;
@@ -123,6 +122,10 @@ public class IguanaTweaksTConstruct {
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
         pulsar.postInit(event);
+
+        FMLCommonHandler.instance().bus().register(new OldToolConversionHandler());
+
+        GameRegistry.addRecipe(new ToolUpdateRecipe());
 	}
 
 	@EventHandler

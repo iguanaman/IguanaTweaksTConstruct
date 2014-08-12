@@ -109,33 +109,14 @@ public class LevelingEventHandler {
         if(event.tool == TinkerTools.arrow)
             return;
 
-        NBTTagCompound toolTag = event.toolTag.getCompoundTag("InfiTool");
-        int head = toolTag.getInteger("Head");
-        int handle = toolTag.getInteger("Handle");
-        int accessory = toolTag.getInteger("Accessory");
-        int extra = toolTag.hasKey("Extra") ? toolTag.getInteger("Extra") : -1;
-
         // add tags for tool leveling
+        NBTTagCompound toolTag = event.toolTag.getCompoundTag("InfiTool");
         LevelingLogic.addLevelingTags(toolTag, event.tool);
 
 
-
+        // remove modifiers
         if (Config.toolLeveling && Config.toolLevelingExtraModifiers)
             toolTag.setInteger("Modifiers", Math.max(toolTag.getInteger("Modifiers") - 3, 0));
-
-        /* what is this? o_O
-        if (event.tool == TinkerTools.hammer || event.tool == TinkerTools.excavator || event.tool == TinkerTools.lumberaxe)
-        {
-            List<String> replaceTags = new ArrayList<String>(Arrays.asList(
-                    "MiningSpeed", "MiningSpeed2", "MiningSpeedHandle", "MiningSpeedExtra"
-            ));
-
-            for (String replaceTag : replaceTags)
-                if (toolTag.hasKey(replaceTag)) toolTag.setInteger(replaceTag, Math.round(toolTag.getInteger(replaceTag) / 2f));
-
-            event = event;
-        }
-        */
     }
 
 

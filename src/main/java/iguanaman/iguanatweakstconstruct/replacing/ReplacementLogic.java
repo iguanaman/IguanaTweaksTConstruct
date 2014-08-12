@@ -44,6 +44,7 @@ public abstract class ReplacementLogic {
         ItemStack originalTool = ToolBuilder.instance.buildTool(headStack, handleStack, accessoryStack, extraStack, "Original Tool");
         if(originalTool == null) {
             Log.error("Tool to modify is impossible?");
+            return;
         }
 
         int partMaterialId = ToolBuilder.instance.getMaterialID(partStack);

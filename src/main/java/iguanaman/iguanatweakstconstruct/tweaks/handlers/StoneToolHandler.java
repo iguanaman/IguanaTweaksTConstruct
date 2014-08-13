@@ -2,6 +2,7 @@ package iguanaman.iguanatweakstconstruct.tweaks.handlers;
 
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.eventhandler.EventPriority;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
@@ -15,7 +16,7 @@ public class StoneToolHandler {
     // we can initialize this statically, because it wont be initialized until PostInit, where all materials are already registered
     private static ToolMaterial stoneMaterial = TConstructRegistry.getMaterial("Stone");
 
-    @SubscribeEvent
+    @SubscribeEvent(priority=EventPriority.HIGHEST)
     public void onTooltip(ItemTooltipEvent event)
     {
         if(event.entityPlayer == null)

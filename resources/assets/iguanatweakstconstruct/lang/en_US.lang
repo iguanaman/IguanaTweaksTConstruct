@@ -42,6 +42,8 @@ message.levelup.antispider=A strange odor emanates from the weapon
 message.levelup.beheading=You could take someones head off with that!
 message.levelup.lifesteal=It shudders with a strange energy
 message.levelup.knockback=Feeling more confident, you can more easily keep your assailants at bay
+message.levelup.jagged=It has suffered from too much usage
+message.levelup.stonebound=It has become attracted to stone
 
 message.levelup.redstone.tag=Haste
 message.levelup.lapis.tag=Luck
@@ -58,6 +60,8 @@ message.levelup.antispider.tag=Bane of Arthropods
 message.levelup.beheading.tag=Beheading
 message.levelup.lifesteal.tag=Life steal
 message.levelup.knockback.tag=Knockback
+message.levelup.jagged.tag=Jagged
+message.levelup.stonebound.tag=Stonebound
 
 tooltip.level.mininglevel=Mining Level
 tooltip.level.miningxp=Mining XP

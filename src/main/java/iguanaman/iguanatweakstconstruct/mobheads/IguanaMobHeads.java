@@ -14,6 +14,7 @@ import iguanaman.iguanatweakstconstruct.mobheads.proxy.MobHeadCommonProxy;
 import iguanaman.iguanatweakstconstruct.mobheads.tileentities.IguanaSkullTileEntity;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
 import iguanaman.iguanatweakstconstruct.util.Log;
+import iguanaman.iguanatweakstconstruct.util.ModSupportHelper;
 import mantle.pulsar.pulse.Handler;
 import mantle.pulsar.pulse.Pulse;
 import net.minecraft.block.Block;
@@ -40,7 +41,7 @@ public class IguanaMobHeads {
     {
         proxy.initialize();
 
-        if(IguanaTweaksTConstruct.modTEDetected)
+        if(ModSupportHelper.ThermalFoundation)
             integrateThermalExpansion();
 
         skullItem = new IguanaSkull();

@@ -4,18 +4,23 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
+import tconstruct.library.modifier.ItemModifier;
 import tconstruct.modifiers.tools.ModBoolean;
 
 // Shoddy handles Stonebound and Jagged. Jagged simply is negative Stonebound.
-public class ModShoddy extends ModBoolean {
-    public static ModShoddy ModJagged = new ModShoddy("BonusJagged", EnumChatFormatting.RED.toString(), StatCollector.translateToLocal("materialtraits.jagged"), -0.5f);
-    public static ModShoddy ModStonebound = new ModShoddy("BonusStonebound", EnumChatFormatting.AQUA.toString(), StatCollector.translateToLocal("materialtraits.stonebound"), 0.5f);
+public class ModShoddy extends ItemModifier {
+    public static ModShoddy ModJagged = new ModShoddy("Jagged", EnumChatFormatting.RED.toString(), StatCollector.translateToLocal("materialtraits.jagged"), -0.7f);
+    public static ModShoddy ModStonebound = new ModShoddy("Stonebound", EnumChatFormatting.AQUA.toString(), StatCollector.translateToLocal("materialtraits.stonebound"), 0.7f);
 
     protected float change;
+    protected String color;
+    protected String tooltipName;
 
     public ModShoddy(String tag, String c, String tip, float change) {
-        super(new ItemStack[0], 0, tag, c, tip);
+        super(new ItemStack[0], 0, tag);
 
+        this.tooltipName = tip;
+        this.color = c;
         this.change = change;
     }
 
@@ -37,10 +42,14 @@ public class ModShoddy extends ModBoolean {
 
     @Override
     public void modify(ItemStack[] input, ItemStack tool) {
-        super.modify(input, tool);
+        NBTTagCompound tags = tool.getTagCompound().getCompoundTag("InfiTool");
+
+        if(!tags.getBoolean(key)) {
+            tags.setBoolean(key, true);
+            addToolTip(tool, color + tooltipName, color + key);
+        }
 
         // go make stonebound/jagged...y
-        NBTTagCompound tags = tool.getTagCompound().getCompoundTag("InfiTool");
         tags.setFloat("Shoddy", tags.getFloat("Shoddy") + change);
     }
 

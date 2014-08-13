@@ -71,6 +71,7 @@ public class IguanaTweaksTConstruct {
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
+        Log.init(event.getModLog());
         configPath = new File(event.getModConfigurationDirectory(), Reference.MOD_ID);
         configPath.mkdirs();
 

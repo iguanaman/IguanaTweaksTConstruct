@@ -1,9 +1,11 @@
 package iguanaman.iguanatweakstconstruct.leveling;
 
 import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
+import iguanaman.iguanatweakstconstruct.leveling.modifiers.ModCritical;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -99,5 +101,14 @@ public class LevelingActiveToolMod extends ActiveToolMod {
     public boolean afterBlockBreak() {
         Log.info("afterBlockBreak is implemented. Somebody tell me that so I can update xp giving.");
         return super.afterBlockBreak();
+    }
+
+    @Override
+    public boolean doesCriticalHit(ToolCore tool, NBTTagCompound tags, NBTTagCompound toolTags, ItemStack stack, EntityLivingBase player, Entity entity) {
+        // crit modifier adds additional 10% crit chance
+        if(toolTags.hasKey(ModCritical.modCritical.key))
+            return IguanaTweaksTConstruct.random.nextInt(10) == 0;
+
+        return false;
     }
 }

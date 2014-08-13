@@ -1,5 +1,6 @@
 package iguanaman.iguanatweakstconstruct.leveling;
 
+import iguanaman.iguanatweakstconstruct.leveling.modifiers.ModCritical;
 import iguanaman.iguanatweakstconstruct.leveling.modifiers.ModShoddy;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.util.Log;
@@ -43,6 +44,12 @@ import java.util.Map;
  */
 public class RandomBonuses {
     private static Map<String, ItemModifier> modCache = new HashMap<String, ItemModifier>();
+
+    static {
+        modCache.put(ModShoddy.ModJagged.key, ModShoddy.ModJagged);
+        modCache.put(ModShoddy.ModStonebound.key, ModShoddy.ModStonebound);
+        modCache.put(ModCritical.modCritical.key, ModCritical.modCritical);
+    }
 
     public static Modifier tryModifying(EntityPlayer player, ItemStack tool)
     {
@@ -116,7 +123,6 @@ public class RandomBonuses {
                 }
             }
 
-;
             if(choice == null)
                 return null;
 
@@ -196,6 +202,7 @@ public class RandomBonuses {
             // special modifier
             case JAGGED:    return addJaggedModifier(player, tool);
             case STONEBOUND:return addStoneboundModifier(player, tool);
+            case CRITICAL:  return addCriticalModifier(player, tool);
         }
 
         return false;
@@ -313,7 +320,10 @@ public class RandomBonuses {
         return addGenericModifier(player, tool, ModShoddy.ModStonebound.key, "message.levelup.stonebound", EnumChatFormatting.AQUA.toString());
     }
 
-
+    public static boolean addCriticalModifier(EntityPlayer player, ItemStack tool)
+    {
+        return addGenericModifier(player, tool, ModCritical.modCritical.key, null, 1, 10, "message.levelup.critical", EnumChatFormatting.WHITE.toString());
+    }
 
     /* Backbone ;o */
 
@@ -366,11 +376,6 @@ public class RandomBonuses {
             modCache.put(key, TinkerTools.modAttack);
             return TinkerTools.modAttack;
         }
-
-        if(key.equals(ModShoddy.ModJagged.key))
-            return ModShoddy.ModJagged;
-        if(key.equals(ModShoddy.ModStonebound.key))
-            return ModShoddy.ModStonebound;
 
         for(ItemModifier modifier : ModifyBuilder.instance.itemModifiers)
             if(modifier.key.equals(key)) {
@@ -455,6 +460,8 @@ public class RandomBonuses {
             case BEHEADING: return 5;
             case LIFESTEAL: return 5;
             case KNOCKBACK: return 10;
+            case JAGGED:    return 1;
+            case CRITICAL:  return 1;
             default: return 0;
         }
     }
@@ -474,6 +481,7 @@ public class RandomBonuses {
             case LIFESTEAL: return 30;
             case KNOCKBACK: return 50;
             case JAGGED:    return  5;
+            case CRITICAL:  return  2;
         }
 
         if(Config.randomBonusesAreUseful)
@@ -489,6 +497,7 @@ public class RandomBonuses {
             case DIAMOND:   return 15;
             case EMERALD:   return 30;
             case REINFORCED:return 35;
+            case STONEBOUND:return  1;
             default: return 0;
         }
     }
@@ -497,17 +506,17 @@ public class RandomBonuses {
     {
         switch(mod)
         {
-            case REDSTONE:  return 100;
+            case REDSTONE:  return 130;
             case LAPIS:     return 75;
-            case REPAIR:    return 40;
+            case REPAIR:    return 50;
             // combat modifiers
-            case ATTACK:    return 100;
+            case ATTACK:    return 80;
             case BLAZE:     return 55;
             case SMITE:     return 40;
             case BANE:      return 40;
             case BEHEADING: return 20;
             case LIFESTEAL: return 40;
-            case KNOCKBACK: return 20;
+            case KNOCKBACK: return 70;
         }
 
         if(Config.randomBonusesAreUseful)
@@ -554,7 +563,8 @@ public class RandomBonuses {
         KNOCKBACK,
         // Special modifiers
         STONEBOUND,
-        JAGGED;
+        JAGGED,
+        CRITICAL;
 
         // !!! DO NOT CHANGE THESE !!!
         // They're used for NBTTags and Configs. Changing them would break compatibility
@@ -576,6 +586,9 @@ public class RandomBonuses {
                 case BEHEADING: return "Beheading";
                 case LIFESTEAL: return "LifeSteal";
                 case KNOCKBACK: return "Knockback";
+                case JAGGED: return "Jagged";
+                case STONEBOUND: return "Stonebound";
+                case CRITICAL: return "Critical";
                 default: return super.toString();
             }
         }

@@ -26,8 +26,9 @@ message.levelup.modifier=Modifier
 message.levelup.miningboost=Suddenly, a flash of light shines from the tip of your %s
 message.levelup.mininglevel=Mining Level
 
-message.levelup.redstone=You spin it around with a flourish
+materialtraits.critical=Critical Strike
 
+message.levelup.redstone=You spin it around with a flourish
 message.levelup.lapis=Perhaps holding on to it will bring you luck?
 message.levelup.autosmelt=Fwoosh. A flame bursts from the tip
 message.levelup.silktouch=Is that... butter?
@@ -44,6 +45,7 @@ message.levelup.lifesteal=It shudders with a strange energy
 message.levelup.knockback=Feeling more confident, you can more easily keep your assailants at bay
 message.levelup.jagged=It has suffered from too much usage
 message.levelup.stonebound=It has become attracted to stone
+message.levelup.critical=You swing it around skillfully
 
 message.levelup.redstone.tag=Haste
 message.levelup.lapis.tag=Luck
@@ -62,6 +64,7 @@ message.levelup.lifesteal.tag=Life steal
 message.levelup.knockback.tag=Knockback
 message.levelup.jagged.tag=Jagged
 message.levelup.stonebound.tag=Stonebound
+message.levelup.critical.tag=Critical Chance
 
 tooltip.level.mininglevel=Mining Level
 tooltip.level.miningxp=Mining XP

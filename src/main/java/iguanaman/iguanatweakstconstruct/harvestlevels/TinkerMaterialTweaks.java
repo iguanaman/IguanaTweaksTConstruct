@@ -1,8 +1,10 @@
 package iguanaman.iguanatweakstconstruct.harvestlevels;
 
 import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.Mod;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.util.Log;
+import iguanaman.iguanatweakstconstruct.util.ModSupportHelper;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.tools.ToolMaterial;
 import tconstruct.tools.TinkerTools;
@@ -40,7 +42,7 @@ public abstract class TinkerMaterialTweaks {
 
         // modify the base materials added by tinkers construct
         modifyTcon();
-        if(Loader.isModLoaded("ExtraTiC"))
+        if(ModSupportHelper.ExtraTiC)
             modifyExtraTiC();
 
         Log.info("Finished modifying TConstruct materials");
@@ -99,23 +101,27 @@ public abstract class TinkerMaterialTweaks {
         if(!Config.nerfBronze)
             bronzeLevel++;
 
-        modifyMetallurgyBasePrecious(bronzeLevel);
-        modifyMetallurgyFantasy(bronzeLevel);
-        modifyMetallurgyNether(bronzeLevel);
-        modifyMetallurgyEnd(bronzeLevel);
-        modifyNatura(bronzeLevel);
-        modifyMekanism();
+        if(ModSupportHelper.Metallurgy) {
+            modifyMetallurgyBasePrecious(bronzeLevel);
+            modifyMetallurgyFantasy(bronzeLevel);
+            modifyMetallurgyNether(bronzeLevel);
+            modifyMetallurgyEnd(bronzeLevel);
+        }
+        if(ModSupportHelper.Natura)
+            modifyNatura(bronzeLevel);
+        if(ModSupportHelper.Mekanism)
+            modifyMekanism();
 
-        // other mods or extratic itself
-        updateMaterial(_1_flint, "Nether Quartz", 101, 300, 1, 0.7f);
-        updateMaterial(_7_ardite, "Fairy", 250, 750, 2, 1.2f); // ardite + obsidian + blood
-        updateMaterial(_8_cobalt, "Pokefennium", 500, 850, 2, 1.5f); // cobalt + iron + blood
+        if(ModSupportHelper.BiomesOPlenty)
+            updateMaterial(_5_diamond, "Amethyst", 1548, 800, 5, 1.1f); // supr diamond
 
-        // Applied Energistics 2
-        updateMaterial(_3_iron, "Certus Quartz", 250, 600, 2, 1.4f);
+        if(ModSupportHelper.AppliedEnergistics2)
+            updateMaterial(_3_iron, "Certus Quartz", 199, 800, 3, 0.8f); // better quartz, I guess
 
-        // Biomes o' Plenty
-        updateMaterial(_5_diamond, "Amethyst", 1548, 1500, 5, 1.2f);
+        // extratic itself
+        updateMaterial(_3_iron,   "Nether Quartz", 101, 550, 3, 0.7f);
+        updateMaterial(_7_ardite, "Fairy",         250,1050, 5, 0.5f); // ardite + obsidian + blood
+        updateMaterial(_8_cobalt, "Pokefennium",  1000, 850, 2, 3.0f); // cobalt + iron + blood
     }
 
     private static void modifyMetallurgyBasePrecious(int bronzeLevel)

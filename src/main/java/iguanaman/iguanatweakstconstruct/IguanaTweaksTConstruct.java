@@ -67,11 +67,11 @@ public class IguanaTweaksTConstruct {
     private IConfiguration pulseCFG;
     private PulseManager pulsar;
 
-    public static boolean modTEDetected = false;
     public static File configPath;
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
+        Log.init(event.getModLog());
         configPath = new File(event.getModConfigurationDirectory(), Reference.MOD_ID);
         configPath.mkdirs();
 
@@ -92,8 +92,6 @@ public class IguanaTweaksTConstruct {
         isTweaksActive = pulseCFG.isModuleEnabled(new PulseMeta(Reference.PULSE_TWEAKS, "", false, false));
         isItemsActive = pulseCFG.isModuleEnabled(new PulseMeta(Reference.PULSE_ITEMS, "", false, false));
         isPartReplacementActive = pulseCFG.isModuleEnabled(new PulseMeta(Reference.PULSE_REPLACING, "", false, false));
-
-        modTEDetected = Loader.isModLoaded("ThermalFoundation");
 
         // if we don't use our custom harvest levels, we have to adjust what we're using
         if(!isHarvestTweaksActive)

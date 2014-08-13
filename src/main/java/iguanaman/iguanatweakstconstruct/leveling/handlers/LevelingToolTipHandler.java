@@ -7,6 +7,7 @@ import iguanaman.iguanatweakstconstruct.OldToolConversionHandler;
 import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
 import iguanaman.iguanatweakstconstruct.leveling.LevelingTooltips;
 import iguanaman.iguanatweakstconstruct.reference.Config;
+import iguanaman.iguanatweakstconstruct.util.ModSupportHelper;
 import iguanaman.iguanatweakstconstruct.util.TooltipHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -99,7 +100,7 @@ public class LevelingToolTipHandler {
         inserter.add("");
 
         // add info that you can hold shift for more details
-        if(!advanced && Config.showTooltipXP && !Loader.isModLoaded("TiCTooltips") && Config.toolLeveling) // don't display if TicToolTips is installed
+        if(!advanced && Config.showTooltipXP && !ModSupportHelper.tiCTooltips && Config.toolLeveling) // don't display if TicToolTips is installed
             inserter.add(StatCollector.translateToLocalFormatted("tooltip.level.advanced", EnumChatFormatting.YELLOW.toString() + EnumChatFormatting.ITALIC + "Shift" + EnumChatFormatting.RESET + EnumChatFormatting.GRAY));
 
         // remove the trailing empty line we used as insert reference n stuff

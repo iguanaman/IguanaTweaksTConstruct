@@ -14,6 +14,7 @@ import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
 import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import iguanaman.iguanatweakstconstruct.util.Log;
+import iguanaman.iguanatweakstconstruct.util.ModSupportHelper;
 import mantle.pulsar.pulse.Handler;
 import mantle.pulsar.pulse.Pulse;
 import net.minecraft.init.Items;
@@ -96,7 +97,7 @@ public class IguanaToolLeveling {
             // blaze head
             ModifyBuilder.registerModifier(new ModMiningLevelBoost(getIguanaMobHead(2), 24, HarvestLevels._6_obsidian));
             // blizz head
-            if(IguanaTweaksTConstruct.modTEDetected)
+            if(ModSupportHelper.ThermalFoundation)
                 ModifyBuilder.registerModifier(new ModMiningLevelBoost(getIguanaMobHead(3), 25, HarvestLevels._6_obsidian));
             // enderman head
             ModifyBuilder.registerModifier(new ModMiningLevelBoost(getIguanaMobHead(0), 26, HarvestLevels._7_ardite));

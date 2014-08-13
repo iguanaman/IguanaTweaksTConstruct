@@ -3,10 +3,16 @@ package iguanaman.iguanatweakstconstruct.util;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 
-public class Log {
-    private static Logger logger = org.apache.logging.log4j.LogManager.getLogger("Iguana-TCon");
+public abstract class Log {
+    // initialized by preinit
+    private static Logger logger;
 
-	public static void log(Level level, Object obj)
+    public static void init(Logger log)
+    {
+        logger = log;
+    }
+
+    public static void log(Level level, Object obj)
 	{
         logger.log(level, String.valueOf(obj));
 	}

@@ -1,5 +1,6 @@
 package iguanaman.iguanatweakstconstruct.leveling;
 
+import iguanaman.iguanatweakstconstruct.leveling.modifiers.ModShoddy;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.entity.player.EntityPlayer;
@@ -115,6 +116,7 @@ public class RandomBonuses {
                 }
             }
 
+;
             if(choice == null)
                 return null;
 
@@ -191,6 +193,9 @@ public class RandomBonuses {
             case BEHEADING: return addBeheadingModifier(player, tool);
             case LIFESTEAL: return addLifeStealModifier(player, tool);
             case KNOCKBACK: return addKnockbackModifier(player, tool);
+            // special modifier
+            case JAGGED:    return addJaggedModifier(player, tool);
+            case STONEBOUND:return addStoneboundModifier(player, tool);
         }
 
         return false;
@@ -297,6 +302,19 @@ public class RandomBonuses {
     }
 
 
+    /* Special Enchantments */
+    public static boolean addJaggedModifier(EntityPlayer player, ItemStack tool)
+    {
+        return addGenericModifier(player, tool, ModShoddy.ModJagged.key, "message.levelup.jagged", EnumChatFormatting.RED.toString());
+    }
+
+    public static boolean addStoneboundModifier(EntityPlayer player, ItemStack tool)
+    {
+        return addGenericModifier(player, tool, ModShoddy.ModStonebound.key, "message.levelup.stonebound", EnumChatFormatting.AQUA.toString());
+    }
+
+
+
     /* Backbone ;o */
 
     // simple call
@@ -349,6 +367,10 @@ public class RandomBonuses {
             return TinkerTools.modAttack;
         }
 
+        if(key.equals(ModShoddy.ModJagged.key))
+            return ModShoddy.ModJagged;
+        if(key.equals(ModShoddy.ModStonebound.key))
+            return ModShoddy.ModStonebound;
 
         for(ItemModifier modifier : ModifyBuilder.instance.itemModifiers)
             if(modifier.key.equals(key)) {
@@ -416,6 +438,7 @@ public class RandomBonuses {
             case EMERALD:   return 35;
             case REPAIR:    return 50;
             case REINFORCED:return 88;
+            case STONEBOUND:return  5;
         }
 
         // less useful bonuses
@@ -450,6 +473,7 @@ public class RandomBonuses {
             case BEHEADING: return 50;
             case LIFESTEAL: return 30;
             case KNOCKBACK: return 50;
+            case JAGGED:    return  5;
         }
 
         if(Config.randomBonusesAreUseful)
@@ -527,7 +551,10 @@ public class RandomBonuses {
         BANE,
         BEHEADING,
         LIFESTEAL,
-        KNOCKBACK;
+        KNOCKBACK,
+        // Special modifiers
+        STONEBOUND,
+        JAGGED;
 
         // !!! DO NOT CHANGE THESE !!!
         // They're used for NBTTags and Configs. Changing them would break compatibility

@@ -20,6 +20,7 @@ import iguanaman.iguanatweakstconstruct.leveling.IguanaToolLeveling;
 import iguanaman.iguanatweakstconstruct.leveling.commands.IguanaCommandLevelUpTool;
 import iguanaman.iguanatweakstconstruct.leveling.commands.IguanaCommandToolXP;
 import iguanaman.iguanatweakstconstruct.mobheads.IguanaMobHeads;
+import iguanaman.iguanatweakstconstruct.override.IguanaOverride;
 import iguanaman.iguanatweakstconstruct.proxy.CommonProxy;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
@@ -107,6 +108,7 @@ public class IguanaTweaksTConstruct {
         // replacing has to be after tweaks and restrictions, because its tooltips have to be handled last
         pulsar.registerPulse(new IguanaToolPartReplacing());
         pulsar.registerPulse(new IguanaWorldGen());
+        pulsar.registerPulse(new IguanaOverride());
         pulsar.registerPulse(new IguanaDebug());
         pulsar.preInit(event);
 	}

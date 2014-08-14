@@ -15,6 +15,7 @@ public class Reference {
     public static final String PULSE_ITEMS = "Items";
     public static final String PULSE_RESTRICTIONS = "Restrictions";
     public static final String PULSE_WORLDGEN = "WorldGen";
+    public static final String PULSE_OVERRIDE = "Override";
 
     public static final String PROXY_CLIENT_CLASS = "iguanaman.iguanatweakstconstruct.proxy.ClientProxy";
     public static final String PROXY_SERVER_CLASS = "iguanaman.iguanatweakstconstruct.proxy.ServerProxy";

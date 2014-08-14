@@ -152,33 +152,19 @@ public abstract class TinkerMaterialTweaks {
         updateMaterial(_9_manyullym, "Adamantine",  1550,1000, 5, 2.3f); // Reinforced 2
         updateMaterial(_9_manyullym, "Atlarus",     1750,1200, 5, 2.5f);
         updateMaterial(_9_manyullym, "Tartarite",   2000,1500, 6, 3.33f); // Adamantine + Atlarus
-
-            /*
-    Stat Baseline:
-    0 - Stone:      100, 200, 1, 0.5
-    1 - Flint:      150, 400, 2, 0.5
-    2 - Copper:     200, 500, 2, 1.0
-    3 - Iron:       300, 600, 3, 1.1
-    4 - Bronze:     400, 650, 3, 1.2
-    5 - Diamond:    450, 700, 3, 1.3
-    6 - Obsidian:   500, 800, 3, 1.3
-    7 - Ardite:     600, 850, 4, 1.7
-    8 - Cobalt      800,1000, 4, 1.9
-    9 - Manyullyn: 1100, 900, 5, 2.5
-     */
     }
 
     private static void modifyMetallurgyNether(int bronzeLevel)
     {
-        updateMaterial(bronzeLevel, "Ignatius",     200, 400, 3, 0.3f); // Ignite 1
-        updateMaterial(bronzeLevel, "Shadow Iron",  300, 400, 3, 1.2f); // Weakness 1 + Reinforced 1
+        updateMaterial(_3_iron,     "Ignatius",     200, 400, 3, 0.3f); // Ignite 1
+        updateMaterial(_3_iron,     "Shadow Iron",  300, 400, 3, 1.2f); // Weakness 1 + Reinforced 1
         updateMaterial(bronzeLevel, "Shadow Steel", 400, 600, 4, 1.3f); // Shadow Iron + Lemurite, Weakness 2 + Reinforced 2
         updateMaterial(_5_diamond,  "Midasium",     111,1111, 4, 1.1f);
         updateMaterial(_5_diamond,  "Vyroxeres",    300, 700, 3, 0.8f); // Poison 1
         updateMaterial(_6_obsidian, "Ceruclase",    500, 707, 4, 1.4f);
-        updateMaterial(_6_obsidian, "Inolashite",   900, 800, 3, 0.81f); // Alduorite + Ceruclase, Poison 2
+        updateMaterial(_7_ardite,   "Inolashite",   900, 800, 3, 0.81f); // Alduorite + Ceruclase, Poison 2
         updateMaterial(_7_ardite,   "Kalendrite",  1000, 500, 4, 1.1f);
-        updateMaterial(_7_ardite,   "Amordrine",    900,1400, 3, 1.0f); // Kalendrite + Platinum, Life Steal 1
+        updateMaterial(_8_cobalt,   "Amordrine",    900,1400, 3, 1.0f); // Kalendrite + Platinum, Life Steal 1
         updateMaterial(_8_cobalt,   "Vulcanite",   1500,1000, 4, 0.7f); // Ignite 2
         updateMaterial(_8_cobalt,   "Sanguinite",   150, 200, 6, 0.5f); // Wither 1, Combat material. Requires manyullyn to mine, but can't mine it
     }

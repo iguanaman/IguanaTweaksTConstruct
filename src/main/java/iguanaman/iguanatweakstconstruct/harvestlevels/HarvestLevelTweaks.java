@@ -196,15 +196,15 @@ public abstract class HarvestLevelTweaks {
             // 1: Flint
             {},
             // 2: Copper
-            {},
+            {"Lemurite", "Ignatius"},
             // 3: Iron
-            {"Lemurite"},
+            {"ShadowIron"},
             // 4: Bronze
-            {"Ignatius", "ShadowIron"},
-            // 5: Redstone/Diamond
             {"Midasium", "Vyroxeres"},
+            // 5: Redstone/Diamond
+            {"Ceruclase"},
             // 6: Obsidian/Alumite
-            {"Ceruclase", "Alduorite"},
+            {"Alduorite"},
             // 7: Ardite
             {"Kalendrite"},
             // 8: Cobalt

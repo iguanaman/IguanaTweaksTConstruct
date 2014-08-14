@@ -143,15 +143,29 @@ public abstract class TinkerMaterialTweaks {
         updateMaterial(_2_copper,    "Black Steel",  300, 550, 2, 0.9f); // Infuscolium (hlvl2) + deep iron, Reinforced 2, Better Copper
         updateMaterial(_3_iron,      "Oureclase",    330, 700, 3, 1.0f); // better iron
         updateMaterial(bronzeLevel,  "Astral Silver", 35, 700, 2, 0.35f);
-        updateMaterial(_5_diamond,   "Carmot",        50, 800, 2, 0.4f);
-        updateMaterial(_5_diamond,   "Mithril",      700, 720, 3, 1.1f);
-        updateMaterial(_5_diamond,   "Quicksilver",  600, 880, 4, 1.2f); // Mithril + Silver, enhanced mithril at the cost of durability
-        updateMaterial(_6_obsidian,  "Haderoth",     810, 800, 4, 1.3f); // Rubracium (hlvl6) + Mithril
-        updateMaterial(_7_ardite,    "Orichalcum",  1010, 900, 4, 1.5f);
-        updateMaterial(_7_ardite,    "Celenegil",     600,1400, 3, 0.7f); // Orichalcum + Platin
-        updateMaterial(_8_cobalt,    "Adamantine",  1550,1000, 5, 2.3f); // Reinforced 2
+        updateMaterial(_5_diamond,   "Carmot",       150, 800, 2, 0.4f);
+        updateMaterial(_6_obsidian,  "Mithril",      700, 720, 3, 1.1f);
+        updateMaterial(_6_obsidian,  "Quicksilver",  600, 880, 4, 1.2f); // Mithril + Silver, enhanced mithril at the cost of durability
+        updateMaterial(_7_ardite,    "Haderoth",     810, 800, 4, 1.3f); // Rubracium (hlvl6) + Mithril
+        updateMaterial(_8_cobalt,    "Orichalcum",  1010, 900, 4, 1.5f);
+        updateMaterial(_8_cobalt,    "Celenegil",    600,1400, 3, 0.7f); // Orichalcum + Platin
+        updateMaterial(_9_manyullym, "Adamantine",  1550,1000, 5, 2.3f); // Reinforced 2
         updateMaterial(_9_manyullym, "Atlarus",     1750,1200, 5, 2.5f);
         updateMaterial(_9_manyullym, "Tartarite",   2000,1500, 6, 3.33f); // Adamantine + Atlarus
+
+            /*
+    Stat Baseline:
+    0 - Stone:      100, 200, 1, 0.5
+    1 - Flint:      150, 400, 2, 0.5
+    2 - Copper:     200, 500, 2, 1.0
+    3 - Iron:       300, 600, 3, 1.1
+    4 - Bronze:     400, 650, 3, 1.2
+    5 - Diamond:    450, 700, 3, 1.3
+    6 - Obsidian:   500, 800, 3, 1.3
+    7 - Ardite:     600, 850, 4, 1.7
+    8 - Cobalt      800,1000, 4, 1.9
+    9 - Manyullyn: 1100, 900, 5, 2.5
+     */
     }
 
     private static void modifyMetallurgyNether(int bronzeLevel)

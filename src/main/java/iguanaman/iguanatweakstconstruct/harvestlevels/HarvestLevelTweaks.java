@@ -169,17 +169,17 @@ public abstract class HarvestLevelTweaks {
 
     public static String[][] oreDictLevelsMetallurgyFantasy = {
             // 0: Stone
-            {"Prometheum"},
+            {"Prometheum", "DeepIron"},
             // 1: Flint
-            {"DeepIron"},
-            // 2: Copper
             {"Infuscolium"},
-            // 3: Iron
+            // 2: Copper
             {"Oureclase"},
-            // 4: Bronze
+            // 3: Iron
             {"AstralSilver"},
+            // 4: Bronze
+            {"Carmot"},
             // 5: Redstone/Diamond
-            {"Carmot", "Mithril"},
+            {"Mithril"},
             // 6: Obsidian/Alumite
             {"Rubracium"},
             // 7: Ardite

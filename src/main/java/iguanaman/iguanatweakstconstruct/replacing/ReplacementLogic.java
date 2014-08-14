@@ -51,19 +51,19 @@ public abstract class ReplacementLogic {
         int oldMaterialId = -1;
 
         if(type == HEAD && headStack != null) {
-            headStack.setItemDamage(partMaterialId);
+            headStack = partStack;
             oldMaterialId = getToolPartMaterial(tags, HEAD);
         }
         if(type == HANDLE && handleStack != null) {
-            handleStack.setItemDamage(partMaterialId);
+            handleStack = partStack;
             oldMaterialId = getToolPartMaterial(tags, HANDLE);
         }
         if(type == ACCESSORY && accessoryStack != null) {
-            accessoryStack.setItemDamage(partMaterialId);
+            accessoryStack = partStack;
             oldMaterialId = getToolPartMaterial(tags, ACCESSORY);
         }
         if(type == EXTRA && extraStack != null) {
-            extraStack.setItemDamage(partMaterialId);
+            extraStack = partStack;
             oldMaterialId = getToolPartMaterial(tags, EXTRA);
         }
 

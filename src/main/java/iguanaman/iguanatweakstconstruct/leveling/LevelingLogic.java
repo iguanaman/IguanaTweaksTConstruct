@@ -49,7 +49,7 @@ public abstract class LevelingLogic {
     */
     public static boolean canBoostMiningLevel(NBTTagCompound tags)
     {
-        return tags.hasKey(TAG_IS_BOOSTED) && !isBoosted(tags) && getHarvestLevel(tags) <= HarvestLevels.max;
+        return tags.hasKey(TAG_IS_BOOSTED) && !isBoosted(tags) && getHarvestLevel(tags) < HarvestLevels.max;
     }
 
     /**

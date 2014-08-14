@@ -261,18 +261,30 @@ public class Config {
             // TE
             "ThermalExpansion:tool.axeInvar",
             "ThermalExpansion:tool.pickaxeInvar",
-            "ThermalExpansion:tool.shovelInvar"
+            "ThermalExpansion:tool.shovelInvar",
+            // IC2
+            "IC2:itemToolBronzeAxe",
+            "IC2:itemToolBronzePickaxe",
+            "IC2:itemToolBronzeSpade",
+            // Railcraft
+            "Railcraft:tool.steel.axe",
+            "Railcraft:tool.steel.pickaxe",
+            "Railcraft:tool.steel.shovel"
     };
     private static String[] defaultExcludedHoes = new String[]{
             "Steamcraft:hoeGildedGold",
             "Steamcraft:hoeBrass",
-            "ThermalExpansion:tool.hoeInvar"
+            "ThermalExpansion:tool.hoeInvar",
+            "IC2:itemToolBronzeHoe",
+            "Railcraft:tool.steel.hoe"
     };
     private static String[] defaultExcludedSwords = new String[]{
             "Botania:manasteelSword",
             "Steamcraft:swordGildedGold",
             "Steamcraft:swordBrass",
-            "ThermalExpansion:tool.swordInvar"
+            "ThermalExpansion:tool.swordInvar",
+            "IC2:itemToolBronzeSword",
+            "Railcraft:tool.steel.sword"
     };
     private static String[] defaultExcludedBows = new String[]{
             "ThermalExpansion:tool.bowInvar"
@@ -283,6 +295,7 @@ public class Config {
             "Natura",
             "BiomesOPlenty",
             "ProjRed|Exploration",
-            "appliedenergistics2"
+            "appliedenergistics2",
+            "MekanismTool"
     };
 }

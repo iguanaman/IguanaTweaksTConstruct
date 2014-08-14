@@ -143,28 +143,28 @@ public abstract class TinkerMaterialTweaks {
         updateMaterial(_2_copper,    "Black Steel",  300, 550, 2, 0.9f); // Infuscolium (hlvl2) + deep iron, Reinforced 2, Better Copper
         updateMaterial(_3_iron,      "Oureclase",    330, 700, 3, 1.0f); // better iron
         updateMaterial(bronzeLevel,  "Astral Silver", 35, 700, 2, 0.35f);
-        updateMaterial(_5_diamond,   "Carmot",        50, 800, 2, 0.4f);
-        updateMaterial(_5_diamond,   "Mithril",      700, 720, 3, 1.1f);
-        updateMaterial(_5_diamond,   "Quicksilver",  600, 880, 4, 1.2f); // Mithril + Silver, enhanced mithril at the cost of durability
-        updateMaterial(_6_obsidian,  "Haderoth",     810, 800, 4, 1.3f); // Rubracium (hlvl6) + Mithril
-        updateMaterial(_7_ardite,    "Orichalcum",  1010, 900, 4, 1.5f);
-        updateMaterial(_7_ardite,    "Celenegil",     600,1400, 3, 0.7f); // Orichalcum + Platin
-        updateMaterial(_8_cobalt,    "Adamantine",  1550,1000, 5, 2.3f); // Reinforced 2
+        updateMaterial(_5_diamond,   "Carmot",       150, 800, 2, 0.4f);
+        updateMaterial(_6_obsidian,  "Mithril",      700, 720, 3, 1.1f);
+        updateMaterial(_6_obsidian,  "Quicksilver",  600, 880, 4, 1.2f); // Mithril + Silver, enhanced mithril at the cost of durability
+        updateMaterial(_7_ardite,    "Haderoth",     810, 800, 4, 1.3f); // Rubracium (hlvl6) + Mithril
+        updateMaterial(_8_cobalt,    "Orichalcum",  1010, 900, 4, 1.5f);
+        updateMaterial(_8_cobalt,    "Celenegil",    600,1400, 3, 0.7f); // Orichalcum + Platin
+        updateMaterial(_9_manyullym, "Adamantine",  1550,1000, 5, 2.3f); // Reinforced 2
         updateMaterial(_9_manyullym, "Atlarus",     1750,1200, 5, 2.5f);
         updateMaterial(_9_manyullym, "Tartarite",   2000,1500, 6, 3.33f); // Adamantine + Atlarus
     }
 
     private static void modifyMetallurgyNether(int bronzeLevel)
     {
-        updateMaterial(bronzeLevel, "Ignatius",     200, 400, 3, 0.3f); // Ignite 1
-        updateMaterial(bronzeLevel, "Shadow Iron",  300, 400, 3, 1.2f); // Weakness 1 + Reinforced 1
+        updateMaterial(_3_iron,     "Ignatius",     200, 400, 3, 0.3f); // Ignite 1
+        updateMaterial(_3_iron,     "Shadow Iron",  300, 400, 3, 1.2f); // Weakness 1 + Reinforced 1
         updateMaterial(bronzeLevel, "Shadow Steel", 400, 600, 4, 1.3f); // Shadow Iron + Lemurite, Weakness 2 + Reinforced 2
         updateMaterial(_5_diamond,  "Midasium",     111,1111, 4, 1.1f);
         updateMaterial(_5_diamond,  "Vyroxeres",    300, 700, 3, 0.8f); // Poison 1
         updateMaterial(_6_obsidian, "Ceruclase",    500, 707, 4, 1.4f);
-        updateMaterial(_6_obsidian, "Inolashite",   900, 800, 3, 0.81f); // Alduorite + Ceruclase, Poison 2
+        updateMaterial(_7_ardite,   "Inolashite",   900, 800, 3, 0.81f); // Alduorite + Ceruclase, Poison 2
         updateMaterial(_7_ardite,   "Kalendrite",  1000, 500, 4, 1.1f);
-        updateMaterial(_7_ardite,   "Amordrine",    900,1400, 3, 1.0f); // Kalendrite + Platinum, Life Steal 1
+        updateMaterial(_8_cobalt,   "Amordrine",    900,1400, 3, 1.0f); // Kalendrite + Platinum, Life Steal 1
         updateMaterial(_8_cobalt,   "Vulcanite",   1500,1000, 4, 0.7f); // Ignite 2
         updateMaterial(_8_cobalt,   "Sanguinite",   150, 200, 6, 0.5f); // Wither 1, Combat material. Requires manyullyn to mine, but can't mine it
     }

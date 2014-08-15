@@ -17,22 +17,25 @@ public class ClayBucketHandler {
     @SubscribeEvent
     public void EntityInteract(EntityInteractEvent event)
     {
-        if (event != null && event.target != null && event.target instanceof EntityCow)
+        if(event.target == null || !(event.target instanceof EntityCow))
+            return;
+        if(event.entityPlayer == null)
+            return;
+
+        ItemStack equipped = event.entityPlayer.getCurrentEquippedItem();
+        // bucket present?
+        if(equipped == null || equipped.getItem() != IguanaItems.clayBucketFired)
+            return;
+
+        EntityPlayer player = event.entityPlayer;
+
+        if (equipped.stackSize-- == 1)
         {
-            ItemStack equipped = event.entityPlayer.getCurrentEquippedItem();
-            if(equipped.getItem() != IguanaItems.clayBucketFired)
-                return;
-
-            EntityPlayer player = event.entityPlayer;
-
-            if (equipped.stackSize-- == 1)
-            {
-                player.inventory.setInventorySlotContents(player.inventory.currentItem, new ItemStack(IguanaItems.clayBucketMilk));
-            }
-            else if (!player.inventory.addItemStackToInventory(new ItemStack(IguanaItems.clayBucketMilk)))
-            {
-                player.dropPlayerItemWithRandomChoice(new ItemStack(IguanaItems.clayBucketMilk, 1, 0), false);
-            }
+            player.inventory.setInventorySlotContents(player.inventory.currentItem, new ItemStack(IguanaItems.clayBucketMilk));
+        }
+        else if (!player.inventory.addItemStackToInventory(new ItemStack(IguanaItems.clayBucketMilk)))
+        {
+            player.dropPlayerItemWithRandomChoice(new ItemStack(IguanaItems.clayBucketMilk, 1, 0), false);
         }
     }
 

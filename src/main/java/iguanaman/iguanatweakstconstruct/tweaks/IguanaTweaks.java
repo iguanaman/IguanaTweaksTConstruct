@@ -48,8 +48,10 @@ public class IguanaTweaks {
         // flint recipes n stuff
         flintTweaks();
 
-        if(Config.castsBurnMaterial)
-            castCreatingConsumesPart();
+        if(Config.castsBurnMaterial) {
+            Log.info("Burn casting materials to a crisp");
+            MinecraftForge.EVENT_BUS.register(new CastHandler());
+        }
 
         if(Config.allowPartReuse)
             reusableToolParts();
@@ -160,25 +162,6 @@ public class IguanaTweaks {
 
             // add recipe
             GameRegistry.addShapelessRecipe(new ItemStack(Items.flint), recipe);
-        }
-    }
-
-    private void castCreatingConsumesPart()
-    {
-        Log.info("Modifying cast creation to consume toolpart");
-        try {
-            Field consume = CastingRecipe.class.getDeclaredField("consumeCast");
-            consume.setAccessible(true);
-
-            for(CastingRecipe recipe : TConstructRegistry.getTableCasting().getCastingRecipes())
-                if(recipe.getResult().getItem() == TinkerSmeltery.metalPattern)
-                    consume.set(recipe, true);
-        } catch (NoSuchFieldException e) {
-            Log.error("Couldn't find field to modify");
-            Log.error(e);
-        } catch (IllegalAccessException e) {
-            Log.error("Couldn't modify casting pattern");
-            Log.error(e);
         }
     }
 

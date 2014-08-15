@@ -144,6 +144,9 @@ public class IguanaTweaks {
         // has to be added after exchanging the repair modifier, to obtain the correct cache
         if(Config.easyToolRepair)
             GameRegistry.addRecipe(new RepairCraftingRecipe());
+
+        if(Config.easyPartCrafting)
+            GameRegistry.addRecipe(new PartCraftingRecipe());
     }
 
     private void flintTweaks()

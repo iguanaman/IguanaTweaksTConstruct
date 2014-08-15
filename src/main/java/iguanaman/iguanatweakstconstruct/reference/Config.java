@@ -63,6 +63,7 @@ public class Config {
     public static boolean disableStoneTools;
     public static boolean castsBurnMaterial;
     public static boolean easyToolRepair;
+    public static boolean easyPartCrafting;
     public static boolean allowPartReuse;
     public static boolean removeStoneTorchRecipe;
     public static boolean moreExpensiveSilkyCloth;
@@ -188,6 +189,7 @@ public class Config {
         disableStoneTools = configfile.getBoolean("disableStoneTools", CATEGORY_Tweaks, true, "Stone Tools can only be used to create casts, but no tools");
         castsBurnMaterial = configfile.getBoolean("castingBurnsMaterial", CATEGORY_Tweaks, true, "Creating a metal cast burns up the material that was used to create it");
         easyToolRepair    = configfile.getBoolean("easyToolRepair", CATEGORY_Tweaks, true, "Allows to repair your tool in a crafting grid, without tool station");
+        easyPartCrafting  = configfile.getBoolean("easyPartCrafting", CATEGORY_Tweaks, false, "Allows to craft tool parts with a pattern and the material in any crafting grid.");
         allowPartReuse    = configfile.getBoolean("allowPartReuse", CATEGORY_Tweaks, true, "Allows toolparts to be used as material in the Part Builder. Like, turn a Pick head into a Shovel head.!");
 
         // stuff

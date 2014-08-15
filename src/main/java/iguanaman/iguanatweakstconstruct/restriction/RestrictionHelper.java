@@ -391,6 +391,7 @@ public abstract class RestrictionHelper {
     public static final String[] defaultAllowed = new String[] {
             // Wood:
             "Wood:rod",
+            "Wood:crossbar",
             "Wood:binding",
             "Wood:sign",
 
@@ -405,6 +406,7 @@ public abstract class RestrictionHelper {
             "Bone:rod",
             "Bone:shovel",
             "Bone:axe",
+            "Bone:crossbar",
             "Bone:knifeblade",
             "Bone:arrowhead",
 

@@ -147,6 +147,9 @@ public class IguanaTweaks {
 
         if(Config.easyPartCrafting)
             GameRegistry.addRecipe(new PartCraftingRecipe());
+
+        if(Config.easyToolBuilding)
+            GameRegistry.addRecipe(new ToolCraftingRecipe());
     }
 
     private void flintTweaks()

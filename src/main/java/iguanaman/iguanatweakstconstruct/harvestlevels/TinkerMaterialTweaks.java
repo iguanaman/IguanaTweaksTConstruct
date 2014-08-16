@@ -142,7 +142,7 @@ public abstract class TinkerMaterialTweaks {
         updateMaterial(_1_flint,     "Deep Iron",    250, 450, 2, 0.8f); // Reinforced 1, better Flint
         updateMaterial(_2_copper,    "Black Steel",  300, 550, 2, 0.9f); // Infuscolium (hlvl2) + deep iron, Reinforced 2, Better Copper
         updateMaterial(_3_iron,      "Oureclase",    330, 700, 3, 1.0f); // better iron
-        updateMaterial(bronzeLevel,  "Astral Silver", 35, 700, 2, 0.35f);
+        updateMaterial(bronzeLevel,  "Astral Silver", 35, 900, 2, 0.35f);
         updateMaterial(_5_diamond,   "Carmot",       150, 800, 2, 0.4f);
         updateMaterial(_6_obsidian,  "Mithril",      700, 720, 3, 1.1f);
         updateMaterial(_6_obsidian,  "Quicksilver",  600, 880, 4, 1.2f); // Mithril + Silver, enhanced mithril at the cost of durability

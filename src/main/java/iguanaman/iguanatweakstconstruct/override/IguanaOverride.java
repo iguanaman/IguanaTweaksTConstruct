@@ -21,7 +21,11 @@ public class IguanaOverride {
     @Handler
     public void postInit(FMLPostInitializationEvent event)
     {
+        // tinker materials
         File file = new File(IguanaTweaksTConstruct.configPath, "MaterialOverride.cfg");
         MaterialOverride.doOverride(file);
+        // non-tinker tools
+        file = new File(IguanaTweaksTConstruct.configPath, "ToolOverride.cfg");
+        ToolOverride.doOverride(file);
     }
 }

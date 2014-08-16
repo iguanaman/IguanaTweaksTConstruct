@@ -24,6 +24,7 @@ public class Config {
 	public static boolean toolLevelingExtraModifiers;
     public static int[] toolModifiersAtLevels;
 	public static boolean toolLevelingRandomBonuses;
+    public static int[] randomBonusesAtlevels;
     public static boolean randomBonusesAreUseful;
     public static boolean randomBonusesAreRandom;
 
@@ -125,8 +126,9 @@ public class Config {
         maxToolLevel               = configfile.getInt("maxToolLevel", CATEGORY_Leveling, 6, 1, 99, "");
         toolLeveling               = configfile.getBoolean("toolLeveling", CATEGORY_Leveling, true, "Can your skill with tools 'level up' as you use them?");
         toolLevelingExtraModifiers = configfile.getBoolean("ExtraModifiers", CATEGORY_Leveling, true, "Removes modifiers on new tools and gives them through leveling (requires 'toolLeveling=true')");
+        toolModifiersAtLevels      = configfile.get(CATEGORY_Leveling, "ModifiersAtLevels", new int[]{2,4,6}, "Adds an extra modifier on these levleups if 'ExtraModifiers' is enabled").getIntList();
 		toolLevelingRandomBonuses  = configfile.getBoolean("RandomBonuses", CATEGORY_Leveling, true, "Gives a random bonus every level, if false and levelling is on modifiers are given at levels 2 and 4 (requires 'toolLeveling=true')");
-        toolModifiersAtLevels      = configfile.get(CATEGORY_Leveling, "ModifiersAtLevels", new int[]{2,4,6}, "Adds an extra modifier on these levleups if 'toolLevelingExtraModifiers' is enabled").getIntList();
+        randomBonusesAtlevels      = configfile.get(CATEGORY_Leveling, "BonusesAtLevels", new int[]{2,3,4,5,6}, "Adds a random bonus on these levleups if 'RandomBonuses' is enabled").getIntList();
         randomBonusesAreUseful     = configfile.getBoolean("UsefulBonuses", CATEGORY_Leveling, true, "Disables less-useful modifiers on levelups. Like a sword with silktouch, or a pickaxe with beheading.");
         randomBonusesAreRandom     = configfile.getBoolean("CompletelyRandomBonuses", CATEGORY_Leveling, false, "Each modifier is equally likely on levelup. Disables useful bonuses.");
 

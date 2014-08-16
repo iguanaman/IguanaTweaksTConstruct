@@ -272,7 +272,13 @@ public abstract class LevelingLogic {
         // this is done first so the extra-chance can be incorporated correctly
         if (Config.toolLevelingRandomBonuses)
         {
-            RandomBonuses.tryModifying(player, stack);
+            int bonusesToAdd = 0;
+            for(int lvl : Config.randomBonusesAtlevels)
+                if(level == lvl)
+                    bonusesToAdd++;
+
+            while(bonusesToAdd-- > 0)
+                RandomBonuses.tryModifying(player, stack);
         }
 
         // and NOW save the change

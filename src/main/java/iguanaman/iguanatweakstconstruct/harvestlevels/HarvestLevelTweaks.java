@@ -12,6 +12,8 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.oredict.OreDictionary;
 import tconstruct.world.blocks.GravelOre;
 
+import java.lang.reflect.Field;
+
 /**
  * Used to modify the harvest levels of all known/findable tools and blocks. Vanilla and modded.
  * Has to be used with the Tinker Tool Tweaks or you'll be very unhappy with unmineable blocks.
@@ -131,10 +133,32 @@ public abstract class HarvestLevelTweaks {
                         break;
                     // default... we just increase it?
                     default:
-                        hlvl = old + 1;
+                        hlvl = old + 2;
                 }
 
                 item.setHarvestLevel(toolClass, hlvl);
+                // meh. special fix for CofH tools
+                Class clazz = item.getClass();
+                while(clazz != Object.class)
+                {
+                    if(clazz.getSimpleName().equals("ItemToolAdv"))
+                    {
+                        try {
+                            Field hlvlField = clazz.getDeclaredField("harvestLevel");
+                            hlvlField.setAccessible(true);
+                            hlvlField.set(item, hlvl);
+                        } catch (NoSuchFieldException e) {
+                            // errorrr
+                            Log.error("Couldn't find harvestlevel of " + item.getUnlocalizedName());
+                        } catch (IllegalAccessException e) {
+                            Log.error("Couldn't change harvestlevel of " + item.getUnlocalizedName());
+                        }
+                        break;
+                    }
+                    clazz = clazz.getSuperclass();
+                }
+
+
                 if (Config.logMiningLevelChanges)
                     Log.debug(String.format("Changed Harvest Level for %s of %s from %d to %d", toolClass, item.getUnlocalizedName(), old, hlvl));
             }

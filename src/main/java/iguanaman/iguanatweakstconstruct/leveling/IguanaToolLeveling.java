@@ -1,6 +1,7 @@
 package iguanaman.iguanatweakstconstruct.leveling;
 
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
@@ -55,7 +56,9 @@ public class IguanaToolLeveling {
     @Handler
     public void postInit(FMLPostInitializationEvent event)
     {
-        MinecraftForge.EVENT_BUS.register(new LevelingEventHandler());
+        LevelingEventHandler handler = new LevelingEventHandler();
+        MinecraftForge.EVENT_BUS.register(handler);
+        FMLCommonHandler.instance().bus().register(handler);
         MinecraftForge.EVENT_BUS.register(new LevelingToolTipHandler());
         if(Config.mobHeadPickaxeBoost)
             MinecraftForge.EVENT_BUS.register(new MobHeadTooltipHandler());

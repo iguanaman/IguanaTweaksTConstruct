@@ -1,6 +1,7 @@
 package iguanaman.iguanatweakstconstruct.leveling.handlers;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
@@ -17,10 +18,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
-import tconstruct.items.tools.Battleaxe;
-import tconstruct.items.tools.Hammer;
-import tconstruct.items.tools.Pickaxe;
-import tconstruct.items.tools.Shortbow;
+import tconstruct.items.tools.*;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.event.ToolCraftEvent;
 import tconstruct.library.tools.ToolCore;
@@ -101,6 +99,28 @@ public class LevelingEventHandler {
         ItemStack stack = event.current;
         if (stack != null && stack.hasTagCompound() && stack.getItem() instanceof ToolCore)
             LevelingLogic.addXP(stack, player, 1L);
+    }
+
+    @SubscribeEvent
+    public void onCrafting(PlayerEvent.ItemCraftedEvent event)
+    {
+        if(event.crafting == null)
+            return;
+
+        // was a chisel involved?
+        ItemStack chisel = null;
+        for(int i = 0; i < event.craftMatrix.getSizeInventory(); i++)
+            if(event.craftMatrix.getStackInSlot(i) != null && event.craftMatrix.getStackInSlot(i).getItem() instanceof Chisel)
+                chisel = event.craftMatrix.getStackInSlot(i);
+
+        // no chisel found
+        if(chisel == null)
+            return;
+
+        // we don't check for chisel recipes specifically, since there is no other recipe that requires a chisel
+        // and it's very likely that there never will be
+
+        LevelingLogic.addXP(chisel, event.player, 1);
     }
 
     @SubscribeEvent

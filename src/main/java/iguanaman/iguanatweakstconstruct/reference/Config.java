@@ -63,6 +63,7 @@ public class Config {
     public static int recipeGravelPerFlint;
     public static boolean disableStoneTools;
     public static boolean castsBurnMaterial;
+    public static boolean allowStringBinding;
 
     public static boolean easyToolRepair;
     public static boolean easyPartCrafting;
@@ -195,6 +196,7 @@ public class Config {
         disableStoneTools = configfile.getBoolean("disableStoneTools", CATEGORY_Tweaks, true, "Stone Tools can only be used to create casts, but no tools");
         castsBurnMaterial = configfile.getBoolean("castingBurnsMaterial", CATEGORY_Tweaks, true, "Creating a metal cast burns up the material that was used to create it");
         allowPartReuse    = configfile.getBoolean("allowPartReuse", CATEGORY_Tweaks, true, "Allows toolparts to be used as material in the Part Builder. Like, turn a Pick head into a Shovel head.!");
+        allowStringBinding= configfile.getBoolean("allowStringBinding", CATEGORY_Tweaks, true, "Allows you to use a piece of string as a binding");
 
         // easy crafting
         easyToolRepair           = configfile.getBoolean("easyToolRepair", CATEGORY_Tweaks, true, "Allows to repair your tool in a crafting grid, without tool station");

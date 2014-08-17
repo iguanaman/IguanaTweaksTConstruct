@@ -1,6 +1,7 @@
 package iguanaman.iguanatweakstconstruct.tweaks;
 
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
@@ -14,15 +15,14 @@ import mantle.pulsar.pulse.Pulse;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.*;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import tconstruct.library.TConstructRegistry;
-import tconstruct.library.crafting.CastingRecipe;
-import tconstruct.library.crafting.ModifyBuilder;
-import tconstruct.library.crafting.PatternBuilder;
-import tconstruct.library.crafting.ToolBuilder;
+import tconstruct.library.client.TConstructClientRegistry;
+import tconstruct.library.crafting.*;
 import tconstruct.library.modifier.ItemModifier;
 import tconstruct.library.util.IPattern;
 import tconstruct.modifiers.tools.ModFlux;
@@ -47,6 +47,14 @@ public class IguanaTweaks {
     {
         // flint recipes n stuff
         flintTweaks();
+
+        // add string bindings. yay.
+        if(Config.allowStringBinding) {
+            TConstructRegistry.addToolMaterial(40, "String", 0, 33, 1, 0, 0.01F, 0, 0f, EnumChatFormatting.WHITE.toString(), "");
+            TConstructClientRegistry.addMaterialRenderMapping(40, "tinker", "paper", true);
+            MinecraftForge.EVENT_BUS.register(new StringBindingHandler());
+        }
+
 
         if(Config.castsBurnMaterial) {
             Log.info("Burn casting materials to a crisp");

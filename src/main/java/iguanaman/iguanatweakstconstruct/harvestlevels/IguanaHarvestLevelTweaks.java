@@ -5,15 +5,25 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import iguanaman.iguanatweakstconstruct.harvestlevels.proxy.HarvestCommonProxy;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
+import iguanaman.iguanatweakstconstruct.restriction.RestrictionHelper;
+import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import mantle.pulsar.pulse.Handler;
 import mantle.pulsar.pulse.Pulse;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
+import tconstruct.library.TConstructRegistry;
 import tconstruct.library.crafting.ModifyBuilder;
 import tconstruct.library.modifier.ItemModifier;
+import tconstruct.library.tools.ToolMaterial;
 import tconstruct.modifiers.tools.ModDurability;
+import tconstruct.tools.TinkerTools;
+import tconstruct.world.TinkerWorld;
 
 import java.lang.reflect.Field;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The Harvest-Tweaks Pulse. If this were a separate mod instead of pulse-module, it'd be a @Mod
@@ -60,5 +70,32 @@ public class IguanaHarvestLevelTweaks {
         TinkerMaterialTweaks.modifyToolMaterials();
         HarvestLevelTweaks.modifyHarvestLevels();
         MinecraftForge.EVENT_BUS.register(new VanillaToolTipHandler());
+
+        adaptChestLoot();
+    }
+
+    // removes all pickaxe and hammer heads that have a higher harvestlevel than flint
+    private void adaptChestLoot()
+    {
+        for(Map.Entry<Integer, ToolMaterial> mat : TConstructRegistry.toolMaterials.entrySet())
+        {
+            // we allow flint and lower
+            if(mat.getValue().harvestLevel() <= HarvestLevels._1_flint)
+                continue;
+
+            // remove pickaxe head
+            TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(TinkerTools.pickaxeHead, 1, mat.getKey()));
+            // remove hammer head
+            TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(TinkerTools.hammerHead, 1, mat.getKey()));
+            // shovel
+            TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(TinkerTools.shovelHead, 1, mat.getKey()));
+            // excavator
+            TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(TinkerTools.excavatorHead, 1, mat.getKey()));
+            // hatchet
+            TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(TinkerTools.hatchetHead, 1, mat.getKey()));
+            // lumberaxe
+            TinkerWorld.tinkerHouseChest.removeItem(new ItemStack(TinkerTools.broadAxeHead, 1, mat.getKey()));
+            // other stuff should be fine
+        }
     }
 }

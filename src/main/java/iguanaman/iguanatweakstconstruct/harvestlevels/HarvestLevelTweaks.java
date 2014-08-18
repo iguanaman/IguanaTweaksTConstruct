@@ -62,24 +62,11 @@ public final class HarvestLevelTweaks {
 
     private static void modifyOredictBlocks()
     {
-        String[][][] lists = new String[][][] {oreDictLevels, oreDictLevelsMetallurgyFantasy, oreDictLevelsMetallurgyNether, oreDictLevelsMetallurgyEnd};
-        for(String[][] odll : lists)
-            for (int i = 0; i < odll.length; ++i)
-                for (String materialName : odll[i]) {
-                    // regular ore variants
-                    for (ItemStack oreStack : OreDictionary.getOres("ore" + materialName)) modifyBlock(oreStack, i);
-                    // dense ore variants
-                    for (ItemStack oreStack : OreDictionary.getOres("denseore" + materialName)) modifyBlock(oreStack, i);
-                    // nether ore variants
-                    for (ItemStack oreStack : OreDictionary.getOres("oreNether" + materialName)) modifyBlock(oreStack, i);
-                    // dense nether ore variants
-                    for (ItemStack oreStack : OreDictionary.getOres("denseoreNether" + materialName)) modifyBlock(oreStack, i);
-                    // full blocks (metal-blocks)
-                    for (ItemStack oreStack : OreDictionary.getOres("block" + materialName)) modifyBlock(oreStack, i);
-                    // stone-ores? dunno which mod adds that. leave it in for compatibility
-                    for (ItemStack oreStack : OreDictionary.getOres("stone" + materialName)) modifyBlock(oreStack, i);
-                    // bricks from metallurgy
-                    for (ItemStack oreStack : OreDictionary.getOres("brick" + materialName)) modifyBlock(oreStack, i);
+        //String[][][] lists = new String[][][] {oreDictLevels, oreDictLevelsMetallurgyFantasy, oreDictLevelsMetallurgyNether, oreDictLevelsMetallurgyEnd};
+        //for(String[][] odll : lists)
+            for (int i = 0; i < allOreDicLevels.length; ++i)
+                for (String materialName : allOreDicLevels[i]) {
+                    modifyOredictBlock(materialName, i);
                 }
 
         // metal-blocks
@@ -87,9 +74,26 @@ public final class HarvestLevelTweaks {
             Log.debug("Modified oredicted blocks");
     }
 
+    public static void modifyOredictBlock(String orePostfix, int hlvl)
+    {
+        // regular ore variants
+        for (ItemStack oreStack : OreDictionary.getOres("ore" + orePostfix)) modifyBlock(oreStack, hlvl);
+        // dense ore variants
+        for (ItemStack oreStack : OreDictionary.getOres("denseore" + orePostfix)) modifyBlock(oreStack, hlvl);
+        // nether ore variants
+        for (ItemStack oreStack : OreDictionary.getOres("oreNether" + orePostfix)) modifyBlock(oreStack, hlvl);
+        // dense nether ore variants
+        for (ItemStack oreStack : OreDictionary.getOres("denseoreNether" + orePostfix)) modifyBlock(oreStack, hlvl);
+        // full blocks (metal-blocks)
+        for (ItemStack oreStack : OreDictionary.getOres("block" + orePostfix)) modifyBlock(oreStack, hlvl);
+        // stone-ores? dunno which mod adds that. leave it in for compatibility
+        for (ItemStack oreStack : OreDictionary.getOres("stone" + orePostfix)) modifyBlock(oreStack, hlvl);
+        // bricks from metallurgy
+        for (ItemStack oreStack : OreDictionary.getOres("brick" + orePostfix)) modifyBlock(oreStack, hlvl);
+    }
 
 
-    private static void modifyBlock(ItemStack stack, int harvestLevel)
+    public static void modifyBlock(ItemStack stack, int harvestLevel)
     {
         Block block = Block.getBlockFromItem(stack.getItem());
 
@@ -175,7 +179,7 @@ public final class HarvestLevelTweaks {
     }
 
     // HarvestLevels
-    public static String[][] oreDictLevels = {
+    public static final String[][] oreDictLevels = {
             // 0: Stone
             {},
             // 1: Flint
@@ -193,11 +197,12 @@ public final class HarvestLevelTweaks {
             // 7: Ardite
             {"Cobalt", "Iridium", "Cooperite", "Titanium"},
             // 8: Cobalt
-            {"Manyullyn"}
+            {"Manyullyn"},
             // 9: Manyullyn (empty)
+            {}
     };
 
-    public static String[][] oreDictLevelsMetallurgyFantasy = {
+    public static final String[][] oreDictLevelsMetallurgyFantasy = {
             // 0: Stone
             {"Prometheum", "DeepIron"},
             // 1: Flint
@@ -220,7 +225,7 @@ public final class HarvestLevelTweaks {
             {"Atlarus"}
     };
 
-    public static String[][] oreDictLevelsMetallurgyNether = {
+    public static final String[][] oreDictLevelsMetallurgyNether = {
             // 0: Stone
             {},
             // 1: Flint
@@ -243,7 +248,7 @@ public final class HarvestLevelTweaks {
             {"Sanguinite"}
     };
 
-    public static String[][] oreDictLevelsMetallurgyEnd = {
+    public static final String[][] oreDictLevelsMetallurgyEnd = {
             // 0: Stone
             {},
             // 1: Flint
@@ -263,6 +268,23 @@ public final class HarvestLevelTweaks {
             // 8: Cobalt
             {},
             // 9: Manyullyn
-            {},
+            {}
     };
+
+    public static String[][] allOreDicLevels;
+    static {
+        String[][][] lists = new String[][][] {oreDictLevels, oreDictLevelsMetallurgyFantasy, oreDictLevelsMetallurgyNether, oreDictLevelsMetallurgyEnd};
+        allOreDicLevels = new String[oreDictLevels.length][];
+        for(int i = 0; i < 10; i++)
+        {
+            int size = 0;
+            for (String[][] list : lists) size += list.length;
+
+            allOreDicLevels[i] = new String[size];
+            int j = 0;
+            for (String[][] list : lists)
+                for(String entry : list[i])
+                    allOreDicLevels[i][j++] = entry;
+        }
+    }
 }

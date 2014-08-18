@@ -5,6 +5,7 @@ import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
 import mantle.pulsar.pulse.Handler;
 import mantle.pulsar.pulse.Pulse;
+import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
 
@@ -21,11 +22,25 @@ public class IguanaOverride {
     @Handler
     public void postInit(FMLPostInitializationEvent event)
     {
-        // tinker materials
-        File file = new File(IguanaTweaksTConstruct.configPath, "MaterialOverride.cfg");
-        MaterialOverride.doOverride(file);
-        // non-tinker tools
-        file = new File(IguanaTweaksTConstruct.configPath, "ToolOverride.cfg");
-        ToolOverride.doOverride(file);
+        doOverride("Material", new MaterialOverride());
+        doOverride("Tool", new ToolOverride());
+        doOverride("Block", new BlockOverride());
+    }
+
+    public static void doOverride(String type, IOverride overrider)
+    {
+        String configFileName = type + "Override.cfg";
+        String defaultFileName = type + "Defaults.cfg";
+
+        Configuration defaultConfig = new Configuration(Reference.configFile(defaultFileName));
+        overrider.createDefault(defaultConfig);
+        defaultConfig.save();
+
+        Configuration config = new Configuration(Reference.configFile(configFileName));
+        config.load();
+        overrider.processConfig(config);
+
+        if(config.hasChanged())
+            config.save();
     }
 }

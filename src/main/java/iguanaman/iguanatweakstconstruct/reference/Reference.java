@@ -1,5 +1,9 @@
 package iguanaman.iguanatweakstconstruct.reference;
 
+import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
+
+import java.io.File;
+
 public class Reference {
     public static final String MOD_ID = "IguanaTweaksTConstruct";
     public static final String MOD_NAME = "Iguana Tinker Tweaks";
@@ -25,4 +29,6 @@ public class Reference {
         return String.format("%s:%s", RESOURCE, res);
     }
     public static String prefix(String name) { return String.format("iguana.tcon.%s", name);}
+
+    public static File configFile(String fileName) { return new File(IguanaTweaksTConstruct.configPath, fileName); }
 }

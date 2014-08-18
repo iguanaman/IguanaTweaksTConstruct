@@ -136,28 +136,7 @@ public abstract class HarvestLevelTweaks {
                         hlvl = old + 2;
                 }
 
-                item.setHarvestLevel(toolClass, hlvl);
-                // meh. special fix for CofH tools
-                Class clazz = item.getClass();
-                while(clazz != Object.class)
-                {
-                    if(clazz.getSimpleName().equals("ItemToolAdv"))
-                    {
-                        try {
-                            Field hlvlField = clazz.getDeclaredField("harvestLevel");
-                            hlvlField.setAccessible(true);
-                            hlvlField.set(item, hlvl);
-                        } catch (NoSuchFieldException e) {
-                            // errorrr
-                            Log.error("Couldn't find harvestlevel of " + item.getUnlocalizedName());
-                        } catch (IllegalAccessException e) {
-                            Log.error("Couldn't change harvestlevel of " + item.getUnlocalizedName());
-                        }
-                        break;
-                    }
-                    clazz = clazz.getSuperclass();
-                }
-
+                updateToolHarvestLevel(item, toolClass, hlvl);
 
                 if (Config.logMiningLevelChanges)
                     Log.debug(String.format("Changed Harvest Level for %s of %s from %d to %d", toolClass, item.getUnlocalizedName(), old, hlvl));
@@ -166,6 +145,31 @@ public abstract class HarvestLevelTweaks {
 
         if(Config.logMiningLevelChanges)
             Log.debug("Modified tools");
+    }
+
+    public static void updateToolHarvestLevel(Item item, String toolClass, int hlvl)
+    {
+        item.setHarvestLevel(toolClass, hlvl);
+        // meh. special fix for CofH tools
+        Class clazz = item.getClass();
+        while(clazz != Object.class)
+        {
+            if(clazz.getSimpleName().equals("ItemToolAdv"))
+            {
+                try {
+                    Field hlvlField = clazz.getDeclaredField("harvestLevel");
+                    hlvlField.setAccessible(true);
+                    hlvlField.set(item, hlvl);
+                } catch (NoSuchFieldException e) {
+                    // errorrr
+                    Log.error("Couldn't find harvestlevel of " + item.getUnlocalizedName());
+                } catch (IllegalAccessException e) {
+                    Log.error("Couldn't change harvestlevel of " + item.getUnlocalizedName());
+                }
+                break;
+            }
+            clazz = clazz.getSuperclass();
+        }
     }
 
     // HarvestLevels

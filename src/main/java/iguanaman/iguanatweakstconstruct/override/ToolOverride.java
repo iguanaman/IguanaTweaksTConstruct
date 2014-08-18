@@ -1,5 +1,6 @@
 package iguanaman.iguanatweakstconstruct.override;
 
+import iguanaman.iguanatweakstconstruct.harvestlevels.HarvestLevelTweaks;
 import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.item.Item;
@@ -43,7 +44,7 @@ public abstract class ToolOverride {
 
                 // update tool
                 if(level != newLevel)
-                    item.setHarvestLevel(tool, newLevel);
+                    HarvestLevelTweaks.updateToolHarvestLevel(item, tool, newLevel);
             }
         }
 

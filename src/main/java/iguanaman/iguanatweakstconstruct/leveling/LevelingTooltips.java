@@ -8,7 +8,8 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 
 // utility class for constructing tooltip
-public abstract class LevelingTooltips {
+public final class LevelingTooltips {
+    private LevelingTooltips() {} // non-instantiable
 
     /**
      * Returns only the XP progress. Standard is %.

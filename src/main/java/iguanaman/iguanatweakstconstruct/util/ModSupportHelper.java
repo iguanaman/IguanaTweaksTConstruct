@@ -2,7 +2,9 @@ package iguanaman.iguanatweakstconstruct.util;
 
 import cpw.mods.fml.common.Loader;
 
-public abstract class ModSupportHelper {
+public final class ModSupportHelper {
+    private ModSupportHelper() {} // non-instantiable
+
     public static final boolean tiCTooltips = Loader.isModLoaded("TiCTooltips");
     public static final boolean ExtraTiC = Loader.isModLoaded("ExtraTiC");
     public static final boolean BiomesOPlenty = Loader.isModLoaded("BiomesOPlenty");

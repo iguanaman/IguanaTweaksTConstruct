@@ -6,7 +6,9 @@ import net.minecraft.util.StatCollector;
 import static net.minecraft.util.EnumChatFormatting.*;
 
 // strength of the tool-material. stone == strength of a stone pick etc.
-public abstract class HarvestLevels {
+public final class HarvestLevels {
+    private HarvestLevels() {} // non-instantiable
+
     public static int _0_stone = 0;
     public static int _1_flint = 1;
     public static int _2_copper = 2;

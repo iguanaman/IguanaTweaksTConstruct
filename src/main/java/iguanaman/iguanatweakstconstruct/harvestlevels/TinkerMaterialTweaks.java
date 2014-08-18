@@ -15,7 +15,8 @@ import static iguanaman.iguanatweakstconstruct.util.HarvestLevels.*;
  * Used to modify the harvest levels and speeds of the tinker tool parts.
  * Has to be used together with the HarvestLevel Tweaks or everything will be messed up. :)
  */
-public abstract class TinkerMaterialTweaks {
+public final class TinkerMaterialTweaks {
+    private TinkerMaterialTweaks() {} // non-instantiable
     /*
     Stat Baseline:
     0 - Stone:      100, 200, 1, 0.5

@@ -21,8 +21,8 @@ import tconstruct.modifiers.tools.ModRedstone;
 
 import static iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic.PartTypes.*;
 
-public abstract class ReplacementLogic {
-
+public final class ReplacementLogic {
+    private ReplacementLogic() {} // non-instantiable
 
     public static void exchangeToolPart(ToolCore tool, NBTTagCompound tags, PartTypes type, ItemStack partStack, ItemStack toolStack)
     {

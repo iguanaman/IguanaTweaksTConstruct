@@ -11,7 +11,9 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class MaterialOverride {
+public final class MaterialOverride {
+    private MaterialOverride() {} // non-instantiable
+
     public static void doOverride(File configFile)
     {
         Log.info("Loading Material Overrides");

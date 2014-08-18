@@ -3,7 +3,9 @@ package iguanaman.iguanatweakstconstruct.util;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 
-public abstract class Log {
+public final class Log {
+    private Log() {} // non-instantiable
+
     // initialized by preinit
     private static Logger logger;
 

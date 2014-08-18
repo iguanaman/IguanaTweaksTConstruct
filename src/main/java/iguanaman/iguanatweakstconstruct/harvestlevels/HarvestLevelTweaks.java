@@ -18,7 +18,9 @@ import java.lang.reflect.Field;
  * Used to modify the harvest levels of all known/findable tools and blocks. Vanilla and modded.
  * Has to be used with the Tinker Tool Tweaks or you'll be very unhappy with unmineable blocks.
  */
-public abstract class HarvestLevelTweaks {
+public final class HarvestLevelTweaks {
+    private HarvestLevelTweaks() {} // non-instantiable
+
     public static void modifyHarvestLevels() {
         Log.info("Modifying HarvestLevel of blocks and items");
 

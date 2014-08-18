@@ -8,7 +8,8 @@ import net.minecraft.item.crafting.IRecipe;
 import java.util.List;
 import java.util.ListIterator;
 
-public abstract class RecipeRemover {
+public final class RecipeRemover {
+    private RecipeRemover() {} // non-instantiable
 
     @SuppressWarnings("unchecked")
     public static void removeAnyRecipe (ItemStack resultItem)

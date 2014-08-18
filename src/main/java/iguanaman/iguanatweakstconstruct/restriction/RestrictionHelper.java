@@ -17,8 +17,9 @@ import tconstruct.tools.items.Pattern;
 
 import java.util.*;
 
-// todo: refactor this properly with a Map or something when i need to restrict more than vanilla
-public abstract class RestrictionHelper {
+public final class RestrictionHelper {
+    private RestrictionHelper() {} // non-instantiable
+
     public static Map<String, ItemMeta> configNameToPattern; // holds the names that can be used in the config and maps them to item-meta combinations to retrieve the materials
     public static Map<String, ItemMeta> configNameToCast; // same as above but for metal casts
     // this list contains all ALLOWED pattern - material combinations

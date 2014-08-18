@@ -9,7 +9,9 @@ import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
 
-public abstract class ToolOverride {
+public final class ToolOverride {
+    private ToolOverride() {} // non-instantiable
+
     public static void doOverride(File configFile) {
         Log.info("Loading Tool Overrides");
         // load the file

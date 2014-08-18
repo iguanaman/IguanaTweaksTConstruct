@@ -1,5 +1,6 @@
 package iguanaman.iguanatweakstconstruct.restriction;
 
+import iguanaman.iguanatweakstconstruct.reference.Reference;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraftforge.common.config.Configuration;
 import tconstruct.library.TConstructRegistry;
@@ -13,8 +14,8 @@ public class RestrictionConfig {
     private Configuration configfile;
 //    public static Map<String, Set<Integer>> restrictedParts = new HashMap<String, Set<Integer>>();
 
-    public void init(File file) {
-        configfile = new Configuration(file);
+    public void init(String fileName) {
+        configfile = new Configuration(Reference.configFile(fileName));
         configfile.load();
 
         Log.info("Applying Tool Part restrictions");

@@ -24,7 +24,7 @@ public class IguanaPartRestriction {
         RestrictionHelper.init();
 
         RestrictionConfig config = new RestrictionConfig();
-        config.init(new File(IguanaTweaksTConstruct.configPath, "restrictions.cfg"));
+        config.init("restrictions.cfg");
 
         adaptChestLoot();
 

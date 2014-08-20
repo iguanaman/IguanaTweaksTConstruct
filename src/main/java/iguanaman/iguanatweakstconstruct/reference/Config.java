@@ -32,9 +32,10 @@ public class Config {
     public static Set<RandomBonuses.Modifier> deactivatedModifiers = new HashSet<RandomBonuses.Modifier>();
 
 	// pick boost
-	public static boolean levelingPickaxeBoost;
+	public static boolean pickaxeBoostRequired;
 	public static boolean mobHeadPickaxeBoost;
     public static boolean mobHeadRequiresModifier;
+	public static boolean levelingPickaxeBoost;
 	public static int levelingPickaxeBoostXpPercentage;
     public static float xpPerBoostLevelMultiplier;
 
@@ -147,7 +148,8 @@ public class Config {
         configfile.setCategoryComment(CATEGORY_PickLeveling, "Leveling Module: Allows pickaxes to gain a mining level with enough XP. Should be used with the HarvestLevel Module.");
 
         // pick boosting behaviour
-        levelingPickaxeBoost    = configfile.getBoolean("pickaxeBoostRequired", CATEGORY_PickLeveling, true, "Every Pickaxes Mining Level is reduced by 1 and needs a mining levelup (separate from tool level) or, if enabled, a mob head modifier to advance");
+        pickaxeBoostRequired    = configfile.getBoolean("pickaxeBoostRequired", CATEGORY_PickLeveling, true, "Every Pickaxes Mining Level is reduced by 1 and needs a mining levelup (separate from tool level) or, if enabled, a mob head modifier to advance");
+        levelingPickaxeBoost    = configfile.getBoolean("allowLevelingBoost", CATEGORY_PickLeveling, true, "Pickaxes gain Mining Xp. A pickaxes mining level can be boosted through gaining XP. Should be used with pickaxeBoostRequired, otherwise tools will be able to mine higher than normally.");
         mobHeadPickaxeBoost     = configfile.getBoolean("addMobHeadBoost", CATEGORY_PickLeveling, true, "Mob heads can be used to boost a pickaxe's mining xp (REQUIRES allowLevelBoost)");
         mobHeadRequiresModifier = configfile.getBoolean("mobHeadBoostNeedsModifier", CATEGORY_PickLeveling, false, "Mob head boosting requires a free modifier");
 

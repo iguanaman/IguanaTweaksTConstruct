@@ -105,7 +105,7 @@ public class IguanaTweaksTConstructOld {
 
 	public static String getHarvestLevelName (int num)
 	{
-		if (Config.levelingPickaxeBoost && num > 1) --num;
+		if (Config.pickaxeBoostRequired && num > 1) --num;
 		switch (num)
 		{
 		case 0: return "\u00a77Stone";

@@ -43,25 +43,6 @@ public class IguanaHarvestLevelTweaks {
     {
         // the only thing this does is replacing GUIs with our own GUIs to display the correct harvest levels
         proxy.initialize();
-
-        // Remove Mininglevel-boost from diamond and emerald modifier.
-        // We use reflection for that. Although that's quite.. meh it means any changes to tconstruct are registered and we don't have to do localization separately
-
-        try {
-            Log.info("Removing Mininglevel from Diamond/Emerald Modifier");
-            Field maxLevel = ModDurability.class.getDeclaredField("miningLevel");
-            for (ItemModifier mod : ModifyBuilder.instance.itemModifiers) {
-                if (!(mod instanceof ModDurability))
-                    continue;
-
-                maxLevel.setAccessible(true);
-                maxLevel.set((ModDurability)mod, 0);
-            }
-        } catch (NoSuchFieldException e) {
-            Log.error(e.getMessage());
-        } catch (IllegalAccessException e) {
-            Log.error(e.getMessage());
-        }
     }
 
     @Handler

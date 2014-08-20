@@ -146,6 +146,10 @@ public final class ReplacementLogic {
         if(Config.removeMobHeadOnPartReplacement && type == HEAD)
             removeMobHeadModifier(tags);
 
+        // if boosted, remove boost tag
+        if(tags.hasKey("GemBoost"))
+            tags.removeTag("GemBoost");
+
         // handle Leveling/xp (has to be done first before we change the stats so we get the correct old values)
         if(LevelingLogic.hasXp(tags))
         {

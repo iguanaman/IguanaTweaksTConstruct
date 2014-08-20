@@ -1,22 +1,18 @@
 package iguanaman.iguanatweakstconstruct;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic;
 import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import iguanaman.iguanatweakstconstruct.util.Log;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import tconstruct.items.tools.Arrow;
 import tconstruct.items.tools.Hammer;
 import tconstruct.items.tools.Pickaxe;
 import tconstruct.library.TConstructRegistry;
-import tconstruct.library.crafting.ModifyBuilder;
-import tconstruct.library.crafting.ToolBuilder;
 import tconstruct.library.tools.ToolCore;
 
 public class OldToolConversionHandler {
@@ -36,7 +32,7 @@ public class OldToolConversionHandler {
         if(itemStack.getItem() == null)
             return false;
 
-        if(!(itemStack.getItem() instanceof ToolCore))
+        if(!(itemStack.getItem() instanceof ToolCore) || itemStack.getItem() instanceof Arrow)
             return false;
 
         NBTTagCompound tags = itemStack.getTagCompound().getCompoundTag("InfiTool");
@@ -56,12 +52,13 @@ public class OldToolConversionHandler {
         int realHlvl = TConstructRegistry.getMaterial(tags.getInteger("Head")).harvestLevel();
 
         // unboosted but boost requires -> we need to reduce the hlvl by 1
-        if(Config.pickaxeBoostRequired && !LevelingLogic.isBoosted(tags) && (itemStack.getItem() instanceof Pickaxe || itemStack.getItem() instanceof Hammer))
+        if(Config.levelingPickaxeBoost && !LevelingLogic.isBoosted(tags) && (itemStack.getItem() instanceof Pickaxe || itemStack.getItem() instanceof Hammer))
             return hlvl != Math.max(realHlvl-1, 0);
 
         // if it's boosted, check if it's boosted by a diamond from bronze level
-        if(realHlvl == HarvestLevels._4_bronze && hlvl > HarvestLevels._4_bronze)
-            return !tags.hasKey("GemBoost");
+        if(tags.hasKey("GemBoost") && realHlvl == HarvestLevels._4_bronze) {
+            return hlvl != HarvestLevels._5_diamond;
+        }
 
         return hlvl != realHlvl;
     }

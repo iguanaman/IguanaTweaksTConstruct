@@ -31,13 +31,13 @@ public final class HarvestLevels {
         _2_copper = 1;
         _3_iron = 2;
         _4_bronze = 2;
-        _5_diamond = 3;
-        _6_obsidian = 4;
-        _7_ardite = 5;
-        _8_cobalt = 6;
-        _9_manyullym = 7;
+        _5_diamond = 2;
+        _6_obsidian = 3;
+        _7_ardite = 4;
+        _8_cobalt = 4;
+        _9_manyullym = 5;
 
-        max = 7;
+        max = 5;
 
         vanilla = true;
     }
@@ -68,11 +68,10 @@ public final class HarvestLevels {
         {
             case 0: return GRAY + StatCollector.translateToLocal("mininglevel.stone");
             case 1: return DARK_RED + StatCollector.translateToLocal("mininglevel.iron");
-            case 2: return RED + StatCollector.translateToLocal("mininglevel.redstone");
-            case 3: return LIGHT_PURPLE + StatCollector.translateToLocal("mininglevel.obsidian");
-            case 4: return BLUE + StatCollector.translateToLocal("mininglevel.cobalt");
-            case 5: return DARK_PURPLE + StatCollector.translateToLocal("mininglevel.manyullyn");
-            case 6: return DARK_PURPLE + StatCollector.translateToLocal("mininglevel.manyullyn") + LIGHT_PURPLE + "+";
+            case 2: return LIGHT_PURPLE + StatCollector.translateToLocal("mininglevel.obsidian");
+            case 3: return BLUE + StatCollector.translateToLocal("mininglevel.cobalt");
+            case 4: return DARK_PURPLE + StatCollector.translateToLocal("mininglevel.manyullyn");
+            case 5: return DARK_PURPLE + StatCollector.translateToLocal("mininglevel.manyullyn") + LIGHT_PURPLE + "+";
             default: return ITALIC + "?????";
         }
     }

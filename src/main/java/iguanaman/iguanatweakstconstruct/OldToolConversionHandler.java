@@ -16,7 +16,8 @@ import tconstruct.library.TConstructRegistry;
 import tconstruct.library.tools.ToolCore;
 
 public class OldToolConversionHandler {
-    @SubscribeEvent
+    // todo: re-enable when this stuff is 100% reliable >_<
+    //@SubscribeEvent
     public void onLogin(PlayerEvent.PlayerLoggedInEvent event)
     {
         IInventory inventory = event.player.inventory;

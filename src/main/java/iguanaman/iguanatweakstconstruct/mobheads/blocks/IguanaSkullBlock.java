@@ -1,5 +1,6 @@
 package iguanaman.iguanatweakstconstruct.mobheads.blocks;
 
+import cpw.mods.fml.common.Optional;
 import iguanaman.iguanatweakstconstruct.mobheads.IguanaMobHeads;
 import iguanaman.iguanatweakstconstruct.mobheads.tileentities.IguanaSkullTileEntity;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
@@ -9,11 +10,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import thaumcraft.api.crafting.IInfusionStabiliser;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class IguanaSkullBlock extends BlockSkull {
+@Optional.Interface(modid = "Thaumcraft", iface = "thaumcraft.api.crafting.IInfusionStabiliser")
+public class IguanaSkullBlock extends BlockSkull implements IInfusionStabiliser {
 
 	public IguanaSkullBlock() {
 		super();
@@ -51,5 +54,11 @@ public class IguanaSkullBlock extends BlockSkull {
 
         ret.add(new ItemStack(IguanaMobHeads.skullItem, 1, this.getDamageValue(world, x,y,z)));
         return ret;
+    }
+
+    @Optional.Method(modid = "Thaumcraft")
+    @Override
+    public boolean canStabaliseInfusion(World world, int x, int y, int z) {
+        return true;
     }
 }

@@ -5,6 +5,7 @@ import cpw.mods.fml.common.gameevent.PlayerEvent;
 import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic;
+import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
@@ -57,6 +58,10 @@ public class OldToolConversionHandler {
         // unboosted but boost requires -> we need to reduce the hlvl by 1
         if(Config.pickaxeBoostRequired && !LevelingLogic.isBoosted(tags) && (itemStack.getItem() instanceof Pickaxe || itemStack.getItem() instanceof Hammer))
             return hlvl != Math.max(realHlvl-1, 0);
+
+        // if it's boosted, check if it's boosted by a diamond from bronze level
+        if(realHlvl == HarvestLevels._4_bronze && hlvl > HarvestLevels._4_bronze)
+            return !tags.hasKey("GemBoost");
 
         return hlvl != realHlvl;
     }

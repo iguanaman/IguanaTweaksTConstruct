@@ -76,7 +76,7 @@ public class LevelingToolTipHandler {
             inserter.add(mLvl);
 
             // display extended tooltip?
-            if(Config.showTooltipXP && advanced && LevelingLogic.hasBoostXp(tags) && Config.levelingPickaxeBoost)
+            if(Config.showTooltipXP && advanced && LevelingLogic.hasBoostXp(tags) && Config.pickaxeBoostRequired)
             {
                 // xp if not boosted
                 if(LevelingLogic.canBoostMiningLevel(tags))

@@ -72,7 +72,7 @@ public final class LevelingLogic {
     public static void addBoostTags(NBTTagCompound tag, ToolCore tool)
     {
         int hlvl = tag.getInteger("HarvestLevel");
-        if(!Config.levelingPickaxeBoost)
+        if(!Config.pickaxeBoostRequired)
             return;
         if(hlvl == 0 || !(tool instanceof Pickaxe || tool instanceof Hammer))
             return;
@@ -80,10 +80,8 @@ public final class LevelingLogic {
         tag.setLong(TAG_BOOST_EXP, 0);
         tag.setBoolean(TAG_IS_BOOSTED, false);
 
-        // reduce harvestlevel by 1 if pickaxe boosting is required
-        if(Config.pickaxeBoostRequired) {
-            tag.setInteger("HarvestLevel", hlvl - 1);
-        }
+        // reduce harvestlevel by 1
+        tag.setInteger("HarvestLevel", hlvl - 1);
     }
 
     /**

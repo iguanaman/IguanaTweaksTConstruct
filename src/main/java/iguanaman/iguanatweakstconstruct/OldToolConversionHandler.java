@@ -46,14 +46,14 @@ public class OldToolConversionHandler {
         // but we need to check for boosting xp
         int hlvl = tags.getInteger("HarvestLevel");
         if(hlvl > 0 && (itemStack.getItem() instanceof Pickaxe || itemStack.getItem() instanceof Hammer))
-            if(!LevelingLogic.hasBoostXp(tags) && Config.levelingPickaxeBoost)
+            if(!LevelingLogic.hasBoostXp(tags) && Config.pickaxeBoostRequired)
                 return true;
 
         // check mining level.
         int realHlvl = TConstructRegistry.getMaterial(tags.getInteger("Head")).harvestLevel();
 
         // unboosted but boost requires -> we need to reduce the hlvl by 1
-        if(Config.levelingPickaxeBoost && !LevelingLogic.isBoosted(tags) && (itemStack.getItem() instanceof Pickaxe || itemStack.getItem() instanceof Hammer))
+        if(Config.pickaxeBoostRequired && !LevelingLogic.isBoosted(tags) && (itemStack.getItem() instanceof Pickaxe || itemStack.getItem() instanceof Hammer))
             return hlvl != Math.max(realHlvl-1, 0);
 
         // if it's boosted, check if it's boosted by a diamond from bronze level
@@ -73,7 +73,7 @@ public class OldToolConversionHandler {
         if(!LevelingLogic.hasLevel(tags) && Config.toolLeveling)
             LevelingLogic.addLevelingTags(tags, tool);
         // boost xp
-        else if(!LevelingLogic.hasBoostXp(tags) && Config.levelingPickaxeBoost)
+        else if(!LevelingLogic.hasBoostXp(tags) && Config.pickaxeBoostRequired)
             LevelingLogic.addBoostTags(tags, tool);
 
         // recreate the head itemstack

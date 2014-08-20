@@ -63,8 +63,11 @@ public class MaterialOverride implements IOverride {
             String category = "materials" + Configuration.CATEGORY_SPLITTER + mat.materialName;
             category = category.toLowerCase();
 
-            if(!config.hasCategory(category) && !fillWithDefault)
+            if(!config.hasCategory(category) && !fillWithDefault) {
+                // retain the material :S
+                newMaterials.put(entry.getKey(), mat);
                 continue;
+            }
 
             ToolMaterial newMat = processMaterial(category, mat, config);
             // we cannot replace the material while cycling through, since it'd cause a ConcurrentModificationException

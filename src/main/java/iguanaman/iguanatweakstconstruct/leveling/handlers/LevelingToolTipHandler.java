@@ -45,6 +45,13 @@ public class LevelingToolTipHandler {
             event.toolTip.add(2, EnumChatFormatting.DARK_RED + StatCollector.translateToLocal("tooltip.oldToolWarning2"));
         }
 
+        ToolCore tool = (ToolCore)event.itemStack.getItem();
+        NBTTagCompound tags = stack.getTagCompound().getCompoundTag(tool.getBaseTagName()); // tinker tags
+
+        // we only need a tooltip if we have a level
+        if(!LevelingLogic.hasLevel(tags))
+            return;
+
         // find spot to insert our tooltip data
         ListIterator<String> inserter = findInsertSpot(event.toolTip);
         // does the user hold shift?
@@ -52,9 +59,6 @@ public class LevelingToolTipHandler {
         // only allow advanced (xp) tooltip if config option is set
         advanced &= Config.showTooltipXP;
 
-
-        ToolCore tool = (ToolCore)event.itemStack.getItem();
-        NBTTagCompound tags = stack.getTagCompound().getCompoundTag(tool.getBaseTagName()); // tinker tags
         boolean hasMiningLevel = tool.getHarvestLevel(event.itemStack, "pickaxe") >= 0 || tool instanceof Pickaxe || tool instanceof Hammer;
 
         // add mining level if applicable

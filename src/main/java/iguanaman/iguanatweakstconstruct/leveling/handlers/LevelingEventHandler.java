@@ -126,7 +126,7 @@ public class LevelingEventHandler {
     @SubscribeEvent
     public void onCraftTool (ToolCraftEvent.NormalTool event) {
         // arrows don't get levels
-        if(event.tool == TinkerTools.arrow)
+        if(event.tool instanceof Arrow)
             return;
 
         // add tags for tool leveling

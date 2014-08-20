@@ -40,6 +40,7 @@ public class Config {
     public static float xpPerBoostLevelMultiplier;
 
     // Harvest Leveling
+    public static boolean changeDiamondModifier;
     public static int durabilityPercentage;
     public static int miningSpeedPercentage;
 
@@ -157,6 +158,9 @@ public class Config {
 
         /** HarvestLevel Module **/
         configfile.setCategoryComment(CATEGORY_HarvestLevels, "Harvest Level Tweak Module: Introduces a slower mining level progression.");
+
+        // changed diamond/emerald modifier
+        changeDiamondModifier = configfile.getBoolean("diamondRequired", CATEGORY_HarvestLevels, true, "Changes the Diamond and Emerald modifier: Apply it to a bronze level tool to obtain diamond level. Required unless you have steel or similar.");
 
         // Tool durability/speed changes
         durabilityPercentage  = configfile.getInt("durabilityPercentage", CATEGORY_HarvestLevels, 80, 1, 999, "Change durability of all tool materials (in percent)");

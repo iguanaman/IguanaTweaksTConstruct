@@ -12,7 +12,6 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import tconstruct.items.tools.*;
 import tconstruct.library.TConstructRegistry;
-import tconstruct.library.tools.HarvestTool;
 import tconstruct.library.tools.ToolCore;
 import tconstruct.library.tools.Weapon;
 
@@ -81,7 +80,7 @@ public final class LevelingLogic {
         tag.setBoolean(TAG_IS_BOOSTED, false);
 
         // reduce harvestlevel by 1 if pickaxe boosting is required
-        if(Config.pickaxeBoostRequired) {
+        if(Config.levelingPickaxeBoost) {
             tag.setInteger("HarvestLevel", hlvl - 1);
         }
     }

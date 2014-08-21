@@ -11,3 +11,4 @@ Everything is highly work in Progress.
 * mDiyo, progwml6, Sunstrike and everybody else who worked on Tinkers and Mantle
 * Squeek502 for [TiC Tooltips](https://github.com/squeek502/TiC-Tooltips) which allowed me to do Tooltips properly
 * iguana_man for creating the original Iguana Tweaks for Tinkers Construct
+* MoxieGrrl for lots of testing and being a darling.

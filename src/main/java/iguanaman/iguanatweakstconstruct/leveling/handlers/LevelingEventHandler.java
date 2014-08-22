@@ -74,24 +74,24 @@ public class LevelingEventHandler {
 
             // spiders also increase bane chance
             if(event.entityLiving instanceof EntitySpider)
-                RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.BANE, xp, tags);
+                RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.BANE, Math.max(1,xp/2), tags);
             // blazes give fiery chance (yes, blizz gives fiery :P)
             else if(event.entityLiving instanceof EntityBlaze)
-                RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.BLAZE, xp, tags);
+                RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.BLAZE, Math.max(1,xp/2), tags);
             // zombie pigman gives lifesteal
             else if(event.entityLiving instanceof EntityPigZombie)
-                RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.LIFESTEAL, xp, tags);
+                RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.LIFESTEAL, Math.max(1,xp/2), tags);
             // zombie gives smite
             else if(event.entityLiving instanceof EntityZombie)
-                RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.SMITE, xp, tags);
+                RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.SMITE, Math.max(1,xp/2), tags);
             // wither skeleton gives lifesteal
             else if(event.entityLiving instanceof EntitySkeleton) {
                 if (((EntitySkeleton) event.entityLiving).getSkeletonType() != 0)
-                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.LIFESTEAL, xp+2, tags);
+                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.LIFESTEAL, Math.max(1,xp/2)+2, tags);
             }
             // enderman gives beheading
             else if(event.entityLiving instanceof EntityEnderman)
-                RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.BEHEADING, xp+3, tags);
+                RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.BEHEADING, Math.max(1,xp/2)+3, tags);
 
             // knocking back enemies with spriting gives knockback chance
             if(player.isSprinting())

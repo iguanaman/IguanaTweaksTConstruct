@@ -21,7 +21,11 @@ import tconstruct.library.tools.Weapon;
 import tconstruct.tools.TinkerTools;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+
+import static iguanaman.iguanatweakstconstruct.leveling.RandomBonuses.Modifier.*;
 
 /*
   On doing stuff, add data what was done. Apply data to weights. Basically on action add an NBT tag that knows how much.
@@ -43,9 +47,21 @@ import java.util.Map;
     maybe.. add a critical strike modifier, only obtainable through levelup :>
  */
 public class RandomBonuses {
+    // see bottom for initialization of that stuff
+    public static Set<Modifier> usefulToolModifiers = new HashSet<Modifier>();
+    public static Set<Modifier> usefulWeaponModifiers  = new HashSet<Modifier>();
+    public static Set<Modifier> usefulBowModifiers  = new HashSet<Modifier>();
+
+    public static Map<Modifier, Integer> toolWeights = new HashMap<Modifier, Integer>();
+    public static Map<Modifier, Integer> weaponWeights = new HashMap<Modifier, Integer>();
+    public static Map<Modifier, Integer> bowWeights = new HashMap<Modifier, Integer>();
+
     private static Map<String, ItemModifier> modCache = new HashMap<String, ItemModifier>();
 
     static {
+        initToolModifiers();
+        initWeaponModifiers();
+        initBowModifiers();
         modCache.put(ModShoddy.ModJagged.key, ModShoddy.ModJagged);
         modCache.put(ModShoddy.ModStonebound.key, ModShoddy.ModStonebound);
         modCache.put(ModCritical.modCritical.key, ModCritical.modCritical);
@@ -69,23 +85,38 @@ public class RandomBonuses {
                 chances[i] = 0;
             else if(Config.randomBonusesAreRandom)
                 chances[i] = 1;
-            else if(tool.getItem() instanceof Weapon || tool.getItem() instanceof Battleaxe)
-                chances[i] = getWeaponModifierWeight(mod);
-            else if(tool.getItem() instanceof HarvestTool)
-                chances[i] = getToolModifierWeight(mod);
-            else if(tool.getItem() instanceof BowBase)
-                chances[i] = getBowModifierWeight(mod);
+            // weapons
+            else if(tool.getItem() instanceof Weapon || tool.getItem() instanceof Battleaxe) {
+                if(Config.randomBonusesAreUseful && !usefulWeaponModifiers.contains(mod))
+                    chances[i] = 0;
+                else
+                    chances[i] = weaponWeights.get(mod);
+            }
+            // tools
+            else if(tool.getItem() instanceof HarvestTool) {
+                if(Config.randomBonusesAreUseful && !usefulToolModifiers.contains(mod))
+                    chances[i] = 0;
+                else
+                    chances[i] = toolWeights.get(mod);
+            }
+            // bows
+            else if(tool.getItem() instanceof BowBase) {
+                if(Config.randomBonusesAreUseful && !usefulBowModifiers.contains(mod))
+                    chances[i] = 0;
+                else
+                    chances[i] = bowWeights.get(mod);
+            }
             else
                 chances[i] = 0;
 
             // calculate extra bonus chance
-            if(chances[i] > 0 && tags.hasKey(String.format("Extra%s", mod.toString()))) {
+            if(tags.hasKey(String.format("Extra%s", mod.toString()))) {
                 float bonus = tags.getInteger(String.format("Extra%s", mod.toString()));
                 // relativize bonus to xp. It matters how much you've done X during the levelup after all, not in total. We don't want +100% chance :P
                 // basically if we didn't do this, the higher the xp required, the higher the chance.
                 bonus /= (float)LevelingLogic.getRequiredXp(tool, tags);
-                // maximal bonus obtainable should be ~20
-                bonus *= 20;
+                // maximal bonus obtainable should be ~70
+                bonus *= 70;
                 chances[i] += bonus;
             }
 
@@ -159,15 +190,18 @@ public class RandomBonuses {
             return null;
         }
 
+        if(Config.logBonusExtraChance)
+            Log.info(String.format("Chance of getting %s was %f %%", choice.toString(), 100f*chances[i-1]/(float)total));
+
         if(Config.logBonusExtraChance && tags.hasKey(String.format("Extra%s", choice.toString()))) {
             // same as above
             float bonus = tags.getInteger(String.format("Extra%s", choice.toString()));
             bonus /= (float)LevelingLogic.getRequiredXp(tool, tags);
-            bonus *= 20;
+            bonus *= 70;
 
             // now relativize the weight bonus to the total.
-            Log.debug(String.format("Bonus weight for getting %s was %f", choice.toString(), bonus));
-            Log.debug(String.format("Bonus chance for getting %s was %f %%", choice.toString(), 100f*bonus/(float)total));
+            Log.info(String.format("Bonus weight for getting %s was %f", choice.toString(), bonus));
+            Log.info(String.format("Bonus chance for getting %s was %f %%", choice.toString(), 100f*bonus/(float)total));
         }
 
 
@@ -427,122 +461,124 @@ public class RandomBonuses {
             tags.removeTag(key);
     }
 
-    /* Modifier weights */
-    private static int getToolModifierWeight(Modifier mod)
+    private static void preFill(Map<Modifier, Integer> map)
     {
-        // useful bonuses
-        switch(mod)
-        {
-            // mining mods
-            case REDSTONE:  return 130;
-            case LAPIS:     return 77;
-            case AUTOSMELT: return 20;
-            case SILKTOUCH: return 15;
-            // general modifiers
-            case DIAMOND:   return 30;
-            case EMERALD:   return 35;
-            case REPAIR:    return 50;
-            case REINFORCED:return 88;
-            case STONEBOUND:return  5;
-        }
-
-        // less useful bonuses
-        if(Config.randomBonusesAreUseful)
-            return 0;
-
-        switch(mod)
-        {
-            // combat modifiers
-            case ATTACK:    return 15;
-            case BLAZE:     return 5;
-            case SMITE:     return 5;
-            case BANE:      return 5;
-            case BEHEADING: return 5;
-            case LIFESTEAL: return 5;
-            case KNOCKBACK: return 10;
-            case JAGGED:    return 1;
-            case CRITICAL:  return 1;
-            default: return 0;
-        }
+        for(Modifier mod : Modifier.values())
+            map.put(mod, 0);
     }
 
-    private static int getWeaponModifierWeight(Modifier mod)
+    private static void initToolModifiers()
     {
-        switch(mod)
-        {
-            case LAPIS:     return 75;
-            case REPAIR:    return 55;
-            // combat modifiers
-            case ATTACK:    return 110;
-            case BLAZE:     return 45;
-            case SMITE:     return 50;
-            case BANE:      return 50;
-            case BEHEADING: return 50;
-            case LIFESTEAL: return 30;
-            case KNOCKBACK: return 50;
-            case JAGGED:    return  5;
-            case CRITICAL:  return  2;
-        }
+        Map<Modifier, Integer> m = toolWeights;
+        preFill(m);
 
-        if(Config.randomBonusesAreUseful)
-            return 0;
+        // in general: take 100 as the baseline for common stuff
 
-        switch(mod)
-        {
-            // mining mods
-            case REDSTONE:  return 0;
-            case AUTOSMELT: return 15;
-            case SILKTOUCH: return 5;
-            // general modifiers
-            case DIAMOND:   return 15;
-            case EMERALD:   return 30;
-            case REINFORCED:return 35;
-            case STONEBOUND:return  1;
-            default: return 0;
-        }
+        // mining mods
+        m.put(REDSTONE,   40); // this is so low because basically every mined block will add +1 to this, resulting in ~110
+        m.put(LAPIS,      40); // same here, but the amount added will be lower
+        m.put(AUTOSMELT,  20);
+        m.put(SILKTOUCH,  15);
+        // general modifiers
+        m.put(DIAMOND,    30);
+        m.put(EMERALD,    35);
+        m.put(REPAIR,     50);
+        m.put(REINFORCED, 88);
+        m.put(STONEBOUND,  5);
+        // combat modifiers
+        m.put(ATTACK,     15);
+        m.put(BLAZE,       5);
+        m.put(SMITE,       5);
+        m.put(BANE,        5);
+        m.put(BEHEADING,   5);
+        m.put(LIFESTEAL,   5);
+        m.put(KNOCKBACK,  10);
+        m.put(JAGGED,      1);
+        m.put(CRITICAL,    1);
+
+        Set<Modifier> u = usefulToolModifiers;
+        u.add(REDSTONE);
+        u.add(LAPIS);
+        u.add(AUTOSMELT);
+        u.add(SILKTOUCH);
+        u.add(DIAMOND);
+        u.add(EMERALD);
+        u.add(REPAIR);
+        u.add(REINFORCED);
+        u.add(STONEBOUND);
     }
 
-    private static int getBowModifierWeight(Modifier mod)
+    private static void initWeaponModifiers()
     {
-        switch(mod)
-        {
-            case REDSTONE:  return 130;
-            case LAPIS:     return 75;
-            case REPAIR:    return 50;
-            // combat modifiers
-            case ATTACK:    return 80;
-            case BLAZE:     return 55;
-            case SMITE:     return 40;
-            case BANE:      return 40;
-            case BEHEADING: return 20;
-            case LIFESTEAL: return 40;
-            case KNOCKBACK: return 70;
-        }
+        Map<Modifier, Integer> m = weaponWeights;
+        preFill(m);
 
-        if(Config.randomBonusesAreUseful)
-            return 0;
+        m.put(LAPIS,      75);
+        m.put(REPAIR,     55);
+        m.put(ATTACK,    110);
+        m.put(BLAZE,      45);
+        m.put(SMITE,      50);
+        m.put(BANE,       50);
+        m.put(BEHEADING,  50);
+        m.put(LIFESTEAL,  30);
+        m.put(KNOCKBACK,  50);
+        m.put(JAGGED,      5);
+        m.put(CRITICAL,    2);
+        m.put(REDSTONE,    0);
+        m.put(AUTOSMELT,  15);
+        m.put(SILKTOUCH,   5);
+        m.put(DIAMOND,    15);
+        m.put(EMERALD,    30);
+        m.put(REINFORCED, 55);
+        m.put(STONEBOUND,  1);
 
-        switch(mod)
-        {
-            case AUTOSMELT: return 1;
-            case SILKTOUCH: return 1;
-            // general modifiers
-            case DIAMOND:   return 15;
-            case EMERALD:   return 30;
-            case REINFORCED:return 40;
-            // combat modifiers
-            case ATTACK:    return 100;
-            case BLAZE:     return 55;
-            case SMITE:     return 40;
-            case BANE:      return 40;
-            case BEHEADING: return 30;
-            case LIFESTEAL: return 40;
-            case KNOCKBACK: return 40;
-            default: return 0;
-        }
+        Set<Modifier> u = usefulWeaponModifiers;
+        u.add(LAPIS);
+        u.add(REPAIR);
+        u.add(ATTACK);
+        u.add(BLAZE);
+        u.add(SMITE);
+        u.add(BANE);
+        u.add(BEHEADING);
+        u.add(LIFESTEAL);
+        u.add(KNOCKBACK);
+        u.add(JAGGED);
+        u.add(CRITICAL);
     }
 
-    public enum Modifier {
+    private static void initBowModifiers()
+    {
+        Map<Modifier, Integer> m = bowWeights;
+        preFill(m);
+
+        m.put(REDSTONE,  100);
+        m.put(REPAIR,     55);
+        m.put(REINFORCED, 65);
+        m.put(KNOCKBACK,  70);
+
+        m.put(DIAMOND,    20);
+        m.put(EMERALD,    25);
+        m.put(LAPIS,      15);
+        m.put(ATTACK,     25);
+        m.put(BLAZE,      15);
+        m.put(SMITE,      15);
+        m.put(BANE,       15);
+        m.put(BEHEADING,  10);
+        m.put(LIFESTEAL,  10);
+        m.put(JAGGED,      1);
+        m.put(CRITICAL,    1);
+        m.put(AUTOSMELT,   1);
+        m.put(SILKTOUCH,   1);
+        m.put(STONEBOUND,  1);
+
+        Set<Modifier> u = usefulBowModifiers;
+        u.add(REDSTONE);
+        u.add(KNOCKBACK);
+        u.add(REPAIR);
+        u.add(REINFORCED);
+    }
+
+    public static enum Modifier {
         // mining modifiers
         REDSTONE,
         LAPIS,

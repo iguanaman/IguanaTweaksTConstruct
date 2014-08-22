@@ -15,10 +15,10 @@ import net.minecraftforge.oredict.OreDictionary;
 import java.io.File;
 import java.util.LinkedList;
 
-public final class BlockOverride implements IOverride {
+public class BlockOverride implements IOverride {
     @Override
     public void createDefault(Configuration config) {
-        Log.info("Loading Block Overrides");
+        Log.info("Creating Block Default File");
 
         // oredict entries
         for(int i = 0; i < HarvestLevelTweaks.allOreDicLevels.length; i++)
@@ -60,7 +60,7 @@ public final class BlockOverride implements IOverride {
 
     @Override
     public void processConfig(Configuration config) {
-        Log.info("Creating Block Default File");
+        Log.info("Loading Block Overrides");
 
         StringBuilder comment = new StringBuilder();
         comment.append("Mining Levels:\n");

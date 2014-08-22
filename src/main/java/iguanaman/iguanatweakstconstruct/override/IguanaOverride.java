@@ -25,6 +25,7 @@ public class IguanaOverride {
         doOverride("Material", new MaterialOverride());
         doOverride("Tool", new ToolOverride());
         doOverride("Block", new BlockOverride());
+        doOverride("BonusModifier", new ModifierOverride());
     }
 
     public static void doOverride(String type, IOverride overrider)

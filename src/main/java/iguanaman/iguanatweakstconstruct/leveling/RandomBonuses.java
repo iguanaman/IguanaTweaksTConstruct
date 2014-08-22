@@ -56,6 +56,8 @@ public class RandomBonuses {
     public static Map<Modifier, Integer> weaponWeights = new HashMap<Modifier, Integer>();
     public static Map<Modifier, Integer> bowWeights = new HashMap<Modifier, Integer>();
 
+    public static Integer usageBonusWeight = 70;
+
     private static Map<String, ItemModifier> modCache = new HashMap<String, ItemModifier>();
 
     static {
@@ -116,7 +118,7 @@ public class RandomBonuses {
                 // basically if we didn't do this, the higher the xp required, the higher the chance.
                 bonus /= (float)LevelingLogic.getRequiredXp(tool, tags);
                 // maximal bonus obtainable should be ~70
-                bonus *= 70;
+                bonus *= usageBonusWeight;
                 chances[i] += bonus;
             }
 
@@ -197,7 +199,7 @@ public class RandomBonuses {
             // same as above
             float bonus = tags.getInteger(String.format("Extra%s", choice.toString()));
             bonus /= (float)LevelingLogic.getRequiredXp(tool, tags);
-            bonus *= 70;
+            bonus *= usageBonusWeight;
 
             // now relativize the weight bonus to the total.
             Log.info(String.format("Bonus weight for getting %s was %f", choice.toString(), bonus));
@@ -627,6 +629,15 @@ public class RandomBonuses {
                 case CRITICAL: return "Critical";
                 default: return super.toString();
             }
+        }
+
+        public static Modifier getEnumByString(String string) throws IllegalArgumentException
+        {
+            for(Modifier mod : Modifier.values())
+                if(mod.toString().equals(string))
+                    return mod;
+
+            throw new IllegalArgumentException();
         }
     }
 }

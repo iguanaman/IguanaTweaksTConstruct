@@ -215,12 +215,13 @@ public final class LevelingLogic {
 
             base += ((float)baseMiningSpeed + (float)(miningSpeed-baseMiningSpeed)/5f)/divider;
 
-			if (tool.getItem() instanceof Hatchet) base /= 2f;
-			else if (tool.getItem() instanceof Shovel) base *= 2f;
-			else if (tool.getItem() instanceof Mattock) base *= 2.5f;
-			else if (tool.getItem() instanceof LumberAxe) base *= 3f;
-			else if (tool.getItem() instanceof Hammer) base *= 6f;
-			else if (tool.getItem() instanceof Excavator) base *= 9f;
+            // shovels need a bit more xp because their blocks berak much faster
+
+            if(tool.getItem() instanceof Hammer) base *= 5.1f;
+            if(tool.getItem() instanceof Excavator) base *= 6.2f;
+            if(tool.getItem() instanceof LumberAxe) base *= 1.38f;
+            if(tool.getItem() instanceof Shovel) base *= 1.2f; // shovels break their blocks faster than picks
+            if(tool.getItem() instanceof Hatchet) base *= 0.66f; // not much wood to chop, but usable as weapon
 
 			base *= Config.xpRequiredToolsPercentage / 100f;
 		}

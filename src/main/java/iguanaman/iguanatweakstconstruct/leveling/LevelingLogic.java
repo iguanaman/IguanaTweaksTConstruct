@@ -174,16 +174,19 @@ public final class LevelingLogic {
 	{
 		if (tags == null) tags = tool.getTagCompound().getCompoundTag("InfiTool");
 
-		float base = 400;
+		float base = 100f;
 
 		if (tool.getItem() instanceof Weapon || tool.getItem() instanceof Shortbow)
 		{
+            base = 140f;
+            base *= ((ToolCore)tool.getItem()).getDamageModifier();
+            base *= tags.getInteger("Attack") * 1.2f;
+
 			if (tool.getItem() instanceof Scythe) base *= 1.5f;
 			base *= Config.xpRequiredWeaponsPercentage / 100f;
 		}
 		else
 		{
-            base = 100f;
             if(tags.hasKey("HarvestLevel") && LevelingLogic.getHarvestLevel(tags) < 1)
                 base -= 20;
             if(tags.hasKey("HarvestLevel") && LevelingLogic.getHarvestLevel(tags) < 2)
@@ -215,12 +218,13 @@ public final class LevelingLogic {
 
             base += ((float)baseMiningSpeed + (float)(miningSpeed-baseMiningSpeed)/5f)/divider;
 
-			if (tool.getItem() instanceof Hatchet) base /= 2f;
-			else if (tool.getItem() instanceof Shovel) base *= 2f;
-			else if (tool.getItem() instanceof Mattock) base *= 2.5f;
-			else if (tool.getItem() instanceof LumberAxe) base *= 3f;
-			else if (tool.getItem() instanceof Hammer) base *= 6f;
-			else if (tool.getItem() instanceof Excavator) base *= 9f;
+            // shovels need a bit more xp because their blocks berak much faster
+
+            if(tool.getItem() instanceof Hammer) base *= 5.1f;
+            if(tool.getItem() instanceof Excavator) base *= 6.2f;
+            if(tool.getItem() instanceof LumberAxe) base *= 1.38f;
+            if(tool.getItem() instanceof Shovel) base *= 1.2f; // shovels break their blocks faster than picks
+            if(tool.getItem() instanceof Hatchet) base *= 0.66f; // not much wood to chop, but usable as weapon
 
 			base *= Config.xpRequiredToolsPercentage / 100f;
 		}

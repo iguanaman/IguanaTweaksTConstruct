@@ -22,7 +22,6 @@ import java.util.List;
 
 // This class is responsible for actually getting XP when mining!
 public class LevelingActiveToolMod extends ActiveToolMod {
-    // TODO: make this customizable?
     static List<Material> materialBlacklist = Arrays.asList(
             Material.leaves, Material.vine, Material.circuits,
             Material.glass, Material.piston, Material.snow

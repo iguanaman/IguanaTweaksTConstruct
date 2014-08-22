@@ -174,16 +174,19 @@ public final class LevelingLogic {
 	{
 		if (tags == null) tags = tool.getTagCompound().getCompoundTag("InfiTool");
 
-		float base = 400;
+		float base = 100f;
 
 		if (tool.getItem() instanceof Weapon || tool.getItem() instanceof Shortbow)
 		{
+            base = 140f;
+            base *= ((ToolCore)tool.getItem()).getDamageModifier();
+            base *= tags.getInteger("Attack") * 1.2f;
+
 			if (tool.getItem() instanceof Scythe) base *= 1.5f;
 			base *= Config.xpRequiredWeaponsPercentage / 100f;
 		}
 		else
 		{
-            base = 100f;
             if(tags.hasKey("HarvestLevel") && LevelingLogic.getHarvestLevel(tags) < 1)
                 base -= 20;
             if(tags.hasKey("HarvestLevel") && LevelingLogic.getHarvestLevel(tags) < 2)

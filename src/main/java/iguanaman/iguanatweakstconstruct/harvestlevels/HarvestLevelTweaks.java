@@ -193,7 +193,7 @@ public final class HarvestLevelTweaks {
             // 5: Redstone/Diamond
             {"Obsidian", "Tungstate", "Sodalite", "Quartz", "CertusQuartz", "SkyStone"},
             // 6: Obsidian/Alumite
-            {"Ardite", "Uranium", "Olivine", "Sheldonite", "Platinum"},
+            {"Ardite", "Uranium", "Olivine", "Sheldonite", "Platinum", "Yellorite"},
             // 7: Ardite
             {"Cobalt", "Iridium", "Cooperite", "Titanium"},
             // 8: Cobalt

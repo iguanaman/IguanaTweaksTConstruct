@@ -56,6 +56,8 @@ public final class HarvestLevelTweaks {
 
         Blocks.obsidian.setHarvestLevel("pickaxe", HarvestLevels._5_diamond);
 
+        Blocks.enchanting_table.setHarvestLevel("pickaxe", HarvestLevels._5_diamond);
+
         if(Config.logHarvestLevelChanges)
             Log.debug("Modified vanilla blocks");
     }

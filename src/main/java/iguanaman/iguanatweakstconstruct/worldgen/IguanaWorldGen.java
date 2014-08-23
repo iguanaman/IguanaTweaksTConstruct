@@ -13,9 +13,9 @@ public class IguanaWorldGen {
     public void init(FMLInitializationEvent event)
     {
         // add some a starting weapon to bonus chests!
-        ChestGenHooks.addItem(ChestGenHooks.BONUS_CHEST, new RandomWeaponChestContent(1,1, 10, 0,0, HarvestLevels._1_flint));
+        ChestGenHooks.addItem(ChestGenHooks.BONUS_CHEST, new RandomWeaponChestContent(0,1, 10, 0,0, HarvestLevels._1_flint, 3));
 
         // awesome dungeon loot!
-        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST, new RandomWeaponChestContent(0,1, 2, 1,2, HarvestLevels._5_diamond));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST, new RandomWeaponChestContent(0,1, 2, 1,2, HarvestLevels._5_diamond, 4));
     }
 }

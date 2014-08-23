@@ -1,5 +1,7 @@
 package iguanaman.iguanatweakstconstruct.harvestlevels;
 
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.LoaderState;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import iguanaman.iguanatweakstconstruct.util.Log;
@@ -101,6 +103,10 @@ public final class HarvestLevelTweaks {
         if(Config.logHarvestLevelChanges) {
             Log.debug(String.format("Changed Harvest Level of %s from %d to %d", stack.getUnlocalizedName(), block.getHarvestLevel(stack.getItemDamage()), harvestLevel));
         }
+
+        if(Config.logOverrideChanges && Loader.instance().isInState(LoaderState.POSTINITIALIZATION))
+            Log.info(String.format("Block Override: Changed Harvest Level of %s to %d", stack.getUnlocalizedName(), harvestLevel));
+
 
         // gravelore gets shovel level instead of pickaxe.
         if(block instanceof GravelOre)

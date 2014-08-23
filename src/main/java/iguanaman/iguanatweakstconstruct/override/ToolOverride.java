@@ -1,6 +1,7 @@
 package iguanaman.iguanatweakstconstruct.override;
 
 import iguanaman.iguanatweakstconstruct.harvestlevels.HarvestLevelTweaks;
+import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
 import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import iguanaman.iguanatweakstconstruct.util.Log;
@@ -80,6 +81,8 @@ public class ToolOverride implements IOverride {
                 // update tool
                 if(level != newLevel) {
                     HarvestLevelTweaks.updateToolHarvestLevel(item, tool, newLevel);
+                    if(Config.logOverrideChanges)
+                        Log.info(String.format("Tool Override: Changed harvest level of %s to %d", item.getUnlocalizedName(), newLevel));
                     changed = true;
                 }
             }

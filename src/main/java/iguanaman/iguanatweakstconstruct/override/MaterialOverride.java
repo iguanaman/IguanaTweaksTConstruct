@@ -1,5 +1,6 @@
 package iguanaman.iguanatweakstconstruct.override;
 
+import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.util.EnumChatFormatting;
@@ -72,6 +73,9 @@ public class MaterialOverride implements IOverride {
             ToolMaterial newMat = processMaterial(category, mat, config);
             // we cannot replace the material while cycling through, since it'd cause a ConcurrentModificationException
             newMaterials.put(entry.getKey(), newMat);
+
+            if(Config.logOverrideChanges)
+                Log.info(String.format("Material Override: Changed Material %s", mat.materialName));
 
             if(cleanup && isEqual(mat, newMat))
                 config.removeCategory(config.getCategory(category));

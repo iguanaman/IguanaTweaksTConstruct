@@ -89,6 +89,7 @@ public class Config {
 	public static boolean logMiningLevelChanges;
     public static boolean logToolMaterialChanges;
     public static boolean logBonusExtraChance;
+    public static boolean logOverrideChanges;
 
 
     public void init(File file) {
@@ -247,6 +248,7 @@ public class Config {
         logMiningLevelChanges  = configfile.getBoolean("logToolMiningLevelChange", CATEGORY_Debug, true, "Logs when the mining level of a (non-tinker) tool is changed");
         logToolMaterialChanges = configfile.getBoolean("logTinkerMaterialChange", CATEGORY_Debug, true, "Logs when the mining level of a tinkers tool material is changed");
         logBonusExtraChance    = configfile.getBoolean("logBonusExtraChance", CATEGORY_Debug, true, "Logs how much the extra-chance from doing stuff you had when getting a random bonus on levelup.");
+        logOverrideChanges     = configfile.getBoolean("logExcessiveOverrideChanges", CATEGORY_Debug, false, "Logs every single thing done by the Override module. Use at your own risk. ;)");
 
 
 		configfile.save();

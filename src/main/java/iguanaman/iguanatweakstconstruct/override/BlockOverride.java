@@ -1,6 +1,7 @@
 package iguanaman.iguanatweakstconstruct.override;
 
 import iguanaman.iguanatweakstconstruct.harvestlevels.HarvestLevelTweaks;
+import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
 import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import iguanaman.iguanatweakstconstruct.util.Log;
@@ -124,9 +125,13 @@ public class BlockOverride implements IOverride {
                 int lvl = prop.getInt();
                 if(meta == -1) {
                     block.setHarvestLevel(tool, prop.getInt());
+                    if(Config.logOverrideChanges)
+                        Log.info(String.format("Block Override: Changed Harvest Level of %s:%d to %d", block.getUnlocalizedName(), meta, lvl));
                 }
                 else {
                     block.setHarvestLevel(tool, prop.getInt(), meta);
+                    if(Config.logOverrideChanges)
+                        Log.info(String.format("Block Override: Changed Harvest Level of %s:%d to %d", block.getUnlocalizedName(), meta, lvl));
                 }
             }
         }

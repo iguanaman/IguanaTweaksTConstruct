@@ -94,7 +94,6 @@ public final class HarvestLevelTweaks {
         for (ItemStack oreStack : OreDictionary.getOres("brick" + orePostfix)) modifyBlock(oreStack, hlvl);
     }
 
-
     public static void modifyBlock(ItemStack stack, int harvestLevel)
     {
         Block block = Block.getBlockFromItem(stack.getItem());

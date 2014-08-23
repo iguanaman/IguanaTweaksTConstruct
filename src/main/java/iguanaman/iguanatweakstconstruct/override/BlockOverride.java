@@ -54,7 +54,7 @@ public class BlockOverride implements IOverride {
 
             // write it down
             for(Integer m : metas)
-                config.get("blocks", key.toString() + ":" + m, block.getHarvestLevel(m));
+                config.get("blocks_" + block.getHarvestTool(m), key.toString() + ":" + m, block.getHarvestLevel(m));
         }
     }
 
@@ -63,13 +63,21 @@ public class BlockOverride implements IOverride {
         Log.info("Loading Block Overrides");
 
         StringBuilder comment = new StringBuilder();
+        comment.append("To change the harvestability, create a 'blocks_<toolclass>' category. See BlockDefaults for examples.\n");
+        comment.append("Format of the block entries: <mod-id>:<name>:<metadata>=<harvestlevel>\n");
+        comment.append("A metadata of -1 will apply the setting for all metadatas.\n");
+        comment.append("A harvestlevel of -1 removes the tools effectiveness for this block.\n");
+        comment.append("You can also add new properties. An Example:\n");
+        comment.append("\tblocks_pickaxe { I:\"minecraft:chest:-1\"=0 }\n");
+        comment.append("\tblocks_axe { I:\"minecraft:chest:-1\"=-1 }\n");
+        comment.append("This changes the chest to be harvestable by pickaxes instead of axes. Note that this does not make any sense, since chests don't require a tool to break it.\n\n");
+
         comment.append("Mining Levels:\n");
         for (int i = 0; i <= HarvestLevels.max; i++)
             comment.append(String.format("\t%d - %s\n", i, HarvestLevels.getHarvestLevelName(i)));
 
         config.setCategoryComment(" Info", comment.toString());
 
-        config.setCategoryComment("blocks", "Adapt harvestability of specific blocks here.\nFormat: <mod-id>:<name>:<metadata>");
         config.setCategoryComment("generaloredict", "Adapt harvestability of all oredicted blocks here. The name is just the postfix, so instead of 'oreIron' you use 'Iron' and it changes all the iron oredcits it can find. like oreIron, denseoreIron, blockIron,...");
         config.setCategoryComment("oredict", "Adapt harvestability of specific oredicted blocks here. The name must be exact, so use 'oreIron' instead of 'Iron' here. Overwrites harvestlevels set by generaloredict.");
 
@@ -87,28 +95,40 @@ public class BlockOverride implements IOverride {
         }
 
         // block specific harvest levels.. urgh
-        cat = config.getCategory("blocks");
-        for(Property prop : cat.values()) {
-            // dissect the name.
-            String[] foo = prop.getName().split(":");
-            String metaStr = foo[foo.length-1];
-            String blockStr = prop.getName().substring(0, prop.getName().lastIndexOf(':'));
-            int meta;
-            // check if the meta-str actually is a number
-            try {
-                meta = Integer.valueOf(metaStr);
-            } catch(NumberFormatException e)
-            {
-                // no metadata string present. Is required.
+        for(String catname : config.getCategoryNames()) {
+            if(!catname.startsWith("blocks_"))
                 continue;
+
+            cat = config.getCategory(catname);
+            String tool = catname.substring(7); // 'b' 'l' 'o' 'c' 'k' 's' '_'. blocks_. 7 letters.
+
+            for (Property prop : cat.values()) {
+                // dissect the name.
+                String[] foo = prop.getName().split(":");
+                String metaStr = foo[foo.length - 1];
+                String blockStr = prop.getName().substring(0, prop.getName().lastIndexOf(':'));
+                int meta;
+                // check if the meta-str actually is a number
+                try {
+                    meta = Integer.valueOf(metaStr);
+                } catch (NumberFormatException e) {
+                    // no metadata string present. Is required.
+                    continue;
+                }
+
+                // find the block
+                if (!Block.blockRegistry.containsKey(blockStr))
+                    continue;
+
+                Block block = (Block) Block.blockRegistry.getObject(blockStr);
+                int lvl = prop.getInt();
+                if(meta == -1) {
+                    block.setHarvestLevel(tool, prop.getInt());
+                }
+                else {
+                    block.setHarvestLevel(tool, prop.getInt(), meta);
+                }
             }
-
-            // find the block
-            if(!Block.blockRegistry.containsKey(blockStr))
-                continue;
-
-            Block block = (Block) Block.blockRegistry.getObject(blockStr);
-            HarvestLevelTweaks.modifyBlock(new ItemStack(block, 1, meta), prop.getInt());
         }
     }
 }

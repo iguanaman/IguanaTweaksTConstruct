@@ -72,7 +72,12 @@ public class IguanaTweaksTConstruct {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
         Log.init(event.getModLog());
-        configPath = new File(event.getModConfigurationDirectory(), Reference.MOD_ID);
+        configPath = new File(event.getModConfigurationDirectory(), "IguanaTinkerTweaks");
+        // update old config path
+        File oldPath = new File(event.getModConfigurationDirectory(), Reference.MOD_ID);
+        if(oldPath.exists())
+            oldPath.renameTo(configPath);
+
         configPath.mkdirs();
 
         // init pulse manager

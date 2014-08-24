@@ -12,6 +12,7 @@ import iguanaman.iguanatweakstconstruct.claybuckets.IguanaItems;
 import iguanaman.iguanatweakstconstruct.commands.CommandDumpOredict;
 import iguanaman.iguanatweakstconstruct.debug.DebugCommand;
 import iguanaman.iguanatweakstconstruct.debug.IguanaDebug;
+import iguanaman.iguanatweakstconstruct.harvestlevels.HarvestLevelTweaks;
 import iguanaman.iguanatweakstconstruct.harvestlevels.IguanaHarvestLevelTweaks;
 import iguanaman.iguanatweakstconstruct.leveling.IguanaToolLeveling;
 import iguanaman.iguanatweakstconstruct.leveling.commands.IguanaCommandLevelUpTool;
@@ -78,10 +79,6 @@ public class IguanaTweaksTConstruct {
         // register config as eventhandler to get config changed updates
         FMLCommonHandler.instance().bus().register(config);
 
-        // if we don't use our custom harvest levels, we have to adjust what we're using
-        if(!pulsar.isPulseLoaded(Reference.PULSE_HARVESTTWEAKS))
-            HarvestLevels.adjustToVanillaLevels();
-
         // order matters here
         pulsar.registerPulse(new IguanaHarvestLevelTweaks());
         pulsar.registerPulse(new IguanaToolLeveling());
@@ -94,6 +91,15 @@ public class IguanaTweaksTConstruct {
         pulsar.registerPulse(new IguanaWorldGen());
         pulsar.registerPulse(new IguanaOverride());
         pulsar.registerPulse(new IguanaDebug());
+
+
+        // if we don't use our custom harvest levels, we have to adjust what we're using
+        if(!pulsar.isPulseLoaded(Reference.PULSE_HARVESTTWEAKS))
+            HarvestLevels.adjustToVanillaLevels();
+        // update harvest level strings
+        HarvestLevels.updateHarvestLevelNames();
+
+        // start up the pulses
         pulsar.preInit(event);
 
         // versionchecker support

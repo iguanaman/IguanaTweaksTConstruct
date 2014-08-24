@@ -4,7 +4,6 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import iguanaman.iguanatweakstconstruct.harvestlevels.modifiers.ModBonusMiningLevel;
-import iguanaman.iguanatweakstconstruct.harvestlevels.proxy.HarvestCommonProxy;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
 import iguanaman.iguanatweakstconstruct.restriction.RestrictionHelper;
@@ -39,15 +38,6 @@ import java.util.Map;
 
 @Pulse(id = Reference.PULSE_HARVESTTWEAKS, description = "Modify tool and item mining levels to create a tiered-ish progression")
 public class IguanaHarvestLevelTweaks {
-    @SidedProxy(clientSide = "iguanaman.iguanatweakstconstruct.harvestlevels.proxy.HarvestClientProxy", serverSide = "iguanaman.iguanatweakstconstruct.harvestlevels.proxy.HarvestCommonProxy")
-    public static HarvestCommonProxy proxy;
-
-    @Handler
-    public void init(FMLInitializationEvent event)
-    {
-        // the only thing this does is replacing GUIs with our own GUIs to display the correct harvest levels
-        proxy.initialize();
-    }
 
     @Handler
     public void postInit(FMLPostInitializationEvent event)

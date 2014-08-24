@@ -9,9 +9,9 @@ import iguanaman.iguanatweakstconstruct.tweaks.handlers.*;
 import iguanaman.iguanatweakstconstruct.tweaks.modifiers.ModFluxExpensive;
 import iguanaman.iguanatweakstconstruct.tweaks.modifiers.ModLimitedToolRepair;
 import iguanaman.iguanatweakstconstruct.util.Log;
-import iguanaman.iguanatweakstconstruct.util.RecipeRemover;
 import mantle.pulsar.pulse.Handler;
 import mantle.pulsar.pulse.Pulse;
+import mantle.utils.RecipeRemover;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.*;
@@ -124,7 +124,7 @@ public class IguanaTweaks {
         if(Config.removeStoneTorchRecipe)
         {
             Log.info("Removing stone torch recipe");
-            RecipeRemover.removeAnyRecipeFor(Item.getItemFromBlock(TinkerWorld.stoneTorch));
+            RecipeRemover.removeAnyRecipe(new ItemStack(TinkerWorld.stoneTorch, 4));
         }
 
         // silky jewel nerfs

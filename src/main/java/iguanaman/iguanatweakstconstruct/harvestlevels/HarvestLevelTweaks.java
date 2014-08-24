@@ -80,20 +80,9 @@ public final class HarvestLevelTweaks {
 
     public static void modifyOredictBlock(String orePostfix, int hlvl)
     {
-        // regular ore variants
-        for (ItemStack oreStack : OreDictionary.getOres("ore" + orePostfix)) modifyBlock(oreStack, hlvl);
-        // dense ore variants
-        for (ItemStack oreStack : OreDictionary.getOres("denseore" + orePostfix)) modifyBlock(oreStack, hlvl);
-        // nether ore variants
-        for (ItemStack oreStack : OreDictionary.getOres("oreNether" + orePostfix)) modifyBlock(oreStack, hlvl);
-        // dense nether ore variants
-        for (ItemStack oreStack : OreDictionary.getOres("denseoreNether" + orePostfix)) modifyBlock(oreStack, hlvl);
-        // full blocks (metal-blocks)
-        for (ItemStack oreStack : OreDictionary.getOres("block" + orePostfix)) modifyBlock(oreStack, hlvl);
-        // stone-ores? dunno which mod adds that. leave it in for compatibility
-        for (ItemStack oreStack : OreDictionary.getOres("stone" + orePostfix)) modifyBlock(oreStack, hlvl);
-        // bricks from metallurgy
-        for (ItemStack oreStack : OreDictionary.getOres("brick" + orePostfix)) modifyBlock(oreStack, hlvl);
+        for(String prefix : oreDictPrefixes)
+            for (ItemStack oreStack : OreDictionary.getOres(prefix + orePostfix))
+                modifyBlock(oreStack, hlvl);
     }
 
     public static void modifyBlock(ItemStack stack, int harvestLevel)
@@ -184,6 +173,11 @@ public final class HarvestLevelTweaks {
             clazz = clazz.getSuperclass();
         }
     }
+
+    // todo: expose this to config. But I'm too lazy for such a minor thing. Just call me to add another string...
+    public static final String[] oreDictPrefixes = {
+            "ore", "denseore", "oreNether", "denseoreNether", "block", "stone", "brick", "orePoor"
+    };
 
     // HarvestLevels
     public static final String[][] oreDictLevels = {

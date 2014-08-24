@@ -94,7 +94,7 @@ public class IguanaToolLeveling {
         // creeper head
         ModifyBuilder.registerModifier(new ModMiningLevelBoost(getVanillaMobHead(4), 22, HarvestLevels._5_diamond));
 
-        if(IguanaTweaksTConstruct.isMobHeadsActive) {
+        if(IguanaTweaksTConstruct.pulsar.isPulseLoaded(Reference.PULSE_MOBHEADS)) {
             // pigman head
             ModifyBuilder.registerModifier(new ModMiningLevelBoost(getIguanaMobHead(1), 23, HarvestLevels._5_diamond));
             // blaze head

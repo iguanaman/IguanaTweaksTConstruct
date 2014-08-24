@@ -51,7 +51,7 @@ public class ClayBucket extends ItemBucket
                 itemStack.stackSize--;
 
                 // very very rarely, you'll get a broken bucket!
-                if(IguanaTweaksTConstruct.isMobHeadsActive && itemStack.stackSize == 0 && IguanaTweaksTConstruct.random.nextInt(1000) == 0)
+                if(IguanaTweaksTConstruct.pulsar.isPulseLoaded(Reference.PULSE_MOBHEADS) && itemStack.stackSize == 0 && IguanaTweaksTConstruct.random.nextInt(1000) == 0)
                     return new ItemStack(IguanaMobHeads.wearables, 1, 1);
 
                 return itemStack;

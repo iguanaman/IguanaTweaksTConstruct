@@ -6,6 +6,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
 import iguanaman.iguanatweakstconstruct.mobheads.IguanaMobHeads;
 import iguanaman.iguanatweakstconstruct.mobheads.renderers.IguanaTileEntitySkullRenderer;
+import iguanaman.iguanatweakstconstruct.reference.Reference;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.RenderPlayerEvent;
@@ -21,7 +22,7 @@ public class RenderPlayerHandler {
             return;
 
         Item item = itemStack.getItem();
-        boolean isBucket = IguanaTweaksTConstruct.isItemsActive && item == IguanaMobHeads.wearables;
+        boolean isBucket = IguanaTweaksTConstruct.pulsar.isPulseLoaded(Reference.PULSE_ITEMS) && item == IguanaMobHeads.wearables;
         if(item != IguanaMobHeads.skullItem && !isBucket)
             return;
 

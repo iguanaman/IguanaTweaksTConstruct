@@ -51,18 +51,9 @@ public class IguanaTweaksTConstruct {
 
     public static Random random = new Random();
 
-    public static boolean isToolLevelingActive = false;
-    public static boolean isHarvestTweaksActive = false;
-    public static boolean isMobHeadsActive = false;
-    public static boolean isTweaksActive = false;
-    public static boolean isItemsActive = false;
-    public static boolean isPartReplacementActive = false;
-
-	public static List<Item> toolParts = null;
-
     // use the PulseManager. This allows us to separate the different parts into independend modules and have stuff together. yay.
     private IConfiguration pulseCFG;
-    private PulseManager pulsar;
+    public static PulseManager pulsar;
 
     public static File configPath;
 
@@ -87,16 +78,8 @@ public class IguanaTweaksTConstruct {
         // register config as eventhandler to get config changed updates
         FMLCommonHandler.instance().bus().register(config);
 
-        // workaround to know which modules are active.. :I
-        isToolLevelingActive = pulseCFG.isModuleEnabled(new PulseMeta(Reference.PULSE_LEVELING, "", false, false));
-        isHarvestTweaksActive = pulseCFG.isModuleEnabled(new PulseMeta(Reference.PULSE_HARVESTTWEAKS, "", false, false));
-        isMobHeadsActive = pulseCFG.isModuleEnabled(new PulseMeta(Reference.PULSE_MOBHEADS, "", false, false));
-        isTweaksActive = pulseCFG.isModuleEnabled(new PulseMeta(Reference.PULSE_TWEAKS, "", false, false));
-        isItemsActive = pulseCFG.isModuleEnabled(new PulseMeta(Reference.PULSE_ITEMS, "", false, false));
-        isPartReplacementActive = pulseCFG.isModuleEnabled(new PulseMeta(Reference.PULSE_REPLACING, "", false, false));
-
         // if we don't use our custom harvest levels, we have to adjust what we're using
-        if(!isHarvestTweaksActive)
+        if(!pulsar.isPulseLoaded(Reference.PULSE_HARVESTTWEAKS))
             HarvestLevels.adjustToVanillaLevels();
 
         // order matters here
@@ -135,8 +118,7 @@ public class IguanaTweaksTConstruct {
 	@EventHandler
 	public void serverStarting(FMLServerStartingEvent event)
 	{
-        // TODO: change this to a proper isModuleLoaded or something in Pulsar 0.4+ (when released/implemented)
-		if (isToolLevelingActive)
+		if (pulsar.isPulseLoaded(Reference.PULSE_LEVELING))
 		{
             Log.debug("Adding command: leveluptool");
             event.registerServerCommand(new IguanaCommandLevelUpTool());
@@ -152,11 +134,4 @@ public class IguanaTweaksTConstruct {
         if(pulseCFG.isModuleEnabled(new PulseMeta("Debug", "", false, false)))
             event.registerServerCommand(new DebugCommand());
 	}
-
-
-    // backwards compatibility
-    public static String getHarvestLevelName (int num)
-    {
-        return HarvestLevels.getHarvestLevelName(num);
-    }
 }

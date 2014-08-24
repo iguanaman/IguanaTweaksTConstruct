@@ -50,11 +50,18 @@ public class IguanaTweaks {
 
         // add string bindings. yay.
         if(Config.allowStringBinding) {
+            Log.info("Register String binding");
             TConstructRegistry.addToolMaterial(40, "String", 0, 33, 1, 0, 0.01F, 0, 0f, EnumChatFormatting.WHITE.toString(), "");
             TConstructClientRegistry.addMaterialRenderMapping(40, "tinker", "paper", true);
             MinecraftForge.EVENT_BUS.register(new StringBindingHandler());
         }
 
+
+        if(Config.allowStencilReuse) {
+            Log.info("Make stencils reusable");
+            for (ItemStack stack : StencilBuilder.getStencils())
+                StencilBuilder.registerBlankStencil(stack);
+        }
 
         if(Config.castsBurnMaterial) {
             Log.info("Burn casting materials to a crisp");

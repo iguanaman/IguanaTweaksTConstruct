@@ -2,11 +2,11 @@ package iguanaman.iguanatweakstconstruct.restriction;
 
 import iguanaman.iguanatweakstconstruct.reference.Reference;
 import iguanaman.iguanatweakstconstruct.util.Log;
+import mantle.utils.ItemMetaWrapper;
 import net.minecraftforge.common.config.Configuration;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.tools.ToolMaterial;
 
-import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,7 +27,6 @@ public class RestrictionConfig {
         configfile.save();
     }
 
-    // todo: move this to an extra config and load it in postInit so everything is registered
     public void loadRestrictedParts()
     {
         // construct the comment containing all the info needed :I
@@ -80,9 +79,9 @@ public class RestrictionConfig {
             // check if we have to add all
             if("all".equals(restriction[1]))
             {
-                for(RestrictionHelper.ItemMeta key : RestrictionHelper.configNameToPattern.values())
+                for(ItemMetaWrapper key : RestrictionHelper.configNameToPattern.values())
                     RestrictionHelper.addRestriction(key, material);
-                for(RestrictionHelper.ItemMeta key : RestrictionHelper.configNameToCast.values())
+                for(ItemMetaWrapper key : RestrictionHelper.configNameToCast.values())
                     RestrictionHelper.addRestriction(key, material);
 
                 continue;

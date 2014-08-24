@@ -1,6 +1,7 @@
 package iguanaman.iguanatweakstconstruct.restriction;
 
 import iguanaman.iguanatweakstconstruct.util.Log;
+import mantle.utils.ItemMetaWrapper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import tconstruct.library.TConstructRegistry;
@@ -20,24 +21,24 @@ import java.util.*;
 public final class RestrictionHelper {
     private RestrictionHelper() {} // non-instantiable
 
-    public static Map<String, ItemMeta> configNameToPattern; // holds the names that can be used in the config and maps them to item-meta combinations to retrieve the materials
-    public static Map<String, ItemMeta> configNameToCast; // same as above but for metal casts
+    public static Map<String, ItemMetaWrapper> configNameToPattern; // holds the names that can be used in the config and maps them to item-meta combinations to retrieve the materials
+    public static Map<String, ItemMetaWrapper> configNameToCast; // same as above but for metal casts
     // this list contains all ALLOWED pattern - material combinations
-    public static Map<ItemMeta, List<ToolMaterial>> patternMaterialLookup; // item+metadata -> List of applicable materials
-    public static Map<ItemMeta, List<CustomMaterial>> patternCustomMaterialLookup; // item+metadata -> List of applicable custom materials
+    public static Map<ItemMetaWrapper, List<ToolMaterial>> patternMaterialLookup; // item+metadata -> List of applicable materials
+    public static Map<ItemMetaWrapper, List<CustomMaterial>> patternCustomMaterialLookup; // item+metadata -> List of applicable custom materials
 
     static {
-        configNameToPattern = new HashMap<String, ItemMeta>();
-        configNameToCast = new HashMap<String, ItemMeta>();
-        patternMaterialLookup = new HashMap<ItemMeta, List<ToolMaterial>>();
-        patternCustomMaterialLookup = new HashMap<ItemMeta, List<CustomMaterial>>();
+        configNameToPattern = new HashMap<String, ItemMetaWrapper>();
+        configNameToCast = new HashMap<String, ItemMetaWrapper>();
+        patternMaterialLookup = new HashMap<ItemMetaWrapper, List<ToolMaterial>>();
+        patternCustomMaterialLookup = new HashMap<ItemMetaWrapper, List<CustomMaterial>>();
     }
 
 
     public static boolean isRestricted(ItemStack pattern, ToolMaterial material)
     {
         boolean restricted = true;
-        List<ToolMaterial> matIDs = patternMaterialLookup.get(new ItemMeta(pattern));
+        List<ToolMaterial> matIDs = patternMaterialLookup.get(new ItemMetaWrapper(pattern));
         if(matIDs != null)
         {
             for(ToolMaterial mat : matIDs)
@@ -61,15 +62,15 @@ public final class RestrictionHelper {
 
     public static List<ToolMaterial> getPatternMaterials(ItemStack pattern)
     {
-        return patternMaterialLookup.get(new ItemMeta(pattern));
+        return patternMaterialLookup.get(new ItemMetaWrapper(pattern));
     }
 
     public static List<CustomMaterial> getPatternCustomMaterials(ItemStack pattern)
     {
-        return patternCustomMaterialLookup.get(new ItemMeta(pattern));
+        return patternCustomMaterialLookup.get(new ItemMetaWrapper(pattern));
     }
 
-    public static void addRestriction(ItemMeta key, ToolMaterial material)
+    public static void addRestriction(ItemMetaWrapper key, ToolMaterial material)
     {
         // fetch the material list
         List<ToolMaterial> materials = patternMaterialLookup.get(key);
@@ -110,7 +111,7 @@ public final class RestrictionHelper {
     // Don't judge me. This function is an absolute terror because I realized that it'd allow invalid combinations if I
     // don't check everything again too late. Should probbaly simply create a set of originally allowed parts, and than
     // build the overlapping set.
-    public static boolean addAllowed(ItemMeta key, ToolMaterial material)
+    public static boolean addAllowed(ItemMetaWrapper key, ToolMaterial material)
     {
         // check if material was allowed for casting
         if(key.item instanceof MetalPattern) {
@@ -198,10 +199,10 @@ public final class RestrictionHelper {
             else
                 name = (new ItemStack(pattern, 1, meta)).getUnlocalizedName();
 
-            ItemMeta im = configNameToPattern.get(name);
+            ItemMetaWrapper im = configNameToPattern.get(name);
             // not registered in the mapping yet?
             if(im == null) {
-                im = new ItemMeta(pattern, meta);
+                im = new ItemMetaWrapper(pattern, meta);
                 configNameToPattern.put(name, im);
             }
 
@@ -219,10 +220,10 @@ public final class RestrictionHelper {
             CustomMaterial mat = TConstructRegistry.getCustomMaterial(matID, BowstringMaterial.class);
             if(mat != null)
             {
-                ItemMeta im = configNameToPattern.get("bowstring");
+                ItemMetaWrapper im = configNameToPattern.get("bowstring");
                 // not registered in the mapping yet?
                 if(im == null) {
-                    im = new ItemMeta(TinkerTools.woodPattern, 23);
+                    im = new ItemMetaWrapper(TinkerTools.woodPattern, 23);
                     configNameToPattern.put("bowstring", im);
                 }
 
@@ -237,10 +238,10 @@ public final class RestrictionHelper {
             mat = TConstructRegistry.getCustomMaterial(matID, FletchingMaterial.class);
             if(mat != null)
             {
-                ItemMeta im = configNameToPattern.get("fletching");
+                ItemMetaWrapper im = configNameToPattern.get("fletching");
                 // not registered in the mapping yet?
                 if(im == null) {
-                    im = new ItemMeta(TinkerTools.woodPattern, 24);
+                    im = new ItemMetaWrapper(TinkerTools.woodPattern, 24);
                     configNameToPattern.put("fletching", im);
                 }
 
@@ -276,10 +277,10 @@ public final class RestrictionHelper {
             else
                 name = (new ItemStack(pattern, 1, meta)).getUnlocalizedName();
 
-            ItemMeta im = configNameToCast.get(name);
+            ItemMetaWrapper im = configNameToCast.get(name);
             // not registered in the mapping yet?
             if(im == null) {
-                im = new ItemMeta(pattern, meta);
+                im = new ItemMetaWrapper(pattern, meta);
                 configNameToCast.put(name, im);
             }
 
@@ -316,43 +317,6 @@ public final class RestrictionHelper {
 
         for(List<ToolMaterial> mats : patternMaterialLookup.values())
             Collections.sort(mats, comparator);
-    }
-
-    // item + metadata combination
-    public static class ItemMeta {
-        public Item item;
-        public Integer meta;
-
-        public ItemMeta(Item item, Integer meta) {
-            this.item = item;
-            this.meta = meta;
-        }
-
-        public ItemMeta(ItemStack stack)
-        {
-            this.item = stack.getItem();
-            this.meta = stack.getItemDamage();
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            ItemMeta itemMeta = (ItemMeta) o;
-
-            if (item != null ? !(item == itemMeta.item) : itemMeta.item != null) return false;
-            if (meta != null ? !meta.equals(itemMeta.meta) : itemMeta.meta != null) return false;
-
-            return true;
-        }
-
-        @Override
-        public int hashCode() {
-            int result = item != null ? item.hashCode() : 0;
-            result = 31 * result + (meta != null ? meta.hashCode() : 0);
-            return result;
-        }
     }
 
     // the tool parts

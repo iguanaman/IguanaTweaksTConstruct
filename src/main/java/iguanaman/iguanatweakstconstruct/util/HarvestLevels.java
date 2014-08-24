@@ -3,6 +3,8 @@ package iguanaman.iguanatweakstconstruct.util;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 
+import java.util.Map;
+
 import static net.minecraft.util.EnumChatFormatting.*;
 
 // strength of the tool-material. stone == strength of a stone pick etc.
@@ -42,39 +44,35 @@ public final class HarvestLevels {
         vanilla = true;
     }
 
-    public static String getHarvestLevelName (int num)
+    public static void updateHarvestLevelNames()
     {
-        if(vanilla) return getVanillaHarvestLevelName(num);
+        Map<Integer, String> names = tconstruct.library.util.HarvestLevels.harvestLevelNames;
 
-        switch (num)
+        if(vanilla)
         {
-            case 0: return GRAY + StatCollector.translateToLocal("mininglevel.stone");
-            case 1: return GOLD + StatCollector.translateToLocal("mininglevel.copper");
-            case 2: return DARK_GRAY + StatCollector.translateToLocal("mininglevel.iron");
-            case 3: return WHITE + StatCollector.translateToLocal("mininglevel.tin");
-            case 4: return RED + StatCollector.translateToLocal("mininglevel.redstone");
-            case 5: return LIGHT_PURPLE + StatCollector.translateToLocal("mininglevel.obsidian");
-            case 6: return DARK_RED + StatCollector.translateToLocal("mininglevel.ardite");
-            case 7: return DARK_AQUA + StatCollector.translateToLocal("mininglevel.cobalt");
-            case 8: return DARK_PURPLE + StatCollector.translateToLocal("mininglevel.manyullyn");
-            case 9: return DARK_PURPLE + StatCollector.translateToLocal("mininglevel.manyullyn") + LIGHT_PURPLE + "+";
-            default: return ITALIC + "?????";
+            names.put(0 , GRAY + StatCollector.translateToLocal("mininglevel.stone"));
+            names.put(1 , DARK_RED + StatCollector.translateToLocal("mininglevel.iron"));
+            names.put(2 , LIGHT_PURPLE + StatCollector.translateToLocal("mininglevel.obsidian"));
+            names.put(3 , BLUE + StatCollector.translateToLocal("mininglevel.cobalt"));
+            names.put(4 , DARK_PURPLE + StatCollector.translateToLocal("mininglevel.manyullyn"));
+            names.put(5 , DARK_PURPLE + StatCollector.translateToLocal("mininglevel.manyullyn") + LIGHT_PURPLE + "+");
+        }
+        else {
+            names.put(0, GRAY + StatCollector.translateToLocal("mininglevel.stone"));
+            names.put(1, GOLD + StatCollector.translateToLocal("mininglevel.copper"));
+            names.put(2, DARK_GRAY + StatCollector.translateToLocal("mininglevel.iron"));
+            names.put(3, WHITE + StatCollector.translateToLocal("mininglevel.tin"));
+            names.put(4, RED + StatCollector.translateToLocal("mininglevel.redstone"));
+            names.put(5, LIGHT_PURPLE + StatCollector.translateToLocal("mininglevel.obsidian"));
+            names.put(6, DARK_RED + StatCollector.translateToLocal("mininglevel.ardite"));
+            names.put(7, DARK_AQUA + StatCollector.translateToLocal("mininglevel.cobalt"));
+            names.put(8, DARK_PURPLE + StatCollector.translateToLocal("mininglevel.manyullyn"));
+            names.put(9, DARK_PURPLE + StatCollector.translateToLocal("mininglevel.manyullyn") + LIGHT_PURPLE + "+");
         }
     }
 
-    public static String getVanillaHarvestLevelName (int num)
+    public static String getHarvestLevelName(int num)
     {
-        switch (num)
-        {
-            case 0: return GRAY + StatCollector.translateToLocal("mininglevel.stone");
-            case 1: return DARK_RED + StatCollector.translateToLocal("mininglevel.iron");
-            case 2: return LIGHT_PURPLE + StatCollector.translateToLocal("mininglevel.obsidian");
-            case 3: return BLUE + StatCollector.translateToLocal("mininglevel.cobalt");
-            case 4: return DARK_PURPLE + StatCollector.translateToLocal("mininglevel.manyullyn");
-            case 5: return DARK_PURPLE + StatCollector.translateToLocal("mininglevel.manyullyn") + LIGHT_PURPLE + "+";
-            default: return ITALIC + "?????";
-        }
+        return tconstruct.library.util.HarvestLevels.getHarvestLevelName(num);
     }
-
-
 }

@@ -112,6 +112,9 @@ public class IguanaTweaksTConstruct {
         pulsar.registerPulse(new IguanaOverride());
         pulsar.registerPulse(new IguanaDebug());
         pulsar.preInit(event);
+
+        // versionchecker support
+        FMLInterModComms.sendRuntimeMessage(Reference.MOD_ID, "VersionChecker", "addVersionCheck", "https://raw.githubusercontent.com/bonii-xx/IguanaTweaksTConstruct/devel/version.json");
 	}
 
 
@@ -127,9 +130,6 @@ public class IguanaTweaksTConstruct {
         FMLCommonHandler.instance().bus().register(new OldToolConversionHandler());
 
         GameRegistry.addRecipe(new ToolUpdateRecipe());
-
-        // versionchecker support
-        FMLInterModComms.sendRuntimeMessage(Reference.MOD_ID, "VersionChecker", "addVersionCheck", "https://raw.githubusercontent.com/bonii-xx/IguanaTweaksTConstruct/devel/version.json");
 	}
 
 	@EventHandler

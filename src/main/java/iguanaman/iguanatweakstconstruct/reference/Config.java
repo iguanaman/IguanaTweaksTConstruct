@@ -62,6 +62,7 @@ public class Config {
     public static boolean addFlintRecipe;
     public static int recipeGravelPerFlint;
     public static boolean disableStoneTools;
+    public static boolean disableBonusMods;
     public static boolean castsBurnMaterial;
     public static boolean allowStringBinding;
 
@@ -200,6 +201,7 @@ public class Config {
         allowStencilReuse = configfile.getBoolean("allowStencilReuse", CATEGORY_Tweaks, false, "Allows to use stencils as blank patterns in the stencil table");
         allowPartReuse    = configfile.getBoolean("allowPartReuse", CATEGORY_Tweaks, true, "Allows toolparts to be used as material in the Part Builder. Like, turn a Pick head into a Shovel head.!");
         allowStringBinding= configfile.getBoolean("allowStringBinding", CATEGORY_Tweaks, true, "Allows you to use a piece of string as a binding");
+        disableBonusMods  = configfile.getBoolean("disableBonusModifierModifiers", CATEGORY_Tweaks, false, "Removes the ability to add modifiers with Gold, Diamond, Netherstars etc.");
 
         // easy crafting
         easyToolRepair           = configfile.getBoolean("easyToolRepair", CATEGORY_Tweaks, true, "Allows to repair your tool in a crafting grid, without tool station");

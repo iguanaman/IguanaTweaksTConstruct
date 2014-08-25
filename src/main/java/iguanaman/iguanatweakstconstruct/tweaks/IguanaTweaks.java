@@ -25,6 +25,7 @@ import tconstruct.library.client.TConstructClientRegistry;
 import tconstruct.library.crafting.*;
 import tconstruct.library.modifier.ItemModifier;
 import tconstruct.library.util.IPattern;
+import tconstruct.modifiers.tools.ModExtraModifier;
 import tconstruct.modifiers.tools.ModFlux;
 import tconstruct.modifiers.tools.ModToolRepair;
 import tconstruct.smeltery.TinkerSmeltery;
@@ -152,6 +153,9 @@ public class IguanaTweaks {
 
         if(Config.moreModifiersForFlux)
             exchangeFluxModifier();
+        
+        if(Config.disableBonusMods)
+            removeBonusModifierModifiers();
 
         if(Config.maxToolRepairs > -1)
             limitToolRepair();
@@ -216,6 +220,20 @@ public class IguanaTweaks {
             if(mod instanceof ModFlux) {
                 iter.set(new ModFluxExpensive(((ModFlux) mod).batteries));
                 Log.trace("Replaced Flux Modifier to make it more expensive");
+            }
+        }
+    }
+
+    private void removeBonusModifierModifiers()
+    {
+        Log.info("Removing bonus modifier modifiers");
+        List<ItemModifier> mods = ModifyBuilder.instance.itemModifiers;
+        for(ListIterator<ItemModifier> iter = mods.listIterator(); iter.hasNext();)
+        {
+            ItemModifier mod = iter.next();
+            // flux mod
+            if(mod instanceof ModExtraModifier) {
+                iter.remove();
             }
         }
     }

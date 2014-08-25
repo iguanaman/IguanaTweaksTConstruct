@@ -21,7 +21,7 @@ public class Config {
     public static boolean showMinimalTooltipXP;
 	public static boolean detailedXpTooltip;
 	public static boolean toolLeveling;
-	public static boolean toolLevelingExtraModifiers;
+	public static int toolLevelingExtraModifiers;
     public static int[] toolModifiersAtLevels;
 	public static boolean toolLevelingRandomBonuses;
     public static int[] randomBonusesAtlevels;
@@ -128,7 +128,7 @@ public class Config {
         // levelup behaviour
         maxToolLevel               = configfile.getInt("maxToolLevel", CATEGORY_Leveling, 6, 1, 99, "");
         toolLeveling               = configfile.getBoolean("toolLeveling", CATEGORY_Leveling, true, "Can your skill with tools 'level up' as you use them?");
-        toolLevelingExtraModifiers = configfile.getBoolean("ExtraModifiers", CATEGORY_Leveling, true, "Removes modifiers on new tools and gives them through leveling (requires 'toolLeveling=true')");
+        toolLevelingExtraModifiers = configfile.getInt("ExtraModifiers", CATEGORY_Leveling, 0, 0, 9, "The amount of modifiers new tools have.");
         toolModifiersAtLevels      = configfile.get(CATEGORY_Leveling, "ModifiersAtLevels", new int[]{2,4,6}, "Adds an extra modifier on these levleups if 'ExtraModifiers' is enabled").getIntList();
 		toolLevelingRandomBonuses  = configfile.getBoolean("RandomBonuses", CATEGORY_Leveling, true, "Gives a random bonus every level, if false and levelling is on modifiers are given at levels 2 and 4 (requires 'toolLeveling=true')");
         randomBonusesAtlevels      = configfile.get(CATEGORY_Leveling, "BonusesAtLevels", new int[]{2,3,4,5,6}, "Adds a random bonus on these levleups if 'RandomBonuses' is enabled").getIntList();

@@ -294,27 +294,24 @@ public final class LevelingLogic {
         int currentModifiers = tags.getInteger("Modifiers");
 
         // Add Modifier for leveling up?
-        if(Config.toolLevelingExtraModifiers)
+        int modifiersToAdd = 0;
+        // check if we are supposed to add a modifier at this levelup
+        for(int lvl : Config.toolModifiersAtLevels)
+            if(level == lvl)
+                modifiersToAdd++;
+                // yes, no break. this means if a level is in the list multiple times, you get multiple modifiers
+
+        if(modifiersToAdd > 0)
         {
-            int modifiersToAdd = 0;
-            // check if we are supposed to add a modifier at this levelup
-            for(int lvl : Config.toolModifiersAtLevels)
-                if(level == lvl)
-                    modifiersToAdd++;
-                    // yes, no break. this means if a level is in the list multiple times, you get multiple modifiers
+            currentModifiers += modifiersToAdd;
+            tags.setInteger("Modifiers", currentModifiers);
 
-            if(modifiersToAdd > 0)
-            {
-                currentModifiers += modifiersToAdd;
-                tags.setInteger("Modifiers", currentModifiers);
-
-                // fancy message on clientside
-                if(!world.isRemote) {
-                    if(world.rand.nextInt(10) < modifiersToAdd)
-                        player.addChatMessage(new ChatComponentText(LevelingTooltips.getInfoString(StatCollector.translateToLocal("message.levelup.newmodifier.2"), EnumChatFormatting.DARK_AQUA, String.format("+%d %s", modifiersToAdd, StatCollector.translateToLocal("message.levelup.modifier")), EnumChatFormatting.GOLD)));
-                    else
-                        player.addChatMessage(new ChatComponentText(LevelingTooltips.getInfoString(StatCollector.translateToLocal("message.levelup.newmodifier.1"), EnumChatFormatting.DARK_AQUA, String.format("+%d %s", modifiersToAdd, StatCollector.translateToLocal("message.levelup.modifier")), EnumChatFormatting.GOLD)));
-                }
+            // fancy message on clientside
+            if(!world.isRemote) {
+                if(world.rand.nextInt(10) < modifiersToAdd)
+                    player.addChatMessage(new ChatComponentText(LevelingTooltips.getInfoString(StatCollector.translateToLocal("message.levelup.newmodifier.2"), EnumChatFormatting.DARK_AQUA, String.format("+%d %s", modifiersToAdd, StatCollector.translateToLocal("message.levelup.modifier")), EnumChatFormatting.GOLD)));
+                else
+                    player.addChatMessage(new ChatComponentText(LevelingTooltips.getInfoString(StatCollector.translateToLocal("message.levelup.newmodifier.1"), EnumChatFormatting.DARK_AQUA, String.format("+%d %s", modifiersToAdd, StatCollector.translateToLocal("message.levelup.modifier")), EnumChatFormatting.GOLD)));
             }
         }
 	}

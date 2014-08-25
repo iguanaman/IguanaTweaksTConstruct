@@ -144,8 +144,7 @@ public class LevelingEventHandler {
 
 
         // remove modifiers
-        if (Config.toolLeveling && Config.toolLevelingExtraModifiers)
-            toolTag.setInteger("Modifiers", Math.max(toolTag.getInteger("Modifiers") - 3, 0));
+        toolTag.setInteger("Modifiers", Math.max(toolTag.getInteger("Modifiers") - (3-Config.toolLevelingExtraModifiers), 0));
     }
 
 

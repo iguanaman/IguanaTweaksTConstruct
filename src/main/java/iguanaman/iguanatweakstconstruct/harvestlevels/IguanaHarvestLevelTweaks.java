@@ -15,6 +15,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
+import tconstruct.TConstruct;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.crafting.ModifyBuilder;
 import tconstruct.library.modifier.ItemModifier;
@@ -49,7 +50,8 @@ public class IguanaHarvestLevelTweaks {
         if(Config.changeDiamondModifier)
             changeDurabilityModifiers();
 
-        adaptChestLoot();
+        if(TConstruct.pulsar.isPulseLoaded("Tinkers' World"))
+            adaptChestLoot();
     }
 
     // removes all pickaxe and hammer heads that have a higher harvestlevel than flint

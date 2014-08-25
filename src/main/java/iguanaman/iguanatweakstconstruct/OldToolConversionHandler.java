@@ -36,6 +36,10 @@ public class OldToolConversionHandler {
         if(!(itemStack.getItem() instanceof ToolCore) || itemStack.getItem() instanceof Arrow)
             return false;
 
+        // no NBT? derped.
+        if(itemStack.getTagCompound() == null)
+            return false;
+
         NBTTagCompound tags = itemStack.getTagCompound().getCompoundTag("InfiTool");
 
         // does it have no level, but leveling is enabled?

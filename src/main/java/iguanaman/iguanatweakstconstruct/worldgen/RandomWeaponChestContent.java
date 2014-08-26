@@ -88,9 +88,10 @@ public class RandomWeaponChestContent extends WeightedRandomChestContent {
                     if(items[i] == null)
                         continue;
 
-                    // get a material
-                    Integer matId = materialIDs.get(random.nextInt(materialIDs.size()));
+
                     do {
+                        // get a material
+                        Integer matId = materialIDs.get(random.nextInt(materialIDs.size()));
                         parts[i] = new ItemStack(items[i], 1, matId);
                     } while(((IToolPart)items[i]).getMaterialID(parts[i]) == -1);
                 }

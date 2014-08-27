@@ -103,7 +103,7 @@ public class IguanaTweaksTConstruct {
         pulsar.preInit(event);
 
         // versionchecker support
-        FMLInterModComms.sendRuntimeMessage(Reference.MOD_ID, "VersionChecker", "addVersionCheck", "https://raw.githubusercontent.com/bonii-xx/IguanaTweaksTConstruct/devel/version.json");
+        FMLInterModComms.sendRuntimeMessage(Reference.MOD_ID, "VersionChecker", "addVersionCheck", "https://raw.githubusercontent.com/SlimeKnights/IguanaTweaksTConstruct/master/version.json");
 	}
 
 

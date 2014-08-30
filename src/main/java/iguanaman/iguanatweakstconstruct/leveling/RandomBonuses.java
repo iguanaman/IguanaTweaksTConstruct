@@ -85,41 +85,42 @@ public class RandomBonuses {
         {
             if(Config.deactivatedModifiers.contains(mod))
                 chances[i] = 0;
-            else if(Config.randomBonusesAreRandom)
-                chances[i] = 1;
-            // weapons
-            else if(tool.getItem() instanceof Weapon || tool.getItem() instanceof Battleaxe) {
-                if(Config.randomBonusesAreUseful && !usefulWeaponModifiers.contains(mod))
+            else {
+                if (Config.randomBonusesAreRandom)
+                    chances[i] = 1;
+                    // weapons
+                else if (tool.getItem() instanceof Weapon || tool.getItem() instanceof Battleaxe) {
+                    if (Config.randomBonusesAreUseful && !usefulWeaponModifiers.contains(mod))
+                        chances[i] = 0;
+                    else
+                        chances[i] = weaponWeights.get(mod);
+                }
+                // tools
+                else if (tool.getItem() instanceof HarvestTool) {
+                    if (Config.randomBonusesAreUseful && !usefulToolModifiers.contains(mod))
+                        chances[i] = 0;
+                    else
+                        chances[i] = toolWeights.get(mod);
+                }
+                // bows
+                else if (tool.getItem() instanceof BowBase) {
+                    if (Config.randomBonusesAreUseful && !usefulBowModifiers.contains(mod))
+                        chances[i] = 0;
+                    else
+                        chances[i] = bowWeights.get(mod);
+                } else
                     chances[i] = 0;
-                else
-                    chances[i] = weaponWeights.get(mod);
-            }
-            // tools
-            else if(tool.getItem() instanceof HarvestTool) {
-                if(Config.randomBonusesAreUseful && !usefulToolModifiers.contains(mod))
-                    chances[i] = 0;
-                else
-                    chances[i] = toolWeights.get(mod);
-            }
-            // bows
-            else if(tool.getItem() instanceof BowBase) {
-                if(Config.randomBonusesAreUseful && !usefulBowModifiers.contains(mod))
-                    chances[i] = 0;
-                else
-                    chances[i] = bowWeights.get(mod);
-            }
-            else
-                chances[i] = 0;
 
-            // calculate extra bonus chance
-            if(tags.hasKey(String.format("Extra%s", mod.toString()))) {
-                float bonus = tags.getInteger(String.format("Extra%s", mod.toString()));
-                // relativize bonus to xp. It matters how much you've done X during the levelup after all, not in total. We don't want +100% chance :P
-                // basically if we didn't do this, the higher the xp required, the higher the chance.
-                bonus /= (float)LevelingLogic.getRequiredXp(tool, tags);
-                // maximal bonus obtainable should be ~70
-                bonus *= usageBonusWeight;
-                chances[i] += bonus;
+                // calculate extra bonus chance
+                if (tags.hasKey(String.format("Extra%s", mod.toString()))) {
+                    float bonus = tags.getInteger(String.format("Extra%s", mod.toString()));
+                    // relativize bonus to xp. It matters how much you've done X during the levelup after all, not in total. We don't want +100% chance :P
+                    // basically if we didn't do this, the higher the xp required, the higher the chance.
+                    bonus /= (float) LevelingLogic.getRequiredXp(tool, tags);
+                    // maximal bonus obtainable should be ~70
+                    bonus *= usageBonusWeight;
+                    chances[i] += bonus;
+                }
             }
 
             total += chances[i];

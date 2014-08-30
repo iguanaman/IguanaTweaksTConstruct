@@ -26,6 +26,7 @@ public class IguanaOverride {
         doOverride("Tool", new ToolOverride());
         doOverride("Block", new BlockOverride());
         doOverride("BonusModifier", new ModifierOverride());
+        doOverride("HarvestLevelNames", new HarvestLevelNameOverride());
     }
 
     public static void doOverride(String type, IOverride overrider)

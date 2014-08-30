@@ -2,7 +2,10 @@ package iguanaman.iguanatweakstconstruct.util;
 
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
+import tconstruct.TConstruct;
+import tconstruct.library.tools.ToolMaterial;
 
+import java.util.List;
 import java.util.Map;
 
 import static net.minecraft.util.EnumChatFormatting.*;
@@ -74,5 +77,11 @@ public final class HarvestLevels {
     public static String getHarvestLevelName(int num)
     {
         return tconstruct.library.util.HarvestLevels.getHarvestLevelName(num);
+    }
+
+    public static void setCustomHarvestLevelNames(Map<Integer, ToolMaterial> mats)
+    {
+        for(Map.Entry<Integer, ToolMaterial> mat : mats.entrySet())
+            tconstruct.library.util.HarvestLevels.harvestLevelNames.put(mat.getKey(), mat.getValue().style() + mat.getValue().name());
     }
 }

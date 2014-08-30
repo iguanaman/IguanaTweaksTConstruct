@@ -73,7 +73,8 @@ public class ModifierOverride implements IOverride {
         {
             try {
                 RandomBonuses.Modifier mod = RandomBonuses.Modifier.getEnumByString(prop.getName());
-                map.put(mod, prop.getInt());
+                int weight = Math.max(0, prop.getInt());
+                map.put(mod, weight);
 
                 if(Config.logOverrideChanges)
                     Log.info(String.format("Bonus Modifier Override: [%s] Changed Weight of %s to %d", categoryName, mod.toString(), prop.getInt()));

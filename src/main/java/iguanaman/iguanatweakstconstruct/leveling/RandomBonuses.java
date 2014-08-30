@@ -128,7 +128,7 @@ public class RandomBonuses {
 
 
         // check if we have modifiers (to prevent endless loops
-        if(total == 0)
+        if(total <= 0)
             return null;
 
         // try modifying

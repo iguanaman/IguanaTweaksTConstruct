@@ -47,28 +47,20 @@ public final class ReplacementLogic {
             return;
         }
 
-        int partMaterialId = ToolBuilder.instance.getMaterialID(partStack);
-        int oldMaterialId = -1;
-
-        if(type == HEAD && headStack != null) {
+        if(type == HEAD && headStack != null)
             headStack = partStack;
-            oldMaterialId = getToolPartMaterial(tags, HEAD);
-        }
-        if(type == HANDLE && handleStack != null) {
+        if(type == HANDLE && handleStack != null)
             handleStack = partStack;
-            oldMaterialId = getToolPartMaterial(tags, HANDLE);
-        }
-        if(type == ACCESSORY && accessoryStack != null) {
+        if(type == ACCESSORY && accessoryStack != null)
             accessoryStack = partStack;
-            oldMaterialId = getToolPartMaterial(tags, ACCESSORY);
-        }
-        if(type == EXTRA && extraStack != null) {
+        if(type == EXTRA && extraStack != null)
             extraStack = partStack;
-            oldMaterialId = getToolPartMaterial(tags, EXTRA);
-        }
 
         ItemStack newTool = ToolBuilder.instance.buildTool(headStack, handleStack, accessoryStack, extraStack, "Modified Tool");
         NBTTagCompound newTags = newTool.getTagCompound().getCompoundTag("InfiTool");
+
+        int partMaterialId = getToolPartMaterial(newTags, type);
+        int oldMaterialId = getToolPartMaterial(tags, type);
 
         // Things that can change from replacing a part:
         // - durability

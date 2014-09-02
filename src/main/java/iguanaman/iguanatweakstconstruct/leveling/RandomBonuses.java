@@ -67,6 +67,9 @@ public class RandomBonuses {
         modCache.put(ModShoddy.ModJagged.key, ModShoddy.ModJagged);
         modCache.put(ModShoddy.ModStonebound.key, ModShoddy.ModStonebound);
         modCache.put(ModCritical.modCritical.key, ModCritical.modCritical);
+
+        // also ensure the correct attack modifier
+        modCache.put(TinkerTools.modAttack.key, TinkerTools.modAttack);
     }
 
     public static Modifier tryModifying(EntityPlayer player, ItemStack tool)
@@ -407,12 +410,6 @@ public class RandomBonuses {
     {
         if(modCache.containsKey(key))
             return modCache.get(key);
-
-        if(key.equals("ModAttack"))
-        {
-            modCache.put(key, TinkerTools.modAttack);
-            return TinkerTools.modAttack;
-        }
 
         for(ItemModifier modifier : ModifyBuilder.instance.itemModifiers)
             if(modifier.key.equals(key)) {

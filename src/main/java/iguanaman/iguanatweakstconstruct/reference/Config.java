@@ -222,7 +222,7 @@ public class Config {
         /** Allowed tools for nerfed vanilla tools **/
         configfile.setCategoryComment(CATEGORY_AllowedTools, "Tweak Module: This category allows you to specify which tools ARE NOT USABLE or alternatively ARE STILL USABLE if the option to disable non-TConstsruct tools is enabled.\nTo make this easier a /dumpTools command is provided, that dumps the names of all applicable items in your world. Copy'n'Paste away!");
         {
-            String type = configfile.getString("exclusionType", CATEGORY_AllowedTools, "blacklist", "Change the type of the exclusion.\n'blacklist' means the listed tools are made usable.\n'whitelist' means ALL tools except the listed ones are unusable.", new String[] {"whitelist","blacklist"});
+            String type = configfile.getString("exclusionType", CATEGORY_AllowedTools, "blacklist", "Change the type of the exclusion.\n'blacklist' means the listed tools are made unusable.\n'whitelist' means ALL tools except the listed ones are unusable.", new String[] {"whitelist","blacklist"});
             excludedToolsIsWhitelist = "whitelist".equals(type);
 
             String[] tools =   configfile.getStringList("tools", CATEGORY_AllowedTools, defaultExcludedTools, "Tools that are excluded if the option to nerf non-tinkers tools is enabled.");

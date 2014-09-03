@@ -15,6 +15,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import tconstruct.world.blocks.GravelOre;
 
 import java.lang.reflect.Field;
+import java.util.LinkedList;
 
 /**
  * Used to modify the harvest levels of all known/findable tools and blocks. Vanilla and modded.
@@ -89,19 +90,32 @@ public final class HarvestLevelTweaks {
     {
         Block block = Block.getBlockFromItem(stack.getItem());
 
-        if(Config.logHarvestLevelChanges) {
-            Log.debug(String.format("Changed Harvest Level of %s from %d to %d", stack.getUnlocalizedName(), block.getHarvestLevel(stack.getItemDamage()), harvestLevel));
-        }
-
-        if(Config.logOverrideChanges && Loader.instance().isInState(LoaderState.POSTINITIALIZATION))
-            Log.info(String.format("Block Override: Changed Harvest Level of %s to %d", stack.getUnlocalizedName(), harvestLevel));
-
-
-        // gravelore gets shovel level instead of pickaxe.
-        if(block instanceof GravelOre)
-            block.setHarvestLevel("shovel", harvestLevel, stack.getItemDamage());
+        int meta = stack.getItemDamage();
+        Integer[] metas;
+        if(meta == OreDictionary.WILDCARD_VALUE)
+            metas = new Integer[] {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
         else
-            block.setHarvestLevel("pickaxe", harvestLevel, stack.getItemDamage());
+            metas = new Integer[] {meta};
+
+        for(int m : metas) {
+            try {
+                if (Config.logHarvestLevelChanges) {
+                    Log.debug(String.format("Changed Harvest Level of %s from %d to %d", stack.getUnlocalizedName(), block.getHarvestLevel(m), harvestLevel));
+                }
+
+                // gravelore gets shovel level instead of pickaxe.
+                if (block instanceof GravelOre)
+                    block.setHarvestLevel("shovel", harvestLevel, m);
+                else
+                    block.setHarvestLevel("pickaxe", harvestLevel, m);
+
+                if (Config.logOverrideChanges && Loader.instance().isInState(LoaderState.POSTINITIALIZATION))
+                    Log.info(String.format("Block Override: Changed Harvest Level of %s to %d", stack.getUnlocalizedName(), harvestLevel));
+            } catch(Exception e)
+            {
+                // exception can occur if stuff does weird things metadatas
+            }
+        }
     }
 
     private static void modifyTools()

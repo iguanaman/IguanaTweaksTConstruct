@@ -105,7 +105,7 @@ public class MaterialOverride implements IOverride {
             tipStyle = mat.style();
 
         // reconstruct the material
-        return new ToolMaterial(mat.materialName, harvestLevel, durability, miningspeed, attack, handleModifier, reinforced, stonebound, tipStyle, mat.ability());
+        return new ToolMaterial(mat.materialName, harvestLevel, durability, miningspeed, attack, handleModifier, reinforced, stonebound, tipStyle);
     }
 
     private EnumChatFormatting stringToEnum(String s)

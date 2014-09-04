@@ -18,6 +18,7 @@ import tconstruct.library.tools.ToolCore;
 import tconstruct.library.tools.ToolMaterial;
 import tconstruct.modifiers.tools.ModAttack;
 import tconstruct.modifiers.tools.ModRedstone;
+import tconstruct.tools.logic.ToolStationLogic;
 
 import static iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic.PartTypes.*;
 
@@ -195,11 +196,10 @@ public final class ReplacementLogic {
 
         // Update the tool name if we replaced the head and it was a automagic name
         if(type == HEAD) {
-            String materialName = TConstructRegistry.getMaterial(oldMaterialId).displayName;
-            String toolName = tool.getToolName();
-            if (toolStack.getDisplayName().endsWith(materialName + toolName)) {
-                materialName = TConstructRegistry.getMaterial(partMaterialId).displayName;
-                toolStack.setStackDisplayName("\u00a7r" + materialName + toolName);
+            String defaultName = ToolBuilder.defaultToolName(TConstructRegistry.getMaterial(oldMaterialId), tool);
+            if (toolStack.getDisplayName().endsWith(defaultName)) {
+                defaultName = ToolBuilder.defaultToolName(TConstructRegistry.getMaterial(partMaterialId), tool);
+                toolStack.setStackDisplayName("\u00a7r" + defaultName);
             }
         }
     }
@@ -228,6 +228,7 @@ public final class ReplacementLogic {
         // stonebound/jagged has to be handeled separately, see exchangeToolPart
 
         /************ first add the new traits *************/
+        // todo: rewrite this to use material IDs.
         String ability = newMat.ability();
         // writeable & thaumic (equal since we only exchange 1 part)
         if(ability.equals(StatCollector.translateToLocal("materialtraits.writable")) ||

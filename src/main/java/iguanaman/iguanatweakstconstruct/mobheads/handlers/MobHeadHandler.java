@@ -86,7 +86,7 @@ public class MobHeadHandler {
             skullId = IguanaSkull.META_ENDERMAN;
 
             // sometimes, very very rarely, you'll only get the jaw :D
-            if(IguanaTweaksTConstruct.random.nextInt(2) == 0)
+            if(IguanaTweaksTConstruct.random.nextInt(1000) == 0)
             {
                 skullItem = IguanaMobHeads.wearables;
                 skullId = 2;

@@ -32,6 +32,7 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.tools.ToolMaterial;
+import tconstruct.smeltery.TinkerSmeltery;
 import tconstruct.tools.TinkerTools;
 import tconstruct.world.TinkerWorld;
 
@@ -45,18 +46,6 @@ public class IguanaFMPCompat {
     public static Item arditeSaw;
     public static Item cobaltSaw;
     public static Item manyullynSaw;
-
-    @Handler
-    public void preInit(FMLPreInitializationEvent event)
-    {
-        arditeSaw = createSaw(TConstructRegistry.getMaterial("Ardite"));
-        cobaltSaw = createSaw(TConstructRegistry.getMaterial("Cobalt"));
-        manyullynSaw = createSaw(TConstructRegistry.getMaterial("Manyullyn"));
-
-//        GameRegistry.registerItem(arditeSaw, "ArditeSaw");
-//        GameRegistry.registerItem(cobaltSaw, "CobaltSaw");
-//        GameRegistry.registerItem(manyullynSaw, "ManyullynSaw");
-    }
 
     private Item createSaw(ToolMaterial mat)
     {
@@ -73,21 +62,40 @@ public class IguanaFMPCompat {
     @Handler
     public void init(FMLInitializationEvent event)
     {
-        String[] recipe = { "srr", "sbr"};
-
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(arditeSaw), recipe, 's', Items.stick, 'r', "rodStone", 'b', new ItemStack(TinkerTools.toolRod, 1, 11)));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(cobaltSaw), recipe, 's', Items.stick, 'r', "rodStone", 'b', new ItemStack(TinkerTools.toolRod, 1, 10)));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(manyullynSaw), recipe, 's', Items.stick, 'r', "rodStone", 'b', new ItemStack(TinkerTools.toolRod, 1, 12)));
-
         //make Tconstruct blocks multipartable!
-        if(TinkerWorld.metalBlock != null)
-            for(int i = 0; i < 11; i++)
+        if(TinkerWorld.metalBlock != null) {
+            // metal blocks
+            for (int i = 0; i < 11; i++)
                 FMLInterModComms.sendMessage("ForgeMicroblock", "microMaterial", new ItemStack(TinkerWorld.metalBlock, 1, i));
+        }
+
+        if(TinkerSmeltery.smeltery != null) {
+            // smeltery bricks
+            for (int i = 2; i < 12; i++) {
+                if (i == 3)
+                    continue;
+                FMLInterModComms.sendMessage("ForgeMicroblock", "microMaterial", new ItemStack(TinkerSmeltery.smeltery, 1, i));
+                FMLInterModComms.sendMessage("ForgeMicroblock", "microMaterial", new ItemStack(TinkerSmeltery.smelteryNether, 1, i));
+            }
+
+            // brownstone
+            for (int i = 0; i < 7; i++)
+                FMLInterModComms.sendMessage("ForgeMicroblock", "microMaterial", new ItemStack(TinkerSmeltery.speedBlock, 1, i));
+        }
+
+        if(TinkerTools.multiBrick != null) {
+            // chisel bricks
+            for (int i = 0; i < 14; i++)
+                FMLInterModComms.sendMessage("ForgeMicroblock", "microMaterial", new ItemStack(TinkerTools.multiBrick, 1, i));
+            for (int i = 0; i < 16; i++)
+                FMLInterModComms.sendMessage("ForgeMicroblock", "microMaterial", new ItemStack(TinkerTools.multiBrickFancy, 1, i));
+        }
     }
 
     @Handler
     public void postInit(FMLPostInitializationEvent event)
     {
+        // change existing saws
         for(Object o : Item.itemRegistry)
         {
             // is it a saw?
@@ -119,6 +127,18 @@ public class IguanaFMPCompat {
                 }
             }
         }
+
+        // create our own saws (have to do this this late, since the harvestlevel changes and overrides have to be applied first)
+        arditeSaw = createSaw(TConstructRegistry.getMaterial("Ardite"));
+        cobaltSaw = createSaw(TConstructRegistry.getMaterial("Cobalt"));
+        manyullynSaw = createSaw(TConstructRegistry.getMaterial("Manyullyn"));
+
+        // and add recipes for them
+        String[] recipe = { "srr", "sbr"};
+
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(arditeSaw), recipe, 's', Items.stick, 'r', "rodStone", 'b', new ItemStack(TinkerTools.toolRod, 1, 11)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(cobaltSaw), recipe, 's', Items.stick, 'r', "rodStone", 'b', new ItemStack(TinkerTools.toolRod, 1, 10)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(manyullynSaw), recipe, 's', Items.stick, 'r', "rodStone", 'b', new ItemStack(TinkerTools.toolRod, 1, 12)));
 
         proxy.updateSawRenderers();
     }

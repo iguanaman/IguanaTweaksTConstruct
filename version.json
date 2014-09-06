@@ -2,11 +2,11 @@
 	"versionList": [
 		{
 			"mcVersion": "Minecraft 1.7.10",
-			"modVersion": "1.7.10-2.0.3",
+			"modVersion": "1.7.10-2.0.4",
 			"changeLog": [
-                		"Bugfixes"
+                		"Bugfixes, FMP Support"
 			],
-			"updateURL":"http://minecraft.curseforge.com/mc-mods/223248-iguanas-tinker-tweaks/files/2213563/download",
+			"updateURL":"http://minecraft.curseforge.com/mc-mods/223248-iguanas-tinker-tweaks/files/2213692/download",
 			"isDirectLink":"true"
 		}
 	]

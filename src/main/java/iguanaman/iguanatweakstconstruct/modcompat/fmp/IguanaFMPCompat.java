@@ -1,36 +1,24 @@
 package iguanaman.iguanatweakstconstruct.modcompat.fmp;
 
-import codechicken.lib.config.ConfigFile;
-import codechicken.lib.config.ConfigTag;
-import codechicken.lib.config.ConfigTagParent;
 import codechicken.microblock.BlockMicroMaterial;
 import codechicken.microblock.ItemSaw;
-import codechicken.microblock.MicroMaterialRegistry$;
 import codechicken.microblock.Saw;
 import codechicken.microblock.handler.MicroblockProxy;
-import codechicken.microblock.handler.MicroblockProxy$;
-import codechicken.multipart.MultiPartRegistry;
 import codechicken.multipart.handler.MultipartProxy;
-import codechicken.multipart.handler.MultipartProxy$;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
 import iguanaman.iguanatweakstconstruct.harvestlevels.HarvestLevelTweaks;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
-import iguanaman.iguanatweakstconstruct.tweaks.IguanaTweaks;
-import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import mantle.pulsar.pulse.Handler;
 import mantle.pulsar.pulse.Pulse;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import tconstruct.library.TConstructRegistry;
@@ -71,7 +59,7 @@ public class IguanaFMPCompat {
         if(TinkerWorld.metalBlock != null) {
             // metal blocks
             for (int i = 0; i < 11; i++)
-                FMLInterModComms.sendMessage("ForgeMicroblock", "microMaterial", new ItemStack(TinkerWorld.metalBlock, 1, i));
+                BlockMicroMaterial.createAndRegister(TinkerWorld.metalBlock, i);
         }
 
         if(TinkerSmeltery.smeltery != null) {
@@ -79,21 +67,22 @@ public class IguanaFMPCompat {
             for (int i = 2; i < 12; i++) {
                 if (i == 3)
                     continue;
-                FMLInterModComms.sendMessage("ForgeMicroblock", "microMaterial", new ItemStack(TinkerSmeltery.smeltery, 1, i));
-                FMLInterModComms.sendMessage("ForgeMicroblock", "microMaterial", new ItemStack(TinkerSmeltery.smelteryNether, 1, i));
+                BlockMicroMaterial.createAndRegister(TinkerSmeltery.smeltery, i);
+                BlockMicroMaterial.createAndRegister(TinkerSmeltery.smelteryNether, i);
             }
 
             // brownstone
             for (int i = 0; i < 7; i++)
-                FMLInterModComms.sendMessage("ForgeMicroblock", "microMaterial", new ItemStack(TinkerSmeltery.speedBlock, 1, i));
+                BlockMicroMaterial.createAndRegister(TinkerSmeltery.speedBlock, i);
         }
 
         if(TinkerTools.multiBrick != null) {
             // chisel bricks
             for (int i = 0; i < 14; i++)
-                FMLInterModComms.sendMessage("ForgeMicroblock", "microMaterial", new ItemStack(TinkerTools.multiBrick, 1, i));
+                BlockMicroMaterial.createAndRegister(TinkerTools.multiBrick, i);
+
             for (int i = 0; i < 16; i++)
-                FMLInterModComms.sendMessage("ForgeMicroblock", "microMaterial", new ItemStack(TinkerTools.multiBrickFancy, 1, i));
+                BlockMicroMaterial.createAndRegister(TinkerTools.multiBrickFancy, i);
         }
     }
 

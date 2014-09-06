@@ -18,6 +18,7 @@ import iguanaman.iguanatweakstconstruct.leveling.IguanaToolLeveling;
 import iguanaman.iguanatweakstconstruct.leveling.commands.IguanaCommandLevelUpTool;
 import iguanaman.iguanatweakstconstruct.leveling.commands.IguanaCommandToolXP;
 import iguanaman.iguanatweakstconstruct.mobheads.IguanaMobHeads;
+import iguanaman.iguanatweakstconstruct.modcompat.fmp.IguanaFMPCompat;
 import iguanaman.iguanatweakstconstruct.override.IguanaOverride;
 import iguanaman.iguanatweakstconstruct.proxy.CommonProxy;
 import iguanaman.iguanatweakstconstruct.reference.Config;
@@ -91,6 +92,9 @@ public class IguanaTweaksTConstruct {
         pulsar.registerPulse(new IguanaWorldGen());
         pulsar.registerPulse(new IguanaOverride());
         pulsar.registerPulse(new IguanaDebug());
+
+        // mod compat
+        pulsar.registerPulse(new IguanaFMPCompat());
 
 
         // if we don't use our custom harvest levels, we have to adjust what we're using

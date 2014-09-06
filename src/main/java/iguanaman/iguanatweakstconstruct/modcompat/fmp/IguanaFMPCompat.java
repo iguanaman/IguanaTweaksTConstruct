@@ -18,9 +18,11 @@ import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
+import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
 import iguanaman.iguanatweakstconstruct.harvestlevels.HarvestLevelTweaks;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
+import iguanaman.iguanatweakstconstruct.tweaks.IguanaTweaks;
 import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import mantle.pulsar.pulse.Handler;
@@ -29,6 +31,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.tools.ToolMaterial;
@@ -62,6 +65,8 @@ public class IguanaFMPCompat {
     @Handler
     public void init(FMLInitializationEvent event)
     {
+        Log.info("Making TConstruct blocks multipart compatible");
+
         //make Tconstruct blocks multipartable!
         if(TinkerWorld.metalBlock != null) {
             // metal blocks
@@ -95,6 +100,10 @@ public class IguanaFMPCompat {
     @Handler
     public void postInit(FMLPostInitializationEvent event)
     {
+        if(IguanaTweaksTConstruct.pulsar.isPulseLoaded("Debug"))
+            MinecraftForge.EVENT_BUS.register(new SawStrengthHandler());
+
+        Log.info("Adapting and adding FMP saws");
         // change existing saws
         for(Object o : Item.itemRegistry)
         {

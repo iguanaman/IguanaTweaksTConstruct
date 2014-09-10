@@ -144,4 +144,9 @@ public class IguanaTweaksTConstruct {
         if(pulseCFG.isModuleEnabled(new PulseMeta("Debug", "", false, false)))
             event.registerServerCommand(new DebugCommand());
 	}
+
+    public static String getHarvestLevelName(int num)
+    {
+        return HarvestLevels.getHarvestLevelName(num);
+    }
 }

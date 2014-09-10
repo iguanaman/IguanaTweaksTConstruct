@@ -133,34 +133,36 @@ public final class HarvestLevelTweaks {
                 if (old <= 0)
                     continue;
 
-                int hlvl = 0;
-                switch (old) {
-                    // stone tool: nerfed to wood level
-                    case 1:
-                        hlvl = HarvestLevels._0_stone;
-                        break;
-                    // iron tool
-                    case 2:
-                        hlvl = HarvestLevels._3_iron;
-                        break;
-                    // diamond tool
-                    case 3:
-                        hlvl = HarvestLevels._5_diamond;
-                        break;
-                    // default... we just increase it?
-                    default:
-                        hlvl = old + 2;
-                }
+                int hlvl = getUpdatedHarvestLevel(old);
 
                 updateToolHarvestLevel(item, toolClass, hlvl);
 
                 if (Config.logMiningLevelChanges)
                     Log.debug(String.format("Changed Harvest Level for %s of %s from %d to %d", toolClass, item.getUnlocalizedName(), old, hlvl));
             }
+
         }
 
         if(Config.logMiningLevelChanges)
             Log.debug("Modified tools");
+    }
+
+    public static int getUpdatedHarvestLevel(int old)
+    {
+        switch (old) {
+            // stone tool: nerfed to wood level
+            case 1:
+                return HarvestLevels._0_stone;
+            // iron tool
+            case 2:
+                return HarvestLevels._3_iron;
+            // diamond tool
+            case 3:
+                return HarvestLevels._5_diamond;
+            // default... we just increase it?
+            default:
+                return old + 2;
+        }
     }
 
     public static void updateToolHarvestLevel(Item item, String toolClass, int hlvl)

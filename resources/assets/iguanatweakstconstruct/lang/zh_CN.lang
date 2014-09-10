@@ -1,4 +1,4 @@
-mininglevel.stone=石
+mininglevel.stone=石头
 mininglevel.copper=铜
 mininglevel.iron=铁
 mininglevel.tin=锡
@@ -31,7 +31,7 @@ materialtraits.critical=暴击
 message.levelup.redstone=你将它随处挥霍
 message.levelup.lapis=拿着它或许能给你带来好运?
 message.levelup.autosmelt=Fwoosh.提示中迸发出了火焰
-message.levelup.silktouch=那是... 黄油么?
+message.levelup.silktouch=那是... 黄油吗?
 message.levelup.diamond=看起来它很硬
 message.levelup.emerald=你感觉这个工具会更耐用
 message.levelup.repair=看样子覆上了一片苔藓
@@ -53,9 +53,9 @@ message.levelup.autosmelt.tag=熔炼
 message.levelup.silktouch.tag=精准采集
 message.levelup.diamond.tag=钻石
 message.levelup.emerald.tag=绿宝石
-message.levelup.repair.tag=修复
-message.levelup.reinforced.tag=增强
-message.levelup.attack.tag=利刃
+message.levelup.repair.tag=自动修复
+message.levelup.reinforced.tag=坚韧
+message.levelup.attack.tag=锋利
 message.levelup.blaze.tag=烈焰
 message.levelup.smite.tag=亡灵杀手
 message.levelup.antispider.tag=节肢杀手
@@ -88,7 +88,7 @@ tooltip.level.skill.11=出神
 tooltip.level.skill.19=MoxieGrrl
 tooltip.level.skill.42=boni
 tooltip.level.skill.66=Jadedcat
-tooltip.level.skill.99=Hacker
+tooltip.level.skill.99=骇客
 
 tooltip.oldToolWarning1=这把工具有 不 正 确 的 数 据
 tooltip.oldToolWarning2=将其放入合成窗更新
@@ -110,7 +110,7 @@ tooltip.pattern.advanced=按住%s查看材料
 tooltip.pattern.noMaterials=未知材料
 
 item.iguana.tcon.clayBucket.name=粘土桶
-item.iguana.tcon.clayBucketUnfired.name=粘土桶胚
+item.iguana.tcon.clayBucketUnfired.name=未烧制的粘土桶
 item.iguana.tcon.clayBucketFired.name=粘土桶(烤制)
 item.iguana.tcon.clayBucket.Water.name=粘土桶(水)
 item.iguana.tcon.clayBucket.Lava.name=粘土桶(岩浆)
@@ -144,19 +144,21 @@ item.iguana.tcon.clayBucket.Slime.name=粘土桶(史莱姆粘液)
 item.iguana.tcon.clayBucket.PigIron.name=粘土桶(液态生铁)
 item.iguana.tcon.clayBucket.Glue.name=粘土桶(凝胶)
 
+item.iguana.tcon.sawArdite.name=阿迪特手锯
+item.iguana.tcon.sawCobalt.name=钴手锯
+item.iguana.tcon.sawManyullyn.name=玛玉灵手锯
 
 item.iguana.tcon.skull.enderman.name=末影人头颅
 item.iguana.tcon.skull.pigman.name=猪人头颅
 item.iguana.tcon.skull.blaze.name=烈焰人头颅
-item.iguana.tcon.skull.blizz.name=暴雪头颅
+item.iguana.tcon.skull.blizz.name=暴雪人头颅
 
-
-item.iguana.tcon.wearable.bucketHoley.name=多洞的桶
+item.iguana.tcon.wearable.bucketHoley.name=多洞的粘土桶
 item.iguana.tcon.wearable.clayBucketCracked.name=破裂的粘土桶
-item.iguana.tcon.wearable.endermanJaw.name=末影之颌
+item.iguana.tcon.wearable.endermanJaw.name=末影人之颌
 item.iguana.tcon.wearable.bathat.name=蝙蝠帽子
 
 tooltip.bucketHoley=有洞的桶.多么有用.
-tooltip.clayBucketCracked=坏掉了. :(
-tooltip.endermanJaw=A distinct lack of head is noticable.
+tooltip.clayBucketCracked=坏掉了 :(
+tooltip.endermanJaw=头上的破洞十分引人注目.
 tooltip.bathat=NANANANANANANANA

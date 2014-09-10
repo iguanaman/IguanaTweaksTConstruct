@@ -144,6 +144,10 @@ item.iguana.tcon.clayBucket.Slime.name=Toneimer mit flüssigem Schleim
 item.iguana.tcon.clayBucket.PigIron.name=Toneimer mit geschmolzenem Schweineisen
 item.iguana.tcon.clayBucket.Glue.name=Toneimer mit Klebstoff
 
+item.iguana.tcon.sawArdite.name=Arditsäge
+item.iguana.tcon.sawCobalt.name=Cobaltsäge
+item.iguana.tcon.sawManyullyn.name=Manyullynsäge
+
 item.iguana.tcon.skull.enderman.name=Enderman Kopf
 item.iguana.tcon.skull.pigman.name=Zombie Pigmen Kopf
 item.iguana.tcon.skull.blaze.name=Lohen Kopf

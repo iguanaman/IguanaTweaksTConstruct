@@ -86,11 +86,12 @@ public class IguanaTweaksTConstruct {
         pulsar.registerPulse(new IguanaMobHeads());
         pulsar.registerPulse(new IguanaItems());
         pulsar.registerPulse(new IguanaTweaks());
+        // override before restriction because restrictions use ToolMaterial objects, and override can change them.
+        pulsar.registerPulse(new IguanaOverride());
         pulsar.registerPulse(new IguanaPartRestriction());
         // replacing has to be after tweaks and restrictions, because its tooltips have to be handled last
         pulsar.registerPulse(new IguanaToolPartReplacing());
         pulsar.registerPulse(new IguanaWorldGen());
-        pulsar.registerPulse(new IguanaOverride());
         pulsar.registerPulse(new IguanaDebug());
 
         // mod compat

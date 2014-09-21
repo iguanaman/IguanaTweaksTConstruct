@@ -2,11 +2,11 @@
 	"versionList": [
 		{
 			"mcVersion": "Minecraft 1.7.10",
-			"modVersion": "1.7.10-2.0.4",
+			"modVersion": "1.7.10-2.0.6",
 			"changeLog": [
-                		"Bugfixes, FMP Support"
+                		"Fix Part Restrictions not working properly with Material overrides"
 			],
-			"updateURL":"http://minecraft.curseforge.com/mc-mods/223248-iguanas-tinker-tweaks/files/2213692/download",
+			"updateURL":"http://minecraft.curseforge.com/mc-mods/223248-iguanas-tinker-tweaks/files/2214862/download",
 			"isDirectLink":"true"
 		}
 	]

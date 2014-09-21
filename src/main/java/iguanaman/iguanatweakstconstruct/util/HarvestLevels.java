@@ -82,6 +82,6 @@ public final class HarvestLevels {
     public static void setCustomHarvestLevelNames(Map<Integer, ToolMaterial> mats)
     {
         for(Map.Entry<Integer, ToolMaterial> mat : mats.entrySet())
-            tconstruct.library.util.HarvestLevels.harvestLevelNames.put(mat.getKey(), mat.getValue().style() + mat.getValue().name());
+            tconstruct.library.util.HarvestLevels.harvestLevelNames.put(mat.getKey(), mat.getValue().style() + mat.getValue().localizedName());
     }
 }

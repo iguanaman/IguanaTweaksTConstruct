@@ -42,7 +42,7 @@ public final class RestrictionHelper {
         if(matIDs != null)
         {
             for(ToolMaterial mat : matIDs)
-                if(mat == material) {
+                if(mat.materialName.equals(material.materialName)) {
                     restricted = false;
                     break;
                 }
@@ -85,7 +85,7 @@ public final class RestrictionHelper {
         while(iter.hasNext())
         {
             ToolMaterial mat = iter.next();
-            if(mat == material)
+            if(mat.materialName.equals(material.materialName))
             {
                 iter.remove();
             }
@@ -100,7 +100,7 @@ public final class RestrictionHelper {
             while(iter.hasNext())
             {
                 ToolMaterial mat = iter.next();
-                if(mat == material)
+                if(mat.materialName.equals(material.materialName))
                 {
                     iter.remove();
                 }
@@ -126,7 +126,7 @@ public final class RestrictionHelper {
 
                 int matID = ((IToolPart)recipe.output.getItem()).getMaterialID(recipe.output);
 
-                if (key.item == recipe.cast.getItem() && key.meta == recipe.cast.getItemDamage() && TConstructRegistry.getMaterial(matID) == material) {
+                if (key.item == recipe.cast.getItem() && key.meta == recipe.cast.getItemDamage() && TConstructRegistry.getMaterial(matID).materialName.equals(material.materialName)) {
                     allowed = true;
                     break;
                 }
@@ -144,7 +144,7 @@ public final class RestrictionHelper {
                 int meta = (Integer) entry.get(1); // metadata of the pattern
                 int matID = (Integer)entry.get(2); // Material-ID of the material needed to craft
 
-                if (key.item == pattern && key.meta == meta && TConstructRegistry.getMaterial(matID) == material) {
+                if (key.item == pattern && key.meta == meta && TConstructRegistry.getMaterial(matID).materialName.equals(material.materialName)) {
                     allowed = true;
                     break;
                 }
@@ -160,12 +160,8 @@ public final class RestrictionHelper {
         }
 
         // find the entry so we don't have a double entry
-        ListIterator<ToolMaterial> iter = materials.listIterator();
-        while(iter.hasNext())
-        {
-            ToolMaterial mat = iter.next();
-            if(mat == material)
-            {
+        for (ToolMaterial mat : materials) {
+            if (mat.materialName.equals(material.materialName)) {
                 // duplicate
                 return true;
             }

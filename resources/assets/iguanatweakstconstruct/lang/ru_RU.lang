@@ -144,6 +144,9 @@ item.iguana.tcon.clayBucket.Slime.name=Глиняное ведро жидкой 
 item.iguana.tcon.clayBucket.PigIron.name=Глиняное ведро расплавленного свиного железа
 item.iguana.tcon.clayBucket.Glue.name=Глиняное ведро липкого клея
 
+item.iguana.tcon.sawArdite.name=Ардитовая пила
+item.iguana.tcon.sawCobalt.name=Кобальтовая пила
+item.iguana.tcon.sawManyullyn.name=Кобальтовая пила
 
 item.iguana.tcon.skull.enderman.name=Голова странника Края
 item.iguana.tcon.skull.pigman.name=Голова свиночеловека
@@ -158,5 +161,5 @@ item.iguana.tcon.wearable.bathat.name=Шапка летучей мыши
 
 tooltip.bucketHoley=Ведро с дырками. Как бесполезно.
 tooltip.clayBucketCracked=Оно сломано. :(
-tooltip.endermanJaw=Явный недостаток головы примечателен.
+tooltip.endermanJaw=Замечен явный недостаток головы.
 tooltip.bathat=NANANANANANANANA

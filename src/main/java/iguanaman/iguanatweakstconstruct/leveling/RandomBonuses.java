@@ -477,8 +477,8 @@ public class RandomBonuses {
         // mining mods
         m.put(REDSTONE,   40); // this is so low because basically every mined block will add +1 to this, resulting in ~110
         m.put(LAPIS,      40); // same here, but the amount added will be lower
-        m.put(AUTOSMELT,  20);
-        m.put(SILKTOUCH,  15);
+        m.put(AUTOSMELT,   4);
+        m.put(SILKTOUCH,   3);
         // general modifiers
         m.put(DIAMOND,    30);
         m.put(EMERALD,    35);
@@ -486,12 +486,12 @@ public class RandomBonuses {
         m.put(REINFORCED, 88);
         m.put(STONEBOUND,  5);
         // combat modifiers
-        m.put(ATTACK,     15);
-        m.put(BLAZE,       5);
-        m.put(SMITE,       5);
-        m.put(BANE,        5);
-        m.put(BEHEADING,   5);
-        m.put(LIFESTEAL,   5);
+        m.put(ATTACK,      7);
+        m.put(BLAZE,       3);
+        m.put(SMITE,       3);
+        m.put(BANE,        3);
+        m.put(BEHEADING,   3);
+        m.put(LIFESTEAL,   3);
         m.put(KNOCKBACK,  10);
         m.put(JAGGED,      1);
         m.put(CRITICAL,    1);

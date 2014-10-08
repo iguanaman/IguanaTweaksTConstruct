@@ -55,10 +55,11 @@ public final class HarvestLevels {
         {
             names.put(0 , GRAY + StatCollector.translateToLocal("mininglevel.stone"));
             names.put(1 , DARK_RED + StatCollector.translateToLocal("mininglevel.iron"));
-            names.put(2 , LIGHT_PURPLE + StatCollector.translateToLocal("mininglevel.obsidian"));
-            names.put(3 , BLUE + StatCollector.translateToLocal("mininglevel.cobalt"));
-            names.put(4 , DARK_PURPLE + StatCollector.translateToLocal("mininglevel.manyullyn"));
-            names.put(5 , DARK_PURPLE + StatCollector.translateToLocal("mininglevel.manyullyn") + LIGHT_PURPLE + "+");
+            names.put(2 , RED + StatCollector.translateToLocal("mininglevel.redstone"));
+            names.put(3 , LIGHT_PURPLE + StatCollector.translateToLocal("mininglevel.obsidian"));
+            names.put(4 , BLUE + StatCollector.translateToLocal("mininglevel.cobalt"));
+            names.put(5 , DARK_PURPLE + StatCollector.translateToLocal("mininglevel.manyullyn"));
+            names.put(6 , DARK_PURPLE + StatCollector.translateToLocal("mininglevel.manyullyn") + LIGHT_PURPLE + "+");
         }
         else {
             names.put(0, GRAY + StatCollector.translateToLocal("mininglevel.stone"));

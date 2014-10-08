@@ -1,8 +1,10 @@
 package iguanaman.iguanatweakstconstruct.replacing;
 
+import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
 import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
 import iguanaman.iguanatweakstconstruct.leveling.modifiers.ModXpAwareRedstone;
 import iguanaman.iguanatweakstconstruct.reference.Config;
+import iguanaman.iguanatweakstconstruct.reference.Reference;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -189,8 +191,8 @@ public final class ReplacementLogic {
             if(LevelingLogic.isBoosted(tags))
                 tags.setInteger("HarvestLevel", tags.getInteger("HarvestLevel") + 1);
         }
-        // add boost xp if its missing. Check is done in the function
-        else {
+        // add boost xp if its missing. Additional checks are done in the function
+        else if(IguanaTweaksTConstruct.pulsar.isPulseLoaded(Reference.PULSE_LEVELING)) {
             LevelingLogic.addBoostTags(tags, tool);
         }
 

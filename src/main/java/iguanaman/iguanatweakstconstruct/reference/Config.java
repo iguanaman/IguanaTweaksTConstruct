@@ -130,9 +130,9 @@ public class Config {
         maxToolLevel               = configfile.getInt("maxToolLevel", CATEGORY_Leveling, 6, 1, 99, "");
         toolLeveling               = configfile.getBoolean("toolLeveling", CATEGORY_Leveling, true, "Can your skill with tools 'level up' as you use them?");
         toolLevelingExtraModifiers = configfile.getInt("ExtraModifiers", CATEGORY_Leveling, 0, 0, 9, "The amount of modifiers new tools have.");
-        toolModifiersAtLevels      = configfile.get(CATEGORY_Leveling, "ModifiersAtLevels", new int[]{2,4,6}, "Adds an extra modifier on these levleups if 'ExtraModifiers' is enabled").getIntList();
+        toolModifiersAtLevels      = configfile.get(CATEGORY_Leveling, "ModifiersAtLevels", new int[]{2,4,6}, "Adds an extra modifier on these levelups if 'ExtraModifiers' is enabled").getIntList();
 		toolLevelingRandomBonuses  = configfile.getBoolean("RandomBonuses", CATEGORY_Leveling, true, "Gives a random bonus every level, if false and levelling is on modifiers are given at levels 2 and 4 (requires 'toolLeveling=true')");
-        randomBonusesAtlevels      = configfile.get(CATEGORY_Leveling, "BonusesAtLevels", new int[]{2,3,4,5,6}, "Adds a random bonus on these levleups if 'RandomBonuses' is enabled").getIntList();
+        randomBonusesAtlevels      = configfile.get(CATEGORY_Leveling, "BonusesAtLevels", new int[]{2,3,4,5,6}, "Adds a random bonus on these levelups if 'RandomBonuses' is enabled").getIntList();
         randomBonusesAreUseful     = configfile.getBoolean("UsefulBonuses", CATEGORY_Leveling, true, "Disables less-useful modifiers on levelups. Like a sword with silktouch, or a pickaxe with beheading.");
         randomBonusesAreRandom     = configfile.getBoolean("CompletelyRandomBonuses", CATEGORY_Leveling, false, "Each modifier is equally likely on levelup. Disables useful bonuses.");
 
@@ -170,7 +170,7 @@ public class Config {
         miningSpeedPercentage = configfile.getInt("miningSpeedPercentage", CATEGORY_HarvestLevels, 100, 1, 999, "Change mining speed of all tool materials (in percent)");
 
         /** PartReplacement Module **/
-        removeMobHeadOnPartReplacement = configfile.getBoolean("removeMobHead", CATEGORY_PartReplacement, true, "Removes the Mob Head Modifier on Tool-Head replacement, allowing it to be reapplied. Sholud be used with PickBoostXpPenality.");
+        removeMobHeadOnPartReplacement = configfile.getBoolean("removeMobHead", CATEGORY_PartReplacement, true, "Removes the Mob Head Modifier on Tool-Head replacement, allowing it to be reapplied. Should be used with PickBoostXpPenality.");
         partReplacementXpPenality      = configfile.getInt("XpPenality", CATEGORY_PartReplacement, 0, 0, 100, "How much of the current XP% shall be removed when replacing parts (So if you had 50%, and penality is 10% it'll remove 5% xp, resulting in 45%). Does not remove Skill Levels.");
         partReplacementBoostXpPenality = configfile.getInt("PickBoostXpPenality", CATEGORY_PartReplacement, 5, 0, 100, "How much of the current XP% to the next mining level shall be removed when replacing the pickaxe head. Useful to remove the mining level boost on part replacement.");
 

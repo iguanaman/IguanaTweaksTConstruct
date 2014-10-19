@@ -266,7 +266,7 @@ public final class LevelingLogic {
     	ToolCore core = (ToolCore) tool.getItem();
     	
     	double numberOfParts = 0;
-    	double xpModSoFar = 0;
+    	double xpModSoFar = 1;
     	
     	if(ReplacementLogic.getPart(core, HEAD) != null)
     	{

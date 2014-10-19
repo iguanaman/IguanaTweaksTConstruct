@@ -1,9 +1,17 @@
 package iguanaman.iguanatweakstconstruct.leveling;
 
+import static iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic.PartTypes.ACCESSORY;
+import static iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic.PartTypes.EXTRA;
+import static iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic.PartTypes.HANDLE;
+import static iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic.PartTypes.HEAD;
+import iguanaman.iguanatweakstconstruct.override.XPAdjustmentMap;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
+import iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic;
+import iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic.PartTypes;
 import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentText;
@@ -227,6 +235,10 @@ public final class LevelingLogic {
             if(tool.getItem() instanceof Hatchet) base *= 0.66f; // not much wood to chop, but usable as weapon
 
 			base *= Config.xpRequiredToolsPercentage / 100f;
+			
+			float xpMulter = getXPMulter(tool, tags);
+			
+			base *= xpMulter;
 		}
 
 		if (miningBoost)
@@ -249,7 +261,46 @@ public final class LevelingLogic {
 		return Math.round(base);
 	}
 
-    /**
+    private static float getXPMulter(ItemStack tool, NBTTagCompound tags) 
+    {
+    	ToolCore core = (ToolCore) tool.getItem();
+    	
+    	double numberOfParts = 0;
+    	double xpModSoFar = 0;
+    	
+    	if(ReplacementLogic.getPart(core, HEAD) != null)
+    	{
+    		numberOfParts++;
+    		int toolMaterialHead = ReplacementLogic.getToolPartMaterial(tags, HEAD);
+    		String matName = TConstructRegistry.getMaterial(toolMaterialHead).name();
+    		xpModSoFar *= XPAdjustmentMap.get(matName);
+    	}
+    	if(ReplacementLogic.getPart(core, HANDLE) != null)
+    	{
+    		numberOfParts++;
+    		int toolMaterialHandle = ReplacementLogic.getToolPartMaterial(tags, HANDLE);
+    		String matName = TConstructRegistry.getMaterial(toolMaterialHandle).name();
+    		xpModSoFar *= XPAdjustmentMap.get(matName);
+    	}
+    	if(ReplacementLogic.getPart(core, ACCESSORY) != null)
+    	{
+    		numberOfParts++;
+    		int toolMaterialAccessory = ReplacementLogic.getToolPartMaterial(tags, ACCESSORY);
+    		String matName = TConstructRegistry.getMaterial(toolMaterialAccessory).name();
+    		xpModSoFar *= XPAdjustmentMap.get(matName);
+    	}
+    	if(ReplacementLogic.getPart(core, EXTRA) != null)
+    	{
+    		numberOfParts++;
+    		int toolMaterialExtra = ReplacementLogic.getToolPartMaterial(tags, EXTRA);
+    		String matName = TConstructRegistry.getMaterial(toolMaterialExtra).name();
+    		xpModSoFar *= XPAdjustmentMap.get(matName);
+    	}
+
+        //Take the arithmatic mean
+		return (float)Math.pow(xpModSoFar,1.0/numberOfParts);
+	}
+	/**
      * Applies all the logic for increasing the tool level. This is only specific to the *tool* level, and has no relation to the mining-level-boost!
      */
 	public static void levelUpTool(ItemStack stack, EntityPlayer player)

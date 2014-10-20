@@ -206,7 +206,7 @@ public final class HarvestLevelTweaks {
             // 3: Iron
             {"Tin", "Cassiterite", "Gold", "Lead", "Redstone", "Steel", "Galena", "Nickel", "Invar", "Electrum", "Sphalerite", "Osmium"},
             // 4: Bronze
-            {"Diamond", "Emerald", "Ruby", "Sapphire", "Cinnabar", "GreenSapphire", "BlackGranite", "RedGranite", "Manganese"},
+            {"Diamond", "Emerald", "Ruby", "Sapphire", "Amethyst", "Cinnabar", "GreenSapphire", "BlackGranite", "RedGranite", "Manganese"},
             // 5: Redstone/Diamond
             {"Obsidian", "Tungstate", "Sodalite", "Quartz", "CertusQuartz", "SkyStone"},
             // 6: Obsidian/Alumite

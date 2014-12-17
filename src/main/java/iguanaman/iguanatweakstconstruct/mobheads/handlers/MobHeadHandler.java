@@ -100,7 +100,7 @@ public class MobHeadHandler {
         else {
             String mobName = EntityList.getEntityString(mob);
             // thermal expansion
-            if(mobName.equals("Blizz"))
+            if("Blizz".equals(mobName))
             {
                 skullItem = IguanaMobHeads.skullItem;
                 skullId = IguanaSkull.META_BLIZZ;

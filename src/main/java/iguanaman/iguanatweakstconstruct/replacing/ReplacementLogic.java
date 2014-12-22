@@ -18,6 +18,7 @@ import tconstruct.library.crafting.ToolRecipe;
 import tconstruct.library.modifier.ItemModifier;
 import tconstruct.library.tools.ToolCore;
 import tconstruct.library.tools.ToolMaterial;
+import tconstruct.library.weaponry.IAmmo;
 import tconstruct.modifiers.tools.ModAttack;
 import tconstruct.modifiers.tools.ModRedstone;
 import tconstruct.tools.logic.ToolStationLogic;
@@ -113,12 +114,24 @@ public final class ReplacementLogic {
         updateTag(newTags, tags, "HarvestLevelHandle");
         updateTag(newTags, tags, "HarvestLevelExtra");
 
-        // bows have additional tags to consider
+        // ranged weapons have have additional tags to consider
         updateTag(newTags, tags, "DrawSpeed");
         updateTag(newTags, tags, "BaseDrawSpeed");
+        updateTag(newTags, tags, "FlightSpeed");
+        updateTag(newTags, tags, "Mass");
+        updateTag(newTags, tags, "BreakChance");
+        updateTag(newTags, tags, "Accuracy");
 
         // stonebound. Shoddy is always present and never changed, we can simply update it.
         updateTag(newTags, tags, "Shoddy");
+
+        // update ammo
+        if(tool instanceof IAmmo)
+        {
+            IAmmo ammo = (IAmmo)tool;
+            if(ammo.getAmmoCount(toolStack) > ammo.getMaxAmmo(toolStack))
+                ammo.setAmmo(ammo.getMaxAmmo(toolStack), toolStack);
+        }
 
         // reinforced is kinda complicated, since the actual level you get out of the materials is complicated
         // simply calculate difference between current and newly built tool to know how much has been added afterwards

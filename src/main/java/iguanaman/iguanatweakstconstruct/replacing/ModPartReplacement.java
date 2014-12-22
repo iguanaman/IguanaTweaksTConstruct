@@ -12,6 +12,7 @@ import tconstruct.library.crafting.ToolRecipe;
 import tconstruct.library.modifier.ItemModifier;
 import tconstruct.library.tools.ToolCore;
 import tconstruct.library.util.IToolPart;
+import tconstruct.weaponry.TinkerWeaponry;
 
 import static iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic.*;
 import static iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic.PartTypes.*;
@@ -44,10 +45,12 @@ public class ModPartReplacement extends ItemModifier {
         {
             if(tool.getHeadItem() != null && getToolPartMaterial(tags, HEAD) == 1)
                 return false;
-            if(tool.getHandleItem() != null && getToolPartMaterial(tags, HANDLE) == 1)
+            if(tool.getHandleItem() != null && getToolPartMaterial(tags, HANDLE) == 1 && tool.getHandleItem() != TinkerWeaponry.bowstring && tool.getHandleItem() != TinkerWeaponry.partArrowShaft) {
                 return false;
-            if(tool.getAccessoryItem() != null && getToolPartMaterial(tags, ACCESSORY) == 1)
+            }
+            if(tool.getAccessoryItem() != null && getToolPartMaterial(tags, ACCESSORY) == 1 && tool.getAccessoryItem() != TinkerWeaponry.bowstring && tool.getAccessoryItem() != TinkerWeaponry.fletching) {
                 return false;
+            }
             if(tool.getExtraItem() != null && getToolPartMaterial(tags, EXTRA) == 1)
                 return false;
         }

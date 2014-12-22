@@ -180,7 +180,8 @@ public final class LevelingLogic {
 		{
             base = 140f;
             base *= ((ToolCore)tool.getItem()).getDamageModifier();
-            base *= tags.getInteger("Attack") * 1.2f;
+			if(!(tool.getItem() instanceof Shortbow))
+            	base *= tags.getInteger("Attack") * 1.2f;
 
 			if (tool.getItem() instanceof Scythe) base *= 1.5f;
 			base *= Config.xpRequiredWeaponsPercentage / 100f;

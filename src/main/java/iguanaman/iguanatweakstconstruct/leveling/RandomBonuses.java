@@ -52,10 +52,12 @@ public class RandomBonuses {
     public static Set<Modifier> usefulToolModifiers = new HashSet<Modifier>();
     public static Set<Modifier> usefulWeaponModifiers  = new HashSet<Modifier>();
     public static Set<Modifier> usefulBowModifiers  = new HashSet<Modifier>();
+    public static Set<Modifier> usefulAmmoModifiers  = new HashSet<Modifier>();
 
     public static Map<Modifier, Integer> toolWeights = new HashMap<Modifier, Integer>();
     public static Map<Modifier, Integer> weaponWeights = new HashMap<Modifier, Integer>();
     public static Map<Modifier, Integer> bowWeights = new HashMap<Modifier, Integer>();
+    public static Map<Modifier, Integer> ammoWeights = new HashMap<Modifier, Integer>();
 
     public static Integer usageBonusWeight = 70;
 
@@ -71,6 +73,14 @@ public class RandomBonuses {
 
         // also ensure the correct attack modifier
         modCache.put(TinkerTools.modAttack.key, TinkerTools.modAttack);
+
+        // special case: windup is a redstone modifier
+        for(ItemModifier modifier : ModifyBuilder.instance.itemModifiers) {
+            if(modifier instanceof ModWindup) {
+                modCache.put("Windup", modifier);
+                break;
+            }
+        }
     }
 
     public static Modifier tryModifying(EntityPlayer player, ItemStack tool)
@@ -430,11 +440,6 @@ public class RandomBonuses {
             return modCache.get(key);
 
         for(ItemModifier modifier : ModifyBuilder.instance.itemModifiers) {
-            // special case: windup is a redstone modifier
-            if("Windup".equals(key) && modifier instanceof ModWindup) {
-                modCache.put(key, modifier);
-                return modifier;
-            }
             if (modifier.key.equals(key)) {
                 modCache.put(key, modifier);
                 return modifier;

@@ -594,7 +594,7 @@ public class RandomBonuses {
         m.put(REDSTONE,  100);
         m.put(REPAIR,     55);
         m.put(REINFORCED, 65);
-        m.put(KNOCKBACK,  70);
+        m.put(KNOCKBACK,  50);
         m.put(LAPIS,      60);
 
         m.put(DIAMOND,    20);

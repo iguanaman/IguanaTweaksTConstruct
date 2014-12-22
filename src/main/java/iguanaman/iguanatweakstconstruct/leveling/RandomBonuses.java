@@ -67,6 +67,7 @@ public class RandomBonuses {
         initToolModifiers();
         initWeaponModifiers();
         initBowModifiers();
+        initAmmoModifiers();
         modCache.put(ModShoddy.ModJagged.key, ModShoddy.ModJagged);
         modCache.put(ModShoddy.ModStonebound.key, ModShoddy.ModStonebound);
         modCache.put(ModCritical.modCritical.key, ModCritical.modCritical);
@@ -114,6 +115,13 @@ public class RandomBonuses {
                         chances[i] = 0;
                     else
                         chances[i] = bowWeights.get(mod);
+                }
+                // ammo
+                else if (hasTrait(toolCore, "ammo")) {
+                    if (Config.randomBonusesAreUseful && !usefulAmmoModifiers.contains(mod))
+                        chances[i] = 0;
+                    else
+                        chances[i] = ammoWeights.get(mod);
                 }
                 // weapons
                 else if (hasTrait(toolCore, "weapon") && !(toolCore instanceof Hammer)) { // hammer is an exception because we want it to be harvest
@@ -606,6 +614,45 @@ public class RandomBonuses {
         u.add(REPAIR);
         u.add(REINFORCED);
         u.add(LAPIS);
+    }
+
+    private static void initAmmoModifiers()
+    {
+        Map<Modifier, Integer> m = ammoWeights;
+        preFill(m);
+
+        m.put(LAPIS,      75);
+        m.put(REPAIR,     65);
+        m.put(ATTACK,    100);
+        m.put(BLAZE,      45);
+        m.put(SMITE,      50);
+        m.put(BANE,       50);
+        m.put(BEHEADING,  50);
+        m.put(LIFESTEAL,  30);
+        m.put(KNOCKBACK,  50);
+        m.put(JAGGED,      5);
+        m.put(CRITICAL,    2);
+        m.put(REDSTONE,    0);
+        m.put(AUTOSMELT,  15);
+        m.put(SILKTOUCH,   5);
+        m.put(DIAMOND,    25);
+        m.put(EMERALD,    35);
+        m.put(REINFORCED, 55);
+        m.put(STONEBOUND,  1);
+
+        Set<Modifier> u = usefulAmmoModifiers;
+        u.add(LAPIS);
+        u.add(REPAIR);
+        u.add(ATTACK);
+        u.add(BLAZE);
+        u.add(SMITE);
+        u.add(BANE);
+        u.add(BEHEADING);
+        u.add(LIFESTEAL);
+        u.add(KNOCKBACK);
+        u.add(JAGGED);
+        u.add(CRITICAL);
+        u.add(DIAMOND);
     }
 
     public static enum Modifier {

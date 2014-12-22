@@ -155,6 +155,20 @@ public final class ReplacementLogic {
 
         // now for the scary part... handle material traits >_<
         handleMaterialTraits(tags, oldMaterialId, partMaterialId);
+        // fiery blaze arrows has to be handled separately.. meh
+        if(tool == TinkerWeaponry.arrowAmmo && type==HANDLE)
+            if(oldMaterialId == 3 && partMaterialId != 3) {
+                // remove fiery
+                if(tags.getInteger("Fiery") > 5)
+                    tags.setInteger("Fiery", tags.getInteger("Fiery")-5);
+                else
+                    tags.removeTag("Fiery");
+            }
+            else if(partMaterialId == 3 && oldMaterialId != 3) {
+                // add fiery
+                tags.setInteger("Fiery", 5);
+            }
+
         // material tooltips are handled by tcon internally
 
         // redstone modifier
@@ -261,9 +275,6 @@ public final class ReplacementLogic {
            ability.equals(StatCollector.translateToLocal("materialtraits.thaumic"))) {
             tags.setInteger("Modifiers", tags.getInteger("Modifiers") + 1);
         }
-
-
-        // todo: Fiery for blaze arrows
 
         /************ then remove the old traits *************/
         ability = oldMat.ability();

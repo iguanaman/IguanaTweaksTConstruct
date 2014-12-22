@@ -477,8 +477,8 @@ public class RandomBonuses {
         // mining mods
         m.put(REDSTONE,   40); // this is so low because basically every mined block will add +1 to this, resulting in ~110
         m.put(LAPIS,      40); // same here, but the amount added will be lower
-        m.put(AUTOSMELT,   4);
-        m.put(SILKTOUCH,   3);
+        m.put(AUTOSMELT,   3);
+        m.put(SILKTOUCH,   2);
         // general modifiers
         m.put(DIAMOND,    30);
         m.put(EMERALD,    35);

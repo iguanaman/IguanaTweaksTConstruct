@@ -80,6 +80,11 @@ public class RandomBonuses {
         int modifiers = tags.getInteger("Modifiers");
         tags.setInteger("Modifiers", modifiers+1);
 
+        if(!(tool.getItem() instanceof ToolCore))
+            return null;
+
+        ToolCore toolCore = (ToolCore) tool.getItem();
+
         // construct possibility "matrix"
         Modifier[] mods = Modifier.values();
         int[] chances = new int[mods.length];
@@ -92,27 +97,29 @@ public class RandomBonuses {
             else {
                 if (Config.randomBonusesAreRandom)
                     chances[i] = 1;
-                    // weapons
-                else if (tool.getItem() instanceof Weapon || tool.getItem() instanceof Battleaxe) {
+
+                // bows
+                else if (hasTrait(toolCore, "bow")) {
+                    if (Config.randomBonusesAreUseful && !usefulBowModifiers.contains(mod))
+                        chances[i] = 0;
+                    else
+                        chances[i] = bowWeights.get(mod);
+                }
+                // weapons
+                else if (hasTrait(toolCore, "weapon") && !(toolCore instanceof Hammer)) { // hammer is an exception because we want it to be harvest
                     if (Config.randomBonusesAreUseful && !usefulWeaponModifiers.contains(mod))
                         chances[i] = 0;
                     else
                         chances[i] = weaponWeights.get(mod);
                 }
                 // tools
-                else if (tool.getItem() instanceof HarvestTool) {
+                else if (hasTrait(toolCore, "harvest")) {
                     if (Config.randomBonusesAreUseful && !usefulToolModifiers.contains(mod))
                         chances[i] = 0;
                     else
                         chances[i] = toolWeights.get(mod);
                 }
-                // bows
-                else if (tool.getItem() instanceof BowBase) {
-                    if (Config.randomBonusesAreUseful && !usefulBowModifiers.contains(mod))
-                        chances[i] = 0;
-                    else
-                        chances[i] = bowWeights.get(mod);
-                } else
+                else
                     chances[i] = 0;
 
                 // calculate extra bonus chance

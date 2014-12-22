@@ -49,7 +49,7 @@ public class RestrictionConfig {
             comment.append(name);
             comment.append(", ");
         }
-        comment.append("all\n");
+        comment.append("\n");
 
         // load the actual config after creating this long information comment ._.
         String[] input = configfile.getStringList("restricted", "ToolParts", RestrictionHelper.defaultRestrictions, comment.toString());

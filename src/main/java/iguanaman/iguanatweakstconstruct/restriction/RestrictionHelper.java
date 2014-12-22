@@ -15,6 +15,7 @@ import tconstruct.smeltery.TinkerSmeltery;
 import tconstruct.smeltery.items.MetalPattern;
 import tconstruct.tools.TinkerTools;
 import tconstruct.tools.items.Pattern;
+import tconstruct.weaponry.TinkerWeaponry;
 
 import java.util.*;
 
@@ -192,6 +193,8 @@ public final class RestrictionHelper {
             String name;
             if(pattern == TinkerTools.woodPattern && meta <= patternNames.length)
                 name = patternNames[meta];
+            else if(pattern == TinkerWeaponry.woodPattern && meta <= patternNamesWeaponry.length)
+                name = patternNamesWeaponry[meta];
             else
                 name = (new ItemStack(pattern, 1, meta)).getUnlocalizedName();
 
@@ -270,6 +273,8 @@ public final class RestrictionHelper {
             String name;
             if(pattern == TinkerSmeltery.metalPattern && meta <= patternNames.length)
                 name = patternNames[meta];
+            else if(pattern == TinkerWeaponry.metalPattern && meta <= patternNamesWeaponry.length)
+                name = patternNamesWeaponry[meta];
             else
                 name = (new ItemStack(pattern, 1, meta)).getUnlocalizedName();
 
@@ -345,6 +350,13 @@ public final class RestrictionHelper {
             "arrowhead"     // 25
     };
 
+    public static final String[] patternNamesWeaponry = new String[] {
+            "shuriken",     //  0
+            "crossbowlimb", //  1
+            "crossbowbody", //  2
+            "bowlimb"       //  3
+    };
+
     public static final String[] defaultRestrictions = new String[]{
             // removed because it confused people.
     };
@@ -355,6 +367,9 @@ public final class RestrictionHelper {
             "Wood:crossbar",
             "Wood:binding",
             "Wood:sign",
+            "Wood:bowlimb",
+            "Wood:crossbowlimb",
+            "Wood:crossbowbody",
 
             // Flint:
             "Flint:pickaxe",
@@ -362,6 +377,7 @@ public final class RestrictionHelper {
             "Flint:axe",
             "Flint:knifeblade",
             "Flint:arrowhead",
+            "Flint:shuriken",
 
             // Bone
             "Bone:rod",
@@ -370,11 +386,15 @@ public final class RestrictionHelper {
             "Bone:crossbar",
             "Bone:knifeblade",
             "Bone:arrowhead",
+            "Bone:bowlimb",
+            "Bone:crossbowlimb",
+            "Bone:crossbowbody",
 
             // Cactus
             "Cactus:rod",
             "Cactus:binding",
             "Cactus:knifeblade",
+            "Cactus:shuriken",
 
             // Paper:
             "Paper:rod",
@@ -384,9 +404,57 @@ public final class RestrictionHelper {
             "Slime:rod",
             "Slime:sign",
             "Slime:binding",
+            "Slime:bowlimb",
+            "Slime:crossbowlimb",
+            "Slime:crossbowbody",
 
             // BlueSlime
             "BlueSlime:rod",
-            "BlueSlime:binding"
+            "BlueSlime:binding",
+            "BlueSlime:bowlimb",
+            "BlueSlime:crossbowlimb",
+            "BlueSlime:crossbowbody",
+
+            // Netherrack
+            "Netherrack:rod",
+            "Netherrack:pickaxe",
+            "Netherrack:shovel",
+            "Netherrack:axe",
+            "Netherrack:largeguard",
+            "Netherrack:mediumguard",
+            "Netherrack:crossbar",
+            "Netherrack:binding",
+            "Netherrack:sign",
+            "Netherrack:largerod",
+            "Netherrack:toughbinding",
+            "Netherrack:largeplate",
+            "Netherrack:broadaxe",
+            "Netherrack:scythe",
+            "Netherrack:excavator",
+            "Netherrack:fullguard",
+            "Netherrack:arrowhead",
+            "Netherrack:crossbowbody",
+
+            // Obsidian
+            "Obsidian:rod",
+            "Obsidian:pickaxe",
+            "Obsidian:shovel",
+            "Obsidian:axe",
+            "Obsidian:largeguard",
+            "Obsidian:mediumguard",
+            "Obsidian:crossbar",
+            "Obsidian:binding",
+            "Obsidian:sign",
+            "Obsidian:largerod",
+            "Obsidian:toughbinding",
+            "Obsidian:largeplate",
+            "Obsidian:broadaxe",
+            "Obsidian:scythe",
+            "Obsidian:excavator",
+            "Obsidian:hammerhead",
+            "Obsidian:fullguard",
+            "Obsidian:arrowhead",
+            "Obsidian:crossbowbody",
+            "Obsidian:shuriken"
     };
 }

@@ -7,13 +7,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import tconstruct.items.tools.Arrow;
-import tconstruct.items.tools.Shortbow;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.event.ToolCraftEvent;
 import tconstruct.library.tools.ToolMaterial;
 import tconstruct.library.util.IToolPart;
 import tconstruct.tools.TinkerTools;
+import tconstruct.weaponry.TinkerWeaponry;
+import tconstruct.weaponry.ammo.ArrowAmmo;
+import tconstruct.weaponry.ammo.BoltAmmo;
+import tconstruct.weaponry.weapons.Crossbow;
+import tconstruct.weaponry.weapons.LongBow;
+import tconstruct.weaponry.weapons.ShortBow;
 
 public class StoneToolHandler {
     // we can initialize this statically, because it wont be initialized until PostInit, where all materials are already registered
@@ -26,7 +30,7 @@ public class StoneToolHandler {
             return;
 
         // we're only interested if it's a tool part
-        if(!(event.itemStack.getItem() instanceof IToolPart) || event.itemStack.getItem() == TinkerTools.bowstring || event.itemStack.getItem() == TinkerTools.fletching)
+        if(!(event.itemStack.getItem() instanceof IToolPart) || event.itemStack.getItem() == TinkerWeaponry.bowstring || event.itemStack.getItem() == TinkerWeaponry.fletching || event.itemStack.getItem() == TinkerWeaponry.partArrowShaft)
             return;
 
         ItemStack stack = event.itemStack;
@@ -49,10 +53,15 @@ public class StoneToolHandler {
         for(int i = 0; i < event.materials.length; i++)
         {
             // ignore bowstring and fletchings
-            // todo: add crossbow and longbow
-            if(event.tool instanceof Shortbow && i == 1)
+            if(event.tool instanceof ShortBow && i == 1)
                 continue;
-            if(event.tool instanceof Arrow && i == 2)
+            if(event.tool instanceof LongBow && i == 1)
+                continue;
+            if(event.tool instanceof Crossbow && i == 2)
+                continue;
+            if(event.tool instanceof ArrowAmmo && i >= 1)
+                continue;
+            if(event.tool instanceof BoltAmmo && i == 2)
                 continue;
 
             // don't allow stone tools

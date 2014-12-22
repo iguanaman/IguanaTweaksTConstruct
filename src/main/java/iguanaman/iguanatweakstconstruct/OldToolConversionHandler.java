@@ -33,7 +33,7 @@ public class OldToolConversionHandler {
         if(itemStack.getItem() == null)
             return false;
 
-        if(!(itemStack.getItem() instanceof ToolCore) || itemStack.getItem() instanceof Arrow)
+        if(!(itemStack.getItem() instanceof ToolCore))
             return false;
 
         // no NBT? derped.

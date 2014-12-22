@@ -16,12 +16,14 @@ import tconstruct.library.crafting.ModifyBuilder;
 import tconstruct.library.crafting.ToolBuilder;
 import tconstruct.library.crafting.ToolRecipe;
 import tconstruct.library.modifier.ItemModifier;
+import tconstruct.library.tools.DualMaterialToolPart;
 import tconstruct.library.tools.ToolCore;
 import tconstruct.library.tools.ToolMaterial;
 import tconstruct.library.weaponry.IAmmo;
 import tconstruct.modifiers.tools.ModAttack;
 import tconstruct.modifiers.tools.ModRedstone;
 import tconstruct.tools.logic.ToolStationLogic;
+import tconstruct.weaponry.TinkerWeaponry;
 
 import static iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic.PartTypes.*;
 
@@ -44,6 +46,15 @@ public final class ReplacementLogic {
             accessoryStack = new ItemStack(getPart(tool, ACCESSORY), 1, getToolPartMaterial(tags, ACCESSORY));
         if(getPart(tool, EXTRA) != null)
             extraStack = new ItemStack(getPart(tool, EXTRA), 1, getToolPartMaterial(tags, EXTRA));
+
+        // extra hack for bolt crafting..
+        if(tool == TinkerWeaponry.boltAmmo)
+        {
+            headStack = DualMaterialToolPart.createDualMaterial(TinkerWeaponry.partBolt, getToolPartMaterial(tags, HANDLE), getToolPartMaterial(tags, HEAD));
+            handleStack = accessoryStack;
+            accessoryStack = null;
+            type = HANDLE;
+        }
 
         ItemStack originalTool = ToolBuilder.instance.buildTool(headStack, handleStack, accessoryStack, extraStack, "Original Tool");
         if(originalTool == null) {
@@ -252,6 +263,7 @@ public final class ReplacementLogic {
         }
 
 
+        // todo: Fiery for blaze arrows
 
         /************ then remove the old traits *************/
         ability = oldMat.ability();

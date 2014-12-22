@@ -7,10 +7,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import tconstruct.items.tools.Arrow;
+import tconstruct.items.tools.Shortbow;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.event.ToolCraftEvent;
 import tconstruct.library.tools.ToolMaterial;
 import tconstruct.library.util.IToolPart;
+import tconstruct.tools.TinkerTools;
 
 public class StoneToolHandler {
     // we can initialize this statically, because it wont be initialized until PostInit, where all materials are already registered
@@ -23,7 +26,7 @@ public class StoneToolHandler {
             return;
 
         // we're only interested if it's a tool part
-        if(!(event.itemStack.getItem() instanceof IToolPart))
+        if(!(event.itemStack.getItem() instanceof IToolPart) || event.itemStack.getItem() == TinkerTools.bowstring || event.itemStack.getItem() == TinkerTools.fletching)
             return;
 
         ItemStack stack = event.itemStack;
@@ -43,9 +46,18 @@ public class StoneToolHandler {
     @SubscribeEvent
     public void onToolCraft(ToolCraftEvent event)
     {
-        // don't allow stone tools
-        for(ToolMaterial mat : event.materials)
-            if(mat == stoneMaterial)
+        for(int i = 0; i < event.materials.length; i++)
+        {
+            // ignore bowstring and fletchings
+            // todo: add crossbow and longbow
+            if(event.tool instanceof Shortbow && i == 1)
+                continue;
+            if(event.tool instanceof Arrow && i == 2)
+                continue;
+
+            // don't allow stone tools
+            if(event.materials[i] == stoneMaterial)
                 event.setResult(Event.Result.DENY);
+        }
     }
 }

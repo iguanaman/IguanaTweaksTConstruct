@@ -8,6 +8,7 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import tconstruct.library.TConstructRegistry;
+import tconstruct.library.tools.ToolMaterial;
 import tconstruct.library.util.IToolPart;
 
 public class PartToolTipHandler {
@@ -29,7 +30,13 @@ public class PartToolTipHandler {
         ItemStack stack = event.itemStack;
         IToolPart part = (IToolPart)stack.getItem();
 
-        String ability = TConstructRegistry.getMaterial(part.getMaterialID(stack)).ability();
+        ToolMaterial mat = TConstructRegistry.getMaterial(part.getMaterialID(stack));
+        if(mat == null)
+            return;
+
+        String ability = mat.ability();
+        if(ability == null)
+            return;
         // paper or thaumium?
         if(ability.equals(StatCollector.translateToLocal("materialtraits.writable")) ||
            ability.equals(StatCollector.translateToLocal("materialtraits.thaumic"))) {

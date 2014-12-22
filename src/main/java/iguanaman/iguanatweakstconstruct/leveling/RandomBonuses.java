@@ -572,10 +572,10 @@ public class RandomBonuses {
         m.put(REPAIR,     55);
         m.put(REINFORCED, 65);
         m.put(KNOCKBACK,  70);
+        m.put(LAPIS,      60);
 
         m.put(DIAMOND,    20);
         m.put(EMERALD,    25);
-        m.put(LAPIS,      15);
         m.put(ATTACK,     25);
         m.put(BLAZE,      15);
         m.put(SMITE,      15);
@@ -593,6 +593,7 @@ public class RandomBonuses {
         u.add(KNOCKBACK);
         u.add(REPAIR);
         u.add(REINFORCED);
+        u.add(LAPIS);
     }
 
     public static enum Modifier {

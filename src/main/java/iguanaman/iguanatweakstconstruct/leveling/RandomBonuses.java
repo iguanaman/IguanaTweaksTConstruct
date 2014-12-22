@@ -5,6 +5,7 @@ import iguanaman.iguanatweakstconstruct.leveling.modifiers.ModShoddy;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -381,7 +382,9 @@ public class RandomBonuses {
 
     public static boolean addKnockbackModifier(EntityPlayer player, ItemStack tool)
     {
-        return addGenericModifier(player, tool, "Piston", "message.levelup.knockback", "\u00a77");
+        ItemStack[] pistonStack = new ItemStack[]{new ItemStack(Blocks.piston, 1)};
+
+        return addGenericModifier(player, tool, "Piston", pistonStack, 10, 1, "message.levelup.knockback", "\u00a77");
     }
 
 

@@ -57,7 +57,7 @@ configFile.withReader {
     project.ext.config = new ConfigSlurper().parse prop
 }
 
-ext.artifact_version_override = '2.0.6'
+ext.artifact_version_override = '2.0.7'
 //gitignored config file -- if this has the entry for override it will override the version for local builds
 //create a file called version.properties with the line artifact_version_override=NotUsed
 //replace not used w/ version #'s for manual local overrides

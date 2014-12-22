@@ -23,7 +23,10 @@ import tconstruct.library.TConstructRegistry;
 import tconstruct.library.event.ToolCraftEvent;
 import tconstruct.library.tools.ToolCore;
 import tconstruct.library.tools.Weapon;
+import tconstruct.library.weaponry.ProjectileWeapon;
 import tconstruct.tools.TinkerTools;
+
+import java.util.Arrays;
 
 public class LevelingEventHandler {
     @SubscribeEvent
@@ -50,7 +53,7 @@ public class LevelingEventHandler {
 
         int xp = 0;
         // is a weapon?
-        if (stack.getItem() instanceof Weapon || stack.getItem() instanceof Battleaxe || stack.getItem() instanceof Shortbow && event.source.damageType.equals("arrow"))
+        if (Arrays.asList(((ToolCore) stack.getItem()).getTraits()).contains("weapon"))
             xp = Math.round(event.ammount);
         else
             xp = Math.round((event.ammount-0.1f)/2);
@@ -59,43 +62,54 @@ public class LevelingEventHandler {
         if (event.entityLiving instanceof EntityAnimal)
             xp = Math.max(1, xp/2);
 
+        ItemStack ammo = null;
+        // projectile weapons also get xp on their ammo!
+        if(stack.getItem() instanceof ProjectileWeapon)
+            ammo = ((ProjectileWeapon) stack.getItem()).searchForAmmo(player, stack);
+
         if (xp > 0)
         {
-            LevelingLogic.addXP(stack, player, xp);
+            for(ItemStack itemstack : new ItemStack[] {stack, ammo})
+            {
+                if(itemstack == null)
+                    continue;
 
-            NBTTagCompound tags = stack.getTagCompound().getCompoundTag("InfiTool");
+                LevelingLogic.addXP(itemstack, player, xp);
 
-            // bonus chance for luck if hitting passive mob
-            if(event.entityLiving instanceof EntityAnimal)
-                RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.LAPIS, xp+5, tags);
-            // otherwise damage chance
-            else
-                RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.ATTACK, xp, tags);
+                NBTTagCompound tags = itemstack.getTagCompound().getCompoundTag("InfiTool");
 
-            // spiders also increase bane chance
-            if(event.entityLiving instanceof EntitySpider)
-                RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.BANE, Math.max(1,xp/2), tags);
-            // blazes give fiery chance (yes, blizz gives fiery :P)
-            else if(event.entityLiving instanceof EntityBlaze)
-                RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.BLAZE, Math.max(1,xp/2), tags);
-            // zombie pigman gives lifesteal
-            else if(event.entityLiving instanceof EntityPigZombie)
-                RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.LIFESTEAL, Math.max(1,xp/2), tags);
-            // zombie gives smite
-            else if(event.entityLiving instanceof EntityZombie)
-                RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.SMITE, Math.max(1,xp/2), tags);
-            // wither skeleton gives lifesteal
-            else if(event.entityLiving instanceof EntitySkeleton) {
-                if (((EntitySkeleton) event.entityLiving).getSkeletonType() != 0)
-                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.LIFESTEAL, Math.max(1,xp/2)+2, tags);
+                // bonus chance for luck if hitting passive mob
+                if (event.entityLiving instanceof EntityAnimal)
+                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.LAPIS, xp + 5, tags);
+                    // otherwise damage chance
+                else
+                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.ATTACK, xp, tags);
+
+                // spiders also increase bane chance
+                if (event.entityLiving instanceof EntitySpider)
+                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.BANE, Math.max(1, xp / 2), tags);
+                    // blazes give fiery chance (yes, blizz gives fiery :P)
+                else if (event.entityLiving instanceof EntityBlaze)
+                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.BLAZE, Math.max(1, xp / 2), tags);
+                    // zombie pigman gives lifesteal
+                else if (event.entityLiving instanceof EntityPigZombie)
+                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.LIFESTEAL, Math.max(1, xp / 2), tags);
+                    // zombie gives smite
+                else if (event.entityLiving instanceof EntityZombie)
+                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.SMITE, Math.max(1, xp / 2), tags);
+                    // wither skeleton gives lifesteal
+                else if (event.entityLiving instanceof EntitySkeleton) {
+                    if (((EntitySkeleton) event.entityLiving).getSkeletonType() != 0)
+                        RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.LIFESTEAL, Math.max(1, xp / 2) + 2, tags);
+                }
+                // enderman gives beheading
+                else if (event.entityLiving instanceof EntityEnderman)
+                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.BEHEADING, Math.max(1, xp / 2) + 3, tags);
+
+                // knocking back enemies with spriting gives knockback chance
+                if (player.isSprinting())
+                    RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.KNOCKBACK, xp + 2, tags);
             }
-            // enderman gives beheading
-            else if(event.entityLiving instanceof EntityEnderman)
-                RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.BEHEADING, Math.max(1,xp/2)+3, tags);
-
-            // knocking back enemies with spriting gives knockback chance
-            if(player.isSprinting())
-                RandomBonuses.addModifierExtraWeight(RandomBonuses.Modifier.KNOCKBACK, xp+2, tags);
         }
 
     }
@@ -134,14 +148,9 @@ public class LevelingEventHandler {
 
     @SubscribeEvent
     public void onCraftTool (ToolCraftEvent.NormalTool event) {
-        // arrows don't get levels
-        if(event.tool instanceof Arrow)
-            return;
-
         // add tags for tool leveling
         NBTTagCompound toolTag = event.toolTag.getCompoundTag("InfiTool");
         LevelingLogic.addLevelingTags(toolTag, event.tool);
-
 
         // remove modifiers
         toolTag.setInteger("Modifiers", Math.max(toolTag.getInteger("Modifiers") - (3-Config.toolLevelingExtraModifiers), 0));

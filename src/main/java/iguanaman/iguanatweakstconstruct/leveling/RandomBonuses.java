@@ -14,16 +14,17 @@ import net.minecraft.util.StatCollector;
 import tconstruct.TConstruct;
 import tconstruct.items.tools.Battleaxe;
 import tconstruct.items.tools.BowBase;
+import tconstruct.items.tools.Hammer;
+import tconstruct.library.TConstructRegistry;
 import tconstruct.library.crafting.ModifyBuilder;
 import tconstruct.library.modifier.ItemModifier;
 import tconstruct.library.tools.HarvestTool;
+import tconstruct.library.tools.ToolCore;
 import tconstruct.library.tools.Weapon;
+import tconstruct.modifiers.tools.ModWindup;
 import tconstruct.tools.TinkerTools;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static iguanaman.iguanatweakstconstruct.leveling.RandomBonuses.Modifier.*;
 
@@ -217,6 +218,11 @@ public class RandomBonuses {
         return choice;
     }
 
+    private static boolean hasTrait(ToolCore tool, String trait)
+    {
+        return Arrays.asList(tool.getTraits()).contains(trait);
+    }
+
     private static boolean applyModifier(Modifier modifier, EntityPlayer player, ItemStack tool)
     {
         switch (modifier)
@@ -254,7 +260,12 @@ public class RandomBonuses {
     {
         ItemStack[] redstoneStack = new ItemStack[]{new ItemStack(Items.redstone, 1)};
 
-        return addGenericModifier(player, tool, "Redstone", redstoneStack, 50, 1, "message.levelup.redstone", "\u00a74");
+        String key = "Redstone";
+        if(tool.getItem() instanceof ToolCore)
+            if(hasTrait((ToolCore) tool.getItem(), "windup"))
+                key = "Windup";
+
+        return addGenericModifier(player, tool, key, redstoneStack, 50, 1, "message.levelup.redstone", "\u00a74");
     }
 
     public static boolean addLapisModifier(EntityPlayer player, ItemStack tool)
@@ -411,11 +422,17 @@ public class RandomBonuses {
         if(modCache.containsKey(key))
             return modCache.get(key);
 
-        for(ItemModifier modifier : ModifyBuilder.instance.itemModifiers)
-            if(modifier.key.equals(key)) {
+        for(ItemModifier modifier : ModifyBuilder.instance.itemModifiers) {
+            // special case: windup is a redstone modifier
+            if("Windup".equals(key) && modifier instanceof ModWindup) {
                 modCache.put(key, modifier);
                 return modifier;
             }
+            if (modifier.key.equals(key)) {
+                modCache.put(key, modifier);
+                return modifier;
+            }
+        }
 
         Log.error("Couldn't detect " + key + " modifier when applying random bonus");
         return null;

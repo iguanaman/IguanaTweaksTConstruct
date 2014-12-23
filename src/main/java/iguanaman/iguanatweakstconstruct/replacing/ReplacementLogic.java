@@ -53,7 +53,10 @@ public final class ReplacementLogic {
             headStack = DualMaterialToolPart.createDualMaterial(TinkerWeaponry.partBolt, getToolPartMaterial(tags, HANDLE), getToolPartMaterial(tags, HEAD));
             handleStack = accessoryStack;
             accessoryStack = null;
-            type = HANDLE;
+            if(type == ACCESSORY)
+                type = HANDLE;
+            else
+                type = HEAD;
         }
 
         ItemStack originalTool = ToolBuilder.instance.buildTool(headStack, handleStack, accessoryStack, extraStack, "Original Tool");

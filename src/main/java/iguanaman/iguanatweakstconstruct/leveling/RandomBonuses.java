@@ -510,7 +510,7 @@ public class RandomBonuses {
         // in general: take 100 as the baseline for common stuff
 
         // mining mods
-        m.put(REDSTONE,   40); // this is so low because basically every mined block will add +1 to this, resulting in ~110
+        m.put(REDSTONE,   45); // this is so low because basically every mined block will add +1 to this, resulting in ~110
         m.put(LAPIS,      40); // same here, but the amount added will be lower
         m.put(AUTOSMELT,   3);
         m.put(SILKTOUCH,   2);
@@ -518,7 +518,7 @@ public class RandomBonuses {
         m.put(DIAMOND,    30);
         m.put(EMERALD,    35);
         m.put(REPAIR,     50);
-        m.put(REINFORCED, 88);
+        m.put(REINFORCED, 77);
         m.put(STONEBOUND,  5);
         // combat modifiers
         m.put(ATTACK,      7);
@@ -552,8 +552,8 @@ public class RandomBonuses {
         m.put(REPAIR,     55);
         m.put(ATTACK,    110);
         m.put(BLAZE,      45);
-        m.put(SMITE,      50);
-        m.put(BANE,       50);
+        m.put(SMITE,      40);
+        m.put(BANE,       40);
         m.put(BEHEADING,  50);
         m.put(LIFESTEAL,  30);
         m.put(KNOCKBACK,  50);
@@ -561,7 +561,7 @@ public class RandomBonuses {
         m.put(CRITICAL,    2);
         m.put(REDSTONE,    0);
         m.put(AUTOSMELT,  15);
-        m.put(SILKTOUCH,   5);
+        m.put(SILKTOUCH,   1);
         m.put(DIAMOND,    15);
         m.put(EMERALD,    30);
         m.put(REINFORCED, 55);
@@ -601,7 +601,7 @@ public class RandomBonuses {
         m.put(BEHEADING,  10);
         m.put(LIFESTEAL,  10);
         m.put(JAGGED,      1);
-        m.put(CRITICAL,    1);
+        m.put(CRITICAL,    0);
         m.put(AUTOSMELT,   1);
         m.put(SILKTOUCH,   1);
         m.put(STONEBOUND,  1);
@@ -623,20 +623,20 @@ public class RandomBonuses {
         m.put(REPAIR,     65);
         m.put(ATTACK,    100);
         m.put(BLAZE,      45);
-        m.put(SMITE,      50);
-        m.put(BANE,       50);
-        m.put(BEHEADING,  50);
+        m.put(SMITE,      20);
+        m.put(BANE,       20);
+        m.put(BEHEADING,  30);
         m.put(LIFESTEAL,  30);
         m.put(KNOCKBACK,  50);
-        m.put(JAGGED,      5);
-        m.put(CRITICAL,    2);
-        m.put(REDSTONE,    0);
         m.put(AUTOSMELT,  15);
-        m.put(SILKTOUCH,   5);
+        m.put(SILKTOUCH,   1);
         m.put(DIAMOND,    25);
         m.put(EMERALD,    35);
-        m.put(REINFORCED, 55);
-        m.put(STONEBOUND,  1);
+        m.put(REINFORCED, 45);
+        m.put(STONEBOUND,  0);
+        m.put(JAGGED,      0);
+        m.put(CRITICAL,    0);
+        m.put(REDSTONE,    0);
 
         Set<Modifier> u = usefulAmmoModifiers;
         u.add(LAPIS);

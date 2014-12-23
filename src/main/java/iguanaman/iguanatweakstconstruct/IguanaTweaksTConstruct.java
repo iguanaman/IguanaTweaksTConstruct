@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.Random;
 
 @Mod(modid= Reference.MOD_ID, name= Reference.MOD_NAME, version="${version}",
-dependencies = "required-after:" + Reference.TCON_MOD_ID + "@[1.7.10-1.8.0,);after:*")
+dependencies = "required-after:" + Reference.TCON_MOD_ID + "@[1.7.10-1.8.1,);after:*")
 public class IguanaTweaksTConstruct {
 
 	// The instance of your mod that Forge uses.

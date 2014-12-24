@@ -15,6 +15,7 @@ import tconstruct.smeltery.TinkerSmeltery;
 import tconstruct.smeltery.items.MetalPattern;
 import tconstruct.tools.TinkerTools;
 import tconstruct.tools.items.Pattern;
+import tconstruct.weaponry.TinkerWeaponry;
 
 import java.util.*;
 
@@ -42,7 +43,7 @@ public final class RestrictionHelper {
         if(matIDs != null)
         {
             for(ToolMaterial mat : matIDs)
-                if(mat == material) {
+                if(mat.materialName.equals(material.materialName)) {
                     restricted = false;
                     break;
                 }
@@ -85,7 +86,7 @@ public final class RestrictionHelper {
         while(iter.hasNext())
         {
             ToolMaterial mat = iter.next();
-            if(mat == material)
+            if(mat.materialName.equals(material.materialName))
             {
                 iter.remove();
             }
@@ -100,7 +101,7 @@ public final class RestrictionHelper {
             while(iter.hasNext())
             {
                 ToolMaterial mat = iter.next();
-                if(mat == material)
+                if(mat.materialName.equals(material.materialName))
                 {
                     iter.remove();
                 }
@@ -126,7 +127,7 @@ public final class RestrictionHelper {
 
                 int matID = ((IToolPart)recipe.output.getItem()).getMaterialID(recipe.output);
 
-                if (key.item == recipe.cast.getItem() && key.meta == recipe.cast.getItemDamage() && TConstructRegistry.getMaterial(matID) == material) {
+                if (key.item == recipe.cast.getItem() && key.meta == recipe.cast.getItemDamage() && TConstructRegistry.getMaterial(matID).materialName.equals(material.materialName)) {
                     allowed = true;
                     break;
                 }
@@ -144,7 +145,7 @@ public final class RestrictionHelper {
                 int meta = (Integer) entry.get(1); // metadata of the pattern
                 int matID = (Integer)entry.get(2); // Material-ID of the material needed to craft
 
-                if (key.item == pattern && key.meta == meta && TConstructRegistry.getMaterial(matID) == material) {
+                if (key.item == pattern && key.meta == meta && TConstructRegistry.getMaterial(matID).materialName.equals(material.materialName)) {
                     allowed = true;
                     break;
                 }
@@ -160,12 +161,8 @@ public final class RestrictionHelper {
         }
 
         // find the entry so we don't have a double entry
-        ListIterator<ToolMaterial> iter = materials.listIterator();
-        while(iter.hasNext())
-        {
-            ToolMaterial mat = iter.next();
-            if(mat == material)
-            {
+        for (ToolMaterial mat : materials) {
+            if (mat.materialName.equals(material.materialName)) {
                 // duplicate
                 return true;
             }
@@ -196,6 +193,8 @@ public final class RestrictionHelper {
             String name;
             if(pattern == TinkerTools.woodPattern && meta <= patternNames.length)
                 name = patternNames[meta];
+            else if(pattern == TinkerWeaponry.woodPattern && meta <= patternNamesWeaponry.length)
+                name = patternNamesWeaponry[meta];
             else
                 name = (new ItemStack(pattern, 1, meta)).getUnlocalizedName();
 
@@ -274,6 +273,8 @@ public final class RestrictionHelper {
             String name;
             if(pattern == TinkerSmeltery.metalPattern && meta <= patternNames.length)
                 name = patternNames[meta];
+            else if(pattern == TinkerWeaponry.metalPattern && meta <= patternNamesWeaponry.length)
+                name = patternNamesWeaponry[meta];
             else
                 name = (new ItemStack(pattern, 1, meta)).getUnlocalizedName();
 
@@ -349,6 +350,13 @@ public final class RestrictionHelper {
             "arrowhead"     // 25
     };
 
+    public static final String[] patternNamesWeaponry = new String[] {
+            "shuriken",     //  0
+            "crossbowlimb", //  1
+            "crossbowbody", //  2
+            "bowlimb"       //  3
+    };
+
     public static final String[] defaultRestrictions = new String[]{
             // removed because it confused people.
     };
@@ -359,6 +367,9 @@ public final class RestrictionHelper {
             "Wood:crossbar",
             "Wood:binding",
             "Wood:sign",
+            "Wood:bowlimb",
+            "Wood:crossbowlimb",
+            "Wood:crossbowbody",
 
             // Flint:
             "Flint:pickaxe",
@@ -366,6 +377,7 @@ public final class RestrictionHelper {
             "Flint:axe",
             "Flint:knifeblade",
             "Flint:arrowhead",
+            "Flint:shuriken",
 
             // Bone
             "Bone:rod",
@@ -374,11 +386,15 @@ public final class RestrictionHelper {
             "Bone:crossbar",
             "Bone:knifeblade",
             "Bone:arrowhead",
+            "Bone:bowlimb",
+            "Bone:crossbowlimb",
+            "Bone:crossbowbody",
 
             // Cactus
             "Cactus:rod",
             "Cactus:binding",
             "Cactus:knifeblade",
+            "Cactus:shuriken",
 
             // Paper:
             "Paper:rod",
@@ -388,9 +404,57 @@ public final class RestrictionHelper {
             "Slime:rod",
             "Slime:sign",
             "Slime:binding",
+            "Slime:bowlimb",
+            "Slime:crossbowlimb",
+            "Slime:crossbowbody",
 
             // BlueSlime
             "BlueSlime:rod",
-            "BlueSlime:binding"
+            "BlueSlime:binding",
+            "BlueSlime:bowlimb",
+            "BlueSlime:crossbowlimb",
+            "BlueSlime:crossbowbody",
+
+            // Netherrack
+            "Netherrack:rod",
+            "Netherrack:pickaxe",
+            "Netherrack:shovel",
+            "Netherrack:axe",
+            "Netherrack:largeguard",
+            "Netherrack:mediumguard",
+            "Netherrack:crossbar",
+            "Netherrack:binding",
+            "Netherrack:sign",
+            "Netherrack:largerod",
+            "Netherrack:toughbinding",
+            "Netherrack:largeplate",
+            "Netherrack:broadaxe",
+            "Netherrack:scythe",
+            "Netherrack:excavator",
+            "Netherrack:fullguard",
+            "Netherrack:arrowhead",
+            "Netherrack:crossbowbody",
+
+            // Obsidian
+            "Obsidian:rod",
+            "Obsidian:pickaxe",
+            "Obsidian:shovel",
+            "Obsidian:axe",
+            "Obsidian:largeguard",
+            "Obsidian:mediumguard",
+            "Obsidian:crossbar",
+            "Obsidian:binding",
+            "Obsidian:sign",
+            "Obsidian:largerod",
+            "Obsidian:toughbinding",
+            "Obsidian:largeplate",
+            "Obsidian:broadaxe",
+            "Obsidian:scythe",
+            "Obsidian:excavator",
+            "Obsidian:hammerhead",
+            "Obsidian:fullguard",
+            "Obsidian:arrowhead",
+            "Obsidian:crossbowbody",
+            "Obsidian:shuriken"
     };
 }

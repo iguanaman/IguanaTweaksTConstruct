@@ -1,8 +1,10 @@
 package iguanaman.iguanatweakstconstruct.replacing;
 
+import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
 import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
 import iguanaman.iguanatweakstconstruct.leveling.modifiers.ModXpAwareRedstone;
 import iguanaman.iguanatweakstconstruct.reference.Config;
+import iguanaman.iguanatweakstconstruct.reference.Reference;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -14,10 +16,14 @@ import tconstruct.library.crafting.ModifyBuilder;
 import tconstruct.library.crafting.ToolBuilder;
 import tconstruct.library.crafting.ToolRecipe;
 import tconstruct.library.modifier.ItemModifier;
+import tconstruct.library.tools.DualMaterialToolPart;
 import tconstruct.library.tools.ToolCore;
 import tconstruct.library.tools.ToolMaterial;
+import tconstruct.library.weaponry.IAmmo;
 import tconstruct.modifiers.tools.ModAttack;
 import tconstruct.modifiers.tools.ModRedstone;
+import tconstruct.tools.logic.ToolStationLogic;
+import tconstruct.weaponry.TinkerWeaponry;
 
 import static iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic.PartTypes.*;
 
@@ -40,6 +46,18 @@ public final class ReplacementLogic {
             accessoryStack = new ItemStack(getPart(tool, ACCESSORY), 1, getToolPartMaterial(tags, ACCESSORY));
         if(getPart(tool, EXTRA) != null)
             extraStack = new ItemStack(getPart(tool, EXTRA), 1, getToolPartMaterial(tags, EXTRA));
+
+        // extra hack for bolt crafting..
+        if(tool == TinkerWeaponry.boltAmmo)
+        {
+            headStack = DualMaterialToolPart.createDualMaterial(TinkerWeaponry.partBolt, getToolPartMaterial(tags, HANDLE), getToolPartMaterial(tags, HEAD));
+            handleStack = accessoryStack;
+            accessoryStack = null;
+            if(type == ACCESSORY)
+                type = HANDLE;
+            else
+                type = HEAD;
+        }
 
         ItemStack originalTool = ToolBuilder.instance.buildTool(headStack, handleStack, accessoryStack, extraStack, "Original Tool");
         if(originalTool == null) {
@@ -110,12 +128,24 @@ public final class ReplacementLogic {
         updateTag(newTags, tags, "HarvestLevelHandle");
         updateTag(newTags, tags, "HarvestLevelExtra");
 
-        // bows have additional tags to consider
+        // ranged weapons have have additional tags to consider
         updateTag(newTags, tags, "DrawSpeed");
         updateTag(newTags, tags, "BaseDrawSpeed");
+        updateTag(newTags, tags, "FlightSpeed");
+        updateTag(newTags, tags, "Mass");
+        updateTag(newTags, tags, "BreakChance");
+        updateTag(newTags, tags, "Accuracy");
 
         // stonebound. Shoddy is always present and never changed, we can simply update it.
         updateTag(newTags, tags, "Shoddy");
+
+        // update ammo
+        if(tool instanceof IAmmo)
+        {
+            IAmmo ammo = (IAmmo)tool;
+            if(ammo.getAmmoCount(toolStack) > ammo.getMaxAmmo(toolStack))
+                ammo.setAmmo(ammo.getMaxAmmo(toolStack), toolStack);
+        }
 
         // reinforced is kinda complicated, since the actual level you get out of the materials is complicated
         // simply calculate difference between current and newly built tool to know how much has been added afterwards
@@ -128,6 +158,20 @@ public final class ReplacementLogic {
 
         // now for the scary part... handle material traits >_<
         handleMaterialTraits(tags, oldMaterialId, partMaterialId);
+        // fiery blaze arrows has to be handled separately.. meh
+        if(tool == TinkerWeaponry.arrowAmmo && type==HANDLE)
+            if(oldMaterialId == 3 && partMaterialId != 3) {
+                // remove fiery
+                if(tags.getInteger("Fiery") > 5)
+                    tags.setInteger("Fiery", tags.getInteger("Fiery")-5);
+                else
+                    tags.removeTag("Fiery");
+            }
+            else if(partMaterialId == 3 && oldMaterialId != 3) {
+                // add fiery
+                tags.setInteger("Fiery", 5);
+            }
+
         // material tooltips are handled by tcon internally
 
         // redstone modifier
@@ -188,18 +232,17 @@ public final class ReplacementLogic {
             if(LevelingLogic.isBoosted(tags))
                 tags.setInteger("HarvestLevel", tags.getInteger("HarvestLevel") + 1);
         }
-        // add boost xp if its missing. Check is done in the function
-        else {
+        // add boost xp if its missing. Additional checks are done in the function
+        else if(IguanaTweaksTConstruct.pulsar.isPulseLoaded(Reference.PULSE_LEVELING)) {
             LevelingLogic.addBoostTags(tags, tool);
         }
 
         // Update the tool name if we replaced the head and it was a automagic name
         if(type == HEAD) {
-            String materialName = TConstructRegistry.getMaterial(oldMaterialId).displayName;
-            String toolName = tool.getToolName();
-            if (toolStack.getDisplayName().endsWith(materialName + toolName)) {
-                materialName = TConstructRegistry.getMaterial(partMaterialId).displayName;
-                toolStack.setStackDisplayName("\u00a7r" + materialName + toolName);
+            String defaultName = ToolBuilder.defaultToolName(TConstructRegistry.getMaterial(oldMaterialId), tool);
+            if (toolStack.getDisplayName().endsWith(defaultName)) {
+                defaultName = ToolBuilder.defaultToolName(TConstructRegistry.getMaterial(partMaterialId), tool);
+                toolStack.setStackDisplayName("\u00a7r" + defaultName);
             }
         }
     }
@@ -228,14 +271,13 @@ public final class ReplacementLogic {
         // stonebound/jagged has to be handeled separately, see exchangeToolPart
 
         /************ first add the new traits *************/
+        // todo: rewrite this to use material IDs.
         String ability = newMat.ability();
         // writeable & thaumic (equal since we only exchange 1 part)
         if(ability.equals(StatCollector.translateToLocal("materialtraits.writable")) ||
            ability.equals(StatCollector.translateToLocal("materialtraits.thaumic"))) {
             tags.setInteger("Modifiers", tags.getInteger("Modifiers") + 1);
         }
-
-
 
         /************ then remove the old traits *************/
         ability = oldMat.ability();

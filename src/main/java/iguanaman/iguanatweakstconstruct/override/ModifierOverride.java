@@ -26,11 +26,14 @@ public class ModifierOverride implements IOverride {
             config.get("WeaponWeights", mod.toString(), RandomBonuses.weaponWeights.get(mod));
             // bow modifiers
             config.get("BowWeights", mod.toString(), RandomBonuses.bowWeights.get(mod));
+            // ammo modifiers
+            config.get("AmmoWeights", mod.toString(), RandomBonuses.ammoWeights.get(mod));
 
             // useful modifiers
             config.get("UsefulToolBonuses", mod.toString(), RandomBonuses.usefulToolModifiers.contains(mod));
             config.get("UsefulWeaponBonuses", mod.toString(), RandomBonuses.usefulWeaponModifiers.contains(mod));
             config.get("UsefulBowBonuses", mod.toString(), RandomBonuses.usefulBowModifiers.contains(mod));
+            config.get("UsefulAmmoBonuses", mod.toString(), RandomBonuses.usefulAmmoModifiers.contains(mod));
         }
     }
 
@@ -57,12 +60,14 @@ public class ModifierOverride implements IOverride {
         doWeightUpdate(config, "ToolWeights", RandomBonuses.toolWeights);
         doWeightUpdate(config, "WeaponWeights", RandomBonuses.weaponWeights);
         doWeightUpdate(config, "BowWeights", RandomBonuses.bowWeights);
+        doWeightUpdate(config, "AmmoWeights", RandomBonuses.ammoWeights);
 
         // useful bonuses
         for(RandomBonuses.Modifier mod : RandomBonuses.Modifier.values()) {
             doUsefulnessUpdate(config, "UsefulToolBonuses", mod, RandomBonuses.usefulToolModifiers);
             doUsefulnessUpdate(config, "UsefulWeaponBonuses", mod, RandomBonuses.usefulWeaponModifiers);
-            doUsefulnessUpdate(config, "UsefulBowBonuses", mod, RandomBonuses.usefulToolModifiers);
+            doUsefulnessUpdate(config, "UsefulBowBonuses", mod, RandomBonuses.usefulBowModifiers);
+            doUsefulnessUpdate(config, "UsefulAmmoBonuses", mod, RandomBonuses.usefulAmmoModifiers);
         }
     }
 

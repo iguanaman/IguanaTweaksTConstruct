@@ -19,6 +19,8 @@ public class DebugTooltipHandler {
         if(block == null || block== Blocks.air)
             return;
         int meta = event.itemStack.getItemDamage();
+        if(meta > 15)
+            return;
         String toolclass = block.getHarvestTool(meta);
 
         int hlvl = block.getHarvestLevel(meta);

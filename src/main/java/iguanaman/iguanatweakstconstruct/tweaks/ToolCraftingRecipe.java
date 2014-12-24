@@ -39,8 +39,8 @@ public class ToolCraftingRecipe implements IRecipe {
                 continue;
 
             // is it a toolpart?
-            if(!(slot.getItem() instanceof IToolPart))
-                return false;
+            //if(!(slot.getItem() instanceof IToolPart))
+                //return false;
 
             // save it
             input.add(slot);

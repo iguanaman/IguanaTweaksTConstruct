@@ -24,6 +24,8 @@ import tconstruct.library.tools.HarvestTool;
 import tconstruct.library.tools.ToolCore;
 import tconstruct.library.tools.Weapon;
 
+import javax.tools.Tool;
+
 /**
  * Utility class that takes care of all the Tool XP related things.
  * Basically how leveling works:
@@ -184,11 +186,32 @@ public final class LevelingLogic {
 
 		float base = 100f;
 
-		if (tool.getItem() instanceof Weapon || tool.getItem() instanceof Shortbow)
+		boolean harvest, weapon, bow;
+		harvest = weapon = bow = false;
+		if(tool.getItem() instanceof ToolCore)
+			for(String trait : ((ToolCore) tool.getItem()).getTraits())
+			{
+				if("bow".equals(trait))
+					bow = true;
+				if("weapon".equals(trait))
+					weapon = true;
+				if("harvest".equals(trait))
+					harvest = true;
+			}
+
+
+		if(bow)
+		{
+			base = 200f;
+			base *= tags.getFloat("FlightSpeed") * 0.7f;
+
+			base *= Config.xpRequiredWeaponsPercentage / 100f;
+		}
+		else if (weapon && !(tool.getItem() instanceof Hammer))
 		{
             base = 140f;
             base *= ((ToolCore)tool.getItem()).getDamageModifier();
-            base *= tags.getInteger("Attack") * 1.2f;
+			base *= Math.max(1, tags.getInteger("Attack")) * 1.2f;
 
 			if (tool.getItem() instanceof Scythe) base *= 1.5f;
 			base *= Config.xpRequiredWeaponsPercentage / 100f;

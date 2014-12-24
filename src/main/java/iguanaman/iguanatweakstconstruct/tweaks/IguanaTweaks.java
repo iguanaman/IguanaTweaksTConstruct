@@ -52,7 +52,7 @@ public class IguanaTweaks {
         // add string bindings. yay.
         if(Config.allowStringBinding) {
             Log.info("Register String binding");
-            TConstructRegistry.addToolMaterial(40, "String", 0, 33, 1, 0, 0.01F, 0, 0f, EnumChatFormatting.WHITE.toString(), "");
+            TConstructRegistry.addToolMaterial(40, "String", 0, 33, 1, 0, 0.01F, 0, 0f, EnumChatFormatting.WHITE.toString(), 0xFFFFFF);
             TConstructClientRegistry.addMaterialRenderMapping(40, "tinker", "paper", true);
             MinecraftForge.EVENT_BUS.register(new StringBindingHandler());
         }

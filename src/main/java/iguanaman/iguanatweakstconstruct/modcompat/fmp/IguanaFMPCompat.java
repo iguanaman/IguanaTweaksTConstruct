@@ -51,42 +51,6 @@ public class IguanaFMPCompat {
     }
 
     @Handler
-    public void init(FMLInitializationEvent event)
-    {
-        Log.info("Making TConstruct blocks multipart compatible");
-
-        //make Tconstruct blocks multipartable!
-        if(TinkerWorld.metalBlock != null) {
-            // metal blocks
-            for (int i = 0; i < 11; i++)
-                BlockMicroMaterial.createAndRegister(TinkerWorld.metalBlock, i);
-        }
-
-        if(TinkerSmeltery.smeltery != null) {
-            // smeltery bricks
-            for (int i = 2; i < 12; i++) {
-                if (i == 3)
-                    continue;
-                BlockMicroMaterial.createAndRegister(TinkerSmeltery.smeltery, i);
-                BlockMicroMaterial.createAndRegister(TinkerSmeltery.smelteryNether, i);
-            }
-
-            // brownstone
-            for (int i = 0; i < 7; i++)
-                BlockMicroMaterial.createAndRegister(TinkerSmeltery.speedBlock, i);
-        }
-
-        if(TinkerTools.multiBrick != null) {
-            // chisel bricks
-            for (int i = 0; i < 14; i++)
-                BlockMicroMaterial.createAndRegister(TinkerTools.multiBrick, i);
-
-            for (int i = 0; i < 16; i++)
-                BlockMicroMaterial.createAndRegister(TinkerTools.multiBrickFancy, i);
-        }
-    }
-
-    @Handler
     public void postInit(FMLPostInitializationEvent event)
     {
         if(IguanaTweaksTConstruct.pulsar.isPulseLoaded("Debug"))

@@ -75,7 +75,7 @@ public class PartRestrictionHandler {
         List<ToolMaterial> materials = RestrictionHelper.getPatternMaterials(event.itemStack);
         if(materials != null) {
             for (ToolMaterial mat : materials) {
-                event.toolTip.add(mat.style() + mat.name());
+                event.toolTip.add(mat.style() + mat.localizedName());
             }
             foundMat = true;
         }

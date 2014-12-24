@@ -95,13 +95,6 @@ public class LevelingActiveToolMod extends ActiveToolMod {
         return false;
     }
 
-
-    @Override
-    public boolean afterBlockBreak() {
-        Log.debug("afterBlockBreak is implemented. Somebody tell me that so I can update xp giving.");
-        return super.afterBlockBreak();
-    }
-
     @Override
     public boolean doesCriticalHit(ToolCore tool, NBTTagCompound tags, NBTTagCompound toolTags, ItemStack stack, EntityLivingBase player, Entity entity) {
         // crit modifier adds additional 10% crit chance

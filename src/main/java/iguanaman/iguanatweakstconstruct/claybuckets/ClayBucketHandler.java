@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
@@ -74,7 +75,7 @@ public class ClayBucketHandler {
             }
 
             // water and lava
-            if(bID.getMaterial() == Material.water)
+            if(bID == Blocks.water || bID == Blocks.flowing_water)
             {
                 event.setResult(Event.Result.ALLOW);
                 event.result = new ItemStack(IguanaItems.clayBucketWater);
@@ -82,7 +83,7 @@ public class ClayBucketHandler {
 
                 return;
             }
-            if(bID.getMaterial() == Material.lava)
+            if(bID == Blocks.lava || bID == Blocks.flowing_lava)
             {
                 event.setResult(Event.Result.ALLOW);
                 event.result = new ItemStack(IguanaItems.clayBucketLava);
@@ -90,6 +91,8 @@ public class ClayBucketHandler {
 
                 return;
             }
+
+            event.setCanceled(true);
         }
     }
 }

@@ -11,6 +11,13 @@ import tconstruct.library.TConstructRegistry;
 import tconstruct.library.event.ToolCraftEvent;
 import tconstruct.library.tools.ToolMaterial;
 import tconstruct.library.util.IToolPart;
+import tconstruct.tools.TinkerTools;
+import tconstruct.weaponry.TinkerWeaponry;
+import tconstruct.weaponry.ammo.ArrowAmmo;
+import tconstruct.weaponry.ammo.BoltAmmo;
+import tconstruct.weaponry.weapons.Crossbow;
+import tconstruct.weaponry.weapons.LongBow;
+import tconstruct.weaponry.weapons.ShortBow;
 
 public class StoneToolHandler {
     // we can initialize this statically, because it wont be initialized until PostInit, where all materials are already registered
@@ -23,7 +30,7 @@ public class StoneToolHandler {
             return;
 
         // we're only interested if it's a tool part
-        if(!(event.itemStack.getItem() instanceof IToolPart))
+        if(!(event.itemStack.getItem() instanceof IToolPart) || event.itemStack.getItem() == TinkerWeaponry.bowstring || event.itemStack.getItem() == TinkerWeaponry.fletching || event.itemStack.getItem() == TinkerWeaponry.partArrowShaft)
             return;
 
         ItemStack stack = event.itemStack;
@@ -43,9 +50,23 @@ public class StoneToolHandler {
     @SubscribeEvent
     public void onToolCraft(ToolCraftEvent event)
     {
-        // don't allow stone tools
-        for(ToolMaterial mat : event.materials)
-            if(mat == stoneMaterial)
+        for(int i = 0; i < event.materials.length; i++)
+        {
+            // ignore bowstring and fletchings
+            if(event.tool instanceof ShortBow && i == 1)
+                continue;
+            if(event.tool instanceof LongBow && i == 1)
+                continue;
+            if(event.tool instanceof Crossbow && i == 2)
+                continue;
+            if(event.tool instanceof ArrowAmmo && i >= 1)
+                continue;
+            if(event.tool instanceof BoltAmmo && i == 2)
+                continue;
+
+            // don't allow stone tools
+            if(event.materials[i] == stoneMaterial)
                 event.setResult(Event.Result.DENY);
+        }
     }
 }

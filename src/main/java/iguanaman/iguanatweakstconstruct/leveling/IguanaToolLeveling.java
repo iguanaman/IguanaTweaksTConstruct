@@ -27,6 +27,7 @@ import tconstruct.library.crafting.ModifyBuilder;
 import tconstruct.library.modifier.ItemModifier;
 import tconstruct.library.tools.ToolCore;
 import tconstruct.modifiers.tools.ModRedstone;
+import tconstruct.modifiers.tools.ModWindup;
 import tconstruct.tools.TinkerTools;
 
 import java.util.List;
@@ -77,7 +78,7 @@ public class IguanaToolLeveling {
         {
             ItemModifier mod = iter.next();
             // redstone
-            if(mod instanceof ModRedstone) {
+            if(mod instanceof ModRedstone && !(mod instanceof ModWindup)) {
                 iter.set(new ModXpAwareRedstone((ModRedstone) mod));
                 Log.trace("Replaced Redstone Modifier");
             }

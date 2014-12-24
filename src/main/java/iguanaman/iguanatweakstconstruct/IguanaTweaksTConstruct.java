@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.Random;
 
 @Mod(modid= Reference.MOD_ID, name= Reference.MOD_NAME, version="${version}",
-dependencies = "required-after:" + Reference.TCON_MOD_ID + ";after:*")
+dependencies = "required-after:" + Reference.TCON_MOD_ID + "@[1.7.10-1.8.1,);after:*")
 public class IguanaTweaksTConstruct {
 
 	// The instance of your mod that Forge uses.
@@ -86,11 +86,12 @@ public class IguanaTweaksTConstruct {
         pulsar.registerPulse(new IguanaMobHeads());
         pulsar.registerPulse(new IguanaItems());
         pulsar.registerPulse(new IguanaTweaks());
+        // override before restriction because restrictions use ToolMaterial objects, and override can change them.
+        pulsar.registerPulse(new IguanaOverride());
         pulsar.registerPulse(new IguanaPartRestriction());
         // replacing has to be after tweaks and restrictions, because its tooltips have to be handled last
         pulsar.registerPulse(new IguanaToolPartReplacing());
         pulsar.registerPulse(new IguanaWorldGen());
-        pulsar.registerPulse(new IguanaOverride());
         pulsar.registerPulse(new IguanaDebug());
 
         // mod compat
@@ -144,4 +145,9 @@ public class IguanaTweaksTConstruct {
         if(pulseCFG.isModuleEnabled(new PulseMeta("Debug", "", false, false)))
             event.registerServerCommand(new DebugCommand());
 	}
+
+    public static String getHarvestLevelName(int num)
+    {
+        return HarvestLevels.getHarvestLevelName(num);
+    }
 }

@@ -33,6 +33,7 @@ public class Wearable extends Item {
         return armorType == 0; // 0 = helmet
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void addInformation(ItemStack item, EntityPlayer player, List tooltips, boolean advanced) {
         // specul tooltips

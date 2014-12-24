@@ -5,6 +5,7 @@ import iguanaman.iguanatweakstconstruct.leveling.modifiers.ModShoddy;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -12,18 +13,14 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import tconstruct.TConstruct;
-import tconstruct.items.tools.Battleaxe;
-import tconstruct.items.tools.BowBase;
+import tconstruct.items.tools.Hammer;
 import tconstruct.library.crafting.ModifyBuilder;
 import tconstruct.library.modifier.ItemModifier;
-import tconstruct.library.tools.HarvestTool;
-import tconstruct.library.tools.Weapon;
+import tconstruct.library.tools.ToolCore;
+import tconstruct.modifiers.tools.ModWindup;
 import tconstruct.tools.TinkerTools;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static iguanaman.iguanatweakstconstruct.leveling.RandomBonuses.Modifier.*;
 
@@ -51,10 +48,12 @@ public class RandomBonuses {
     public static Set<Modifier> usefulToolModifiers = new HashSet<Modifier>();
     public static Set<Modifier> usefulWeaponModifiers  = new HashSet<Modifier>();
     public static Set<Modifier> usefulBowModifiers  = new HashSet<Modifier>();
+    public static Set<Modifier> usefulAmmoModifiers  = new HashSet<Modifier>();
 
     public static Map<Modifier, Integer> toolWeights = new HashMap<Modifier, Integer>();
     public static Map<Modifier, Integer> weaponWeights = new HashMap<Modifier, Integer>();
     public static Map<Modifier, Integer> bowWeights = new HashMap<Modifier, Integer>();
+    public static Map<Modifier, Integer> ammoWeights = new HashMap<Modifier, Integer>();
 
     public static Integer usageBonusWeight = 70;
 
@@ -64,12 +63,21 @@ public class RandomBonuses {
         initToolModifiers();
         initWeaponModifiers();
         initBowModifiers();
+        initAmmoModifiers();
         modCache.put(ModShoddy.ModJagged.key, ModShoddy.ModJagged);
         modCache.put(ModShoddy.ModStonebound.key, ModShoddy.ModStonebound);
         modCache.put(ModCritical.modCritical.key, ModCritical.modCritical);
 
         // also ensure the correct attack modifier
         modCache.put(TinkerTools.modAttack.key, TinkerTools.modAttack);
+
+        // special case: windup is a redstone modifier
+        for(ItemModifier modifier : ModifyBuilder.instance.itemModifiers) {
+            if(modifier instanceof ModWindup) {
+                modCache.put("Windup", modifier);
+                break;
+            }
+        }
     }
 
     public static Modifier tryModifying(EntityPlayer player, ItemStack tool)
@@ -78,6 +86,11 @@ public class RandomBonuses {
         NBTTagCompound tags = tool.getTagCompound().getCompoundTag("InfiTool");
         int modifiers = tags.getInteger("Modifiers");
         tags.setInteger("Modifiers", modifiers+1);
+
+        if(!(tool.getItem() instanceof ToolCore))
+            return null;
+
+        ToolCore toolCore = (ToolCore) tool.getItem();
 
         // construct possibility "matrix"
         Modifier[] mods = Modifier.values();
@@ -91,27 +104,36 @@ public class RandomBonuses {
             else {
                 if (Config.randomBonusesAreRandom)
                     chances[i] = 1;
-                    // weapons
-                else if (tool.getItem() instanceof Weapon || tool.getItem() instanceof Battleaxe) {
+
+                // bows
+                else if (hasTrait(toolCore, "bow")) {
+                    if (Config.randomBonusesAreUseful && !usefulBowModifiers.contains(mod))
+                        chances[i] = 0;
+                    else
+                        chances[i] = bowWeights.get(mod);
+                }
+                // ammo
+                else if (hasTrait(toolCore, "ammo")) {
+                    if (Config.randomBonusesAreUseful && !usefulAmmoModifiers.contains(mod))
+                        chances[i] = 0;
+                    else
+                        chances[i] = ammoWeights.get(mod);
+                }
+                // weapons
+                else if (hasTrait(toolCore, "weapon") && !(toolCore instanceof Hammer)) { // hammer is an exception because we want it to be harvest
                     if (Config.randomBonusesAreUseful && !usefulWeaponModifiers.contains(mod))
                         chances[i] = 0;
                     else
                         chances[i] = weaponWeights.get(mod);
                 }
                 // tools
-                else if (tool.getItem() instanceof HarvestTool) {
+                else if (hasTrait(toolCore, "harvest")) {
                     if (Config.randomBonusesAreUseful && !usefulToolModifiers.contains(mod))
                         chances[i] = 0;
                     else
                         chances[i] = toolWeights.get(mod);
                 }
-                // bows
-                else if (tool.getItem() instanceof BowBase) {
-                    if (Config.randomBonusesAreUseful && !usefulBowModifiers.contains(mod))
-                        chances[i] = 0;
-                    else
-                        chances[i] = bowWeights.get(mod);
-                } else
+                else
                     chances[i] = 0;
 
                 // calculate extra bonus chance
@@ -217,6 +239,11 @@ public class RandomBonuses {
         return choice;
     }
 
+    private static boolean hasTrait(ToolCore tool, String trait)
+    {
+        return Arrays.asList(tool.getTraits()).contains(trait);
+    }
+
     private static boolean applyModifier(Modifier modifier, EntityPlayer player, ItemStack tool)
     {
         switch (modifier)
@@ -254,7 +281,12 @@ public class RandomBonuses {
     {
         ItemStack[] redstoneStack = new ItemStack[]{new ItemStack(Items.redstone, 1)};
 
-        return addGenericModifier(player, tool, "Redstone", redstoneStack, 50, 1, "message.levelup.redstone", "\u00a74");
+        String key = "Redstone";
+        if(tool.getItem() instanceof ToolCore)
+            if(hasTrait((ToolCore) tool.getItem(), "windup"))
+                key = "Windup";
+
+        return addGenericModifier(player, tool, key, redstoneStack, 50, 1, "message.levelup.redstone", "\u00a74");
     }
 
     public static boolean addLapisModifier(EntityPlayer player, ItemStack tool)
@@ -345,7 +377,9 @@ public class RandomBonuses {
 
     public static boolean addKnockbackModifier(EntityPlayer player, ItemStack tool)
     {
-        return addGenericModifier(player, tool, "Piston", "message.levelup.knockback", "\u00a77");
+        ItemStack[] pistonStack = new ItemStack[]{new ItemStack(Blocks.piston, 1)};
+
+        return addGenericModifier(player, tool, "Piston", pistonStack, 10, 1, "message.levelup.knockback", "\u00a77");
     }
 
 
@@ -411,11 +445,12 @@ public class RandomBonuses {
         if(modCache.containsKey(key))
             return modCache.get(key);
 
-        for(ItemModifier modifier : ModifyBuilder.instance.itemModifiers)
-            if(modifier.key.equals(key)) {
+        for(ItemModifier modifier : ModifyBuilder.instance.itemModifiers) {
+            if (modifier.key.equals(key)) {
                 modCache.put(key, modifier);
                 return modifier;
             }
+        }
 
         Log.error("Couldn't detect " + key + " modifier when applying random bonus");
         return null;
@@ -475,23 +510,23 @@ public class RandomBonuses {
         // in general: take 100 as the baseline for common stuff
 
         // mining mods
-        m.put(REDSTONE,   40); // this is so low because basically every mined block will add +1 to this, resulting in ~110
+        m.put(REDSTONE,   45); // this is so low because basically every mined block will add +1 to this, resulting in ~110
         m.put(LAPIS,      40); // same here, but the amount added will be lower
-        m.put(AUTOSMELT,  20);
-        m.put(SILKTOUCH,  15);
+        m.put(AUTOSMELT,   3);
+        m.put(SILKTOUCH,   2);
         // general modifiers
         m.put(DIAMOND,    30);
         m.put(EMERALD,    35);
         m.put(REPAIR,     50);
-        m.put(REINFORCED, 88);
+        m.put(REINFORCED, 77);
         m.put(STONEBOUND,  5);
         // combat modifiers
-        m.put(ATTACK,     15);
-        m.put(BLAZE,       5);
-        m.put(SMITE,       5);
-        m.put(BANE,        5);
-        m.put(BEHEADING,   5);
-        m.put(LIFESTEAL,   5);
+        m.put(ATTACK,      7);
+        m.put(BLAZE,       3);
+        m.put(SMITE,       3);
+        m.put(BANE,        3);
+        m.put(BEHEADING,   3);
+        m.put(LIFESTEAL,   3);
         m.put(KNOCKBACK,  10);
         m.put(JAGGED,      1);
         m.put(CRITICAL,    1);
@@ -517,8 +552,8 @@ public class RandomBonuses {
         m.put(REPAIR,     55);
         m.put(ATTACK,    110);
         m.put(BLAZE,      45);
-        m.put(SMITE,      50);
-        m.put(BANE,       50);
+        m.put(SMITE,      40);
+        m.put(BANE,       40);
         m.put(BEHEADING,  50);
         m.put(LIFESTEAL,  30);
         m.put(KNOCKBACK,  50);
@@ -526,7 +561,7 @@ public class RandomBonuses {
         m.put(CRITICAL,    2);
         m.put(REDSTONE,    0);
         m.put(AUTOSMELT,  15);
-        m.put(SILKTOUCH,   5);
+        m.put(SILKTOUCH,   1);
         m.put(DIAMOND,    15);
         m.put(EMERALD,    30);
         m.put(REINFORCED, 55);
@@ -554,11 +589,11 @@ public class RandomBonuses {
         m.put(REDSTONE,  100);
         m.put(REPAIR,     55);
         m.put(REINFORCED, 65);
-        m.put(KNOCKBACK,  70);
+        m.put(KNOCKBACK,  50);
+        m.put(LAPIS,      60);
 
         m.put(DIAMOND,    20);
         m.put(EMERALD,    25);
-        m.put(LAPIS,      15);
         m.put(ATTACK,     25);
         m.put(BLAZE,      15);
         m.put(SMITE,      15);
@@ -566,7 +601,7 @@ public class RandomBonuses {
         m.put(BEHEADING,  10);
         m.put(LIFESTEAL,  10);
         m.put(JAGGED,      1);
-        m.put(CRITICAL,    1);
+        m.put(CRITICAL,    0);
         m.put(AUTOSMELT,   1);
         m.put(SILKTOUCH,   1);
         m.put(STONEBOUND,  1);
@@ -576,6 +611,46 @@ public class RandomBonuses {
         u.add(KNOCKBACK);
         u.add(REPAIR);
         u.add(REINFORCED);
+        u.add(LAPIS);
+    }
+
+    private static void initAmmoModifiers()
+    {
+        Map<Modifier, Integer> m = ammoWeights;
+        preFill(m);
+
+        m.put(LAPIS,      75);
+        m.put(REPAIR,     65);
+        m.put(ATTACK,    100);
+        m.put(BLAZE,      45);
+        m.put(SMITE,      20);
+        m.put(BANE,       20);
+        m.put(BEHEADING,  30);
+        m.put(LIFESTEAL,  30);
+        m.put(KNOCKBACK,  50);
+        m.put(AUTOSMELT,  15);
+        m.put(SILKTOUCH,   1);
+        m.put(DIAMOND,    25);
+        m.put(EMERALD,    35);
+        m.put(REINFORCED, 45);
+        m.put(STONEBOUND,  0);
+        m.put(JAGGED,      0);
+        m.put(CRITICAL,    0);
+        m.put(REDSTONE,    0);
+
+        Set<Modifier> u = usefulAmmoModifiers;
+        u.add(LAPIS);
+        u.add(REPAIR);
+        u.add(ATTACK);
+        u.add(BLAZE);
+        u.add(SMITE);
+        u.add(BANE);
+        u.add(BEHEADING);
+        u.add(LIFESTEAL);
+        u.add(KNOCKBACK);
+        u.add(JAGGED);
+        u.add(CRITICAL);
+        u.add(DIAMOND);
     }
 
     public static enum Modifier {

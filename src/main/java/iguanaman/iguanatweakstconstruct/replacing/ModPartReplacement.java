@@ -6,12 +6,16 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.MinecraftForge;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.crafting.ToolBuilder;
 import tconstruct.library.crafting.ToolRecipe;
+import tconstruct.library.event.ToolBuildEvent;
 import tconstruct.library.modifier.ItemModifier;
 import tconstruct.library.tools.ToolCore;
 import tconstruct.library.util.IToolPart;
+import tconstruct.tools.TinkerTools;
+import tconstruct.weaponry.TinkerWeaponry;
 
 import static iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic.*;
 import static iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic.PartTypes.*;
@@ -44,10 +48,12 @@ public class ModPartReplacement extends ItemModifier {
         {
             if(tool.getHeadItem() != null && getToolPartMaterial(tags, HEAD) == 1)
                 return false;
-            if(tool.getHandleItem() != null && getToolPartMaterial(tags, HANDLE) == 1)
+            if(tool.getHandleItem() != null && getToolPartMaterial(tags, HANDLE) == 1 && tool.getHandleItem() != TinkerWeaponry.bowstring && tool.getHandleItem() != TinkerWeaponry.partArrowShaft) {
                 return false;
-            if(tool.getAccessoryItem() != null && getToolPartMaterial(tags, ACCESSORY) == 1)
+            }
+            if(tool.getAccessoryItem() != null && getToolPartMaterial(tags, ACCESSORY) == 1 && tool.getAccessoryItem() != TinkerWeaponry.bowstring && tool.getAccessoryItem() != TinkerWeaponry.fletching) {
                 return false;
+            }
             if(tool.getExtraItem() != null && getToolPartMaterial(tags, EXTRA) == 1)
                 return false;
         }
@@ -67,8 +73,15 @@ public class ModPartReplacement extends ItemModifier {
                 continue;
             Item item = parts[i].getItem();
 
+            if(tool == TinkerWeaponry.arrowAmmo)
+                if(item == Items.reeds || item == Items.blaze_rod || item == Items.bone || item == Items.stick)
+                    item = TinkerWeaponry.partArrowShaft;
+
+            if(item == Items.bone || item == Items.stick)
+                item = TinkerTools.toolRod;
+
             // is it a toolpart?
-            if (!(item instanceof IToolPart || item == Items.bone || item == Items.stick))
+            if (!(item instanceof IToolPart))
                 return false;
 
             // we only allow single part replacement. sorry i'm lazy. ;/
@@ -148,6 +161,13 @@ public class ModPartReplacement extends ItemModifier {
             partIndex = i;
         }
 
+        if(tool == TinkerWeaponry.arrowAmmo)
+            if(replacementPartItem == Items.reeds || replacementPartItem == Items.blaze_rod || replacementPartItem == Items.bone || replacementPartItem == Items.stick)
+                replacementPartItem = TinkerWeaponry.partArrowShaft;
+
+        if(replacementPartItem == Items.bone || replacementPartItem == Items.stick)
+            replacementPartItem = TinkerTools.toolRod;
+        
         // detect which part to replace
         PartTypes partType = detectAdditionalPartType(recipe, replacementPartItem, null);
         for(int i = partIndex; i > 0; i--)

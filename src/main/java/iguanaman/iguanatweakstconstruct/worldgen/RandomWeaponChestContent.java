@@ -42,7 +42,7 @@ public class RandomWeaponChestContent extends WeightedRandomChestContent {
         weapons = new ArrayList<ToolRecipe>();
         for(ToolRecipe recipe : ToolBuilder.instance.combos) {
             ToolCore type = recipe.getType();
-            if (type instanceof Weapon || type instanceof Battleaxe || type instanceof BowBase) //todo: re-enable bow once IToolPart PR is merged
+            if(Arrays.asList(type.getTraits()).contains("weapon"))
                 weapons.add(recipe);
         }
     }

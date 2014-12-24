@@ -249,7 +249,7 @@ public final class LevelingLogic {
 
             base += ((float)baseMiningSpeed + (float)(miningSpeed-baseMiningSpeed)/5f)/divider;
 
-            // shovels need a bit more xp because their blocks berak much faster
+            // shovels need a bit more xp because their blocks break much faster
 
             if(tool.getItem() instanceof Hammer) base *= 5.1f;
             if(tool.getItem() instanceof Excavator) base *= 6.2f;
@@ -258,10 +258,6 @@ public final class LevelingLogic {
             if(tool.getItem() instanceof Hatchet) base *= 0.66f; // not much wood to chop, but usable as weapon
 
 			base *= Config.xpRequiredToolsPercentage / 100f;
-			
-			float xpMulter = getXPMulter(tool, tags);
-			
-			base *= xpMulter;
 		}
 
 		if (miningBoost)
@@ -279,14 +275,28 @@ public final class LevelingLogic {
 			if (level >= 1) base *= Math.pow(Config.xpPerLevelMultiplier, level - 1);
             if(tags.hasKey("HarvestLevel") && LevelingLogic.getHarvestLevel(tags) == 0)
                 base /= Config.xpPerLevelMultiplier * Config.xpPerLevelMultiplier;
+            
+            //XP Multiplier applies to all tools, but not to "mining boost" XP.
+			float xpMultiplier = getXPMultiplier(tool, tags);
+			
+			base *= xpMultiplier;
 		}
 
 		return Math.round(base);
 	}
 
-    private static float getXPMulter(ItemStack tool, NBTTagCompound tags) 
+    private static float getXPMultiplier(ItemStack tool, NBTTagCompound tags) 
     {
+    	boolean nonHeadsCount = !Config.onlyHeadsChangeXPRequirement;
     	ToolCore core = (ToolCore) tool.getItem();
+    	
+    	boolean extraIsHead = (core instanceof Hammer);
+    	
+    	boolean accessoryIsHead = (extraIsHead ||
+				   				   core instanceof Excavator||
+				   				   core instanceof Cleaver||
+				   				   core instanceof LumberAxe||
+    							   core instanceof Mattock);
     	
     	double numberOfParts = 0;
     	double xpModSoFar = 1;
@@ -298,21 +308,21 @@ public final class LevelingLogic {
     		String matName = TConstructRegistry.getMaterial(toolMaterialHead).name();
     		xpModSoFar *= XPAdjustmentMap.get(matName);
     	}
-    	if(ReplacementLogic.getPart(core, HANDLE) != null)
+    	if(ReplacementLogic.getPart(core, HANDLE) != null && nonHeadsCount)
     	{
     		numberOfParts++;
     		int toolMaterialHandle = ReplacementLogic.getToolPartMaterial(tags, HANDLE);
     		String matName = TConstructRegistry.getMaterial(toolMaterialHandle).name();
     		xpModSoFar *= XPAdjustmentMap.get(matName);
     	}
-    	if(ReplacementLogic.getPart(core, ACCESSORY) != null)
+    	if(ReplacementLogic.getPart(core, ACCESSORY) != null && (accessoryIsHead || nonHeadsCount))
     	{
     		numberOfParts++;
     		int toolMaterialAccessory = ReplacementLogic.getToolPartMaterial(tags, ACCESSORY);
     		String matName = TConstructRegistry.getMaterial(toolMaterialAccessory).name();
     		xpModSoFar *= XPAdjustmentMap.get(matName);
     	}
-    	if(ReplacementLogic.getPart(core, EXTRA) != null)
+    	if(ReplacementLogic.getPart(core, EXTRA) != null  && (extraIsHead || nonHeadsCount))
     	{
     		numberOfParts++;
     		int toolMaterialExtra = ReplacementLogic.getToolPartMaterial(tags, EXTRA);
@@ -320,7 +330,7 @@ public final class LevelingLogic {
     		xpModSoFar *= XPAdjustmentMap.get(matName);
     	}
 
-        //Take the arithmatic mean
+        //Take the geometric mean
 		return (float)Math.pow(xpModSoFar,1.0/numberOfParts);
 	}
 	/**

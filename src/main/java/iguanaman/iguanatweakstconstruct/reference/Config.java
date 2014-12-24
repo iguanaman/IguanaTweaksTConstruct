@@ -27,6 +27,7 @@ public class Config {
     public static int[] randomBonusesAtlevels;
     public static boolean randomBonusesAreUseful;
     public static boolean randomBonusesAreRandom;
+    public static boolean onlyHeadsChangeXPRequirement;
 
     // random bonuses deactivation
     public static Set<RandomBonuses.Modifier> deactivatedModifiers = new HashSet<RandomBonuses.Modifier>();
@@ -120,6 +121,7 @@ public class Config {
         xpRequiredToolsPercentage   = configfile.getInt("xpRequiredToolsPercentage", CATEGORY_Leveling, 100, 1, 999, "Change the XP required to level up tools in % (higher = more xp needed)");
         xpRequiredWeaponsPercentage = configfile.getInt("xpRequiredWeaponsPercentage", CATEGORY_Leveling, 100, 1, 999, "Change the XP required to level up weapons in % (higher = more xp needed)");
         xpPerLevelMultiplier        = configfile.getFloat("xpPerLevelMultiplier", CATEGORY_Leveling, 1.15f, 1.0f, 9.99f, "Exponential multiplier for required xp per level");
+        onlyHeadsChangeXPRequirement = configfile.getBoolean("onlyHeadsChangeXPRequirement", CATEGORY_Leveling, true, "If true, only the heads of tools are examined when determining how much XP it takes to level up. (This only matters if you manually specify that some material types level faster than others using the override module)");
 
         // tooltip things
         showTooltipXP        = configfile.getBoolean("showTooltipXP", CATEGORY_Leveling, true, "Current XP is shown when hovering over a tool");
@@ -318,4 +320,5 @@ public class Config {
             "appliedenergistics2",
             "MekanismTool"
     };
+
 }

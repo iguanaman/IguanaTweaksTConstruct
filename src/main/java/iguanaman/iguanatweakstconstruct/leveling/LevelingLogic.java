@@ -140,6 +140,7 @@ public final class LevelingLogic {
 	public static void addXP(ItemStack tool, EntityPlayer player, long xp)
 	{
 		if (player.capabilities.isCreativeMode) return;
+		if (tool == null || !tool.hasTagCompound()) return;
 
 		NBTTagCompound tags = tool.getTagCompound().getCompoundTag("InfiTool");
 

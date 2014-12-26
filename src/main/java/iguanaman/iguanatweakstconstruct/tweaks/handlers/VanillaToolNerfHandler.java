@@ -45,7 +45,7 @@ public class VanillaToolNerfHandler {
             return false;
 
         if(IguanaTweaks.toolWhitelist.contains(item))
-            return true;
+            return false;
 
         if(item instanceof ItemTool)
             return true;

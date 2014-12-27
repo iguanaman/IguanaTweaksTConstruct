@@ -169,6 +169,9 @@ public class IguanaTweaks {
 
         if(Config.easyToolBuilding)
             GameRegistry.addRecipe(new ToolCraftingRecipe());
+
+        if(Config.removeObsidianAlloy)
+            removeObsidianAlloy();
     }
 
     private void flintTweaks()
@@ -279,6 +282,24 @@ public class IguanaTweaks {
                 if(!Config.excludedModTools.contains(mod) && !Config.excludedTools.contains(identifier))
                     toolWhitelist.add((Item)item);
             }
+        }
+    }
+
+    private static void removeObsidianAlloy()
+    {
+        if(TinkerSmeltery.moltenObsidianFluid == null)
+            return;
+
+        Log.info("Removing Obsidian alloy");
+
+        ListIterator<AlloyMix> iter = Smeltery.getAlloyList().listIterator();
+
+        while(iter.hasNext())
+        {
+            AlloyMix mix = iter.next();
+            // remove the alloy if the result is obsidian
+            if(mix.result.getFluid() == TinkerSmeltery.moltenObsidianFluid)
+                iter.remove();
         }
     }
 }

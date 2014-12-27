@@ -65,6 +65,7 @@ public class Config {
     public static boolean disableBonusMods;
     public static boolean castsBurnMaterial;
     public static boolean allowStringBinding;
+    public static boolean removeObsidianAlloy;
 
     public static boolean easyToolRepair;
     public static boolean easyPartCrafting;
@@ -194,6 +195,8 @@ public class Config {
         removeFlintDrop = configfile.getBoolean("removeFlintDrop", CATEGORY_Tweaks, true, "Removes the random chance of getting flint from gravel");
         addFlintRecipe = configfile.getBoolean("addFlintRecipe", CATEGORY_Tweaks, true, "Adds a shapeless recipe to get flint from gravel");
         recipeGravelPerFlint = configfile.getInt("gravelPerFlint", CATEGORY_Tweaks, 3, 1, 9, "How many gravel are required to craft one Flint");
+
+        removeObsidianAlloy = configfile.getBoolean("removeObsidianAlloy", CATEGORY_Tweaks, true, "Removes the creation of Obsidian in the Smeltery. This is normally used to prevent the early pre-diamond creation of obsidian tools.");
 
         // ticon tweaks
         disableStoneTools = configfile.getBoolean("disableStoneTools", CATEGORY_Tweaks, true, "Stone Tools can only be used to create casts, but no tools");

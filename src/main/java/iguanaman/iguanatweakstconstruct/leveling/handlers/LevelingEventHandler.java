@@ -64,8 +64,11 @@ public class LevelingEventHandler {
 
         ItemStack ammo = null;
         // projectile weapons also get xp on their ammo!
-        if(stack.getItem() instanceof ProjectileWeapon)
+        if(stack.getItem() instanceof ProjectileWeapon) {
             ammo = ((ProjectileWeapon) stack.getItem()).searchForAmmo(player, stack);
+            if(!(ammo.getItem() instanceof ToolCore))
+                ammo = null;
+        }
 
         if (xp > 0)
         {

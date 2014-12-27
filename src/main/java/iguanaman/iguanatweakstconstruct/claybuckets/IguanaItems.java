@@ -21,6 +21,7 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+import tconstruct.smeltery.TinkerSmeltery;
 import tconstruct.world.TinkerWorld;
 
 import static tconstruct.smeltery.TinkerSmeltery.*;
@@ -63,17 +64,21 @@ public class IguanaItems {
         FluidContainerRegistry.registerFluidContainer(FluidRegistry.WATER, new ItemStack(clayBucketWater), emptyClayBucket);
         FluidContainerRegistry.registerFluidContainer(FluidRegistry.LAVA, new ItemStack(clayBucketLava), emptyClayBucket);
 
-        // tinker metals
-        Fluid[] tinkerFluids = new Fluid[] {moltenIronFluid, moltenGoldFluid, moltenCopperFluid, moltenTinFluid, moltenAluminumFluid,
-                                            moltenCobaltFluid, moltenArditeFluid, moltenBronzeFluid, moltenAlubrassFluid, moltenManyullynFluid,
-                                            moltenAlumiteFluid, moltenObsidianFluid, moltenSteelFluid, moltenGlassFluid, moltenStoneFluid, moltenEmeraldFluid,
-                                            bloodFluid, moltenNickelFluid, moltenLeadFluid, moltenSilverFluid, moltenShinyFluid, moltenInvarFluid,
-                                            moltenElectrumFluid, moltenEnderFluid, TinkerWorld.blueSlimeFluid, glueFluid, pigIronFluid};
 
-        for(int i = 0; i < tinkerFluids.length; i++)
-            FluidContainerRegistry.registerFluidContainer(tinkerFluids[i], new ItemStack(clayBucketsTinkers, 1, i), emptyClayBucket);
+        // only integrate tcon metals if they actually exist
+        if(TinkerSmeltery.buckets != null) {
+            // tinker metals
+            Fluid[] tinkerFluids = new Fluid[]{moltenIronFluid, moltenGoldFluid, moltenCopperFluid, moltenTinFluid, moltenAluminumFluid,
+                    moltenCobaltFluid, moltenArditeFluid, moltenBronzeFluid, moltenAlubrassFluid, moltenManyullynFluid,
+                    moltenAlumiteFluid, moltenObsidianFluid, moltenSteelFluid, moltenGlassFluid, moltenStoneFluid, moltenEmeraldFluid,
+                    bloodFluid, moltenNickelFluid, moltenLeadFluid, moltenSilverFluid, moltenShinyFluid, moltenInvarFluid,
+                    moltenElectrumFluid, moltenEnderFluid, TinkerWorld.blueSlimeFluid, glueFluid, pigIronFluid};
 
+            for (int i = 0; i < tinkerFluids.length; i++)
+                if(tinkerFluids[i] != null)
+                    FluidContainerRegistry.registerFluidContainer(tinkerFluids[i], new ItemStack(clayBucketsTinkers, 1, i), emptyClayBucket);
 
+        }
 
         // add recipes
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(clayBucketUnfired), "c c", " c ", 'c', new ItemStack(Items.clay_ball)));
@@ -85,6 +90,9 @@ public class IguanaItems {
     @Handler
     public void postInit(FMLPostInitializationEvent event)
     {
+        if(TinkerSmeltery.buckets == null)
+            return;
+
         MinecraftForge.EVENT_BUS.register(new ClayBucketHandler());
     }
 }

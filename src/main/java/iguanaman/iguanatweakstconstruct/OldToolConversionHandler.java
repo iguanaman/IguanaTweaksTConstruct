@@ -3,6 +3,7 @@ package iguanaman.iguanatweakstconstruct;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
 import iguanaman.iguanatweakstconstruct.reference.Config;
+import iguanaman.iguanatweakstconstruct.reference.Reference;
 import iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic;
 import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import iguanaman.iguanatweakstconstruct.util.Log;
@@ -14,6 +15,7 @@ import tconstruct.items.tools.Hammer;
 import tconstruct.items.tools.Pickaxe;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.tools.ToolCore;
+import tconstruct.util.config.PHConstruct;
 
 public class OldToolConversionHandler {
     // todo: re-enable when this stuff is 100% reliable >_<
@@ -64,6 +66,21 @@ public class OldToolConversionHandler {
         if(tags.hasKey("GemBoost") && realHlvl == HarvestLevels._4_bronze) {
             return hlvl != HarvestLevels._5_diamond;
         }
+
+
+        // our own diamond modifier is disabled, but vanilla one is there
+        if(!Config.changeDiamondModifier || !IguanaTweaksTConstruct.pulsar.isPulseLoaded(Reference.PULSE_HARVESTTWEAKS))
+            // vanilla tcon allows harvestlevel change
+            if(PHConstruct.miningLevelIncrease)
+            {
+                // was the tool boosted with a diamond?
+                if(tags.getBoolean("Diamond")) // returns false if tag is not present
+                    return hlvl != HarvestLevels._6_obsidian;
+                // ...with an emerald?
+                if(tags.getBoolean("Emerald"))
+                    return hlvl != HarvestLevels._5_diamond;
+            }
+
 
         return hlvl != realHlvl;
     }

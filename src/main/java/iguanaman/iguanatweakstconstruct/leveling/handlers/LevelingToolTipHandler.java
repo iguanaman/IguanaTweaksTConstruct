@@ -31,7 +31,7 @@ public class LevelingToolTipHandler {
             return;
 
         // we're only interested in tinker tools, obviously
-        if(!(event.itemStack.getItem() instanceof ToolCore))
+        if(!(event.itemStack.getItem() instanceof ToolCore) || !event.itemStack.hasTagCompound())
             return;
 
         // don't display tooltip when CTRL is held (also tic tooltips compatibility)

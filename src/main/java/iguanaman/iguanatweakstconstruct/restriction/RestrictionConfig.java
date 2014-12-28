@@ -46,6 +46,10 @@ public class RestrictionConfig {
         comment.append("partnames are: ");
         // patterns
         for(String name : RestrictionHelper.configNameToPattern.keySet()) {
+            // exclude fletching and bowstring
+            if("bowstring".equals(name) || "fletching".equals(name))
+                continue;
+
             comment.append(name);
             comment.append(", ");
         }

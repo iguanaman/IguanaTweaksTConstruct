@@ -6,10 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.crafting.CastingRecipe;
-import tconstruct.library.tools.BowstringMaterial;
-import tconstruct.library.tools.CustomMaterial;
-import tconstruct.library.tools.FletchingMaterial;
-import tconstruct.library.tools.ToolMaterial;
+import tconstruct.library.tools.*;
 import tconstruct.library.util.IToolPart;
 import tconstruct.smeltery.TinkerSmeltery;
 import tconstruct.smeltery.items.MetalPattern;
@@ -198,6 +195,9 @@ public final class RestrictionHelper {
             else
                 name = (new ItemStack(pattern, 1, meta)).getUnlocalizedName();
 
+            if(name == null || name.isEmpty())
+                continue;
+
             ItemMetaWrapper im = configNameToPattern.get(name);
             // not registered in the mapping yet?
             if(im == null) {
@@ -213,11 +213,10 @@ public final class RestrictionHelper {
         }
 
         // bowstring and fletchling are treated differently
-        for(Integer matID : TConstructRegistry.toolMaterials.keySet())
+        for(CustomMaterial mat : TConstructRegistry.customMaterials)
         {
             // bowstring
-            CustomMaterial mat = TConstructRegistry.getCustomMaterial(matID, BowstringMaterial.class);
-            if(mat != null)
+            if(mat instanceof BowstringMaterial)
             {
                 ItemMetaWrapper im = configNameToPattern.get("bowstring");
                 // not registered in the mapping yet?
@@ -234,8 +233,7 @@ public final class RestrictionHelper {
             }
 
             // fletchling
-            mat = TConstructRegistry.getCustomMaterial(matID, FletchingMaterial.class);
-            if(mat != null)
+            if(mat instanceof FletchingMaterial)
             {
                 ItemMetaWrapper im = configNameToPattern.get("fletching");
                 // not registered in the mapping yet?
@@ -277,6 +275,9 @@ public final class RestrictionHelper {
                 name = patternNamesWeaponry[meta];
             else
                 name = (new ItemStack(pattern, 1, meta)).getUnlocalizedName();
+
+            if(name == null || name.isEmpty())
+                continue;
 
             ItemMetaWrapper im = configNameToCast.get(name);
             // not registered in the mapping yet?

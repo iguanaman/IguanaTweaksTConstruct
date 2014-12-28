@@ -28,6 +28,11 @@ public class PartRestrictionHandler {
         PatternBuilder.ItemKey key = PatternBuilder.instance.getItemKey(event.material);
         if(key == null)
             return;
+
+        // bowstring and fletching
+        if(event.pattern.getItemDamage() == 23 || event.pattern.getItemDamage() == 24)
+            return;
+
         PatternBuilder.MaterialSet set = ((PatternBuilder.MaterialSet)PatternBuilder.instance.materialSets.get(key.key));
         if(set == null)
             return;

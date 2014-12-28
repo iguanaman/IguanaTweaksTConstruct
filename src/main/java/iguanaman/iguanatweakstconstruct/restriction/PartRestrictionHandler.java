@@ -3,10 +3,12 @@ package iguanaman.iguanatweakstconstruct.restriction;
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import iguanaman.iguanatweakstconstruct.util.TooltipHelper;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.oredict.OreDictionary;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.crafting.CastingRecipe;
 import tconstruct.library.crafting.PatternBuilder;
@@ -84,7 +86,14 @@ public class PartRestrictionHandler {
         List<CustomMaterial> customMaterials = RestrictionHelper.getPatternCustomMaterials(event.itemStack);
         if(customMaterials != null) {
             for (CustomMaterial mat : customMaterials) {
-                event.toolTip.add(mat.input.getDisplayName());
+                if(mat.input != null)
+                    event.toolTip.add(mat.input.getDisplayName());
+                else if(mat.oredict != null)
+                {
+                    List<ItemStack> ores = OreDictionary.getOres(mat.oredict);
+                    if(ores != null && !ores.isEmpty())
+                        event.toolTip.add(String.format("%s (%s)", ores.get(0).getDisplayName(), mat.oredict));
+                }
             }
             foundMat = true;
         }

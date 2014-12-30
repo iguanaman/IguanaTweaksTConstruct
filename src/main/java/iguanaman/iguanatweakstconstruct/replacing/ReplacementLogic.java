@@ -22,6 +22,7 @@ import tconstruct.library.tools.ToolMaterial;
 import tconstruct.library.weaponry.IAmmo;
 import tconstruct.modifiers.tools.ModAttack;
 import tconstruct.modifiers.tools.ModRedstone;
+import tconstruct.tools.TinkerTools;
 import tconstruct.tools.logic.ToolStationLogic;
 import tconstruct.weaponry.TinkerWeaponry;
 
@@ -274,16 +275,14 @@ public final class ReplacementLogic {
         // todo: rewrite this to use material IDs.
         String ability = newMat.ability();
         // writeable & thaumic (equal since we only exchange 1 part)
-        if(ability.equals(StatCollector.translateToLocal("materialtraits.writable")) ||
-           ability.equals(StatCollector.translateToLocal("materialtraits.thaumic"))) {
+        if(newMaterialId == TinkerTools.MaterialID.Paper || newMaterialId == TinkerTools.MaterialID.Thaumium) {
             tags.setInteger("Modifiers", tags.getInteger("Modifiers") + 1);
         }
 
         /************ then remove the old traits *************/
         ability = oldMat.ability();
         // writeable & thaumic (equal since we only exchange 1 part)
-        if(ability.equals(StatCollector.translateToLocal("materialtraits.writable")) ||
-           ability.equals(StatCollector.translateToLocal("materialtraits.thaumic"))) {
+        if(oldMaterialId == TinkerTools.MaterialID.Paper || oldMaterialId == TinkerTools.MaterialID.Thaumium) {
             int newMods = tags.getInteger("Modifiers") - 1;
             // theoretically this should never happen, but.. rather be safe than sorry
             if(newMods < 0) newMods = 0;

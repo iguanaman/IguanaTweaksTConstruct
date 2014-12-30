@@ -2,11 +2,11 @@
 	"versionList": [
 		{
 			"mcVersion": "Minecraft 1.7.10",
-			"modVersion": "1.7.10-2.0.6",
+			"modVersion": "1.7.10-2.1.1",
 			"changeLog": [
-                		"Fix Part Restrictions not working properly with Material overrides"
+                		"Version for Tinkers' Construct with ranged stuff"
 			],
-			"updateURL":"http://minecraft.curseforge.com/mc-mods/223248-iguanas-tinker-tweaks/files/2214862/download",
+			"updateURL":"http://minecraft.curseforge.com/mc-mods/223248-iguanas-tinker-tweaks/files/2223100/download",
 			"isDirectLink":"true"
 		}
 	]

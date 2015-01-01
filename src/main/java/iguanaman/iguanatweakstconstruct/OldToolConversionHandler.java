@@ -14,8 +14,10 @@ import tconstruct.items.tools.Arrow;
 import tconstruct.items.tools.Hammer;
 import tconstruct.items.tools.Pickaxe;
 import tconstruct.library.TConstructRegistry;
+import tconstruct.library.tools.DualMaterialToolPart;
 import tconstruct.library.tools.ToolCore;
 import tconstruct.util.config.PHConstruct;
+import tconstruct.weaponry.ammo.BoltAmmo;
 
 public class OldToolConversionHandler {
     // todo: re-enable when this stuff is 100% reliable >_<
@@ -99,6 +101,10 @@ public class OldToolConversionHandler {
 
         // recreate the head itemstack
         ItemStack newHead = new ItemStack(tool.getHeadItem(), 1, tags.getInteger("Head"));
+
+        // bolts are special..
+        if(tool instanceof BoltAmmo)
+            newHead = DualMaterialToolPart.createDualMaterial(tool.getHeadItem(), tags.getInteger("Handle"), tags.getInteger("Head"));
 
         // and replace. We can always do this, since it shouldn't have any unwanted side effects if we disable the reduction
         int oldXpPenality = Config.partReplacementXpPenality;

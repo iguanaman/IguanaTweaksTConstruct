@@ -5,6 +5,7 @@ import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
 import iguanaman.iguanatweakstconstruct.leveling.modifiers.ModXpAwareRedstone;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
+import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -24,6 +25,7 @@ import tconstruct.modifiers.tools.ModAttack;
 import tconstruct.modifiers.tools.ModRedstone;
 import tconstruct.tools.TinkerTools;
 import tconstruct.tools.logic.ToolStationLogic;
+import tconstruct.util.config.PHConstruct;
 import tconstruct.weaponry.TinkerWeaponry;
 
 import static iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic.PartTypes.*;
@@ -186,6 +188,19 @@ public final class ReplacementLogic {
         // if boosted, remove boost tag
         if(tags.hasKey("GemBoost"))
             tags.removeTag("GemBoost");
+
+        // if boosted by vanilla diamond modifier, then we have to respect that.
+        if(!Config.changeDiamondModifier || !IguanaTweaksTConstruct.pulsar.isPulseLoaded(Reference.PULSE_HARVESTTWEAKS))
+            // vanilla tcon allows harvestlevel change
+            if(PHConstruct.miningLevelIncrease)
+            {
+                // was the tool boosted with a diamond?
+                if(tags.getBoolean("Diamond") && tags.getInteger("HarvestLevel") < HarvestLevels._6_obsidian) // returns false if tag is not present
+                    tags.setInteger("HarvestLevel", HarvestLevels._6_obsidian);
+                // ...with an emerald?
+                if(tags.getBoolean("Emerald") && tags.getInteger("HarvestLevel") < HarvestLevels._5_diamond)
+                    tags.setInteger("HarvestLevel", HarvestLevels._5_diamond);
+            }
 
         // handle Leveling/xp (has to be done first before we change the stats so we get the correct old values)
         if(LevelingLogic.hasXp(tags))

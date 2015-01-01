@@ -18,6 +18,7 @@ import tconstruct.library.tools.CustomMaterial;
 import tconstruct.library.tools.ToolMaterial;
 import tconstruct.library.util.IPattern;
 import tconstruct.library.util.IToolPart;
+import tconstruct.weaponry.TinkerWeaponry;
 
 import java.util.List;
 
@@ -49,6 +50,10 @@ public class PartRestrictionHandler {
         // null checks
         if(event.recipe == null || event.recipe.output == null)
             return;
+        // we allow all bolts
+        if(event.recipe.output.getItem() == TinkerWeaponry.partBolt)
+            return;
+        
         CastingRecipe recipe = event.recipe;
         ItemStack output = recipe.output;
 

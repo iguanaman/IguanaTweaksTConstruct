@@ -188,6 +188,10 @@ public final class HarvestLevelTweaks {
             }
             clazz = clazz.getSuperclass();
         }
+
+        // check if the setting was successful
+        if(item.getHarvestLevel(null, toolClass) != hlvl)
+            Log.error("Could not set harvestlevel of " + item.getUnlocalizedName() + ". Contact the Mod Author to properly support Item.setHarvestLevel().");
     }
 
     // todo: expose this to config. But I'm too lazy for such a minor thing. Just call me to add another string...

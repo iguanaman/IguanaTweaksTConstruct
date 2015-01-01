@@ -5,6 +5,7 @@ import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
 import mantle.pulsar.pulse.Handler;
 import mantle.pulsar.pulse.Pulse;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
@@ -22,6 +23,7 @@ public class IguanaOverride {
     @Handler
     public void postInit(FMLPostInitializationEvent event)
     {
+        new ForgeHooks();
         doOverride("Material", new MaterialOverride());
         doOverride("Tool", new ToolOverride());
         doOverride("Block", new BlockOverride());

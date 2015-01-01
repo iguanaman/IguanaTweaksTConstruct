@@ -1,9 +1,17 @@
 package iguanaman.iguanatweakstconstruct.leveling;
 
+import static iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic.PartTypes.ACCESSORY;
+import static iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic.PartTypes.EXTRA;
+import static iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic.PartTypes.HANDLE;
+import static iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic.PartTypes.HEAD;
+import iguanaman.iguanatweakstconstruct.override.XPAdjustmentMap;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
+import iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic;
+import iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic.PartTypes;
 import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentText;
@@ -242,7 +250,7 @@ public final class LevelingLogic {
 
             base += ((float)baseMiningSpeed + (float)(miningSpeed-baseMiningSpeed)/5f)/divider;
 
-            // shovels need a bit more xp because their blocks berak much faster
+            // shovels need a bit more xp because their blocks break much faster
 
             if(tool.getItem() instanceof Hammer) base *= 5.1f;
             if(tool.getItem() instanceof Excavator) base *= 6.2f;
@@ -268,12 +276,65 @@ public final class LevelingLogic {
 			if (level >= 1) base *= Math.pow(Config.xpPerLevelMultiplier, level - 1);
             if(tags.hasKey("HarvestLevel") && LevelingLogic.getHarvestLevel(tags) == 0)
                 base /= Config.xpPerLevelMultiplier * Config.xpPerLevelMultiplier;
+            
+            //XP Multiplier applies to all tools, but not to "mining boost" XP.
+			float xpMultiplier = getXPMultiplier(tool, tags);
+			
+			base *= xpMultiplier;
 		}
 
 		return Math.round(base);
 	}
 
-    /**
+    private static float getXPMultiplier(ItemStack tool, NBTTagCompound tags) 
+    {
+    	boolean nonHeadsCount = !Config.onlyHeadsChangeXPRequirement;
+    	ToolCore core = (ToolCore) tool.getItem();
+    	
+    	boolean extraIsHead = (core instanceof Hammer);
+    	
+    	boolean accessoryIsHead = (extraIsHead ||
+				   				   core instanceof Excavator||
+				   				   core instanceof Cleaver||
+				   				   core instanceof LumberAxe||
+    							   core instanceof Mattock);
+    	
+    	double numberOfParts = 0;
+    	double xpModSoFar = 1;
+    	
+    	if(ReplacementLogic.getPart(core, HEAD) != null)
+    	{
+    		numberOfParts++;
+    		int toolMaterialHead = ReplacementLogic.getToolPartMaterial(tags, HEAD);
+    		String matName = TConstructRegistry.getMaterial(toolMaterialHead).name();
+    		xpModSoFar *= XPAdjustmentMap.get(matName);
+    	}
+    	if(ReplacementLogic.getPart(core, HANDLE) != null && nonHeadsCount)
+    	{
+    		numberOfParts++;
+    		int toolMaterialHandle = ReplacementLogic.getToolPartMaterial(tags, HANDLE);
+    		String matName = TConstructRegistry.getMaterial(toolMaterialHandle).name();
+    		xpModSoFar *= XPAdjustmentMap.get(matName);
+    	}
+    	if(ReplacementLogic.getPart(core, ACCESSORY) != null && (accessoryIsHead || nonHeadsCount))
+    	{
+    		numberOfParts++;
+    		int toolMaterialAccessory = ReplacementLogic.getToolPartMaterial(tags, ACCESSORY);
+    		String matName = TConstructRegistry.getMaterial(toolMaterialAccessory).name();
+    		xpModSoFar *= XPAdjustmentMap.get(matName);
+    	}
+    	if(ReplacementLogic.getPart(core, EXTRA) != null  && (extraIsHead || nonHeadsCount))
+    	{
+    		numberOfParts++;
+    		int toolMaterialExtra = ReplacementLogic.getToolPartMaterial(tags, EXTRA);
+    		String matName = TConstructRegistry.getMaterial(toolMaterialExtra).name();
+    		xpModSoFar *= XPAdjustmentMap.get(matName);
+    	}
+
+        //Take the geometric mean
+		return (float)Math.pow(xpModSoFar,1.0/numberOfParts);
+	}
+	/**
      * Applies all the logic for increasing the tool level. This is only specific to the *tool* level, and has no relation to the mining-level-boost!
      */
 	public static void levelUpTool(ItemStack stack, EntityPlayer player)

@@ -40,6 +40,10 @@ public class MaterialOverride implements IOverride {
         comment.append("\n");
         comment.append("Stonebound and Jagged are both in the 'shoddy' property. A positive number is stonebound, a negative number jagged.\n");
         comment.append("\n");
+        comment.append("XP Amount is a multiplier on the XP needed to make a tool of this materia level up. For example, 2 makes it take\n");
+        comment.append("twice as long to level up. .5 makes it take half as long. A tool made of multiple materials averages the growth\n");
+        comment.append("rate using the geometric mean. (NOT the arethmatic mean!)\n");
+        comment.append("\n");
         comment.append("Possible Colors:\n");
         for(EnumChatFormatting format : EnumChatFormatting.values())
             comment.append(String.format("\t%s\n", format.getFriendlyName()));
@@ -88,6 +92,7 @@ public class MaterialOverride implements IOverride {
     {
         // get material stats
         int harvestLevel = config.get(category, "harvestLevel", mat.harvestLevel()).getInt();
+        float xpAmount = (float)config.get(category, "xpAmount", XPAdjustmentMap.get(mat.materialName)).getDouble();
         int durability = config.get(category, "durability", mat.durability()).getInt();
         int miningspeed = config.get(category, "miningSpeed", mat.toolSpeed()).getInt();
         int attack = config.get(category, "attack", mat.attack()).getInt();
@@ -105,7 +110,8 @@ public class MaterialOverride implements IOverride {
             tipStyle = mat.style();
 
         // reconstruct the material
-        return new ToolMaterial(mat.materialName, harvestLevel, durability, miningspeed, attack, handleModifier, reinforced, stonebound, tipStyle, mat.primaryColor());
+        XPAdjustmentMap.put(mat.materialName, xpAmount);
+        return new ToolMaterial(mat.materialName, harvestLevel, durability, miningspeed, attack, handleModifier, reinforced, stonebound, tipStyle, mat.ability());
     }
 
     private EnumChatFormatting stringToEnum(String s)
@@ -126,6 +132,7 @@ public class MaterialOverride implements IOverride {
                 mat1.toolSpeed() == mat2.toolSpeed() &&
                 Float.compare(mat1.handleDurability(), mat2.handleDurability()) == 0 &&
                 mat1.reinforced() == mat2.reinforced() &&
+                Float.compare(XPAdjustmentMap.get(mat1.name()), XPAdjustmentMap.get(mat2.name()))==0	&&
                 Float.compare(mat1.shoddy(), mat2.shoddy()) == 0;
     }
 

@@ -45,6 +45,9 @@ public class OldToolConversionHandler {
             return false;
 
         NBTTagCompound tags = itemStack.getTagCompound().getCompoundTag("InfiTool");
+        // special tools are not updated since they got special stats
+        if(tags.getBoolean("Special"))
+            return false;
 
         // does it have no level, but leveling is enabled?
         if(!LevelingLogic.hasLevel(tags) && Config.toolLeveling)

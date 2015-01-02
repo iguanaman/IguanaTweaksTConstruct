@@ -39,6 +39,10 @@ public class ModPartReplacement extends ItemModifier {
         ToolCore tool = (ToolCore) itemStack.getItem();
         NBTTagCompound tags = itemStack.getTagCompound().getCompoundTag("InfiTool");
 
+        // special tools can not be replaced
+        if(tags.getBoolean("Special"))
+            return false;
+
         if(tags.getInteger("Damage") > 0)
             return false;
 

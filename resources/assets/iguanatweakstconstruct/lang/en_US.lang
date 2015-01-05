@@ -66,6 +66,8 @@ message.levelup.jagged.tag=Jagged
 message.levelup.stonebound.tag=Stonebound
 message.levelup.critical.tag=Critical Chance
 
+modifier.toolstation.MiningLevelBoost=Mining Level Boost
+
 tooltip.level.mininglevel=Mining Level
 tooltip.level.miningxp=Mining XP
 tooltip.level.boosted=Boosted

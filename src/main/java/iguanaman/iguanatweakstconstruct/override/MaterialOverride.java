@@ -72,6 +72,7 @@ public class MaterialOverride implements IOverride {
             if(!config.hasCategory(category) && !fillWithDefault) {
                 // retain the material :S
                 newMaterials.put(entry.getKey(), mat);
+                newMaterialStrings.put(mat.name(), mat);
                 continue;
             }
 

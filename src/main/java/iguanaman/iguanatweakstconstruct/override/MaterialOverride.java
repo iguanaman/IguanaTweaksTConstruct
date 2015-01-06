@@ -62,6 +62,7 @@ public class MaterialOverride implements IOverride {
 
         // cycle through all materials
         HashMap<Integer, ToolMaterial> newMaterials = new HashMap<Integer, ToolMaterial>();
+        HashMap<String, ToolMaterial> newMaterialStrings = new HashMap<String, ToolMaterial>();
         for(Map.Entry<Integer, ToolMaterial> entry : TConstructRegistry.toolMaterials.entrySet())
         {
             ToolMaterial mat = entry.getValue();
@@ -77,6 +78,7 @@ public class MaterialOverride implements IOverride {
             ToolMaterial newMat = processMaterial(category, mat, config);
             // we cannot replace the material while cycling through, since it'd cause a ConcurrentModificationException
             newMaterials.put(entry.getKey(), newMat);
+            newMaterialStrings.put(newMat.name(), newMat);
 
             if(Config.logOverrideChanges)
                 Log.info(String.format("Material Override: Changed Material %s", mat.materialName));
@@ -86,6 +88,7 @@ public class MaterialOverride implements IOverride {
         }
 
         TConstructRegistry.toolMaterials = newMaterials;
+        TConstructRegistry.toolMaterialStrings = newMaterialStrings;
     }
 
     private ToolMaterial processMaterial(String category, ToolMaterial mat, Configuration config)

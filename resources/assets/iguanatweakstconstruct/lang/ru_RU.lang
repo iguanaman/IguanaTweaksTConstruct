@@ -66,6 +66,8 @@ message.levelup.jagged.tag=Зазубренность
 message.levelup.stonebound.tag=Сила камня
 message.levelup.critical.tag=Критический шанс
 
+modifier.toolstation.MiningLevelBoost=Увеличение уровня добычи
+
 tooltip.level.mininglevel=Уровень добычи
 tooltip.level.miningxp=Опыт добычи
 tooltip.level.boosted=Усилено
@@ -100,7 +102,7 @@ tooltip.uselessHoe1=Эта мотыга ничего не может делат�
 tooltip.uselessWeapon1=Это оружие бьёт, как мокрая лапша!
 tooltip.uselessBow1=Тетива этого лука лопнула!
 
-tooltip.part.replaceable=Части могут быть заменены
+tooltip.part.replaceable=Детали могут быть заменены
 tooltip.part.needsmodifier1=Не может быть заменено после добавления,
 tooltip.part.needsmodifier2=если модификатор не доступен
 tooltip.part.castonly1=Может использоваться только для создания слепков,

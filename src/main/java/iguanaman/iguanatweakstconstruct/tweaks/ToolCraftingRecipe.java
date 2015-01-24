@@ -31,6 +31,8 @@ public class ToolCraftingRecipe implements IRecipe {
 
         List<ItemStack> input = new LinkedList<ItemStack>();
 
+        boolean hasToolPart = false;
+
         for(int i = 0; i < inventoryCrafting.getSizeInventory(); i++)
         {
             ItemStack slot = inventoryCrafting.getStackInSlot(i);
@@ -39,12 +41,18 @@ public class ToolCraftingRecipe implements IRecipe {
                 continue;
 
             // is it a toolpart?
-            //if(!(slot.getItem() instanceof IToolPart))
-                //return false;
+            if(slot.getItem() instanceof IToolPart)
+                hasToolPart = true;
 
             // save it
             input.add(slot);
         }
+
+        // at least 1 of the used parts has to be a toolpart
+        // this is only a performance optimization. It allows to use sticks as handles while
+        // not checking all possible permutations for recipes that don't even contain toolparts
+        if(!hasToolPart)
+            return false;
 
         // check correct size
         if(input.size() < 2 || (input.size() > 3 && !Config.easyAdvancedToolBuilding))

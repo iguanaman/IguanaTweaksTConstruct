@@ -96,10 +96,4 @@ public class DebugCommand extends CommandBase {
         return null;
     }
 
-    @Override
-    public int compareTo (Object arg0)
-    {
-        return 0;
-    }
-
 }

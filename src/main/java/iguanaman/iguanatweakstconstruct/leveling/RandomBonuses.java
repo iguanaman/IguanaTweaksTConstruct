@@ -17,8 +17,10 @@ import tconstruct.items.tools.Hammer;
 import tconstruct.library.crafting.ModifyBuilder;
 import tconstruct.library.modifier.ItemModifier;
 import tconstruct.library.tools.ToolCore;
+import tconstruct.library.weaponry.IAmmo;
 import tconstruct.modifiers.tools.ModWindup;
 import tconstruct.tools.TinkerTools;
+import tconstruct.weaponry.TinkerWeaponry;
 
 import java.util.*;
 
@@ -70,6 +72,7 @@ public class RandomBonuses {
 
         // also ensure the correct attack modifier
         modCache.put(TinkerTools.modAttack.key, TinkerTools.modAttack);
+        modCache.put(TinkerWeaponry.modAttack.key + "Ammo", TinkerWeaponry.modAttack);
 
         // special case: windup is a redstone modifier
         for(ItemModifier modifier : ModifyBuilder.instance.itemModifiers) {
@@ -341,7 +344,11 @@ public class RandomBonuses {
     {
         ItemStack[] quarzStack = new ItemStack[]{new ItemStack(Items.quartz, 1)};
 
-        return addGenericModifier(player, tool, "ModAttack", quarzStack, 24, 1, "message.levelup.attack", "\u00a7f");
+        String key = "ModAttack";
+        if(tool.getItem() != null && tool.getItem() instanceof IAmmo)
+            key = "ModAttackAmmo";
+
+        return addGenericModifier(player, tool, key, quarzStack, 24, 1, "message.levelup.attack", "\u00a7f");
     }
 
     public static boolean addBlazeModifier(EntityPlayer player, ItemStack tool)

@@ -6,6 +6,7 @@ import iguanaman.iguanatweakstconstruct.reference.Reference;
 import mantle.pulsar.pulse.Handler;
 import mantle.pulsar.pulse.Pulse;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
@@ -29,6 +30,8 @@ public class IguanaOverride {
         doOverride("Block", new BlockOverride());
         doOverride("BonusModifier", new ModifierOverride());
         doOverride("HarvestLevelNames", new HarvestLevelNameOverride());
+
+        MinecraftForge.EVENT_BUS.register(new ExtraHarvestLevelHandler());
     }
 
     public static void doOverride(String type, IOverride overrider)

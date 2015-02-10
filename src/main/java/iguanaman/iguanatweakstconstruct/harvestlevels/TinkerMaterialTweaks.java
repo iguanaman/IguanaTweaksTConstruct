@@ -1,5 +1,8 @@
 package iguanaman.iguanatweakstconstruct.harvestlevels;
 
+import java.util.Collection;
+import java.util.HashSet;
+
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import iguanaman.iguanatweakstconstruct.reference.Config;
@@ -41,6 +44,16 @@ public final class TinkerMaterialTweaks {
         // save constant factor to apply to all durabilities and speeds
         durabilityMod = Config.durabilityPercentage / 100f;
         speedMod = Config.miningSpeedPercentage / 100f;
+
+        // at first we update each material to keep the harvest levels on non-listed materials appropriate
+        Collection<ToolMaterial> copyOfMaterials = new HashSet<ToolMaterial>(TConstructRegistry.toolMaterials.values());
+        for(ToolMaterial material : copyOfMaterials)
+        {
+            // new harvest level
+            int newHlvl = HarvestLevelTweaks.getUpdatedHarvestLevel(material.harvestLevel());
+
+            updateMaterial(newHlvl, material.name(), material.durability(), material.toolSpeed(), material.attack(), material.handleDurability());
+        }
 
         // modify the base materials added by tinkers construct
         modifyTcon();

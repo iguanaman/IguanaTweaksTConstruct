@@ -221,7 +221,7 @@ public final class ReplacementLogic {
         }
 
         // handle boost leveling/xp
-        if(LevelingLogic.hasBoostXp(tags))
+        if(LevelingLogic.hasBoostXp(tags) && Config.levelingPickaxeBoost)
         {
             float newRequiredBoostXp = LevelingLogic.getRequiredBoostXp(toolStack);
             float xp = LevelingLogic.getBoostXp(tags);

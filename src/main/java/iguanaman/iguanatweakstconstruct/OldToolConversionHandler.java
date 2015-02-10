@@ -80,10 +80,10 @@ public class OldToolConversionHandler {
             {
                 // was the tool boosted with a diamond?
                 if(tags.getBoolean("Diamond")) // returns false if tag is not present
-                    return hlvl != HarvestLevels._6_obsidian;
+                    return hlvl < HarvestLevels._6_obsidian;
                 // ...with an emerald?
                 if(tags.getBoolean("Emerald"))
-                    return hlvl != HarvestLevels._5_diamond;
+                    return hlvl < HarvestLevels._5_diamond;
             }
 
 

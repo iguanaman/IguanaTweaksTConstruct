@@ -12,6 +12,11 @@ public class ModFluxExpensive extends ModFlux {
         this.batteries = batteries;
     }
 
+    @Override
+    public boolean matches(ItemStack[] input, ItemStack tool) {
+        return super.matches(input, tool) && canModify(tool, input);
+    }
+
     // needs 2 modifiers
     @Override
     protected boolean canModify(ItemStack tool, ItemStack[] input) {

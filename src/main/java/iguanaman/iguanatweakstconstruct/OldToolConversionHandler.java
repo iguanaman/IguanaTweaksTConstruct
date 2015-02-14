@@ -10,13 +10,18 @@ import iguanaman.iguanatweakstconstruct.util.Log;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+
+import java.util.Arrays;
+
 import tconstruct.items.tools.Arrow;
 import tconstruct.items.tools.Hammer;
 import tconstruct.items.tools.Pickaxe;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.tools.DualMaterialToolPart;
 import tconstruct.library.tools.ToolCore;
+import tconstruct.tools.TinkerTools;
 import tconstruct.util.config.PHConstruct;
+import tconstruct.weaponry.TinkerWeaponry;
 import tconstruct.weaponry.ammo.BoltAmmo;
 
 public class OldToolConversionHandler {
@@ -48,6 +53,18 @@ public class OldToolConversionHandler {
         // special tools are not updated since they got special stats
         if(tags.getBoolean("Special"))
             return false;
+
+        // Special check for all the weapons that got broken from the Attack-Modifier bug
+        if(TinkerTools.modAttack != null && tags.hasKey("ModAttack")) {
+            // basically non-ammo weapons got the ammo-modifier and we have to fix their NBT now
+            if(!Arrays.asList(((ToolCore) itemStack.getItem()).getTraits()).contains("ammo")) {
+                int[] data = tags.getIntArray("ModAttack");
+                if(data[1] % 72 != 0) {
+                    // yup, b0rked
+                    return true;
+                }
+            }
+        }
 
         // does it have no level, but leveling is enabled?
         if(!LevelingLogic.hasLevel(tags) && Config.toolLeveling)
@@ -94,6 +111,20 @@ public class OldToolConversionHandler {
     {
         ToolCore tool = (ToolCore) itemStack.getItem();
         NBTTagCompound tags = itemStack.getTagCompound().getCompoundTag("InfiTool");
+
+        // Special check for broken attack-modifier from ITT levelups (see above)
+        // Special check for all the weapons that got broken from the Attack-Modifier bug
+        if(TinkerTools.modAttack != null && tags.hasKey("ModAttack")) {
+            // basically non-ammo weapons got the ammo-modifier and we have to fix their NBT now
+            if(!Arrays.asList(((ToolCore) itemStack.getItem()).getTraits()).contains("ammo")) {
+                int[] data = tags.getIntArray("ModAttack");
+                if(data[1] % 72 != 0) {
+                    // yup, b0rked
+                    data[1] = (data[1]/72 + 1)*72;
+                    tags.setIntArray("ModAttack", data);
+                }
+            }
+        }
 
         // regular level and xp
         if(!LevelingLogic.hasLevel(tags) && Config.toolLeveling)

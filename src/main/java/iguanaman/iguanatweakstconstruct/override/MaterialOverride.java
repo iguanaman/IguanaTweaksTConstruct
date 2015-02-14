@@ -115,7 +115,7 @@ public class MaterialOverride implements IOverride {
 
         // reconstruct the material
         XPAdjustmentMap.put(mat.materialName, xpAmount);
-        return new ToolMaterial(mat.materialName, harvestLevel, durability, miningspeed, attack, handleModifier, reinforced, stonebound, tipStyle, mat.ability());
+        return new ToolMaterial(mat.materialName, mat.localizationString, harvestLevel, durability, miningspeed, attack, handleModifier, reinforced, stonebound, tipStyle, mat.primaryColor);
     }
 
     private EnumChatFormatting stringToEnum(String s)

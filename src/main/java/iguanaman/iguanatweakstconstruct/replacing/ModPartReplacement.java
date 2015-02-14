@@ -125,8 +125,10 @@ public class ModPartReplacement extends ItemModifier {
         // index 2 = extra
         // index >2 = crafting station
         // todo: special behaviour that left side of crafting station is left hammer/battleaxe part and right is right component ;)
-        for(int i = partIndex; i > 0; i--)
+        for(int i = partIndex; i > 0; i--) {
             partType = detectAdditionalPartType(recipe, replacementPartItem, partType);
+            oldMatId = getToolPartMaterial(tags, partType);
+        }
 
         // if it's a head, we don't allow downgrading to a head with no xp, if we have xp
         if(partType == HEAD)

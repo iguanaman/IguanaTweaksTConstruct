@@ -12,6 +12,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
+
+import java.util.Arrays;
+
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.crafting.ModifyBuilder;
 import tconstruct.library.crafting.ToolBuilder;
@@ -352,27 +355,26 @@ public final class ReplacementLogic {
 
         int modifiers = tags.getInteger("Modifiers"); // backup modifiers
 
-        // find the correct(!!, not glove attack) modifier
-        for(ItemModifier mod : ModifyBuilder.instance.itemModifiers)
-            if(mod.key.equals("ModAttack"))
-            {
-                ModAttack modAttack = (ModAttack)mod;
-                int[] keyPair = tags.getIntArray("ModAttack");
-                // get amount of redstone applied
-                int qLvl = keyPair[0];
-                // reset redstone modifier
-                tags.removeTag("ModAttack");
+        ModAttack modAttack = TinkerTools.modAttack;
+        // ammo weapons have their own modifier
+        if(itemStack.getItem() instanceof ToolCore && TinkerWeaponry.modAttack != null && Arrays.asList(((ToolCore) itemStack.getItem()).getTraits()).contains("ammo"))
+            modAttack = TinkerWeaponry.modAttack;
 
-                // remove the old tooltip
-                int tipIndex = keyPair[2];
-                tags.removeTag("Tooltip" + tipIndex);
-                tags.removeTag("ModifierTip" + tipIndex);
+        int[] keyPair = tags.getIntArray("ModAttack");
+        // get amount of redstone applied
+        int qLvl = keyPair[0];
+        // reset redstone modifier
+        tags.removeTag("ModAttack");
+
+        // remove the old tooltip
+        int tipIndex = keyPair[2];
+        tags.removeTag("Tooltip" + tipIndex);
+        tags.removeTag("ModifierTip" + tipIndex);
 
 
-                // reapply redstone
-                while(qLvl-- > 0)
-                    modAttack.modify(new ItemStack[]{new ItemStack(Items.quartz)}, itemStack); // tags belong to oldTool
-            }
+        // reapply redstone
+        while(qLvl-- > 0)
+            modAttack.modify(new ItemStack[]{new ItemStack(Items.quartz)}, itemStack); // tags belong to oldTool
 
         // restore modifiers
         tags.setInteger("Modifiers", modifiers);

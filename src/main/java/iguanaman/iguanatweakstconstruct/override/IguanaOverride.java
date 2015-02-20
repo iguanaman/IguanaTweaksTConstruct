@@ -5,6 +5,8 @@ import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
 import mantle.pulsar.pulse.Handler;
 import mantle.pulsar.pulse.Pulse;
+import tconstruct.util.IMCHandler;
+
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -39,15 +41,23 @@ public class IguanaOverride {
         String configFileName = type + "Override.cfg";
         String defaultFileName = type + "Defaults.cfg";
 
-        Configuration defaultConfig = new Configuration(Reference.configFile(defaultFileName));
-        overrider.createDefault(defaultConfig);
-        defaultConfig.save();
+        try {
+            Configuration defaultConfig = new Configuration(Reference.configFile(defaultFileName));
+            overrider.createDefault(defaultConfig);
+            defaultConfig.save();
+        } catch(Exception e) {
+            IMCHandler.bigWarning("An Error occurred while creating default files for the %s Override", type);
+        }
 
-        Configuration config = new Configuration(Reference.configFile(configFileName));
-        config.load();
-        overrider.processConfig(config);
+        try {
+            Configuration config = new Configuration(Reference.configFile(configFileName));
+            config.load();
+            overrider.processConfig(config);
 
-        if(config.hasChanged())
-            config.save();
+            if(config.hasChanged())
+                config.save();
+        } catch(Exception e) {
+            IMCHandler.bigWarning("An Error occurred while processing the Override for %s", type);
+        }
     }
 }

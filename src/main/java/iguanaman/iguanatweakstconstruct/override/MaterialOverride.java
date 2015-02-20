@@ -29,7 +29,7 @@ public class MaterialOverride implements IOverride {
 
     @Override
     public void processConfig(Configuration config) {
-        Log.info("Loading Material Overrides");
+        Log.debug("Loading Material Overrides");
         StringBuilder comment = new StringBuilder();
         comment.append("Copy the desired materials you want to change from the defaults file into this file and adapt the stats.\n\n");
 

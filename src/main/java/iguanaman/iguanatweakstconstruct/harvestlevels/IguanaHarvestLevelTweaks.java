@@ -84,7 +84,7 @@ public class IguanaHarvestLevelTweaks {
         // deactivate mininglevel increase by tcon
         PHConstruct.miningLevelIncrease = false;
 
-        Log.info("Adding Diamond/Emerald Modifiers for Mining Levels");
+        Log.debug("Adding Diamond/Emerald Modifiers for Mining Levels");
         ModifyBuilder.registerModifier(new ModBonusMiningLevel(new ItemStack[] {new ItemStack(Items.diamond) }, "Diamond"));
         ModifyBuilder.registerModifier(new ModBonusMiningLevel(new ItemStack[] {new ItemStack(Items.emerald) }, "Emerald"));
     }

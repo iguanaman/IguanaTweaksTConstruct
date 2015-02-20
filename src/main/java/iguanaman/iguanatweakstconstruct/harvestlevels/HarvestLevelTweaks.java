@@ -25,14 +25,14 @@ public final class HarvestLevelTweaks {
     private HarvestLevelTweaks() {} // non-instantiable
 
     public static void modifyHarvestLevels() {
-        Log.info("Modifying HarvestLevel of blocks and items");
+        Log.debug("Modifying HarvestLevel of blocks and items");
 
         modifyOredictBlocks();
         modifyVanillaBlocks();
 
         modifyTools();
 
-        Log.info("Finished modifying HarvestLevel of blocks and items");
+        Log.debug("Finished modifying HarvestLevel of blocks and items");
     }
 
     private static void modifyVanillaBlocks()

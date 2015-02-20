@@ -18,7 +18,7 @@ public class RestrictionConfig {
         configfile = new Configuration(Reference.configFile(fileName));
         configfile.load();
 
-        Log.info("Applying Tool Part restrictions");
+        Log.debug("Applying Tool Part restrictions");
         configfile.setCategoryComment("ToolParts", "Restriction Module: Allows to blacklist certain ToolParts from being created with specific Materials!\nThe allowed and restricted entries are (=should be) equal. They're just both there for visibility.\nAny material not listed in any category will stay untouched.");
         loadRestrictedParts();
         loadAllowedParts();

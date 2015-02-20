@@ -17,7 +17,7 @@ import java.io.File;
 public class ToolOverride implements IOverride {
     @Override
     public void createDefault(Configuration config) {
-        Log.info("Creating Tool Default File");
+        Log.debug("Creating Tool Default File");
 
         for(Object identifier : Item.itemRegistry.getKeys())
         {
@@ -40,7 +40,7 @@ public class ToolOverride implements IOverride {
 
     @Override
     public void processConfig(Configuration config) {
-        Log.info("Loading Tool Overrides");
+        Log.debug("Loading Tool Overrides");
 
         StringBuilder comment = new StringBuilder();
         comment.append("Copy the desired tools you want to change from the defaults file into this file and adapt the stats.\n\n");

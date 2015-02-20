@@ -39,7 +39,7 @@ public final class TinkerMaterialTweaks {
 
     public static void modifyToolMaterials()
     {
-        Log.info("Modifying TConstruct materials");
+        Log.debug("Modifying TConstruct materials");
 
         // save constant factor to apply to all durabilities and speeds
         durabilityMod = Config.durabilityPercentage / 100f;
@@ -60,7 +60,7 @@ public final class TinkerMaterialTweaks {
         if(ModSupportHelper.ExtraTiC)
             modifyExtraTiC();
 
-        Log.info("Finished modifying TConstruct materials");
+        Log.debug("Finished modifying TConstruct materials");
     }
 
     private static void modifyTcon()

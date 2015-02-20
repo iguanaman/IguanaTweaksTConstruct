@@ -150,6 +150,6 @@ public class OldToolConversionHandler {
 
         Config.partReplacementXpPenality = oldXpPenality;
         Config.partReplacementBoostXpPenality = oldBoostXpPenality;
-        Log.info("Updated Tool " + itemStack.getDisplayName());
+        Log.debug("Updated Tool " + itemStack.getDisplayName());
     }
 }

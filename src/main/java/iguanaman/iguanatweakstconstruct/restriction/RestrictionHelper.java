@@ -179,7 +179,7 @@ public final class RestrictionHelper {
 
     private static void initPatternParts()
     {
-        Log.info("Loading tool pattern combinations");
+        Log.debug("Loading tool pattern combinations");
         // cycle through ALL combinations
         for(Map.Entry<List, ItemStack> entry : TConstructRegistry.patternPartMapping.entrySet())
         {
@@ -253,7 +253,7 @@ public final class RestrictionHelper {
 
     private static void initCastParts()
     {
-        Log.info("Loading tool casting combinations");
+        Log.debug("Loading tool casting combinations");
         // cycle through ALL combinations
         for(CastingRecipe recipe : TConstructRegistry.getTableCasting().getCastingRecipes())
         {

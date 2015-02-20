@@ -15,7 +15,7 @@ import java.util.Map;
 public class HarvestLevelNameOverride implements IOverride {
     @Override
     public void createDefault(Configuration config) {
-        Log.info("Creating Harvest Level Name Default File");
+        Log.debug("Creating Harvest Level Name Default File");
 
         config.get("HarvestLevelNames", "Level0", "Stone");
         config.get("HarvestLevelNames", "Level1", "Copper");
@@ -30,7 +30,7 @@ public class HarvestLevelNameOverride implements IOverride {
 
     @Override
     public void processConfig(Configuration config) {
-        Log.info("Loading Harvest Level Name Overrides");
+        Log.debug("Loading Harvest Level Name Overrides");
 
         ConfigCategory cat = config.getCategory("HarvestLevelNames");
         cat.setComment("Use materialnames to set the name of a harvest level. Check the MaterialDefaults file for the material names.\nFor Example: 'Level0=wood' would change the first harvest level to wood from stone.");
@@ -56,14 +56,21 @@ public class HarvestLevelNameOverride implements IOverride {
 
             // find material. we have to loop through all materials, because configs don't like case sensitivity.
             String matName = prop.getString().toLowerCase();
+            boolean found = false;
             for(ToolMaterial mat : TConstructRegistry.toolMaterials.values())
                 if(matName.equals(mat.name().toLowerCase()))
                 {
                     mats.put(lvl, mat);
                     if(Config.logOverrideChanges)
                         Log.info(String.format("Harvest Level Name Override: Changed Level %s to %s", lvl, mat.materialName));
+                    found = true;
                     break;
                 }
+
+            if(!found) {
+                Log.error("No Tinkers Construct material found: " + prop.getString());
+                Log.error("Entries have to be a registered material for Tinker Tools!");
+            }
         }
 
         HarvestLevels.setCustomHarvestLevelNames(mats);

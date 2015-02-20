@@ -56,7 +56,7 @@ public class IguanaFMPCompat {
         if(IguanaTweaksTConstruct.pulsar.isPulseLoaded("Debug"))
             MinecraftForge.EVENT_BUS.register(new SawStrengthHandler());
 
-        Log.info("Adapting and adding FMP saws");
+        Log.debug("Adapting and adding FMP saws");
         // change existing saws
         for(Object o : Item.itemRegistry)
         {

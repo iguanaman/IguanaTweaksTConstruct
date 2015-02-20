@@ -14,7 +14,7 @@ public class ModifierOverride implements IOverride {
 
     @Override
     public void createDefault(Configuration config) {
-        Log.info("Creating Modifier Default File");
+        Log.debug("Creating Modifier Default File");
 
         config.get("UsageBonus", "bonusWeight", RandomBonuses.usageBonusWeight, "The average amount of weight added if a tool does one action for a whole levelup.");
 
@@ -39,7 +39,7 @@ public class ModifierOverride implements IOverride {
 
     @Override
     public void processConfig(Configuration config) {
-        Log.info("Loading Modifier Overrides");
+        Log.debug("Loading Modifier Overrides");
 
         StringBuilder comment = new StringBuilder();
         comment.append("Tools, Weapons and Bows use separate data to determine which modifier should be rewarded.\n");

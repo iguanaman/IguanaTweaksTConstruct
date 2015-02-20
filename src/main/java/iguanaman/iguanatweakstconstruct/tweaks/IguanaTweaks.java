@@ -51,7 +51,7 @@ public class IguanaTweaks {
 
         // add string bindings. yay.
         if(Config.allowStringBinding) {
-            Log.info("Register String binding");
+            Log.debug("Register String binding");
             TConstructRegistry.addToolMaterial(40, "String", 0, 33, 1, 0, 0.01F, 0, 0f, EnumChatFormatting.WHITE.toString(), 0xFFFFFF);
             TConstructClientRegistry.addMaterialRenderMapping(40, "tinker", "paper", true);
             MinecraftForge.EVENT_BUS.register(new StringBindingHandler());
@@ -59,13 +59,13 @@ public class IguanaTweaks {
 
 
         if(Config.allowStencilReuse) {
-            Log.info("Make stencils reusable");
+            Log.debug("Make stencils reusable");
             for (ItemStack stack : StencilBuilder.getStencils())
                 StencilBuilder.registerBlankStencil(stack);
         }
 
         if(Config.castsBurnMaterial) {
-            Log.info("Burn casting materials to a crisp");
+            Log.debug("Burn casting materials to a crisp");
             MinecraftForge.EVENT_BUS.register(new CastHandler());
         }
 
@@ -74,7 +74,7 @@ public class IguanaTweaks {
 
         // no stone tools for you
         if(Config.disableStoneTools) {
-            Log.info("Disabling tinkers stone tools");
+            Log.debug("Disabling tinkers stone tools");
             MinecraftForge.EVENT_BUS.register(new StoneToolHandler());
             ChestGenHooks.removeItem(ChestGenHooks.BONUS_CHEST, new ItemStack(Items.stone_axe));
             ChestGenHooks.removeItem(ChestGenHooks.BONUS_CHEST, new ItemStack(Items.stone_pickaxe));
@@ -114,31 +114,31 @@ public class IguanaTweaks {
 
         // no hoes for you
         if(Config.nerfVanillaHoes) {
-            Log.info("Vanilla hoe? More like vanilla go!");
+            Log.debug("Vanilla hoe? More like vanilla go!");
             MinecraftForge.EVENT_BUS.register(new VanillaHoeNerfHandler());
         }
 
         if(Config.nerfVanillaSwords) {
-            Log.info("Replacing swords with pasta");
+            Log.debug("Replacing swords with pasta");
             MinecraftForge.EVENT_BUS.register(new VanillaSwordNerfHandler());
         }
 
         if(Config.nerfVanillaBows) {
-            Log.info("Sabotaging bows");
+            Log.debug("Sabotaging bows");
             MinecraftForge.EVENT_BUS.register(new VanillaBowNerfHandler());
         }
 
         // stonetorches
         if(Config.removeStoneTorchRecipe)
         {
-            Log.info("Removing stone torch recipe");
+            Log.debug("Removing stone torch recipe");
             RecipeRemover.removeAnyRecipe(new ItemStack(TinkerWorld.stoneTorch, 4));
         }
 
         // silky jewel nerfs
         if(Config.moreExpensiveSilkyCloth)
         {
-            Log.info("Making Silky Cloth more expensive");
+            Log.debug("Making Silky Cloth more expensive");
             RecipeRemover.removeAnyRecipe(new ItemStack(TinkerTools.materials, 1, 25));
             String[] patSurround = { "###", "#m#", "###" };
             GameRegistry.addRecipe(new ItemStack(TinkerTools.materials, 1, 25), patSurround, 'm', new ItemStack(TinkerTools.materials, 1, 14), '#', new ItemStack(Items.string));
@@ -146,7 +146,7 @@ public class IguanaTweaks {
         }
         if(Config.moreExpensiveSilkyJewel)
         {
-            Log.info("Making Silky Jewel more expensive");
+            Log.debug("Making Silky Jewel more expensive");
             RecipeRemover.removeAnyRecipe(new ItemStack(TinkerTools.materials, 1, 26));
             GameRegistry.addRecipe(new ItemStack(TinkerTools.materials, 1, 26), " c ", "cec", " c ", 'c', new ItemStack(TinkerTools.materials, 1, 25), 'e', new ItemStack(Item.getItemFromBlock(Blocks.emerald_block)));
         }
@@ -177,12 +177,12 @@ public class IguanaTweaks {
     private void flintTweaks()
     {
         if(Config.removeFlintDrop) {
-            Log.info("Removing Flint drops from Gravel");
+            Log.debug("Removing Flint drops from Gravel");
             MinecraftForge.EVENT_BUS.register(new FlintHandler());
         }
 
         if(Config.addFlintRecipe) {
-            Log.info("Adding shapeless Flint recipe from " + Config.recipeGravelPerFlint + " Gravel");
+            Log.debug("Adding shapeless Flint recipe from " + Config.recipeGravelPerFlint + " Gravel");
             // create recipe
             Object[] recipe = new ItemStack[Config.recipeGravelPerFlint];
             for(int i = 0; i < Config.recipeGravelPerFlint; i++)
@@ -194,7 +194,7 @@ public class IguanaTweaks {
     }
 
     private void reusableToolParts() {
-        Log.info("Registering reusable tool parts");
+        Log.debug("Registering reusable tool parts");
         // the material IDs of non-metal parts
         //int[] nonMetals = { 0, 1, 3, 4, 5, 6, 7, 8, 9, 17, 31 };
         for (Map.Entry<List, ItemStack> entry : TConstructRegistry.patternPartMapping.entrySet()) {
@@ -222,14 +222,14 @@ public class IguanaTweaks {
             // flux mod
             if(mod instanceof ModFlux) {
                 iter.set(new ModFluxExpensive(((ModFlux) mod).batteries));
-                Log.trace("Replaced Flux Modifier to make it more expensive");
+                Log.debug("Replaced Flux Modifier to make it more expensive");
             }
         }
     }
 
     private void removeBonusModifierModifiers()
     {
-        Log.info("Removing bonus modifier modifiers");
+        Log.debug("Removing bonus modifier modifiers");
         List<ItemModifier> mods = ModifyBuilder.instance.itemModifiers;
         for(ListIterator<ItemModifier> iter = mods.listIterator(); iter.hasNext();)
         {
@@ -251,14 +251,14 @@ public class IguanaTweaks {
             // flux mod
             if(mod instanceof ModToolRepair) {
                 iter.set(new ModLimitedToolRepair());
-                Log.trace("Replaced Tool Repair Modifier to limit the maximum amount of repairs");
+                Log.debug("Replaced Tool Repair Modifier to limit the maximum amount of repairs");
             }
         }
     }
 
     private static void findToolsFromConfig()
     {
-        Log.info("Setting up whitelist/blacklist for allowed tools");
+        Log.debug("Setting up whitelist/blacklist for allowed tools");
 
         // cycle through all items
         for(Object identifier : Item.itemRegistry.getKeys())
@@ -290,7 +290,7 @@ public class IguanaTweaks {
         if(TinkerSmeltery.moltenObsidianFluid == null)
             return;
 
-        Log.info("Removing Obsidian alloy");
+        Log.debug("Removing Obsidian alloy");
 
         ListIterator<AlloyMix> iter = Smeltery.getAlloyList().listIterator();
 

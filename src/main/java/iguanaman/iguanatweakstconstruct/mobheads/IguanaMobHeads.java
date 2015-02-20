@@ -70,7 +70,7 @@ public class IguanaMobHeads {
 
     private void integrateThermalExpansion()
     {
-        Log.info("Adding Blizz head");
+        Log.debug("Adding Blizz head");
         IguanaSkull.addHead(3, "blizz", "skull_blizz");
     }
 }

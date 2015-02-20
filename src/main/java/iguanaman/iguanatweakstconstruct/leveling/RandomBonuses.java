@@ -222,7 +222,8 @@ public class RandomBonuses {
         }
 
         if(Config.logBonusExtraChance)
-            Log.info(String.format("Chance of getting %s was %f %%", choice.toString(), 100f*chances[i-1]/(float)total));
+            Log.debug(String.format("Chance of getting %s was %f %%", choice.toString(),
+                                    100f * chances[i - 1] / (float) total));
 
         if(Config.logBonusExtraChance && tags.hasKey(String.format("Extra%s", choice.toString()))) {
             // same as above
@@ -231,8 +232,8 @@ public class RandomBonuses {
             bonus *= usageBonusWeight;
 
             // now relativize the weight bonus to the total.
-            Log.info(String.format("Bonus weight for getting %s was %f", choice.toString(), bonus));
-            Log.info(String.format("Bonus chance for getting %s was %f %%", choice.toString(), 100f*bonus/(float)total));
+            Log.debug(String.format("Bonus weight for getting %s was %f", choice.toString(), bonus));
+            Log.debug(String.format("Bonus chance for getting %s was %f %%", choice.toString(), 100f*bonus/(float)total));
         }
 
 

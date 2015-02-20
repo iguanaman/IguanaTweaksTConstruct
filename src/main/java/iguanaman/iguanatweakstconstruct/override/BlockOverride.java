@@ -19,7 +19,7 @@ import java.util.LinkedList;
 public class BlockOverride implements IOverride {
     @Override
     public void createDefault(Configuration config) {
-        Log.info("Creating Block Default File");
+        Log.debug("Creating Block Default File");
 
         // oredict entries
         for(int i = 0; i < HarvestLevelTweaks.allOreDicLevels.length; i++)
@@ -61,7 +61,7 @@ public class BlockOverride implements IOverride {
 
     @Override
     public void processConfig(Configuration config) {
-        Log.info("Loading Block Overrides");
+        Log.debug("Loading Block Overrides");
 
         StringBuilder comment = new StringBuilder();
         comment.append("To change the harvestability, create a 'blocks_<toolclass>' category. See BlockDefaults for examples.\n");

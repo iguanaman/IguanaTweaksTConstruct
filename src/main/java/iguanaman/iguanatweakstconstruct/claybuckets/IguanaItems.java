@@ -38,7 +38,7 @@ public class IguanaItems {
     @Handler
     public void preInit(FMLPreInitializationEvent event)
     {
-        Log.info("Adding Items");
+        Log.debug("Adding Items");
         // unfired clay bucket is a regular item
         clayBucketUnfired = new Item().setUnlocalizedName(Reference.prefix("clayBucketUnfired")).setTextureName(Reference.resource("clayBucketUnfired")).setMaxStackSize(16).setCreativeTab(CreativeTabs.tabMisc);
         GameRegistry.registerItem(clayBucketUnfired, "clayBucketUnfired");
@@ -84,7 +84,7 @@ public class IguanaItems {
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(clayBucketUnfired), "c c", " c ", 'c', new ItemStack(Items.clay_ball)));
         GameRegistry.addSmelting(clayBucketUnfired, new ItemStack(clayBucketFired), 0.0F);
 
-        Log.info("Added Items");
+        Log.debug("Added Items");
     }
 
     @Handler

@@ -58,6 +58,7 @@ public class IguanaItems {
 
         // register milkbucket to the ordictionary
         OreDictionary.registerOre("listAllmilk", clayBucketMilk); // i suppose this is for pams harvestcraft.
+        OreDictionary.registerOre("listAllwater", clayBucketWater); // also water
 
         // register the buckets with the fluid container registry
         ItemStack emptyClayBucket = new ItemStack(clayBucketFired);

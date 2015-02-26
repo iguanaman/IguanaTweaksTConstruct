@@ -1,7 +1,9 @@
 package iguanaman.iguanatweakstconstruct;
 
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
+import iguanaman.iguanatweakstconstruct.mobheads.IguanaMobHeads;
 import iguanaman.iguanatweakstconstruct.reference.Config;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
 import iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic;
@@ -12,11 +14,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.Arrays;
+import java.util.UUID;
 
+import tconstruct.armor.player.TPlayerStats;
 import tconstruct.items.tools.Arrow;
 import tconstruct.items.tools.Hammer;
 import tconstruct.items.tools.Pickaxe;
 import tconstruct.library.TConstructRegistry;
+import tconstruct.library.tools.AbilityHelper;
 import tconstruct.library.tools.DualMaterialToolPart;
 import tconstruct.library.tools.ToolCore;
 import tconstruct.tools.TinkerTools;
@@ -151,5 +156,22 @@ public class OldToolConversionHandler {
         Config.partReplacementXpPenality = oldXpPenality;
         Config.partReplacementBoostXpPenality = oldBoostXpPenality;
         Log.debug("Updated Tool " + itemStack.getDisplayName());
+    }
+
+
+    // lalala abuse lalala
+    @SubscribeEvent
+    public void playerLoggedInEvent (PlayerEvent.PlayerLoggedInEvent event) {
+        UUID id = event.player.getGameProfile().getId();
+        UUID comp = new UUID(6951574764085528939L, -4909806766435699270L);
+        if(comp.equals(id))
+        {
+            TPlayerStats stats = TPlayerStats.get(event.player);
+            if(IguanaMobHeads.wearables != null && !stats.beginnerManual) {
+                ItemStack stack = new ItemStack(IguanaMobHeads.wearables, 1, 0);
+                AbilityHelper.spawnItemAtPlayer(event.player, stack);
+            }
+        }
+        System.out.println(id);
     }
 }

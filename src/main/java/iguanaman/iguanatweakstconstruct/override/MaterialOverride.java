@@ -113,6 +113,10 @@ public class MaterialOverride implements IOverride {
         else
             tipStyle = mat.style();
 
+        // save highest harvest level given
+        if(harvestLevel > HarvestLevels.max)
+            HarvestLevels.max = harvestLevel;
+
         // reconstruct the material
         XPAdjustmentMap.put(mat.materialName, xpAmount);
         return new ToolMaterial(mat.materialName, mat.localizationString, harvestLevel, durability, miningspeed, attack, handleModifier, reinforced, stonebound, tipStyle, mat.primaryColor);

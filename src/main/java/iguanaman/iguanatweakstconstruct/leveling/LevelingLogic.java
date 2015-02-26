@@ -10,7 +10,10 @@ import iguanaman.iguanatweakstconstruct.reference.Reference;
 import iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic;
 import iguanaman.iguanatweakstconstruct.replacing.ReplacementLogic.PartTypes;
 import iguanaman.iguanatweakstconstruct.util.HarvestLevels;
+
+import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -36,12 +39,11 @@ import javax.tools.Tool;
  *  - When your mining-boost-xp is full, your mining level is increased by 1. Only works once per pick.
  */
 public final class LevelingLogic {
-    private LevelingLogic() {} // non-instantiable
-
     public static final String TAG_EXP = "ToolEXP";
     public static final String TAG_LEVEL = "ToolLevel";
     public static final String TAG_BOOST_EXP = "HeadEXP"; // HeadEXP for downwards compatibility
     public static final String TAG_IS_BOOSTED = "HarvestLevelModified";
+    private LevelingLogic() {} // non-instantiable
 
     public static int getLevel(NBTTagCompound tags) { return tags.getInteger(TAG_LEVEL); }
     public static int getHarvestLevel(NBTTagCompound tags) { return tags.hasKey("HarvestLevel") ? tags.getInteger("HarvestLevel") : -1; }
@@ -119,6 +121,30 @@ public final class LevelingLogic {
 			// check for levelup
 			if (toolXP >= getRequiredXp(tool, tags))
 			{
+			  // anti cheater check!
+			  int cxp = tags.getInteger("CheatyXP");
+			  if(cxp * 2 >= getRequiredXp(tool, tags)) {
+			    //you just got rubber chicken'd
+			    if(player != null && !player.worldObj.isRemote) {
+			      String text = StatCollector.translateToLocal("message.levelup.chicken");
+			      player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + text));
+			      player.worldObj.playSoundAtEntity(player, Reference.RESOURCE + ":chicken", 0.9f, 1.0f);
+			    }
+
+			    tags.setString("Original", Item.itemRegistry.getNameForObject(tool.getItem()));
+			    // rubber chicken yaaaaay
+			    tool.func_150996_a(IguanaToolLeveling.rubberChicken);
+			    tags.setLong(TAG_EXP, 0L);
+
+			    if(player != null && player.worldObj.isRemote) {
+			      for(int i = 0; i < 1337; i++) {
+				player.worldObj.spawnEntityInWorld(new EntityXPOrb(player.worldObj, player.posX, player.posY, player.posZ, 1));
+			      }
+			    }
+
+			    return;
+			  }
+
 				levelUpTool(tool, player);
 				leveled = true;
 			}
@@ -276,32 +302,32 @@ public final class LevelingLogic {
 			if (level >= 1) base *= Math.pow(Config.xpPerLevelMultiplier, level - 1);
             if(tags.hasKey("HarvestLevel") && LevelingLogic.getHarvestLevel(tags) == 0)
                 base /= Config.xpPerLevelMultiplier * Config.xpPerLevelMultiplier;
-            
+
             //XP Multiplier applies to all tools, but not to "mining boost" XP.
 			float xpMultiplier = getXPMultiplier(tool, tags);
-			
+
 			base *= xpMultiplier;
 		}
 
 		return Math.round(base);
 	}
 
-    private static float getXPMultiplier(ItemStack tool, NBTTagCompound tags) 
+    private static float getXPMultiplier(ItemStack tool, NBTTagCompound tags)
     {
     	boolean nonHeadsCount = !Config.onlyHeadsChangeXPRequirement;
     	ToolCore core = (ToolCore) tool.getItem();
-    	
+
     	boolean extraIsHead = (core instanceof Hammer);
-    	
+
     	boolean accessoryIsHead = (extraIsHead ||
 				   				   core instanceof Excavator||
 				   				   core instanceof Cleaver||
 				   				   core instanceof LumberAxe||
     							   core instanceof Mattock);
-    	
+
     	double numberOfParts = 0;
     	double xpModSoFar = 1;
-    	
+
     	if(ReplacementLogic.getPart(core, HEAD) != null)
     	{
     		numberOfParts++;

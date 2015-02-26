@@ -4,6 +4,7 @@ import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import iguanaman.iguanatweakstconstruct.OldToolConversionHandler;
+import iguanaman.iguanatweakstconstruct.leveling.IguanaToolLeveling;
 import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
 import iguanaman.iguanatweakstconstruct.leveling.LevelingTooltips;
 import iguanaman.iguanatweakstconstruct.reference.Config;
@@ -30,15 +31,23 @@ public class LevelingToolTipHandler {
         if(event.entityPlayer == null)
             return;
 
+        ItemStack stack = event.itemStack;
+
+        if(stack.getItem() == IguanaToolLeveling.rubberChicken && stack.hasTagCompound() && stack.getTagCompound().getCompoundTag(
+            "InfiTool").hasKey("Original")) {
+            event.toolTip.add(1, EnumChatFormatting.DARK_RED.toString() + EnumChatFormatting.ITALIC + StatCollector.translateToLocal("tooltip.chicken1"));
+            event.toolTip.add(2, EnumChatFormatting.DARK_RED + StatCollector.translateToLocal("tooltip.chicken2"));
+            return;
+        }
+
         // we're only interested in tinker tools, obviously
-        if(!(event.itemStack.getItem() instanceof ToolCore) || !event.itemStack.hasTagCompound())
+        if(!(stack.getItem() instanceof ToolCore) || !stack.hasTagCompound())
             return;
 
         // don't display tooltip when CTRL is held (also tic tooltips compatibility)
         if(TooltipHelper.ctrlHeld())
             return;
 
-        ItemStack stack = event.itemStack;
         // first off, let's check if we have to display a warning.
         if(OldToolConversionHandler.toolNeedsUpdating(stack)) {
             event.toolTip.add(1, EnumChatFormatting.DARK_RED + StatCollector.translateToLocal("tooltip.oldToolWarning1"));

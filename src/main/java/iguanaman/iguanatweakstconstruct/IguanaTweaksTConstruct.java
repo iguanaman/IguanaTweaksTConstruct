@@ -10,6 +10,7 @@ import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.registry.GameRegistry;
 import iguanaman.iguanatweakstconstruct.claybuckets.IguanaItems;
 import iguanaman.iguanatweakstconstruct.commands.CommandDumpOredict;
+import iguanaman.iguanatweakstconstruct.commands.CommandIAmADirtyCheater;
 import iguanaman.iguanatweakstconstruct.debug.DebugCommand;
 import iguanaman.iguanatweakstconstruct.debug.IguanaDebug;
 import iguanaman.iguanatweakstconstruct.harvestlevels.HarvestLevelTweaks;
@@ -135,6 +136,7 @@ public class IguanaTweaksTConstruct {
             event.registerServerCommand(new IguanaCommandLevelUpTool());
             Log.debug("Adding command: toolxp");
             event.registerServerCommand(new IguanaCommandToolXP());
+                    event.registerServerCommand(new CommandIAmADirtyCheater());
 		}
 
         Log.debug("Adding command: dumpTools");
@@ -145,6 +147,7 @@ public class IguanaTweaksTConstruct {
         if(pulseCFG.isModuleEnabled(new PulseMeta("Debug", "", false, false)))
             event.registerServerCommand(new DebugCommand());
 	}
+
 
     public static String getHarvestLevelName(int num)
     {

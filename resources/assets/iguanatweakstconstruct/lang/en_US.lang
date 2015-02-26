@@ -19,6 +19,7 @@ message.levelup.9=You and your %s are living legends!
 message.levelup.10=No god could stand in the way of you and your %s!
 message.levelup.11=Your %s is pure awesome.
 message.levelup.generic=Your %s has reached level %s
+message.levelup.chicken=What are you, a chicken?
 
 message.levelup.newmodifier.1=You notice room for improvement
 message.levelup.newmodifier.2=More Bling for your Thing
@@ -168,3 +169,7 @@ tooltip.bucketHoley=A bucket with holes. How useful.
 tooltip.clayBucketCracked=It broke. :(
 tooltip.endermanJaw=A distinct lack of head is noticeable.
 tooltip.bathat=NANANANANANANANA
+message.apology=I am really sorry and will not do it again
+message.apologyaccepted=Apology accepted. Don't do it again
+tooltip.chicken1=You dirty cheater.
+tooltip.chicken2=If you're sorry type '/imadirtycheater'

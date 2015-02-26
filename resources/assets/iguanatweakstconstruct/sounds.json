@@ -4,5 +4,11 @@
      "sounds": [
        "chime"
      ]
+   },
+   "chicken": {
+     "category": "player",
+     "sounds": [
+       "chicken"
+     ]
    }
 }

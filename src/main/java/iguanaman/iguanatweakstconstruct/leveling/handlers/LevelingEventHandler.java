@@ -62,6 +62,13 @@ public class LevelingEventHandler {
         if (event.entityLiving instanceof EntityAnimal)
             xp = Math.max(1, xp/2);
 
+        // dead stuff gives little xp
+        boolean cheatyXP = false;
+        if(!event.entityLiving.isEntityAlive()) {
+            xp = Math.max(1, Math.round(xp*40f));
+            cheatyXP = true;
+        }
+
         ItemStack ammo = null;
         // projectile weapons also get xp on their ammo!
         if(stack.getItem() instanceof ProjectileWeapon && event.source.damageType.equals("arrow")) {
@@ -88,6 +95,10 @@ public class LevelingEventHandler {
                 LevelingLogic.addXP(itemstack, player, xp);
 
                 NBTTagCompound tags = itemstack.getTagCompound().getCompoundTag("InfiTool");
+                if(cheatyXP) {
+                    int cxp = tags.getInteger("CheatyXP");
+                    tags.setInteger("CheatyXP", cxp + xp);
+                }
 
                 // bonus chance for luck if hitting passive mob
                 if (event.entityLiving instanceof EntityAnimal)

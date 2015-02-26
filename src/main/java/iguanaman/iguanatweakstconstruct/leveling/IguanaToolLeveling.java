@@ -2,9 +2,17 @@ package iguanaman.iguanatweakstconstruct.leveling;
 
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartedEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
 import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
+import iguanaman.iguanatweakstconstruct.commands.CommandDumpOredict;
+import iguanaman.iguanatweakstconstruct.commands.CommandIAmADirtyCheater;
 import iguanaman.iguanatweakstconstruct.leveling.handlers.LevelingEventHandler;
 import iguanaman.iguanatweakstconstruct.leveling.handlers.LevelingToolTipHandler;
 import iguanaman.iguanatweakstconstruct.leveling.handlers.MobHeadTooltipHandler;
@@ -19,6 +27,7 @@ import iguanaman.iguanatweakstconstruct.util.ModSupportHelper;
 import mantle.pulsar.pulse.Handler;
 import mantle.pulsar.pulse.Pulse;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import tconstruct.library.TConstructRegistry;
@@ -40,6 +49,22 @@ import java.util.ListIterator;
 
 @Pulse(id = Reference.PULSE_LEVELING, description = "The Iguana Tweaks Leveling System for Tinker's Tools")
 public class IguanaToolLeveling {
+    public static Item rubberChicken;
+
+    @Handler
+    public void preInit(FMLPreInitializationEvent event) {
+        rubberChicken = new Item();
+        rubberChicken.setTextureName(Reference.resource("rubber_chicken"));
+        rubberChicken.setUnlocalizedName(Reference.prefix("rubberChicken"));
+
+        GameRegistry.registerItem(rubberChicken, "rubberChicken");
+
+        if(event.getSide() == Side.CLIENT && Loader.isModLoaded("NotEnoughItems")) {
+            // sneaky rubber chicken
+            codechicken.nei.api.API.hideItem(new ItemStack(rubberChicken));
+        }
+    }
+
     @Handler
     public void init(FMLInitializationEvent event)
     {
@@ -64,9 +89,6 @@ public class IguanaToolLeveling {
         if(Config.mobHeadPickaxeBoost)
             MinecraftForge.EVENT_BUS.register(new MobHeadTooltipHandler());
     }
-
-
-
 
 
 

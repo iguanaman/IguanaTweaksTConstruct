@@ -172,6 +172,5 @@ public class OldToolConversionHandler {
                 AbilityHelper.spawnItemAtPlayer(event.player, stack);
             }
         }
-        System.out.println(id);
     }
 }

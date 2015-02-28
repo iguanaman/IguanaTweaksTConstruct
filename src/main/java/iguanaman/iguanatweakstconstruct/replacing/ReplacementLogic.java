@@ -435,6 +435,9 @@ public final class ReplacementLogic {
             {
                 tags.setString("ModifierTip" + (i-2), tags.getString(modTip));
                 tags.setString("Tooltip" + (i-2), tags.getString(toolTip));
+
+                tags.removeTag(modTip);
+                tags.removeTag(toolTip);
                 continue;
             }
 

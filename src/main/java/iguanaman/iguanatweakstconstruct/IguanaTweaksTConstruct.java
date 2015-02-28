@@ -35,6 +35,7 @@ import mantle.pulsar.config.IConfiguration;
 import mantle.pulsar.control.PulseManager;
 import mantle.pulsar.pulse.PulseMeta;
 import net.minecraft.item.Item;
+import net.minecraftforge.common.MinecraftForge;
 
 import java.io.File;
 import java.util.List;
@@ -123,6 +124,7 @@ public class IguanaTweaksTConstruct {
         pulsar.postInit(event);
 
         FMLCommonHandler.instance().bus().register(new OldToolConversionHandler());
+            FMLCommonHandler.instance().bus().register(new AntiChiselDupeHandler());
 
         GameRegistry.addRecipe(new ToolUpdateRecipe());
 	}

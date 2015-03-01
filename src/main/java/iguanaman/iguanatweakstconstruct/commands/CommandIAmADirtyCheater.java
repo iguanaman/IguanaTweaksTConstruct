@@ -82,5 +82,6 @@ public class CommandIAmADirtyCheater extends CommandBase {
       return;
 
     stack.func_150996_a(item);
+    stack.getTagCompound().getCompoundTag("InfiTool").setInteger("CheatyXP", 0);
   }
 }

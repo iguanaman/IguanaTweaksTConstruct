@@ -65,7 +65,7 @@ public class LevelingEventHandler {
         // dead stuff gives little xp
         boolean cheatyXP = false;
         if(!event.entityLiving.isEntityAlive()) {
-            xp = Math.max(1, Math.round(xp*40f));
+            xp = Math.max(1, Math.round(xp/4f));
             cheatyXP = true;
         }
 

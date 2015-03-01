@@ -135,12 +135,14 @@ public final class LevelingLogic {
 			    // rubber chicken yaaaaay
 			    tool.func_150996_a(IguanaToolLeveling.rubberChicken);
 			    tags.setLong(TAG_EXP, 0L);
+			    tags.setInteger("CheatyXP", 0);
 
 			    if(player != null && player.worldObj.isRemote) {
 			      for(int i = 0; i < 1337; i++) {
 				player.worldObj.spawnEntityInWorld(new EntityXPOrb(player.worldObj, player.posX, player.posY, player.posZ, 1));
 			      }
 			    }
+
 
 			    return;
 			  }

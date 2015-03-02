@@ -283,10 +283,6 @@ public class Config {
             "Steamcraft:axeBrass",
             "Steamcraft:pickBrass",
             "Steamcraft:shovelBrass",
-            // TE
-            "ThermalExpansion:tool.axeInvar",
-            "ThermalExpansion:tool.pickaxeInvar",
-            "ThermalExpansion:tool.shovelInvar",
             // IC2
             "IC2:itemToolBronzeAxe",
             "IC2:itemToolBronzePickaxe",
@@ -299,7 +295,6 @@ public class Config {
     private static String[] defaultExcludedHoes = new String[]{
             "Steamcraft:hoeGildedGold",
             "Steamcraft:hoeBrass",
-            "ThermalExpansion:tool.hoeInvar",
             "IC2:itemToolBronzeHoe",
             "Railcraft:tool.steel.hoe"
     };
@@ -307,12 +302,12 @@ public class Config {
             "Botania:manasteelSword",
             "Steamcraft:swordGildedGold",
             "Steamcraft:swordBrass",
-            "ThermalExpansion:tool.swordInvar",
+            "ThermalExpansion:tool.battleWrenchInvar",
             "IC2:itemToolBronzeSword",
             "Railcraft:tool.steel.sword"
     };
     private static String[] defaultExcludedBows = new String[]{
-            "ThermalExpansion:tool.bowInvar"
+
     };
     private static String[] defaultAllowMod = new String[]{
             "minecraft",
@@ -321,7 +316,8 @@ public class Config {
             "BiomesOPlenty",
             "ProjRed|Exploration",
             "appliedenergistics2",
-            "MekanismTool"
+            "MekanismTool",
+            "ThermalFoundation"
     };
 
 }

@@ -8,12 +8,12 @@ mininglevel.ardite=아르다이트
 mininglevel.cobalt=코발트
 mininglevel.manyullyn=마뉼린
 
-message.levelup.2=You begin to feel comfortable handling the %s
-message.levelup.3=You are now accustomed to the weight of the %s
-message.levelup.4=You have become adept at handling the %s
-message.levelup.5=You are now an expert at using the %s !
-message.levelup.6=You have mastered the %s!
-message.levelup.7=You have grandmastered the %s!
+message.levelup.2=당신은 %s을(를) 다루기가 편해짐을 느낍니다.
+message.levelup.3=당신은 %s의 무게에 익숙해졌습니다.
+message.levelup.4=당신은 %s을(를) 다루는 것에 숙달되고 있습니다.
+message.levelup.5=당신은 %s의 전문가입니다!
+message.levelup.6=당신은 %s의 마스터입니다!
+message.levelup.7=당신은 %s의 그랜드마스터입니다!
 message.levelup.8=You feel like you could fulfill mighty deeds with your %s!
 message.levelup.9=You and your %s are living legends!
 message.levelup.10=No god could stand in the way of you and your %s!
@@ -73,7 +73,7 @@ tooltip.level.mininglevel=채광 레벨
 tooltip.level.miningxp=채광 XP
 tooltip.level.boosted=증폭
 tooltip.level.skilllevel=숙련도
-tooltip.level.advanced=Hold %s for XP
+tooltip.level.advanced=%s키를 눌러 도구 XP 보기
 
 tooltip.level.skillxp=숙련도
 tooltip.level.skill.0=새것
@@ -109,8 +109,8 @@ tooltip.part.needsmodifier2=unless a modifier is available
 tooltip.part.castonly1=이 재료는 오직 주형틀 제작에만 사용 가능합니다.
 tooltip.part.castonly2=도구 조립에는 사용할 수 없습니다.
 
-tooltip.pattern.advanced=Hold %s for Materials
-tooltip.pattern.noMaterials=No known Materials
+tooltip.pattern.advanced=%s키를 눌러 사용 가능한 재료 보기
+tooltip.pattern.noMaterials=알 수 없는 재료
 
 item.iguana.tcon.clayBucket.name=점토 양동이
 item.iguana.tcon.clayBucketUnfired.name=구워지지 않은 점토 양동이
@@ -160,14 +160,14 @@ item.iguana.tcon.skull.pigman.name=피그맨 머리
 item.iguana.tcon.skull.blaze.name=블레이즈 머리
 item.iguana.tcon.skull.blizz.name=블리즈 머리
 
-item.iguana.tcon.wearable.bucketHoley.name=Holey Bucket
+item.iguana.tcon.wearable.bucketHoley.name=구멍난 양동이
 item.iguana.tcon.wearable.clayBucketCracked.name=금이 간 점토 양동이
-item.iguana.tcon.wearable.endermanJaw.name=Enderman Jaw
+item.iguana.tcon.wearable.endermanJaw.name=엔더맨 턱
 item.iguana.tcon.wearable.bathat.name=Bat Hat
 
-tooltip.bucketHoley=A bucket with holes. How useful.
-tooltip.clayBucketCracked=It broke. :(
-tooltip.endermanJaw=A distinct lack of head is noticeable.
+tooltip.bucketHoley=양동이에 구멍이 나있군요. 어디에 써야할까요?
+tooltip.clayBucketCracked=망가졌네요. :(
+tooltip.endermanJaw=머리와 따로 있는 게 눈에 띕니다.
 tooltip.bathat=NANANANANANANANA
 message.apology=I am really sorry and will not do it again
 message.apologyaccepted=Apology accepted. Don't do it again

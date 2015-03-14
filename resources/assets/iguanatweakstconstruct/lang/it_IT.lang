@@ -19,9 +19,10 @@ message.levelup.9=Tu e il tuo %s siete leggende viventi!
 message.levelup.10=Nessun dio potrebbe fermare te e il tuo %s!
 message.levelup.11=Il tuo %s è pura miticità.
 message.levelup.generic=Il tuo %s ha raggiunto il livello %s
+message.levelup.chicken=Che cosa sei, un pollo?
 
 message.levelup.newmodifier.1=Noti spazio per miglioramento
-message.levelup.newmodifier.2=Più Bling per il tuo attrezzo
+message.levelup.newmodifier.2=Più fantasia per il tuo attrezzo
 message.levelup.modifier=Modificatore
 message.levelup.miningboost=Improvvisamente, un fascio di luce risplende sulla punta del tuo %s
 message.levelup.mininglevel=Livello dell'attrezzo
@@ -66,9 +67,11 @@ message.levelup.jagged.tag=Seghettato
 message.levelup.stonebound.tag=Roccioso
 message.levelup.critical.tag=Possibilità critico
 
+modifier.toolstation.MiningLevelBoost=Aumento livello dell'attrezzo
+
 tooltip.level.mininglevel=Livello dell'attrezzo
 tooltip.level.miningxp=XP Scavo
-tooltip.level.boosted=Velocizato
+tooltip.level.boosted=Potenziato
 tooltip.level.skilllevel=Livello abilità
 tooltip.level.advanced=Tieni premuto %s per XP
 
@@ -139,11 +142,18 @@ item.iguana.tcon.clayBucket.Silver.name=Secchio d'argilla d'argento fuso
 item.iguana.tcon.clayBucket.Shiny.name=Secchio d'argilla di platino fuso
 item.iguana.tcon.clayBucket.Invar.name=Secchio d'argilla di invar fuso
 item.iguana.tcon.clayBucket.Electrum.name=Secchio d'argilla di elettro fuso
+item.iguana.tcon.clayBucket.Lumium.name=Secchio d'argilla di lumio fuso
+item.iguana.tcon.clayBucket.Signalum.name=Secchio d'argilla di signalo fuso
+item.iguana.tcon.clayBucket.Mithril.name=Secchio d'argilla di metallo infuso di mana fuso
+item.iguana.tcon.clayBucket.Enderium.name=Secchio d'argilla d'omeghio fuso
 item.iguana.tcon.clayBucket.Ender.name=Secchio d'argilla di omega liquido
 item.iguana.tcon.clayBucket.Slime.name=Secchio d'argilla di gelatina liquida
 item.iguana.tcon.clayBucket.PigIron.name=Secchio d'argilla di ferro suino fuso
 item.iguana.tcon.clayBucket.Glue.name=Secchio d'argilla di colla
 
+item.iguana.tcon.sawArdite.name=Sega di ardite
+item.iguana.tcon.sawCobalt.name=Sega di cobalto
+item.iguana.tcon.sawManyullyn.name=Sega di manyullyn
 
 item.iguana.tcon.skull.enderman.name=Testa di Enderman
 item.iguana.tcon.skull.pigman.name=Testa di Zombi suino
@@ -156,7 +166,11 @@ item.iguana.tcon.wearable.clayBucketCracked.name=Secchio d'argilla rotto
 item.iguana.tcon.wearable.endermanJaw.name=Mascella di Enderman
 item.iguana.tcon.wearable.bathat.name=Bat-cappello
 
-tooltip.bucketHoley=Un secchio con buchi. Veramente utile.
+tooltip.bucketHoley=Un secchio bucato. Veramente utile.
 tooltip.clayBucketCracked=Si è rotto. :(
 tooltip.endermanJaw=E' notabile una distinta mancanza di testa.
 tooltip.bathat=NANANANANANANANA
+message.apology=Mi dispiace veramente tanto e non lo farò di nuovo
+message.apologyaccepted=Scuse accettate. Non farlo di nuovo
+tooltip.chicken1=Sono uno sporco cheater.
+tooltip.chicken2=Se ti dispiace scrivi '/imadirtycheater'

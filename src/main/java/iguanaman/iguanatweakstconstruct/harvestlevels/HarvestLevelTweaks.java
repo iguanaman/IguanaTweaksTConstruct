@@ -190,7 +190,7 @@ public final class HarvestLevelTweaks {
         }
 
         // check if the setting was successful
-        if(item.getHarvestLevel(null, toolClass) != hlvl)
+        if(item.getHarvestLevel(new ItemStack(item), toolClass) != hlvl)
             Log.error("Could not set harvestlevel of " + item.getUnlocalizedName() + ". Contact the Mod Author to properly support Item.setHarvestLevel().");
     }
 

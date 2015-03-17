@@ -3,6 +3,7 @@ package iguanaman.iguanatweakstconstruct.override;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct;
 import iguanaman.iguanatweakstconstruct.reference.Reference;
+import iguanaman.iguanatweakstconstruct.util.Log;
 import mantle.pulsar.pulse.Handler;
 import mantle.pulsar.pulse.Pulse;
 import tconstruct.util.IMCHandler;
@@ -45,8 +46,9 @@ public class IguanaOverride {
             Configuration defaultConfig = new Configuration(Reference.configFile(defaultFileName));
             overrider.createDefault(defaultConfig);
             defaultConfig.save();
-        } catch(Exception e) {
+        } catch(RuntimeException e) {
             IMCHandler.bigWarning("An Error occurred while creating default files for the %s Override", type);
+          throw e;
         }
 
         try {
@@ -56,8 +58,9 @@ public class IguanaOverride {
 
             if(config.hasChanged())
                 config.save();
-        } catch(Exception e) {
+        } catch(RuntimeException e) {
             IMCHandler.bigWarning("An Error occurred while processing the Override for %s", type);
+          throw e;
         }
     }
 }

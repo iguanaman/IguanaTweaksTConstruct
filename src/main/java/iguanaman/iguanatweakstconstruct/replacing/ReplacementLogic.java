@@ -25,6 +25,7 @@ import tconstruct.library.tools.ToolCore;
 import tconstruct.library.tools.ToolMaterial;
 import tconstruct.library.weaponry.IAmmo;
 import tconstruct.modifiers.tools.ModAttack;
+import tconstruct.modifiers.tools.ModButtertouch;
 import tconstruct.modifiers.tools.ModRedstone;
 import tconstruct.tools.TinkerTools;
 import tconstruct.tools.logic.ToolStationLogic;
@@ -184,6 +185,8 @@ public final class ReplacementLogic {
         reapplyRedstone(tags, toolStack);
         // quartz/attack modifier
         reapplyAttack(tags, toolStack);
+        // silktouch
+        reapplySilktouch(tags, toolStack);
 
         if(Config.removeMobHeadOnPartReplacement && type == HEAD)
             removeMobHeadModifier(tags);
@@ -379,6 +382,35 @@ public final class ReplacementLogic {
         // restore modifiers
         tags.setInteger("Modifiers", modifiers);
     }
+
+  // Reapplies the changes to stats done by the silktouch modifier
+  private static void reapplySilktouch(NBTTagCompound tags, ItemStack itemStack)
+  {
+    // only do if we actually have attack modifier
+    if(!tags.hasKey("Silk Touch"))
+      return;
+
+    int attack = tags.getInteger("Attack");
+    attack -= 3;
+    if (attack < 0)
+      attack = 0;
+    tags.setInteger("Attack", attack);
+
+    int miningSpeed = tags.getInteger("MiningSpeed");
+    miningSpeed -= 300;
+    if (miningSpeed < 0)
+      miningSpeed = 0;
+    tags.setInteger("MiningSpeed", miningSpeed);
+
+    if (tags.hasKey("MiningSpeed2"))
+    {
+      int miningSpeed2 = tags.getInteger("MiningSpeed2");
+      miningSpeed2 -= 300;
+      if (miningSpeed2 < 0)
+        miningSpeed2 = 0;
+      tags.setInteger("MiningSpeed2", miningSpeed2);
+    }
+  }
 
     // removes the mobhead modifier and rendering
     private static void removeMobHeadModifier(NBTTagCompound tags)

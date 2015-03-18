@@ -95,18 +95,19 @@ public class OldToolConversionHandler {
         }
 
 
+      // vanilla tcon allows harvestlevel change
+      if(PHConstruct.miningLevelIncrease)
+      {
         // our own diamond modifier is disabled, but vanilla one is there
-        if(!Config.changeDiamondModifier || !IguanaTweaksTConstruct.pulsar.isPulseLoaded(Reference.PULSE_HARVESTTWEAKS))
-            // vanilla tcon allows harvestlevel change
-            if(PHConstruct.miningLevelIncrease)
-            {
-                // was the tool boosted with a diamond?
-                if(tags.getBoolean("Diamond")) // returns false if tag is not present
-                    return hlvl < HarvestLevels._6_obsidian;
-                // ...with an emerald?
-                if(tags.getBoolean("Emerald"))
-                    return hlvl < HarvestLevels._5_diamond;
-            }
+        if(!Config.changeDiamondModifier || !IguanaTweaksTConstruct.pulsar.isPulseLoaded(Reference.PULSE_HARVESTTWEAKS)) {
+          // was the tool boosted with a diamond?
+          if (tags.getBoolean("Diamond") && hlvl < 3) // returns false if tag is not present
+            return true;
+          // ...with an emerald?
+          if (tags.getBoolean("Emerald") && hlvl < 2)
+            return true;
+        }
+      }
 
 
         return hlvl != realHlvl;

@@ -14,17 +14,22 @@ import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import tconstruct.items.tools.*;
 import tconstruct.library.TConstructRegistry;
+import tconstruct.library.entity.ProjectileBase;
 import tconstruct.library.event.ToolCraftEvent;
 import tconstruct.library.tools.ToolCore;
 import tconstruct.library.tools.Weapon;
+import tconstruct.library.weaponry.AmmoItem;
 import tconstruct.library.weaponry.ProjectileWeapon;
 import tconstruct.tools.TinkerTools;
+import tconstruct.weaponry.entity.ShurikenEntity;
+import tconstruct.weaponry.weapons.Shuriken;
 
 import java.util.Arrays;
 
@@ -45,6 +50,18 @@ public class LevelingEventHandler {
             return;
 
         ItemStack stack = player.getCurrentEquippedItem();
+        if(event.source.getSourceOfDamage() instanceof ShurikenEntity) {
+            if(stack == null || !(stack.getItem() instanceof Shuriken)) {
+                if (player.inventory.currentItem == 0)
+                    stack = player.inventory.getStackInSlot(8);
+                else
+                    stack = player.inventory.getStackInSlot(player.inventory.currentItem + 1);
+            }
+
+            if(stack != null && !(stack.getItem() instanceof Shuriken))
+                stack = null;
+        }
+
         if (stack == null || !stack.hasTagCompound())
             return;
 

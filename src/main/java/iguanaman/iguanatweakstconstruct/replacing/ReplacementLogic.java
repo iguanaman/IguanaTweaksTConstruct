@@ -82,6 +82,10 @@ public final class ReplacementLogic {
             extraStack = partStack;
 
         ItemStack newTool = ToolBuilder.instance.buildTool(headStack, handleStack, accessoryStack, extraStack, "Modified Tool");
+        if(newTool == null) {
+            Log.debug("External source prevents creation of tool with replaced parts.");
+            return;
+        }
         NBTTagCompound newTags = newTool.getTagCompound().getCompoundTag("InfiTool");
 
         int partMaterialId = getToolPartMaterial(newTags, type);

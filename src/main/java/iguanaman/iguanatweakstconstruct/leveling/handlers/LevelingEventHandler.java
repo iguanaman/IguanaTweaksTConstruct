@@ -8,10 +8,13 @@ import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;
 import iguanaman.iguanatweakstconstruct.leveling.LevelingTooltips;
 import iguanaman.iguanatweakstconstruct.leveling.RandomBonuses;
 import iguanaman.iguanatweakstconstruct.reference.Config;
+
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.monster.*;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EntityDamageSourceIndirect;
@@ -158,9 +161,15 @@ public class LevelingEventHandler {
         EntityPlayer player = event.entityPlayer;
         // no fake players
         if(player instanceof FakePlayer) return;
-        ItemStack stack = event.current;
-        if (stack != null && stack.hasTagCompound() && stack.getItem() instanceof ToolCore)
-            LevelingLogic.addXP(stack, player, 1L);
+
+        // can hoe?
+        Block block = event.world.getBlock(event.x, event.y, event.z);
+        Block blockAbove = event.world.getBlock(event.x, event.y+1, event.z);
+        if (blockAbove.isAir(event.world, event.x, event.y+1, event.z) && (block == Blocks.grass || block == Blocks.dirt)) {
+            ItemStack stack = event.current;
+            if (stack != null && stack.hasTagCompound() && stack.getItem() instanceof ToolCore)
+                LevelingLogic.addXP(stack, player, 1L);
+        }
     }
 
     @SubscribeEvent

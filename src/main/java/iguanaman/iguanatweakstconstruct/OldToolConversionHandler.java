@@ -116,6 +116,8 @@ public class OldToolConversionHandler {
           if (tags.getBoolean("Emerald") && hlvl < 2)
             return true;
         }
+
+          return false;
       }
 
 

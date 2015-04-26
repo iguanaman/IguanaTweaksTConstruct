@@ -86,8 +86,17 @@ public class OldToolConversionHandler {
         int realHlvl = TConstructRegistry.getMaterial(tags.getInteger("Head")).harvestLevel();
 
         // unboosted but boost requires -> we need to reduce the hlvl by 1
-        if(Config.pickaxeBoostRequired && !LevelingLogic.isBoosted(tags) && (itemStack.getItem() instanceof Pickaxe || itemStack.getItem() instanceof Hammer))
-            return hlvl != Math.max(realHlvl-1, 0);
+        if(Config.pickaxeBoostRequired && !LevelingLogic.isBoosted(tags) && (itemStack.getItem() instanceof Pickaxe || itemStack.getItem() instanceof Hammer)) {
+            int min = 0;
+            if(PHConstruct.miningLevelIncrease) {
+                if(tags.getBoolean("Diamond"))
+                   min = 3;
+                else if(tags.getBoolean("Emerald"))
+                    min = 2;
+            }
+
+            return hlvl != Math.max(realHlvl - 1, min);
+        }
 
         // if it's boosted, check if it's boosted by a diamond from bronze level
         if(tags.hasKey("GemBoost") && realHlvl == HarvestLevels._4_bronze) {

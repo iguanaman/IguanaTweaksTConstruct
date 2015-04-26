@@ -15,6 +15,7 @@ import net.minecraft.util.StatCollector;
 
 import java.util.Arrays;
 
+import tconstruct.TConstruct;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.crafting.ModifyBuilder;
 import tconstruct.library.crafting.ToolBuilder;
@@ -199,18 +200,25 @@ public final class ReplacementLogic {
         if(tags.hasKey("GemBoost"))
             tags.removeTag("GemBoost");
 
-        // if boosted by vanilla diamond modifier, then we have to respect that.
-        if(!Config.changeDiamondModifier || !IguanaTweaksTConstruct.pulsar.isPulseLoaded(Reference.PULSE_HARVESTTWEAKS))
-            // vanilla tcon allows harvestlevel change
-            if(PHConstruct.miningLevelIncrease)
-            {
-                // was the tool boosted with a diamond?
-                if(tags.getBoolean("Diamond") && tags.getInteger("HarvestLevel") < HarvestLevels._6_obsidian) // returns false if tag is not present
-                    tags.setInteger("HarvestLevel", HarvestLevels._6_obsidian);
-                // ...with an emerald?
-                if(tags.getBoolean("Emerald") && tags.getInteger("HarvestLevel") < HarvestLevels._5_diamond)
-                    tags.setInteger("HarvestLevel", HarvestLevels._5_diamond);
+        // if boosted by vanilla diamond modifier, then we have to respect that if vanilla tcon allows harvestlevel change
+        // check is either modifier-changed OR harvestlevels, because the changeDiamondModifier is basically false if the pulse isn't loaded
+        if(PHConstruct.miningLevelIncrease && (!Config.changeDiamondModifier || !TConstruct.pulsar.isPulseLoaded(Reference.PULSE_HARVESTTWEAKS)))
+        {
+            int min = 0;
+            if(tags.getBoolean("Diamond")) {
+                min = 3;
+                if(TConstruct.pulsar.isPulseLoaded(Reference.PULSE_HARVESTTWEAKS))
+                    min = HarvestLevels._6_obsidian;
             }
+            else if(tags.getBoolean("Emerald")) {
+                min = 2;
+                if(TConstruct.pulsar.isPulseLoaded(Reference.PULSE_HARVESTTWEAKS))
+                    min = HarvestLevels._5_diamond;
+            }
+
+            if(tags.getInteger("HarvestLevel") < min)
+                tags.setInteger("HarvestLevel", min);
+        }
 
         // handle Leveling/xp (has to be done first before we change the stats so we get the correct old values)
         if(LevelingLogic.hasXp(tags))

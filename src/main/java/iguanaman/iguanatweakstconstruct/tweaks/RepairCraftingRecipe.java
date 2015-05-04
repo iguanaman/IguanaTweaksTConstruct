@@ -65,6 +65,10 @@ public class RepairCraftingRecipe implements IRecipe {
 
     @Override
     public ItemStack getCraftingResult(InventoryCrafting inventoryCrafting) {
+        // we call the matches-function again to sync up the issue in case it got called between
+        // the matches-call and the getCraftingResult call
+        // we can pass null for the world since it is never accessed in the function
+        matches(inventoryCrafting, null);
         return modifiedTool;
     }
 

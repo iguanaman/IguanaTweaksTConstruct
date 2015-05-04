@@ -210,7 +210,7 @@ public final class TinkerMaterialTweaks {
         int durability = Math.round(newDurability * durabilityMod);
         int speed = Math.round(newSpeed * speedMod);
         // round everything
-        ToolMaterial newMaterial = new ToolMaterial(old.materialName, harvestLevel, durability, speed, newAttack, newHandleModifier, old.reinforced(), old.shoddy(), old.style(), old.primaryColor());
+        ToolMaterial newMaterial = new ToolMaterial(old.materialName, old.localizationString, harvestLevel, durability, speed, newAttack, newHandleModifier, old.reinforced(), old.shoddy(), old.style(), old.primaryColor());
 
         // replace old material
         Integer id = getMaterialID(old);

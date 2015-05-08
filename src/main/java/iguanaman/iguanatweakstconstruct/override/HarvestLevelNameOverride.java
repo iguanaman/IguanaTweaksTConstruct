@@ -72,6 +72,7 @@ public class HarvestLevelNameOverride implements IOverride {
 
             // if it's not a material, we try items
             if(!found) {
+                matName = prop.getString();
                 Item item = (Item)Item.itemRegistry.getObject(matName);
                 if(item != null) {
                     String name = (new ItemStack(item)).getDisplayName();

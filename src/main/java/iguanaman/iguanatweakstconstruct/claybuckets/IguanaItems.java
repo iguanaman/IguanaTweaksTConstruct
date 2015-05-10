@@ -63,7 +63,7 @@ public class IguanaItems {
         // register the buckets with the fluid container registry
         ItemStack emptyClayBucket = new ItemStack(clayBucketFired);
         FluidContainerRegistry.registerFluidContainer(FluidRegistry.WATER, new ItemStack(clayBucketWater), emptyClayBucket);
-        FluidContainerRegistry.registerFluidContainer(FluidRegistry.LAVA, new ItemStack(clayBucketLava), emptyClayBucket);
+        FluidContainerRegistry.registerFluidContainer(FluidRegistry.LAVA, new ItemStack(clayBucketLava), new ItemStack(clayBucketFired, 0));
 
 
         // only integrate tcon metals if they actually exist

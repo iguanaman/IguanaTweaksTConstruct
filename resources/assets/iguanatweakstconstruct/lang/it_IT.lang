@@ -8,12 +8,12 @@ mininglevel.ardite=Ardite
 mininglevel.cobalt=Cobalto
 mininglevel.manyullyn=Manyullyn
 
-message.levelup.2=Inizi a sentirti comfortevole usando il %s
+message.levelup.2=Inizi a sentirti a tuo agio usando %s
 message.levelup.3=Ora sei abituato al peso di %s
-message.levelup.4=Sei diventato un esperto nell'usare il %s
-message.levelup.5=Sei diventato un specialista nell'usare il %s!
-message.levelup.6=Hai masterizato il %s!
-message.levelup.7=Hai stramasterizato il %s!
+message.levelup.4=Sei diventato un esperto nell'usare %s
+message.levelup.5=Sei diventato un specialista nell'usare %s!
+message.levelup.6=Hai masterizato %s!
+message.levelup.7=Hai stramasterizato %s!
 message.levelup.8=Ti senti pronto a compiere grandi gesta col tuo %s!
 message.levelup.9=Tu e il tuo %s siete leggende viventi!
 message.levelup.10=Nessun dio potrebbe fermare te e il tuo %s!
@@ -25,7 +25,7 @@ message.levelup.newmodifier.1=Noti spazio per miglioramento
 message.levelup.newmodifier.2=Più fantasia per il tuo attrezzo
 message.levelup.modifier=Modificatore
 message.levelup.miningboost=Improvvisamente, un fascio di luce risplende sulla punta del tuo %s
-message.levelup.mininglevel=Livello dell'attrezzo
+message.levelup.mininglevel=Livello di scavo
 
 materialtraits.critical=Colpo critico
 
@@ -67,9 +67,9 @@ message.levelup.jagged.tag=Seghettato
 message.levelup.stonebound.tag=Roccioso
 message.levelup.critical.tag=Possibilità critico
 
-modifier.toolstation.MiningLevelBoost=Aumento livello dell'attrezzo
+modifier.toolstation.MiningLevelBoost=Aumento livello di scavo
 
-tooltip.level.mininglevel=Livello dell'attrezzo
+tooltip.level.mininglevel=Livello di scavo
 tooltip.level.miningxp=XP Scavo
 tooltip.level.boosted=Potenziato
 tooltip.level.skilllevel=Livello abilità
@@ -78,7 +78,7 @@ tooltip.level.advanced=Tieni premuto %s per XP
 tooltip.level.skillxp=XP abilità
 tooltip.level.skill.0=Come nuovo
 tooltip.level.skill.1=Impacciato
-tooltip.level.skill.2=Comfortevole
+tooltip.level.skill.2=Confortevole
 tooltip.level.skill.3=Abituato
 tooltip.level.skill.4=Esperto
 tooltip.level.skill.5=Specialista

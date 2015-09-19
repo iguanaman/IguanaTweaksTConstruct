@@ -181,7 +181,7 @@ public class Config {
         configfile.setCategoryComment(CATEGORY_Heads, "Mob Head Module: Adds additional Mob heads and drops");
 
         // drop behaviour
-        baseHeadDropChance      = configfile.getInt("baseDropChange", CATEGORY_Heads, 5, 1, 100, "Base percentage for a head to drop");
+        baseHeadDropChance      = configfile.getInt("baseDropChange", CATEGORY_Heads, 5, 0, 100, "Base percentage for a head to drop");
         beheadingHeadDropChance = configfile.getInt("beheadingDropChange", CATEGORY_Heads, 2, 1, 100, "Percentage added to base percentage per level of Beheading modifier");
 
 

@@ -31,6 +31,11 @@ public class CommandIAmADirtyCheater extends CommandBase {
   }
 
   @Override
+  public int getRequiredPermissionLevel() {
+    return 0;
+  }
+
+  @Override
   public void processCommand(ICommandSender sender, String[] args) {
     if(!isCheater(sender)) {
       sender.addChatMessage(new ChatComponentText(EnumChatFormatting.ITALIC + "You don't look like a cheater to me"));

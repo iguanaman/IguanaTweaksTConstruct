@@ -48,7 +48,7 @@ public class IguanaOverride {
             defaultConfig.save();
         } catch(RuntimeException e) {
             IMCHandler.bigWarning("An Error occurred while creating default files for the %s Override", type);
-          throw e;
+            Log.error(e);
         }
 
         try {
@@ -60,7 +60,7 @@ public class IguanaOverride {
                 config.save();
         } catch(RuntimeException e) {
             IMCHandler.bigWarning("An Error occurred while processing the Override for %s", type);
-          throw e;
+            Log.error(e);
         }
     }
 }

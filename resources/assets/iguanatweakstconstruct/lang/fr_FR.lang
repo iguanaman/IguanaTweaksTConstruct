@@ -19,6 +19,7 @@ message.levelup.9=Vous et vôtre %s êtes des légendes vivantes!
 message.levelup.10=Aucun dieu ne pourrait se mettre entre vous et votre %s!
 message.levelup.11=Votre %s est purement génial.
 message.levelup.generic=Votre %s a atteint le niveau %s
+message.levelup.chicken=Qu'êtes-vosu,, un poulet ?
 
 message.levelup.newmodifier.1=Vous remarquez une place d'amélioration
 message.levelup.newmodifier.2=Plus de Bling pour votre truc
@@ -141,6 +142,10 @@ item.iguana.tcon.clayBucket.Silver.name=Seau d'argent fondu en argile
 item.iguana.tcon.clayBucket.Shiny.name=Seau de brillant fondu en argile
 item.iguana.tcon.clayBucket.Invar.name=Seau d'invar fondu en argile
 item.iguana.tcon.clayBucket.Electrum.name=Seau d'électrum fondu en argile
+item.iguana.tcon.clayBucket.Lumium.name=Seau de lumium fondu en argile
+item.iguana.tcon.clayBucket.Signalum.name=Seau de signalum fondu en argile
+item.iguana.tcon.clayBucket.Mithril.name=Seau de mana infusé fondu en argile
+item.iguana.tcon.clayBucket.Enderium.name=Seau d'enderium fondu en argile
 item.iguana.tcon.clayBucket.Ender.name=Seau d'ender liquide en argile
 item.iguana.tcon.clayBucket.Slime.name=Seau de bave en argile
 item.iguana.tcon.clayBucket.PigIron.name=Seau de fonte fondu en argile
@@ -155,7 +160,6 @@ item.iguana.tcon.skull.pigman.name=Tête d'homme cochon
 item.iguana.tcon.skull.blaze.name=Tête de Flamboyant
 item.iguana.tcon.skull.blizz.name=Tête de Blizzard
 
-
 item.iguana.tcon.wearable.bucketHoley.name=Seau troué
 item.iguana.tcon.wearable.clayBucketCracked.name=Seau en argile craquelé
 item.iguana.tcon.wearable.endermanJaw.name=Mâchoire d'Enderman
@@ -165,3 +169,7 @@ tooltip.bucketHoley=Un seau avec des trous. Pratique.
 tooltip.clayBucketCracked=Il s'est cassé. :(
 tooltip.endermanJaw=Un manque indéniable de tête est perceptible.
 tooltip.bathat=NANANANANANANANA
+message.apology=Je suis vraiement désolé et je ne le referai jamais
+message.apologyaccepted=Escuses acceptées. Ne le refaite jamais
+tooltip.chicken1=Salle tricheur.
+tooltip.chicken2=Si vous êtes désolé, tappez '/imadirtycheater'

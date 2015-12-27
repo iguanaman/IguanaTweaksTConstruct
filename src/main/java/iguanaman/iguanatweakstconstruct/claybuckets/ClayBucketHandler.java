@@ -46,6 +46,9 @@ public class ClayBucketHandler {
     {
         if (event.current.getItem() == IguanaItems.clayBucketFired && event.target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
         {
+            if(event.getResult() != Event.Result.DEFAULT)
+                return;
+            
             int hitX = event.target.blockX;
             int hitY = event.target.blockY;
             int hitZ = event.target.blockZ;

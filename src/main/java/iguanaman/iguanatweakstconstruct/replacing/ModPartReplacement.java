@@ -1,3 +1,4 @@
+/* I, boni, hereby grant Vexatos the right to use and modify the code in this file as he wishes */
 package iguanaman.iguanatweakstconstruct.replacing;
 
 import iguanaman.iguanatweakstconstruct.leveling.LevelingLogic;

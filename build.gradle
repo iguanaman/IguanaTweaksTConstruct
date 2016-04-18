@@ -1,0 +1,183 @@
+/*
+ * Tinkers Construct
+ * Master build file
+ * 
+ * Authors: Sunstrike, ProgWML6
+ * Help from AbrarSyed
+ */
+
+buildscript {
+    repositories {
+        mavenCentral()
+		mavenLocal()
+        maven {
+            name = 'ForgeFS'
+            url = 'http://files.minecraftforge.net/maven'
+        }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+    }
+}
+
+repositories {
+    maven {
+        name "CB Maven FS"
+        url "http://chickenbones.net/maven/"
+    }
+    maven {
+        name "ProfMobius Maven FS"
+        url "http://mobiusstrip.eu/maven"
+    }
+    maven {
+        name "DVS1 Maven FS'"
+        url 'http://dvs1.progwml6.com/files/maven'
+    }
+    maven {
+        name "ForgeFS"
+        url 'http://files.minecraftforge.net/maven'
+    }
+}
+
+// Load ForgeGradle
+apply plugin: 'forge'
+group = "boni"
+
+// Define properties file
+ext.configFile = file "build.properties"
+
+configFile.withReader {
+    // Load config.  It shall from now be referenced as simply config or project.config
+    def prop = new Properties()
+    prop.load(it)
+    project.ext.config = new ConfigSlurper().parse prop
+}
+
+ext.artifact_version_override = 'NotUsed'
+//gitignored config file -- if this has the entry for override it will override the version for local builds
+//create a file called version.properties with the line artifact_version_override=NotUsed
+//replace not used w/ version #'s for manual local overrides
+ext.configFile2 = file "version.properties"
+if (configFile2.exists()){
+    configFile2.withReader {
+        def prop2 = new Properties()
+        prop2.load(it)
+        ext.GIVersionFL = new ConfigSlurper().parse prop2
+        if (GIVersionFL != null){
+            project.artifact_version_override = GIVersionFL.artifact_version_override
+        }
+    }
+}
+
+dependencies {
+    //compile "mantle:Mantle:${config.minecraft_version}-${config.mantle_version}:deobf"
+    compile "tconstruct:TConstruct:${config.minecraft_version}-${config.tconstruct_version}:deobf"
+    compile "codechicken:ForgeMultipart:${config.minecraft_version}-${config.fmp_version}:dev"
+    //compile name: 'CodeChickenLib', version: "${config.minecraft_version}-${config.CCLIB_version}", ext: 'jar'
+    //compile name: 'NotEnoughItems', version: "${config.NEI_version}", type: 'jar'
+}
+
+// Finds and sets version data
+task buildInfo {
+    def cmd = "git rev-parse --short HEAD"
+    def proc = cmd.execute()
+    proc.waitFor()
+    if (proc.exitValue() == 0) {
+        ext.revision = proc.text.trim()
+    } else {
+        ext.revision = "GITBORK"
+    }
+
+    if (System.getenv().BUILD_NUMBER != null) {
+        ext.buildNum = System.getenv().BUILD_NUMBER
+    } else {
+        ext.buildNum = "DEV.${project.buildInfo.revision}"
+    }
+}
+ext.artifact_version = 'NFG'
+if (System.getenv().ARTIFACT_VERSION == null && artifact_version_override == 'NotUsed') {
+    artifact_version = "${config.mod_version}.${project.buildInfo.buildNum}"
+}
+if (System.getenv().ARTIFACT_VERSION != null && artifact_version_override == 'NotUsed') {
+    artifact_version = "${system.getenv().ARTIFACT_VERSION}"
+}
+if (artifact_version_override != 'NotUsed') {
+    artifact_version = "${artifact_version_override}"
+}
+
+version = "${config.minecraft_version}-${artifact_version}"
+
+minecraft {
+    version = config.minecraft_version + "-" + config.forge_version
+    runDir = 'run'
+    replace '${version}', project.version
+}
+
+
+sourceSets {
+    main {
+        resources {
+            srcDir 'resources'
+        }
+		
+    }
+}
+processResources
+{
+    // this will ensure that this task is redone when the versions change.
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    // Replace stuff in text files, not binaries.
+    from(sourceSets.main.resources.srcDirs) {
+        include '**/*.info'
+        // Replace version and MCversion
+        expand 'version':artifact_version,'MCversion':config.minecraft_version
+    }
+        
+    // Copy everything else that's not text
+    from(sourceSets.main.resources.srcDirs) {
+        exclude '**/*.info'
+    }
+}
+
+
+// Create deobf dev jars
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'deobf'
+}
+
+artifacts {
+    archives deobfJar
+}
+
+task("uploadJars", dependsOn:"signJar") {
+
+    description = "uploads JARs"
+
+    if (project.hasProperty("local_maven") || project.hasProperty("sftp_maven")) {
+        apply plugin: 'maven'
+        uploadArchives {
+            repositories {
+                if(project.hasProperty("local_maven"))
+                {
+                    mavenDeployer {
+                        repository(url: "file://${local_maven}")
+                    }
+                }
+                if(project.hasProperty("sftp_maven")) {
+                    repositories.mavenDeployer {
+                        configuration = configurations.deployerJars
+                        repository(url: "sftp://${sftp_maven}"){
+                            authentication(userName: "${sftp_username}",privateKey: "${sftp_key}")}
+                    }
+                }
+            }
+        }
+    }
+}

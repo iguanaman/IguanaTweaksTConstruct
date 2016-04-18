@@ -1,0 +1,14 @@
+{
+   "chime": {
+     "category": "player",
+     "sounds": [
+       "chime"
+     ]
+   },
+   "chicken": {
+     "category": "player",
+     "sounds": [
+       "chicken"
+     ]
+   }
+}
